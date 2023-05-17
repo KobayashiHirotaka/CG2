@@ -22,6 +22,7 @@ LRESULT WindowsClass::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lpar
 
 void WindowsClass::GetWindow(const wchar_t* title, UINT windowStyle,
     int32_t clientWidth, int32_t clientHeight) {
+   
     OutputDebugStringA("Hello,DirectX!!\n");
 
     //ウィンドウクラスの設定

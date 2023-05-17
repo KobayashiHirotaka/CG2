@@ -27,6 +27,9 @@
     <ClCompile Include="WindowsClass.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXClass.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -37,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowsClass.h">
+      <Filter>ヘッダー ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXClass.h">
       <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
   </ItemGroup>

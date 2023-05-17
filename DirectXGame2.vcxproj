@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXClass.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="WindowsClass.cpp" />
   </ItemGroup>
@@ -32,6 +33,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXClass.h" />
     <ClInclude Include="WindowsClass.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
