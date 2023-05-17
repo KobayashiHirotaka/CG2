@@ -14,13 +14,25 @@ class DirectXClass
 {
 public:
 
+
+
 	static DirectXClass* GetInstance();
 
 
 private:
 
+	WindowsClass* win_;
+
 	// DXGIデバイス初期化
 	void InitializeDXGIDevice();
+
+	void InitializeCommand();
+
+	void CreateSwapChain();
+
+	void CreateFinalRenderTargets();
+
+	void PreDraw();
 
 	//DXGIファクトリーの生成
 	IDXGIFactory7* dxgiFactory = nullptr;
@@ -29,4 +41,11 @@ private:
 	IDXGIAdapter4* useAdapter = nullptr;
 
 	ID3D12Device* device = nullptr;
+
+	// コマンドキューを生成する
+	ID3D12CommandQueue* commandQueue = nullptr;
+
+	// ディスクリプタヒープの生成
+	ID3D12DescriptorHeap* rtvDescriptorHeap = nullptr;
+
 };
