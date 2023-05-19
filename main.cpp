@@ -1,19 +1,16 @@
-#include <Windows.h>
 #include "WindowsClass.h"
 #include "DirectXClass.h"
-#include <string>
-#include <format>
+
+const wchar_t kWindowTitle[] = { L"CG2" };
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
     WindowsClass* win = nullptr;
-    DirectXClass* DX = nullptr;
 
     // ゲームウィンドウの作成
-    win = WindowsClass::GetInstance();
-    win->GetWindow();
+    WindowsClass::CreateWindowView(kWindowTitle);
 
-    DX = DirectXClass::GetInstance();
+    DirectXClass::DirectXInitialization();
 
     MSG msg{};
 

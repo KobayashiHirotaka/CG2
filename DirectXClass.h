@@ -1,51 +1,96 @@
 #pragma once
 #include <Windows.h>
-#include "WindowsClass.h"
-#include <d3d12.h>
-#include <dxgi1_6.h>
 #include <string>
 #include <format>
+#include <d3d12.h>
+#include <dxgi1_6.h>
+#include <cassert>
+#include <dxgidebug.h>
 
-#pragma comment(lib, "d3d12.lib")
-#pragma comment(lib, "dxgi.lib")
+#include "WindowsClass.h"
 
+#pragma comment(lib,"d3d12.lib")
+#pragma comment(lib,"dxgi.lib")
+#pragma comment(lib,"dxguid.lib")
 
 class DirectXClass
 {
 public:
+	static const int32_t kClientWidth = 1280;
+	static const int32_t kClientHeight = 720;
 
+	static void Log(const std::string& message);
 
+	static void DirectXInitialization();
 
-	static DirectXClass* GetInstance();
+	static void InitializeDXGIDevice();
 
+	static void InitializeCommand();
+
+	static void CreateSwapChain();
+
+	static void CreateFinalRenderTargets();
+
+	static void CreateFence();
+
+	static void Release();
+
+	static void ResourceCheck();
 
 private:
+	static WindowsClass* win_;
 
-	WindowsClass* win_;
+	//　DXGIファクトリー生成
+	static IDXGIFactory7* dxgiFactory;
+	static HRESULT hr;
+	//
 
-	// DXGIデバイス初期化
-	void InitializeDXGIDevice();
+	// 使用するアダプタ用の変数
+	static IDXGIAdapter4* useAdapter;
+	//
 
-	void InitializeCommand();
-
-	void CreateSwapChain();
-
-	void CreateFinalRenderTargets();
-
-	void PreDraw();
-
-	//DXGIファクトリーの生成
-	IDXGIFactory7* dxgiFactory = nullptr;
-
-	//使用するアダプタ用の変数。最初にnullptrを入れておく
-	IDXGIAdapter4* useAdapter = nullptr;
-
-	ID3D12Device* device = nullptr;
+	// D3D12Device生成
+	static ID3D12Device* device;
+	//
 
 	// コマンドキューを生成する
-	ID3D12CommandQueue* commandQueue = nullptr;
+	static ID3D12CommandQueue* commandQueue;
+	static inline D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
+	//
+
+	// コマンドアロケータを生成する
+	static ID3D12CommandAllocator* commandAllocator;
+	//
+
+	// コマンドリストの生成
+	static ID3D12GraphicsCommandList* commandList;
+	//
+
+	// スワップチェーンを生成する
+	static IDXGISwapChain4* swapChain;
+	static inline DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
+	//
 
 	// ディスクリプタヒープの生成
-	ID3D12DescriptorHeap* rtvDescriptorHeap = nullptr;
+	static ID3D12DescriptorHeap* rtvDescriptorHeap;
+	static inline D3D12_DESCRIPTOR_HEAP_DESC rtvDescriptorHeapDesc{};
+	//
 
+	// SwapchainからResourceを引っ張ってくる
+	static ID3D12Resource* swapChainResources[2];
+	//
+
+	// 初期値0でFenceを作る
+	static ID3D12Fence* fence;
+	static uint64_t fenceValue;
+	//
+
+	// FenceのSignalを持つためにイベントを作成する
+	static HANDLE fenceEvent;
+	//
+
+	// デバッグ
+	static ID3D12Debug1* debugController;
+	static IDXGIDebug1* debug;
+	//
 };
