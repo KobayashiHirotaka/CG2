@@ -11,8 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ConvertString.cpp" />
     <ClCompile Include="DirectXClass.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MyEngine.cpp" />
+    <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="WindowsClass.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -33,7 +36,10 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConvertString.h" />
     <ClInclude Include="DirectXClass.h" />
+    <ClInclude Include="MyEngine.h" />
+    <ClInclude Include="Triangle.h" />
     <ClInclude Include="WindowsClass.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
