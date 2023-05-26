@@ -18,7 +18,7 @@ private:
 	void SettingVertex();
 
 private:
-	MyEngine* Engine;
+	MyEngine* engine_;
 
 	DirectXClass* dxClass_;
 

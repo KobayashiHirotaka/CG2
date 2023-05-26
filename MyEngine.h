@@ -61,9 +61,9 @@ private:
 
 	//頂点リソースにデータを書き込む
 	Vector4* vertexData_;
-	Vector4 leftBottom[10];
-	Vector4 top[10];
-	Vector4 rightBottom[10];
+	Vector4 leftBottom_[10];
+	Vector4 top_[10];
+	Vector4 rightBottom_[10];
 
 	IDxcBlob* CompileShader(
 		//CompileShaderするShaderファイルへのパス
