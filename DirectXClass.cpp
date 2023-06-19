@@ -10,6 +10,46 @@
 #pragma comment(lib, "dxguid.lib")
 #pragma comment(lib, "Winmm.lib")
 
+WindowsClass* DirectXClass::win_;
+
+//DXGIファクトリーの生成
+IDXGIFactory7* DirectXClass::dxgiFactory_;
+
+//使用するアダプタ用の変数
+IDXGIAdapter4* DirectXClass::useAdapter_;
+
+//D3D12Deviceの生成
+ID3D12Device* DirectXClass::device_;
+
+//コマンドキュー生成
+ID3D12CommandQueue* DirectXClass::commandQueue_;
+
+//コマンドアロケータの生成
+ID3D12CommandAllocator* DirectXClass::commandAllocator_;
+
+//コマンドリストを生成する
+ID3D12GraphicsCommandList* DirectXClass::commandList_;
+
+//スワップチェーン
+IDXGISwapChain4* DirectXClass::swapChain_;
+
+//ディスクリプタヒープの生成
+ID3D12DescriptorHeap* DirectXClass::rtvDescriptorHeap_;
+
+//RTVを２つ作るのでディスクリプタを２つ用意
+D3D12_CPU_DESCRIPTOR_HANDLE DirectXClass::rtvHandles_[2];
+ID3D12Resource* DirectXClass::swapChainResources_[2];
+
+//Fence
+ID3D12Fence* DirectXClass::fence_;
+UINT64 DirectXClass::fenceValue_;
+HANDLE DirectXClass::fenceEvent_;
+
+int32_t DirectXClass::backBufferWidth_;
+int32_t DirectXClass::backBufferHeight_;
+
+HRESULT DirectXClass::hr_;
+
 void DirectXClass::Initialization(WindowsClass* win, const wchar_t* title, int32_t backBufferWidth, int32_t backBufferHeight) {
 
 	win_ = win;
@@ -296,42 +336,3 @@ void DirectXClass::Finalize() {
 	}
 }
 
-WindowsClass* DirectXClass::win_;
-
-//DXGIファクトリーの生成
-IDXGIFactory7* DirectXClass::dxgiFactory_;
-
-//使用するアダプタ用の変数
-IDXGIAdapter4* DirectXClass::useAdapter_;
-
-//D3D12Deviceの生成
-ID3D12Device* DirectXClass::device_;
-
-//コマンドキュー生成
-ID3D12CommandQueue* DirectXClass::commandQueue_;
-
-//コマンドアロケータの生成
-ID3D12CommandAllocator* DirectXClass::commandAllocator_;
-
-//コマンドリストを生成する
-ID3D12GraphicsCommandList* DirectXClass::commandList_;
-
-//スワップチェーン
-IDXGISwapChain4* DirectXClass::swapChain_;
-
-//ディスクリプタヒープの生成
-ID3D12DescriptorHeap* DirectXClass::rtvDescriptorHeap_;
-
-//RTVを２つ作るのでディスクリプタを２つ用意
-D3D12_CPU_DESCRIPTOR_HANDLE DirectXClass::rtvHandles_[2];
-ID3D12Resource* DirectXClass::swapChainResources_[2];
-
-//Fence
-ID3D12Fence* DirectXClass::fence_;
-UINT64 DirectXClass::fenceValue_;
-HANDLE DirectXClass::fenceEvent_;
-
-int32_t DirectXClass::backBufferWidth_;
-int32_t DirectXClass::backBufferHeight_;
-
-HRESULT DirectXClass::hr_;
