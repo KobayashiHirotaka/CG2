@@ -13,55 +13,65 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	engine_->Initialize();
 
-	Vector4 data1 = { -0.2f,0.4f,0.0f,1.0f };
-	Vector4 data2 = { 0.0f,0.8f,0.0f,1.0f };
-	Vector4 data3 = { 0.2f,0.4f,0.0f,1.0f };
-	Vector4 material1 = { 1.0f,1.0f,0.0f,1.0f };
+	//左(上)
+	Vector4 data1 = { -0.8f,0.4f,0.0f,1.0f };
+	Vector4 data2 = { -0.6f,0.8f,0.0f,1.0f };
+	Vector4 data3 = { -0.4f,0.4f,0.0f,1.0f };
+	Vector4 material1 = { 1.0f,0.0f,0.0f,1.0f };
 
-	Vector4 data4 = { -0.8f,-0.8f,0.0f,1.0f };
-	Vector4 data5 = { -0.6f,-0.4f,0.0f,1.0f };
-	Vector4 data6 = { -0.4f,-0.8f,0.0f,1.0f };
-	Vector4 material2 = { 0.0f,1.0f,1.0f,1.0f };
+	//真ん中(上)
+	Vector4 data4 = { -0.2f,0.4f,0.0f,1.0f };
+	Vector4 data5 = { 0.0f,0.8f,0.0f,1.0f };
+	Vector4 data6 = { 0.2f,0.4f,0.0f,1.0f };
+	Vector4 material2 = { 0.0f,1.0f,0.0f,1.0f };
 
-	Vector4 data7 = { 0.4f,-0.8f,0.0f,1.0f };
-	Vector4 data8 = { 0.6f,-0.4f,0.0f,1.0f };
-	Vector4 data9 = { 0.8f,-0.8f,0.0f,1.0f };
-	Vector4 material3 = { 1.0f,0.5f,1.0f,1.0f };
+	//右(上)
+	Vector4 data7 = { 0.4f,0.4f,0.0f,1.0f };
+	Vector4 data8 = { 0.6f,0.8f,0.0f,1.0f };
+	Vector4 data9 = { 0.8f,0.4f,0.0f,1.0f };
+	Vector4 material3 = { 0.0f,0.0f,1.0f,1.0f };
 
-	Vector4 data10 = { 0.1f,0.1f,0.0f,1.0f };
-	Vector4 data11 = { 0.3f,0.5f,0.0f,1.0f };
-	Vector4 data12 = { 0.5f,0.1f,0.0f,1.0f };
-	Vector4 material4 = { 1.0f,0.0f,1.0f,1.0f };
+	//左
+	Vector4 data10 = { -0.8f,-0.2f,0.0f,1.0f };
+	Vector4 data11 = { -0.6f,0.2f,0.0f,1.0f };
+	Vector4 data12 = { -0.4f,-0.2f,0.0f,1.0f };
+	Vector4 material4 = { 1.0f,1.0f,0.0f,1.0f };
 
-	Vector4 data13 = { -0.2f,-0.2f,0.0f,1.0f };
-	Vector4 data14 = { 0.0f,0.2f,0.0f,1.0f };
-	Vector4 data15 = { 0.2f,-0.2f,0.0f,1.0f };
-	Vector4 material5 = { 0.0f,0.0f,0.0f,0.0f };
+	//真ん中
+	Vector4  data13 = { -0.2f,-0.2f,0.0f,1.0f };
+	Vector4  data14 = { 0.0f,0.2f,0.0f,1.0f };
+	Vector4  data15 = { 0.2f,-0.2f,0.0f,1.0f };
+	Vector4 material5 = { 0.0f,1.0f,1.0f,1.0f };
 
-	Vector4 data16 = { 0.4f,0.4f,0.0f,1.0f };
-	Vector4 data17 = { 0.6f,0.8f,0.0f,1.0f };
-	Vector4 data18 = { 0.8f,0.4f,0.0f,1.0f };
-	Vector4 material6 = { 1.0f,1.0f,1.0f,1.0f };
+	//右
+	Vector4 data16 = { 0.4f,-0.2f,0.0f,1.0f };
+	Vector4 data17 = { 0.6f,0.2f,0.0f,1.0f };
+	Vector4 data18 = { 0.8f,-0.2f,0.0f,1.0f };
+	Vector4 material6 = { 1.0f,0.0f,1.0f,1.0f };
 
-	Vector4 data19 = { -0.8f,-0.2f,0.0f,1.0f };
-	Vector4 data20 = { -0.6f,0.2f,0.0f,1.0f };
-	Vector4 data21 = { -0.4f,-0.2f,0.0f,1.0f };
-	Vector4 material7 = { 1.0f,0.0f,0.0f,1.0f };
+	//左(下)
+	Vector4 data19 = { -0.8f,-0.8f,0.0f,1.0f };
+	Vector4 data20 = { -0.6f,-0.4f,0.0f,1.0f };
+	Vector4 data21 = { -0.4f,-0.8f,0.0f,1.0f };
+	Vector4 material7 = { 1.0f,0.5f,0.5f,1.0f };
 
-	Vector4 data22 = { -0.8f,0.4f,0.0f,1.0f };
-	Vector4 data23 = { -0.6f,0.8f,0.0f,1.0f };
-	Vector4 data24 = { -0.4f,0.4f,0.0f,1.0f };
-	Vector4 material8 = { 0.0f,1.0f,0.0f,1.0f };
+	//真ん中(下)
+	Vector4 data22 = { -0.2f,-0.8f,0.0f,1.0f };
+	Vector4 data23 = { 0.0f,-0.4f,0.0f,1.0f };
+	Vector4 data24 = { 0.2f,-0.8f,0.0f,1.0f };
+	Vector4 material8 = { 0.5f,1.0f,0.5f,1.0f };
 
-	Vector4 data25 = { -0.2f,-0.8f,0.0f,1.0f };
-	Vector4 data26 = { 0.0f,-0.4f,0.0f,1.0f };
-	Vector4 data27 = { 0.2f,-0.8f,0.0f,1.0f };
-	Vector4 material9 = { 0.0f,0.0f,1.0f,1.0f };
+	//右(下)
+	Vector4 data25 = { 0.4f,-0.8f,0.0f,1.0f };
+	Vector4 data26 = { 0.6f,-0.4f,0.0f,1.0f };
+	Vector4 data27 = { 0.8f,-0.8f,0.0f,1.0f };
+	Vector4 material9 = { 0.5f,0.5f,1.0f,1.0f };
 
-	Vector4 data28 = { 0.4f,-0.2f,0.0f,1.0f };
-	Vector4 data29 = { 0.6f,0.2f,0.0f,1.0f };
-	Vector4 data30 = { 0.8f,-0.2f,0.0f,1.0f };
-	Vector4 material10 = { 1.0f,0.5f,0.0f,1.0f };
+	//斜め
+	Vector4 data28 = { 0.1f,0.1f,0.0f,1.0f };
+	Vector4 data29 = { 0.3f,0.5f,0.0f,1.0f };
+	Vector4 data30 = { 0.5f,0.1f,0.0f,1.0f };
+	Vector4 material10 = { 0.0f,0.0f,0.0f,1.0f };
 
 	MSG msg{};
 
