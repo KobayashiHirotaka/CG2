@@ -7,9 +7,10 @@ void Triangle::Initialize(DirectXClass* dxClass) {
 	dxClass_ = dxClass;
 	SettingVertex();
 	SettingColor();
+	Move();
 }
 
-void Triangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material) {
+void Triangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& wvpdata) {
 	//左下
 	vertexData_[0] = a;
 	//上
@@ -18,12 +19,15 @@ void Triangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const 
 	vertexData_[2] = c;
 
 	*materialData_ = material;
+	*wvpData_ = wvpdata;
+
 	//VBVを設定
 	dxClass_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
 	//形状を設定。PS0に設定しているものとはまた別。同じものを設定する
 	dxClass_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//マテリアルCBufferの場所を設定
 	dxClass_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+	dxClass_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 	//描画
 	dxClass_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
 
@@ -32,6 +36,7 @@ void Triangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const 
 void Triangle::Finalize() {
 	materialResource_->Release();
 	vertexResource_->Release();
+	wvpResource_->Release();
 }
 
 void Triangle::SettingVertex() {
@@ -51,6 +56,12 @@ void Triangle::SettingColor() {
 	materialResource_ = CreateBufferResource(dxClass_->GetDevice(), sizeof(Vector4));
 	//書き込むためのアドレスを取得
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
+}
+
+void Triangle::Move() {
+	wvpResource_ = CreateBufferResource(dxClass_->GetDevice(), sizeof(Matrix4x4));
+	wvpResource_->Map(0, NULL, reinterpret_cast<void**>(&wvpData_));
+	*wvpData_ = MakeIdentity4x4();
 }
 
 ID3D12Resource* Triangle::CreateBufferResource(ID3D12Device* device, size_t sizeInBytes) {

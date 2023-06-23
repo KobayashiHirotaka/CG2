@@ -1,8 +1,10 @@
 #pragma once
 #include "DirectXClass.h"
 #include <dxcapi.h>
+#include "Vector3.h"
 #include"Vector4.h"
 #include "Triangle.h"
+#include "MyMath.h"
 #pragma comment(lib,"dxcompiler.lib")
 
 class MyEngine
@@ -60,6 +62,9 @@ private:
 
 	//頂点リソースにデータを書き込む
 	Vector4* vertexData_;
+
+	Transform transform_;
+	Matrix4x4 worldMatrix_;
 
 	IDxcBlob* CompileShader(
 		//CompileShaderするShaderファイルへのパス
