@@ -15,8 +15,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	Vector4 data[15];
 
-	data[0] = {0.4f,0.4f,0.0f,1.0f};
-    data[1] = {0.6f,0.8f,0.0f,1.0f};
+	data[0] = { 0.4f,0.4f,0.0f,1.0f };
+	data[1] = { 0.6f,0.8f,0.0f,1.0f };
     data[2] = { 0.8f,0.4f,0.0f,1.0f };
    	
     data[3] = { -0.8f,-0.8f,0.0f,1.0f };
@@ -27,7 +27,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     data[7] = { 0.6f,-0.4f,0.0f,1.0f };
     data[8] = { 0.8f,-0.8f,0.0f,1.0f };
    
-    data[9] = { -0.8f,0.4f,0.0f,1.0f };
+	data[9] = { -0.8f,0.4f,0.0f,1.0f };
     data[10] = { -0.6f,0.8f,0.0f,1.0f };
     data[11] = { -0.4f,0.4f,0.0f,1.0f };
    	  
