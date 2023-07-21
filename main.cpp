@@ -13,25 +13,27 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	engine->Initialize();
 
-	Vector4 data1 = { 0.4f,0.4f,0.0f,1.0f };
-	Vector4 data2 = { 0.6f,0.8f,0.0f,1.0f };
-	Vector4 data3 = { 0.8f,0.4f,0.0f,1.0f };
+	Vector4 data[15];
 
-	Vector4 data4 = { -0.8f,-0.8f,0.0f,1.0f };
-	Vector4 data5 = { -0.6f,-0.4f,0.0f,1.0f };
-	Vector4 data6 = { -0.4f,-0.8f,0.0f,1.0f };
-
-	Vector4 data7 = { 0.4f,-0.8f,0.0f,1.0f };
-	Vector4 data8 = { 0.6f,-0.4f,0.0f,1.0f };
-	Vector4 data9 = { 0.8f,-0.8f,0.0f,1.0f };
-
-	Vector4 data10 = { -0.8f,0.4f,0.0f,1.0f };
-	Vector4 data11 = { -0.6f,0.8f,0.0f,1.0f };
-	Vector4 data12 = { -0.4f,0.4f,0.0f,1.0f };
-
-	Vector4 data13 = { -0.2f,-0.2f,0.0f,1.0f };
-	Vector4 data14 = { 0.0f,0.2f,0.0f,1.0f };
-	Vector4 data15 = { 0.2f,-0.2f,0.0f,1.0f };
+	data[0] = {0.4f,0.4f,0.0f,1.0f};
+    data[1] = {0.6f,0.8f,0.0f,1.0f};
+    data[2] = { 0.8f,0.4f,0.0f,1.0f };
+   	
+    data[3] = { -0.8f,-0.8f,0.0f,1.0f };
+    data[4] = { -0.6f,-0.4f,0.0f,1.0f };
+    data[5] = { -0.4f,-0.8f,0.0f,1.0f };
+   	
+    data[6] = { 0.4f,-0.8f,0.0f,1.0f };
+    data[7] = { 0.6f,-0.4f,0.0f,1.0f };
+    data[8] = { 0.8f,-0.8f,0.0f,1.0f };
+   
+    data[9] = { -0.8f,0.4f,0.0f,1.0f };
+    data[10] = { -0.6f,0.8f,0.0f,1.0f };
+    data[11] = { -0.4f,0.4f,0.0f,1.0f };
+   	  
+    data[12] = { -0.2f,-0.2f,0.0f,1.0f };
+    data[13] = { 0.0f,0.2f,0.0f,1.0f };
+    data[14] = { 0.2f,-0.2f,0.0f,1.0f };
 
 
 	MSG msg{};
@@ -50,15 +52,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 			//三角形描画
-			engine->DrawTriangle(data1, data2, data3);
+			engine->DrawTriangle(data[0], data[1], data[2]);
 			
-			engine->DrawTriangle(data4, data5, data6);
+			engine->DrawTriangle(data[3], data[4], data[5]);
 			
-			engine->DrawTriangle(data7, data8, data9);
+			engine->DrawTriangle(data[6], data[7], data[8]);
 			
-			engine->DrawTriangle(data10, data11, data12);
+			engine->DrawTriangle(data[9], data[10], data[11]);
 			
-			engine->DrawTriangle(data13, data14, data15);
+			engine->DrawTriangle(data[12], data[13], data[14]);
 
 			
 			engine->EndFrame();
