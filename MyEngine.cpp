@@ -201,8 +201,8 @@ void MyEngine::VertexResource()
 void MyEngine::ViewPort()
 {
 	//クライアント領域のサイズと一緒にして画面全体に表示
-	viewport_.Width = WindowsClass::kClientWidth;
-	viewport_.Height = WindowsClass::kClientHeight;
+	viewport_.Width = WindowsApp::kClientWidth;
+	viewport_.Height = WindowsApp::kClientHeight;
 	viewport_.TopLeftX = 0;
 	viewport_.TopLeftY = 0;
 	viewport_.MinDepth = 0.0f;
@@ -213,9 +213,9 @@ void MyEngine::ScissorRect()
 {
 	//シザー短形
 	scissorRect_.left = 0;
-	scissorRect_.right = WindowsClass::kClientWidth;
+	scissorRect_.right = WindowsApp::kClientWidth;
 	scissorRect_.top = 0;
-	scissorRect_.bottom = WindowsClass::kClientHeight;
+	scissorRect_.bottom = WindowsApp::kClientHeight;
 }
 
 void MyEngine::Initialize()
@@ -227,7 +227,7 @@ void MyEngine::Initialize()
 	}
 }
 
-void MyEngine::Initialization(WindowsClass* win, const wchar_t* title, int32_t width, int32_t height)
+void MyEngine::Initialization(WindowsApp* win, const wchar_t* title, int32_t width, int32_t height)
 {
 	dxClass_->Initialization(win, title, win->kClientWidth, win->kClientHeight);
 
@@ -303,5 +303,5 @@ void MyEngine::DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c
 	}
 }
 
-WindowsClass*MyEngine::win_;
-DirectXClass* MyEngine::dxClass_;
+WindowsApp*MyEngine::win_;
+DirectXCommon* MyEngine::dxClass_;

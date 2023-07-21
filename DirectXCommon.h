@@ -2,13 +2,13 @@
 #include <chrono>
 #include <cstdlib>
 #include <dxgi1_6.h>
-#include "WindowsClass.h"
+#include "WindowsApp.h"
 #include "ConvertString.h"
 
-class DirectXClass
+class DirectXCommon
 {
 public:
-	void Initialization(WindowsClass* win, const wchar_t* title, int32_t backBufferWidth = WindowsClass::kClientWidth, int32_t backBufferHeight = WindowsClass::kClientHeight);
+	void Initialization(WindowsApp* win, const wchar_t* title, int32_t backBufferWidth = WindowsApp::kClientWidth, int32_t backBufferHeight = WindowsApp::kClientHeight);
 
 	void PreDraw();
 
@@ -38,7 +38,7 @@ private:
 	void CreateFence();
 
 private:
-	static WindowsClass* win_;
+	static WindowsApp* win_;
 
 	//　DXGIファクトリー生成
 	static IDXGIFactory7* dxgiFactory_;

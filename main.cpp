@@ -7,7 +7,7 @@ const wchar_t kWindowTitle[] = { L"CG2" };
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	//初期化
-	WindowsClass* win_ = nullptr;
+	WindowsApp* win_ = nullptr;
 	MyEngine* engine = new MyEngine;
 	engine->Initialization(win_, kWindowTitle, 1280, 720);
 

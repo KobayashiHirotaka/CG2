@@ -12,11 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConvertString.cpp" />
-    <ClCompile Include="DirectXClass.cpp" />
+    <ClCompile Include="DirectXCommon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyEngine.cpp" />
     <ClCompile Include="Triangle.cpp" />
-    <ClCompile Include="WindowsClass.cpp" />
+    <ClCompile Include="WindowsApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -37,10 +37,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConvertString.h" />
-    <ClInclude Include="DirectXClass.h" />
+    <ClInclude Include="DirectXCommon.h" />
     <ClInclude Include="MyEngine.h" />
     <ClInclude Include="Triangle.h" />
-    <ClInclude Include="WindowsClass.h" />
+    <ClInclude Include="WindowsApp.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
