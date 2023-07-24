@@ -1,37 +1,48 @@
 #pragma once
 #include <Windows.h>
-#include <cstdint>
+#include <stdint.h>
+#include <string>
 #include <d3d12.h>
-#pragma comment(lib,"d3d12.lib")
 
 class WindowsApp
 {
 public:
-	//クライアント領域サイズ
-	static const int32_t kClientWidth = 1280;
-	static const int32_t kClientHeight = 720;
+	// メンバ関数
 
-	HINSTANCE GetHInstance()const { return wc_.hInstance; }
-
-	static	bool Procesmessage();
-	static void Finalize();
-
+	// ウィンドウプロシージャ
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
-	static ID3D12Debug1* GetdebugController() { return debugController_; }
+	// ウィンドウクラスの登録
+	static void WindowClassRegister();
 
-	static inline HWND GetHwnd() { return hwnd_; }
+	// ウィンドウサイズを決める
+	static void WindowSizeDecide();
 
-	static void CreateWindowView(const wchar_t* title, int32_t clientWidth, int32_t clientheight);
+	// ウィンドウの生成
+	static void WindowGeneration();
 
-private:
-	static	UINT windowStyle_;
+	// デバッグレイヤ
+	void DebugLayer();
 
+	// Windowsの初期化
+	static void Initialize();
+
+	// 出力ウィンドウに文字を出す
+	static void Log(const std::string& message);
+
+public:
+	// メンバ変数
 	static ID3D12Debug1* debugController_;
 
-	static	inline 	RECT wrc_ = { 0,0,kClientWidth,kClientHeight };
+	// ウィンドウクラス登録用
+	static WNDCLASS wc_;
 
-	static inline	WNDCLASS wc_{};// ウィンドウクラス
+	// クライアント領域のサイズ
+	static const int32_t kClientWidth_ = 1280;
+	static const int32_t kClientHeight_ = 720;
 
-	static	HWND hwnd_;
+	static RECT wrc_;
+
+	// ウィンドウを生成
+	static HWND hwnd_;
 };

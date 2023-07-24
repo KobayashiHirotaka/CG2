@@ -1,89 +1,112 @@
 #pragma once
-#include "DirectXCommon.h"
-#include <dxcapi.h>
-#include"Vector4.h"
 #include "Triangle.h"
-#pragma comment(lib,"dxcompiler.lib")
+#include "WindowsApp.h"
+#include "DirectXCommon.h"
 
-class MyEngine
-{
+class MyEngine {
 public:
-	void Initialize();
+	// DXCの初期化
+	void DXCInitialize();
 
-	void Initialization(WindowsApp* win, const wchar_t* title, int32_t width, int32_t height);
-
-	void BeginFrame();
-
-	void EndFrame();
-
-	void Finalize();
-
-	void Update();
-
-	void DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c);
-
-private:
-	static WindowsApp* win_;
-	static	DirectXCommon* dxClass_;
-
-	Triangle* triangle_[10];
-
-	int triangleCount_;
-
-	IDxcUtils* dxcUtils_;
-	IDxcCompiler3* dxcCompiler_;
-
-	IDxcIncludeHandler* includeHandler_;
-
-	ID3DBlob* signatureBlob_;
-	ID3DBlob* errorBlob_;
-	ID3D12RootSignature* rootSignature_;
-
-	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc_{};
-
-	D3D12_BLEND_DESC blendDesc_{};
-
-	IDxcBlob* vertexShaderBlob_;
-
-	IDxcBlob* pixelShaderBlob_;
-
-	D3D12_RASTERIZER_DESC rasterizerDesc_{};
-
-	ID3D12PipelineState* graphicsPipelineState_;
-
-	ID3D12Resource* vertexResource_;
-	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_;
-
-	D3D12_VIEWPORT viewport_{};
-	D3D12_RECT scissorRect_{};
-
-	D3D12_INPUT_ELEMENT_DESC inputElementDescs_[1];
-
-	//頂点リソースにデータを書き込む
-	Vector4* vertexData_;
-	Vector4 leftBottom_[10];
-	Vector4 top_[10];
-	Vector4 rightBottom_[10];
-
+	// シェーダのコンパイル
 	IDxcBlob* CompileShader(
-		//CompileShaderするShaderファイルへのパス
+		// CompilerするShaderファイルへのパス
 		const std::wstring& filePath,
-		//Compielerに使用するProfile
+		// Compilerに使用するProfile
 		const wchar_t* profile,
-		//初期化で生成したものを3つ
+		// 初期化で生成したものを3つ
 		IDxcUtils* dxcUtils,
 		IDxcCompiler3* dxcCompiler,
-		IDxcIncludeHandler* includeHandler
-	);
+		IDxcIncludeHandler* includeHandler);
 
-	void InitializeDxcCompiler();
+	// RootSignatureの生成
 	void CreateRootSignature();
-	void CreateInputlayOut();
-	void BlendState();
-	void RasterizerState();
-	void InitializePSO();
-	void VertexResource();
-	void ViewPort();
-	void ScissorRect();
 
+	// InputLayerの設定
+	void SettingInputLayout();
+
+	// BlendStateの設定
+	void SettingBlendState();
+
+	// RasterizerStateの設定
+	void SettingRasterizerState();
+
+	// ピクセルシェーダー
+	void PixelSharder();
+
+	// 頂点シェーダー
+	void VertexSharder();
+
+	// PSOの生成
+	void CreatePSO();
+
+	// PSO
+	void PSO();
+
+	// ビューポート
+	void CreateViewport();
+
+	// シザー矩形
+	void CreateScissor();
+
+	// 頂点データの初期化
+	void VertexInitialize();
+
+	// エンジンの初期化
+	void Initialize();
+
+	// 描画前の処理
+	void BeginFrame();
+
+	// 三角形描画
+	void Draw();
+
+	// 描画後の処理
+	void EndFrame();
+
+	// 解放処理
+	void Release();
+
+public:
+	static const int kMaxTriangle = 11;
+
+	Triangle* Triangle_[kMaxTriangle];
+
+	static	DirectXCommon* directXCommon_;
+
+	IDxcUtils* dxcUtils;
+
+	IDxcCompiler3* dxcCompiler;
+
+	IDxcIncludeHandler* includeHandler;
+
+	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature;
+
+	ID3DBlob* signatureBlob;
+
+	ID3DBlob* errorBlob;
+
+	ID3D12RootSignature* rootSignature;
+
+	D3D12_INPUT_ELEMENT_DESC inputElementDescs[1];
+
+	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc;
+
+	D3D12_BLEND_DESC blendDesc;
+
+	D3D12_RASTERIZER_DESC rasterizerDesc;
+
+	IDxcBlob* vertexShaderBlob;
+
+	IDxcBlob* pixelShaderBlob;
+
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDescs;
+
+	ID3D12PipelineState* graphicsPipelineState;
+
+	D3D12_VIEWPORT viewport;
+
+	D3D12_RECT scissorRect;
+
+	Vector4 triangleData[kMaxTriangle][3];
 };

@@ -1,10 +1,16 @@
 #include "WindowsApp.h"
+#include <Windows.h>
+#include <cstdint>
+#include <string>
+#include <format>
 
-//ウィンドウプロシージャ
-LRESULT CALLBACK WindowsApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
-	//メッセージに応じてゲーム固有の処理を行う
-	switch (msg) {
-		//ウィンドウが破棄された
+// ウィンドウプロシージャ
+LRESULT CALLBACK WindowsApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+{
+	// メッセージに応じてゲーム固有の処理を行う
+	switch (msg)
+	{
+		// ウィンドウが破棄された
 	case WM_DESTROY:
 		// OSに対して、アプリの終了を伝える
 		PostQuitMessage(0);
@@ -15,77 +21,90 @@ LRESULT CALLBACK WindowsApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPAR
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
-void WindowsApp::CreateWindowView(const wchar_t* title, int32_t clientWidth, int32_t clientheight) {
-	//ウィンドウプロシージャ
+// ウィンドウクラスの登録
+void WindowsApp::WindowClassRegister()
+{
+	// ウィンドウプロシージャ
 	wc_.lpfnWndProc = WindowProc;
-	//クラス名
+	// ウィンドウクラス名
 	wc_.lpszClassName = L"CG2WindowClass";
-	//インスタンスハンドル
+	// インスタンスハンドル
 	wc_.hInstance = GetModuleHandle(nullptr);
-	//カーソル
+	// カーソル
 	wc_.hCursor = LoadCursor(nullptr, IDC_ARROW);
 
-	//ウィンドウクラス登録
+	// ウィンドウクラスを登録する
 	RegisterClass(&wc_);
+}
 
-	//ウィンドウサイズの構造体にクライアント領域を入れる
-	RECT wrc = { 0,0,kClientWidth,kClientHeight };
+// ウィンドウサイズを決める
+void WindowsApp::WindowSizeDecide()
+{
+	// ウィンドウサイズを表す構造体にクライアント領域を入れる
+	wrc_ = { 0, 0, kClientWidth_, kClientHeight_ };
 
-	//クライアント領域を元に実際のサイズにwrcを変更してもらう
-	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
+	// クライアント領域をもとに2サイズにWRCを変更してもらう
+	AdjustWindowRect(&wrc_, WS_OVERLAPPEDWINDOW, false);
+}
 
-	//ウィンドウの生成
+// ウィンドウの生成
+void WindowsApp::WindowGeneration()
+{
 	hwnd_ = CreateWindow(
-		wc_.lpszClassName,//クラス名
-		title,//タイトルバーの名前
-		WS_OVERLAPPEDWINDOW,//ウィンドウスタイル
-		CW_USEDEFAULT,//表示X座標
-		CW_USEDEFAULT,//表示Y座標
-		wrc.right - wrc.left,//ウィンドウ横幅
-		wrc.bottom - wrc.top,//ウィンドウ縦幅
-		nullptr,//親ウィンドウハンドル
-		nullptr,//メニューハンドル
-		wc_.hInstance,//インスタンスハンドル
-		nullptr//オプション
+		wc_.lpszClassName,
+		L"CG2_LE2B_13_コバヤシヒロタカ",
+		WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT,
+		CW_USEDEFAULT,
+		wrc_.right - wrc_.left,
+		wrc_.bottom - wrc_.top,
+		nullptr,
+		nullptr,
+		wc_.hInstance,
+		nullptr
 	);
+}
 
-#ifdef _DEBUG//デバッグレイヤー
-	debugController_ = nullptr;
-	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController_)))) {
-		//デバッグレイヤーを有効化
+void WindowsApp::DebugLayer()
+{
+#ifdef _DEBUG
+	//debugController_ = nullptr;
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController_))))
+	{
+		// デバッグレイヤーを有効化する
 		debugController_->EnableDebugLayer();
-		//GPU側でもチェックを行う
+		// さらにGPU側でもチェックを行うようにする
 		debugController_->SetEnableGPUBasedValidation(TRUE);
 	}
-#endif // _DEBUG
+#endif
+}
 
-	//ウィンドウ表示
+// Windowsの初期化
+void WindowsApp::Initialize()
+{
+	WindowClassRegister();
+	WindowSizeDecide();
+	WindowGeneration();
+	// ウィンドウを表示する
 	ShowWindow(hwnd_, SW_SHOW);
 }
 
-bool WindowsApp::Procesmessage() {
-	MSG msg{};
-
-	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
-
-	if (msg.message == WM_QUIT) // 終了メッセージが来たらループを抜ける
-	{
-		return true;
-	}
-
-	return false;
-}
-
-void WindowsApp::Finalize()
+// 出力ウィンドウに文字を出す
+void WindowsApp::Log(const std::string& message)
 {
-	debugController_->Release();
+	OutputDebugStringA(message.c_str());
 }
 
+#pragma region メンバ変数
 
-HWND WindowsApp::hwnd_;
-UINT WindowsApp::windowStyle_;
 ID3D12Debug1* WindowsApp::debugController_;
+
+// ウィンドウクラス登録用
+WNDCLASS WindowsApp::wc_;
+
+RECT WindowsApp::wrc_;
+
+// ウィンドウを生成
+HWND WindowsApp::hwnd_;
+
+#pragma endregion
