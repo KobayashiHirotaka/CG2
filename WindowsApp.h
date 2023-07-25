@@ -1,48 +1,53 @@
 #pragma once
-#include <Windows.h>
-#include <stdint.h>
-#include <string>
-#include <d3d12.h>
+#include <windows.h>
+#include<cstdint>
+#include<d3d12.h>
+#include<dxgidebug.h>
+
+#pragma comment(lib,"dxguid.lib")
 
 class WindowsApp
 {
 public:
-	// メンバ関数
+	//コンストラクタ
+	WindowsApp();
+	//デストラクタ
+	~WindowsApp();
+	//アプリケーションの開始
+	void StartApp();
+	//アプリケーションの終了
+	void EndApp();
+
+	int32_t GetWidth() const { return Width_; };
+	int32_t GetHeight() const { return Height_; };
+	HWND GetHwnd() const { return hwnd_; }
+
+private:
+	const wchar_t* Title_; 
+	HINSTANCE hInst_;	
+	HWND hwnd_;			
+	int32_t Width_;		// ウィンドウの横幅
+	int32_t Height_;	// ウィンドウの縦幅
+
+	RECT wrc_;
+
+	// ウィンドウクラスの登録
+	WNDCLASS wc_;
+
+	ID3D12Debug1* debugController_ = nullptr;
+
+	// 初期化
+	bool Initialize();
+
+	// アプリケーションの終了
+	void End();
+
+	// ウィンドウクラスを登録
+	bool WindowClassRegister();
+
+	// ウィンドウの終了
+	void EndWindow();
 
 	// ウィンドウプロシージャ
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
-
-	// ウィンドウクラスの登録
-	static void WindowClassRegister();
-
-	// ウィンドウサイズを決める
-	static void WindowSizeDecide();
-
-	// ウィンドウの生成
-	static void WindowGeneration();
-
-	// デバッグレイヤ
-	void DebugLayer();
-
-	// Windowsの初期化
-	static void Initialize();
-
-	// 出力ウィンドウに文字を出す
-	static void Log(const std::string& message);
-
-public:
-	// メンバ変数
-	static ID3D12Debug1* debugController_;
-
-	// ウィンドウクラス登録用
-	static WNDCLASS wc_;
-
-	// クライアント領域のサイズ
-	static const int32_t kClientWidth_ = 1280;
-	static const int32_t kClientHeight_ = 720;
-
-	static RECT wrc_;
-
-	// ウィンドウを生成
-	static HWND hwnd_;
 };

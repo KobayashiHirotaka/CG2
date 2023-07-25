@@ -1,23 +1,66 @@
 #pragma once
-#include "Triangle.h"
-#include "WindowsApp.h"
-#include "DirectXCommon.h"
+#include<Windows.h>
+#include<cstdint>
+#include <string>
+#include<format>
+#include<d3d12.h>
+#include<dxgi1_6.h>
+#include<cassert>
+#include<dxgidebug.h>
+#include<dxcapi.h>
+#include<Vector>
 
-class MyEngine {
+#include"DirectXCommon.h"
+#include"WindowsApp.h"
+#include"Triangle.h"
+#include "ConvertString.h"
+#include"Vector4.h"
+
+#pragma comment(lib,"d3d12.lib")
+#pragma comment(lib,"dxgi.lib")
+#pragma comment(lib,"dxguid.lib")
+#pragma comment(lib,"dxcompiler.lib")
+
+class MyEngine
+{
 public:
-	// DXCの初期化
-	void DXCInitialize();
+	/// コンストラクタ
+	MyEngine();
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	~MyEngine();
 
-	// シェーダのコンパイル
-	IDxcBlob* CompileShader(
-		// CompilerするShaderファイルへのパス
+	/// 初期化
+	void Initialize();
+
+	/// 更新
+	void Update();
+
+	/// 更新処理の終了
+	void UpdateEnd();
+
+	/// 三角形描画
+	void Draw(const Vector4& a, const Vector4& b, const Vector4& c);
+
+	/// 解放処理
+	void End();
+
+private:
+	//コンパイルシェーダー関数
+	IDxcBlob* CompileShader
+	(//compilerするshaderファイルへのパス
 		const std::wstring& filePath,
-		// Compilerに使用するProfile
+		//Compilerに使用するprofile
 		const wchar_t* profile,
-		// 初期化で生成したものを3つ
+		//初期化で生成したものを3つ
 		IDxcUtils* dxcUtils,
 		IDxcCompiler3* dxcCompiler,
-		IDxcIncludeHandler* includeHandler);
+		IDxcIncludeHandler* includeHandler
+	);
+
+	// DXCの初期化
+	void DXCInitialize();
 
 	// RootSignatureの生成
 	void CreateRootSignature();
@@ -31,82 +74,93 @@ public:
 	// RasterizerStateの設定
 	void SettingRasterizerState();
 
-	// ピクセルシェーダー
-	void PixelSharder();
+	/// シェーダー
+	void ShaderCompile();
 
-	// 頂点シェーダー
-	void VertexSharder();
-
-	// PSOの生成
+	/// PSOの生成
 	void CreatePSO();
 
-	// PSO
-	void PSO();
+	/// 頂点データ用のリソース
+	void VertexResource();
 
-	// ビューポート
-	void CreateViewport();
+	/// 描画処理
+	void Render();
 
-	// シザー矩形
-	void CreateScissor();
+	/// 画面描画の終わり
+	void StateChange();
 
-	// 頂点データの初期化
-	void VertexInitialize();
+	/// 解放処理
+	void Relese();
 
-	// エンジンの初期化
-	void Initialize();
+	DirectXCommon* directXCommon_ = new DirectXCommon;
+	WindowsApp winApp_;
 
-	// 描画前の処理
-	void BeginFrame();
+	//描画出来る最大個数
+	Triangle* triangle_[11];
 
-	// 三角形描画
-	void Draw();
+	//三角形が描画されている数
+	int triangleCount_;
 
-	// 描画後の処理
-	void EndFrame();
+	HRESULT hr_;
 
-	// 解放処理
-	void Release();
+	IDxcUtils* dxcUtils_ = nullptr;
 
-public:
-	static const int kMaxTriangle = 11;
+	IDxcCompiler3* dxcCompiler_ = nullptr;
 
-	Triangle* Triangle_[kMaxTriangle];
+	IDxcIncludeHandler* includeHandler_ = nullptr;
 
-	static	DirectXCommon* directXCommon_;
+	//RootSignatureの作成
+	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature_{};
 
-	IDxcUtils* dxcUtils;
+	//バイナリを元に生成
+	ID3D12RootSignature* rootSignature_ = nullptr;
 
-	IDxcCompiler3* dxcCompiler;
+	//InputLayout
+	D3D12_INPUT_ELEMENT_DESC inputElementDescs_[1] = {};
+	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc_{};
 
-	IDxcIncludeHandler* includeHandler;
+	//BlendStateの設定
+	D3D12_BLEND_DESC blendDesc_{};
 
-	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature;
+	//RasiterzerStateの設定
+	D3D12_RASTERIZER_DESC rasterizerDesc_{};
 
-	ID3DBlob* signatureBlob;
+	//PSO
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc_{};
 
-	ID3DBlob* errorBlob;
+	//実際に生成
+	ID3D12PipelineState* graphicsPipelineState_ = nullptr;
 
-	ID3D12RootSignature* rootSignature;
+	//頂点リソースの設定
+	D3D12_RESOURCE_DESC vertexResourceDesc_{};
 
-	D3D12_INPUT_ELEMENT_DESC inputElementDescs[1];
+	//実際に頂点リソースを作る
+	ID3D12Resource* vertexResource_;
 
-	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc;
+	//頂点バッファビューを作成する
+	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{};
 
-	D3D12_BLEND_DESC blendDesc;
+	//ビューポート
+	D3D12_VIEWPORT viewport_{};
 
-	D3D12_RASTERIZER_DESC rasterizerDesc;
+	//シザー矩形
+	D3D12_RECT scissorRect_{};
 
-	IDxcBlob* vertexShaderBlob;
+	UINT backBufferIndex;
 
-	IDxcBlob* pixelShaderBlob;
+	//TransitionBarrierの設定
+	D3D12_RESOURCE_BARRIER barrier{};
 
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDescs;
+	//シリアライズしてバイナリにする
+	ID3DBlob* signatureBlob_ = nullptr;
+	ID3DBlob* errorBlob_ = nullptr;
 
-	ID3D12PipelineState* graphicsPipelineState;
+	IDxcBlob* vertexShaderBlob_;
+	IDxcBlob* pixelShaderBlob_;
 
-	D3D12_VIEWPORT viewport;
+	D3D12_CPU_DESCRIPTOR_HANDLE RTVHandle_[2];
+	uint64_t fenceValue_;
 
-	D3D12_RECT scissorRect;
-
-	Vector4 triangleData[kMaxTriangle][3];
+	//頂点リソースにデータを書き込む
+	Vector4* vertexData_;
 };
