@@ -1,20 +1,21 @@
 #include "Triangle.h"
 #include <cassert>
 
-void Triangle::Initialize(DirectXCommon* directXCommon)
+void Triangle::Initialize(DirectXCommon* directXCommon, const Vector4& a, const Vector4& b, const Vector4& c)
 {
 	directXCommon_ = directXCommon;
 	SetVertex();
-}
 
-void Triangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c)
-{
 	//左下
 	vertexData_[0] = a;
 	//上
 	vertexData_[1] = b;
 	//右下
 	vertexData_[2] = c;
+}
+
+void Triangle::Draw()
+{
 
 	//VBVを設定
 	directXCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);

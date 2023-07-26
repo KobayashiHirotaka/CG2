@@ -41,7 +41,7 @@ public:
 	void UpdateEnd();
 
 	/// 三角形描画
-	void Draw(const Vector4& a, const Vector4& b, const Vector4& c);
+	//void Draw(const Vector4& a, const Vector4& b, const Vector4& c);
 
 	/// 解放処理
 	void End();

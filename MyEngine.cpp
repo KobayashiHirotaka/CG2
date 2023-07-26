@@ -17,12 +17,6 @@ void MyEngine::Initialize()
 	ShaderCompile();
 	CreatePSO();
 
-	for (int i = 0; i < 11; i++)
-	{
-		triangle_[i] = new Triangle();
-		triangle_[i]->Initialize(directXCommon_);
-	}
-
 	//頂点データ
 	VertexResource();
 }
@@ -42,15 +36,15 @@ void MyEngine::End()
 	Relese();
 }
 
-void MyEngine::Draw(const Vector4& a, const Vector4& b, const Vector4& c)
-{
-	triangleCount_++;
-	triangle_[triangleCount_]->Draw(a, b, c);
-	if (triangleCount_ >= 10)
-	{
-		triangleCount_ = 0;
-	}
-}
+//void MyEngine::Draw(const Vector4& a, const Vector4& b, const Vector4& c)
+//{
+//	triangleCount_++;
+//	triangle_[triangleCount_]->Draw(a, b, c);
+//	if (triangleCount_ >= 10)
+//	{
+//		triangleCount_ = 0;
+//	}
+//}
 
 IDxcBlob* MyEngine::CompileShader
 (
@@ -337,10 +331,6 @@ void MyEngine::StateChange()
 
 void MyEngine::Relese()
 {
-	for (int i = 0; i < 11; i++)
-	{
-		triangle_[i]->End();
-	}
 
 	vertexResource_->Release();
 	graphicsPipelineState_->Release();

@@ -8,10 +8,10 @@ class Triangle
 {
 public:
 	// 初期化
-	void Initialize(DirectXCommon* directXCommon);
+	void Initialize(DirectXCommon* directXCommon, const Vector4& a, const Vector4& b, const Vector4& c);
 
 	// 三角形描画
-	void Draw(const Vector4& a, const Vector4& b, const Vector4& c);
+	void Draw();
 
 	void End();
 
