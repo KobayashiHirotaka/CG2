@@ -25,7 +25,7 @@ void Triangle::Draw()
 	directXCommon_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
 }
 
-void Triangle::End()
+void Triangle::Finalize()
 {
 	vertexResource_->Release();
 }

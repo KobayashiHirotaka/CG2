@@ -44,7 +44,7 @@ public:
 	//void Draw(const Vector4& a, const Vector4& b, const Vector4& c);
 
 	/// 解放処理
-	void End();
+	void Finalize();
 
 private:
 	//コンパイルシェーダー関数

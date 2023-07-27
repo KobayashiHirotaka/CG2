@@ -13,7 +13,7 @@ public:
 	// 三角形描画
 	void Draw();
 
-	void End();
+	void Finalize();
 
 public:
 	MyEngine* engine_;

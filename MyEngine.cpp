@@ -31,7 +31,7 @@ void MyEngine::UpdateEnd()
 	StateChange();
 }
 
-void MyEngine::End()
+void MyEngine::Finalize()
 {
 	Relese();
 }

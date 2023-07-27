@@ -53,10 +53,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	}
 
 	for (int i = 0; i < 4; i++) {
-		triangle[i]->End();
+		triangle[i]->Finalize();
 	}
 	winApp->EndApp();
-	engine->End();
+	engine->Finalize();
 	directXCommon->PostDraw();
 
 	return 0;
