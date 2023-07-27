@@ -36,16 +36,6 @@ void MyEngine::Finalize()
 	Relese();
 }
 
-//void MyEngine::Draw(const Vector4& a, const Vector4& b, const Vector4& c)
-//{
-//	triangleCount_++;
-//	triangle_[triangleCount_]->Draw(a, b, c);
-//	if (triangleCount_ >= 10)
-//	{
-//		triangleCount_ = 0;
-//	}
-//}
-
 IDxcBlob* MyEngine::CompileShader
 (
 	//compilerするshaderファイルへのパス
