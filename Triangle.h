@@ -15,7 +15,7 @@ public:
 
 	void Finalize();
 
-public:
+private:
 	MyEngine* engine_;
 
 	DirectXCommon* directXCommon_;
