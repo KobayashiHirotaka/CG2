@@ -40,9 +40,6 @@ public:
 	/// 更新処理の終了
 	void UpdateEnd();
 
-	/// 三角形描画
-	//void Draw(const Vector4& a, const Vector4& b, const Vector4& c);
-
 	/// 解放処理
 	void Finalize();
 
@@ -94,12 +91,6 @@ private:
 
 	DirectXCommon* directXCommon_ = new DirectXCommon;
 	WindowsApp winApp_;
-
-	//描画出来る最大個数
-	Triangle* triangle_[11];
-
-	//三角形が描画されている数
-	int triangleCount_;
 
 	HRESULT hr_;
 
