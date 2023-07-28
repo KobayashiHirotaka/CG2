@@ -25,7 +25,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		triangleData[i][0] = { -0.2f,-0.8f + (i * 0.5f),0.0f,1.5f };
 		triangleData[i][1] = { 0.0,-0.4f + (i * 0.5f),0.0f,1.5f };
 		triangleData[i][2] = { 0.2f,-0.8f + (i * 0.5f),0.0f,1.5f };
-		material[i] = { 1.0f,0.0f,0.0f,1.0f };
+		material[i] = { 1.0f,0.0f + (i * 0.3f),0.0f,1.0f };
 		triangle[i] = new Triangle;
 		triangle[i]->Initialize(directXCommon, triangleData[i][0], triangleData[i][1], triangleData[i][2], material[i]);
 	}
