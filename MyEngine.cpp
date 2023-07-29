@@ -8,10 +8,10 @@ IDxcBlob* MyEngine::CompileShader(const std::wstring& filePath, const wchar_t* p
 
 	//hlslファイルを読む
 	IDxcBlobEncoding* shaderSource = nullptr;
-	dxClass_->SetHr(dxcUtils->LoadFile(filePath.c_str(), nullptr, &shaderSource));
+	dxCommon_->SetHr(dxcUtils->LoadFile(filePath.c_str(), nullptr, &shaderSource));
 
 	//読めなかったら決める
-	assert(SUCCEEDED(dxClass_->GetHr()));
+	assert(SUCCEEDED(dxCommon_->GetHr()));
 
 	//読み込んだファイルの内容を設定する
 	DxcBuffer shaderSourceBuffer;
@@ -29,7 +29,7 @@ IDxcBlob* MyEngine::CompileShader(const std::wstring& filePath, const wchar_t* p
 
 	//実際にShaderをコンパイルする
 	IDxcResult* shaderResult = nullptr;
-	dxClass_->SetHr(dxcCompiler->Compile(
+	dxCommon_->SetHr(dxcCompiler->Compile(
 		&shaderSourceBuffer,//読み込んだファイル
 		arguments,//コンパイルオプション
 		_countof(arguments),//コンパイルオプションの数
@@ -38,7 +38,7 @@ IDxcBlob* MyEngine::CompileShader(const std::wstring& filePath, const wchar_t* p
 	));
 
 	//コンパイルエラーではなくdxcが起動できないなど致命的な状況
-	assert(SUCCEEDED(dxClass_->GetHr()));
+	assert(SUCCEEDED(dxCommon_->GetHr()));
 
 	//警告・エラーが出たらログに出して止める
 	IDxcBlobUtf8* shaderError = nullptr;
@@ -52,8 +52,8 @@ IDxcBlob* MyEngine::CompileShader(const std::wstring& filePath, const wchar_t* p
 
 	//コンパイル結果から実行用のバイナリ部分を取得
 	IDxcBlob* shaderBlob = nullptr;
-	dxClass_->SetHr(shaderResult->GetOutput(DXC_OUT_OBJECT, IID_PPV_ARGS(&shaderBlob), nullptr));
-	assert(SUCCEEDED(dxClass_->GetHr()));
+	dxCommon_->SetHr(shaderResult->GetOutput(DXC_OUT_OBJECT, IID_PPV_ARGS(&shaderBlob), nullptr));
+	assert(SUCCEEDED(dxCommon_->GetHr()));
 
 	//成功したログを出す
 	Log(ConvertString(std::format(L"Compile Succeeded, path:{},profile:{}\n", filePath, profile)));
@@ -108,7 +108,7 @@ void MyEngine::CreateRootSignature()
 	hr = D3D12SerializeRootSignature(&descriptionRootSignature,
 		D3D_ROOT_SIGNATURE_VERSION_1, &signatureBlob_, &errorBlob_);
 
-	if (FAILED(dxClass_->GetHr()))
+	if (FAILED(dxCommon_->GetHr()))
 	{
 		Log(reinterpret_cast<char*>(errorBlob_->GetBufferPointer()));
 		assert(false);
@@ -116,7 +116,7 @@ void MyEngine::CreateRootSignature()
 
 	//バイナリを元に生成
 	rootSignature_ = nullptr;
-	hr = dxClass_->GetDevice()->CreateRootSignature(0, signatureBlob_->GetBufferPointer(),
+	hr = dxCommon_->GetDevice()->CreateRootSignature(0, signatureBlob_->GetBufferPointer(),
 		signatureBlob_->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
 	assert(SUCCEEDED(hr));
 }
@@ -193,7 +193,7 @@ void MyEngine::InitializePSO()
 
 	//実際に生成
 	graphicsPipelineState_ = nullptr;
-	HRESULT hr = dxClass_->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+	HRESULT hr = dxCommon_->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 		IID_PPV_ARGS(&graphicsPipelineState_));
 	assert(SUCCEEDED(hr));
 }
@@ -201,8 +201,8 @@ void MyEngine::InitializePSO()
 void MyEngine::ViewPort()
 {
 	//クライアント領域のサイズと一緒にして画面全体に表示
-	viewport_.Width = WindowsClass::kClientWidth;
-	viewport_.Height = WindowsClass::kClientHeight;
+	viewport_.Width = WindowsApp::kClientWidth;
+	viewport_.Height = WindowsApp::kClientHeight;
 	viewport_.TopLeftX = 0;
 	viewport_.TopLeftY = 0;
 	viewport_.MinDepth = 0.0f;
@@ -213,9 +213,9 @@ void MyEngine::ScissorRect()
 {
 	//シザー短形
 	scissorRect_.left = 0;
-	scissorRect_.right = WindowsClass::kClientWidth;
+	scissorRect_.right = WindowsApp::kClientWidth;
 	scissorRect_.top = 0;
-	scissorRect_.bottom = WindowsClass::kClientHeight;
+	scissorRect_.bottom = WindowsApp::kClientHeight;
 }
 
 void MyEngine::Initialize()
@@ -224,13 +224,13 @@ void MyEngine::Initialize()
 	for (int i = 0; i < 11; i++)
 	{
 		triangle_[i] = new Triangle();
-		triangle_[i]->Initialize(dxClass_);
+		triangle_[i]->Initialize(dxCommon_);
 	}
 }
 
-void MyEngine::Initialization(WindowsClass* win, const wchar_t* title, int32_t width, int32_t height)
+void MyEngine::Initialization(WindowsApp* win, const wchar_t* title, int32_t width, int32_t height)
 {
-	dxClass_->Initialization(win, title, win->kClientWidth, win->kClientHeight);
+	dxCommon_->Initialization(win, title, win->kClientWidth, win->kClientHeight);
 
 	InitializeDxcCompiler();
 
@@ -253,20 +253,20 @@ void MyEngine::Initialization(WindowsClass* win, const wchar_t* title, int32_t w
 void MyEngine::BeginFrame()
 {
 	triangleCount_ = 0;
-	dxClass_->PreDraw();
+	dxCommon_->PreDraw();
 	//viewportを設定
-	dxClass_->GetCommandList()->RSSetViewports(1, &viewport_);
+	dxCommon_->GetCommandList()->RSSetViewports(1, &viewport_);
 	//scirssorを設定
-	dxClass_->GetCommandList()->RSSetScissorRects(1, &scissorRect_);
+	dxCommon_->GetCommandList()->RSSetScissorRects(1, &scissorRect_);
 	//RootSignatureを設定。PS0とは別途設定が必要
-	dxClass_->GetCommandList()->SetGraphicsRootSignature(rootSignature_);
+	dxCommon_->GetCommandList()->SetGraphicsRootSignature(rootSignature_);
 	//PS0を設定
-	dxClass_->GetCommandList()->SetPipelineState(graphicsPipelineState_);
+	dxCommon_->GetCommandList()->SetPipelineState(graphicsPipelineState_);
 }
 
 void MyEngine::EndFrame()
 {
-	dxClass_->PostDraw();
+	dxCommon_->PostDraw();
 }
 
 void MyEngine::Finalize()
@@ -287,7 +287,7 @@ void MyEngine::Finalize()
 	rootSignature_->Release();
 	pixelShaderBlob_->Release();
 	vertexShaderBlob_->Release();
-	dxClass_->Finalize();
+	dxCommon_->Finalize();
 }
 
 void MyEngine::Update()
@@ -302,5 +302,5 @@ void MyEngine::DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c
 	triangle_[triangleCount_]->Draw(a, b, c, material, worldMatrix_);
 }
 
-WindowsClass* MyEngine::win_;
-DirectXClass* MyEngine::dxClass_;
+WindowsApp* MyEngine::win_;
+DirectXCommon* MyEngine::dxCommon_;

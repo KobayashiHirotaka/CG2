@@ -1,5 +1,5 @@
 #pragma once
-#include"DirectXClass.h"
+#include"DirectXCommon.h"
 #include "Vector3.h"
 #include"Vector4.h"
 #include "Matrix4x4.h"
@@ -8,7 +8,7 @@ class MyEngine;
 
 class Triangle {
 public:
-	void Initialize(DirectXClass* dxClass);
+	void Initialize(DirectXCommon* dxCommon);
 
 	void Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& wvpdata);
 
@@ -24,7 +24,7 @@ private:
 private:
 	MyEngine* engine_;
 
-	DirectXClass* dxClass_;
+	DirectXCommon* dxCommon_;
 
 	Vector4* vertexData_;
 

@@ -3,8 +3,8 @@
 #include"MyEngine.h"
 
 
-void Triangle::Initialize(DirectXClass* dxClass) {
-	dxClass_ = dxClass;
+void Triangle::Initialize(DirectXCommon* dxCommon) {
+	dxCommon_ = dxCommon;
 	SettingVertex();
 	SettingColor();
 	Move();
@@ -22,14 +22,14 @@ void Triangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const 
 	*wvpData_ = wvpdata;
 
 	//VBVを設定
-	dxClass_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
+	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
 	//形状を設定。PS0に設定しているものとはまた別。同じものを設定する
-	dxClass_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//マテリアルCBufferの場所を設定
-	dxClass_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
-	dxClass_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
+	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 	//描画
-	dxClass_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
+	dxCommon_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
 
 }
 
@@ -40,7 +40,7 @@ void Triangle::Finalize() {
 }
 
 void Triangle::SettingVertex() {
-	vertexResource_ = CreateBufferResource(dxClass_->GetDevice(), sizeof(Vector4) * 3);
+	vertexResource_ = CreateBufferResource(dxCommon_->GetDevice(), sizeof(Vector4) * 3);
 	//リソースの先頭のアドレスから使う
 	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress();
 	//使用するリソースのサイズは頂点3つ分のサイズ
@@ -53,13 +53,13 @@ void Triangle::SettingVertex() {
 
 void Triangle::SettingColor() {
 	//マテリアル用のリソースを作る　今回はcolor1つ分
-	materialResource_ = CreateBufferResource(dxClass_->GetDevice(), sizeof(Vector4));
+	materialResource_ = CreateBufferResource(dxCommon_->GetDevice(), sizeof(Vector4));
 	//書き込むためのアドレスを取得
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 }
 
 void Triangle::Move() {
-	wvpResource_ = CreateBufferResource(dxClass_->GetDevice(), sizeof(Matrix4x4));
+	wvpResource_ = CreateBufferResource(dxCommon_->GetDevice(), sizeof(Matrix4x4));
 	wvpResource_->Map(0, NULL, reinterpret_cast<void**>(&wvpData_));
 	*wvpData_ = MakeIdentity4x4();
 }

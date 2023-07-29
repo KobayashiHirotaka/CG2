@@ -1,5 +1,5 @@
 #pragma once
-#include "DirectXClass.h"
+#include "DirectXCommon.h"
 #include <dxcapi.h>
 #include "Vector3.h"
 #include"Vector4.h"
@@ -12,7 +12,7 @@ class MyEngine
 public:
 	void Initialize();
 
-	void Initialization(WindowsClass* win, const wchar_t* title, int32_t width, int32_t height);
+	void Initialization(WindowsApp* win, const wchar_t* title, int32_t width, int32_t height);
 
 	void BeginFrame();
 
@@ -25,8 +25,8 @@ public:
 	void DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material);
 
 private:
-	static WindowsClass* win_;
-	static	DirectXClass* dxClass_;
+	static WindowsApp* win_;
+	static	DirectXCommon* dxCommon_;
 
 	Triangle* triangle_[11];
 
