@@ -5,6 +5,7 @@
 #include "WindowsApp.h"
 #include "ConvertString.h"
 
+
 class DirectXCommon
 {
 public:
@@ -26,6 +27,8 @@ public:
 
 	ID3D12GraphicsCommandList* GetCommandList() { return commandList_; }
 
+	static void ImGuiInitialize();
+
 private:
 	void InitializeDXGIDevice();
 
@@ -40,47 +43,47 @@ private:
 private:
 	static WindowsApp* win_;
 
-	//　DXGIファクトリー生成
+	//DXGIファクトリーの生成
 	static IDXGIFactory7* dxgiFactory_;
 
-	// 使用するアダプタ用の変数
+	//使用するアダプタ用の変数
 	static IDXGIAdapter4* useAdapter_;
 
-	// D3D12Device生成
-	static ID3D12Device* device_;
+	//D3D12Deviceの生成
+	static	ID3D12Device* device_;
 
-	// コマンドキューを生成する
+	//コマンドキュー生成
 	static ID3D12CommandQueue* commandQueue_;
 
-	// コマンドアロケータを生成する
+	//コマンドアロケータの生成
 	static ID3D12CommandAllocator* commandAllocator_;
 
-	// コマンドリストの生成
+	//コマンドリストを生成する
 	static ID3D12GraphicsCommandList* commandList_;
 
-	// スワップチェーンを生成する
+	//スワップチェーン
 	static IDXGISwapChain4* swapChain_;
+	static DXGI_SWAP_CHAIN_DESC1 swapChainDesc_;
 
-	// ディスクリプタヒープの生成
+	//ディスクリプタヒープの生成
 	static ID3D12DescriptorHeap* rtvDescriptorHeap_;
+	static D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_;
+
 	static ID3D12DescriptorHeap* srvDescriptorHeap_;
-	static ID3D12DescriptorHeap* descriptorHeap_;
 
-	// SwapchainからResourceを引っ張ってくる
-	static ID3D12Resource* swapChainResources_[2];
-	static D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles_[2];
+	//RTVを２つ作るのでディスクリプタを２つ用意
+	static	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles_[2];
+	static	ID3D12Resource* swapChainResources_[2];
 
-	// 初期値0でFenceを作る
+	//Fence
 	static ID3D12Fence* fence_;
-	static uint64_t fenceValue_;
-
-	// FenceのSignalを持つためにイベントを作成する
+	static UINT64 fenceValue_;
 	static HANDLE fenceEvent_;
 
-	static int32_t backBufferWidth_;
-	static int32_t backBufferHeight_;
+	static	int32_t backBufferWidth_;
+	static	int32_t backBufferHeight_;
 
-	static inline D3D12_RESOURCE_BARRIER barrier_{};
+	static	inline D3D12_RESOURCE_BARRIER barrier_{};
 
 	static HRESULT hr_;
 

@@ -262,10 +262,14 @@ void MyEngine::BeginFrame()
 	dxCommon_->GetCommandList()->SetGraphicsRootSignature(rootSignature_);
 	//PS0を設定
 	dxCommon_->GetCommandList()->SetPipelineState(graphicsPipelineState_);
+	//開発用UIの処理
+	ImGui::ShowDemoWindow();
 }
 
 void MyEngine::EndFrame()
 {
+	ImGui::Render();
+
 	dxCommon_->PostDraw();
 }
 
