@@ -5,6 +5,7 @@
 #include"Vector4.h"
 #include "Triangle.h"
 #include "MyMath.h"
+#include "externals/DirectXTex/DirectXTex.h"
 #pragma comment(lib,"dxcompiler.lib")
 
 class MyEngine
@@ -76,6 +77,14 @@ private:
 		IDxcCompiler3* dxcCompiler,
 		IDxcIncludeHandler* includeHandler
 	);
+
+	DirectX::ScratchImage LoadTexture(const std::string& filePath);
+
+	ID3D12Resource* CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);
+
+	void UploadTexturData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
+
+	void TransferTexture();
 
 	void InitializeDxcCompiler();
 	void CreateRootSignature();

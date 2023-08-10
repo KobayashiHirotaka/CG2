@@ -6,6 +6,9 @@ const wchar_t kWindowTitle[] = { L"CG2" };
 //Windowsアプリでのエントリーポイント
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
+	//COMの初期化
+	CoInitializeEx(0, COINIT_MULTITHREADED);
+
 	//初期化
 	WindowsApp* win = nullptr;
 	MyEngine* engine = new MyEngine;
@@ -85,6 +88,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	}
 
 	engine->Finalize();
+	CoUninitialize();
 
 	return 0;
 }
