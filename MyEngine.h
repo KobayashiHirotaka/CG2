@@ -29,6 +29,8 @@ public:
 
 	DirectX::ScratchImage LoadTexture(const std::string& filePath);
 
+	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureHandleGPU() { return textureSrvHandleGPU_; }
+
 private:
 	static WindowsApp* win_;
 	static	DirectXCommon* dxCommon_;
