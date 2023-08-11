@@ -73,6 +73,8 @@ private:
 
 	static ID3D12DescriptorHeap* srvDescriptorHeap_;
 
+	/*static ID3D12DescriptorHeap* dsvDescriptorHeap_;*/
+
 	//RTVを２つ作るのでディスクリプタを２つ用意
 	static	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles_[2];
 	static	ID3D12Resource* swapChainResources_[2];

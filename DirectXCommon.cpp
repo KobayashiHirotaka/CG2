@@ -241,6 +241,16 @@ void DirectXCommon::CreateFinalRenderTargets() {
 	device_->CreateRenderTargetView(swapChainResources_[1], &rtvDesc_, rtvHandles_[1]);
 
 	depthStencilResource_ = CreateDepthStencilTextureResource(win_->GetKClientWidth(), win_->GetKClientHeight());
+
+	//dsvDescriptorHeap_ = CreateDescriptorHeap(device_, D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
+
+	////DSVの設定
+	//D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc{};
+	//dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	//dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+
+	//DSVHeapの先頭にDSVをつくる
+	/*device_->CreateDepthStencilView(depthStencilResource_, &dsvDesc, dsvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart());*/
 }
 
 ID3D12DescriptorHeap* DirectXCommon::CreateDescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible)
@@ -369,6 +379,7 @@ void DirectXCommon::Release() {
 	dxgiFactory_->Release();
 
 	depthStencilResource_->Release();
+	/*dsvDescriptorHeap_->Release();*/
 
 #ifdef DEBUG
 	winApp_->GetdebugController()->Release();
