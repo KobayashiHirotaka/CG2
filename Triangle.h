@@ -4,6 +4,7 @@
 #include"Vector4.h"
 #include "Matrix4x4.h"
 #include "ConvertString.h"
+#include "VertexData.h"
 
 class MyEngine;
 
@@ -27,7 +28,7 @@ private:
 
 	DirectXCommon* dxCommon_;
 
-	Vector4* vertexData_;
+	VertexData* vertexData_;
 
 	Vector4* materialData_;
 

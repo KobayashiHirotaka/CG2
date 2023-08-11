@@ -58,7 +58,9 @@
     <ClInclude Include="MyEngine.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="Triangle.h" />
+    <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
+    <ClInclude Include="VertexData.h" />
     <ClInclude Include="WindowsApp.h" />
   </ItemGroup>
   <ItemGroup>

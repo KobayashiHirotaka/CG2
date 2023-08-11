@@ -12,13 +12,19 @@ void Triangle::Initialize(DirectXCommon* dxCommon, MyEngine* engine)
 	Move();
 }
 
-void Triangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& wvpdata) {
+void Triangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& wvpdata)
+{
 	//左下
-	vertexData_[0] = a;
+	vertexData_[0].position = a;
+	vertexData_[0].texcoord = { 0.0f,1.0f };
+
 	//上
-	vertexData_[1] = b;
+	vertexData_[1].position = b;
+	vertexData_[1].texcoord = { 0.5f,0.0f };
+
 	//右下
-	vertexData_[2] = c;
+	vertexData_[2].position = c;
+	vertexData_[2].texcoord = { 1.0f,1.0f };
 
 	*materialData_ = material;
 	*wvpData_ = wvpdata;
@@ -42,14 +48,15 @@ void Triangle::Release()
 	wvpResource_->Release();
 }
 
-void Triangle::SettingVertex() {
-	vertexResource_ = CreateBufferResource(dxCommon_->GetDevice(), sizeof(Vector4) * 3);
+void Triangle::SettingVertex() 
+{
+	vertexResource_ = CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData) * 3);
 	//リソースの先頭のアドレスから使う
 	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress();
 	//使用するリソースのサイズは頂点3つ分のサイズ
-	vertexBufferView_.SizeInBytes = sizeof(Vector4) * 3;
+	vertexBufferView_.SizeInBytes = sizeof(VertexData) * 3;
 	//1頂点当たりのサイズ
-	vertexBufferView_.StrideInBytes = sizeof(Vector4);
+	vertexBufferView_.StrideInBytes = sizeof(VertexData);
 	//書き込むためのアドレスを取得
 	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
 }

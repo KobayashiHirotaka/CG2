@@ -7,6 +7,7 @@
 #include "MyMath.h"
 #include "externals/DirectXTex/DirectXTex.h"
 #include "ConvertString.h"
+#include "VertexData.h"
 #pragma comment(lib,"dxcompiler.lib")
 
 class MyEngine
@@ -64,7 +65,7 @@ private:
 	D3D12_VIEWPORT viewport_{};
 	D3D12_RECT scissorRect_{};
 
-	D3D12_INPUT_ELEMENT_DESC inputElementDescs_[1];
+	D3D12_INPUT_ELEMENT_DESC inputElementDescs_[2];
 
 	//頂点リソースにデータを書き込む
 	Vector4* vertexData_;
