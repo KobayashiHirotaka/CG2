@@ -346,7 +346,7 @@ void DirectXCommon::ClearRenderTarget() {
 
 }
 
-void DirectXCommon::Finalize() {
+void DirectXCommon::Release() {
 	CloseHandle(fenceEvent_);
 	fence_->Release();
 

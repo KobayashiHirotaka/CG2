@@ -221,7 +221,7 @@ void MyEngine::ScissorRect()
 void MyEngine::Initialize()
 {
 	transform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-	for (int i = 0; i < 11; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		triangle_[i] = new Triangle();
 		triangle_[i]->Initialize(dxCommon_,this);
@@ -274,11 +274,11 @@ void MyEngine::EndFrame()
 	dxCommon_->PostDraw();
 }
 
-void MyEngine::Finalize()
+void MyEngine::Release()
 {
-	for (int i = 0; i < 11; i++)
+	for (int i = 0; i < kMaxTriangle; i++)
 	{
-		triangle_[i]->Finalize();
+		triangle_[i]->Release();
 		textureResource_->Release();
 	}
 
@@ -293,7 +293,7 @@ void MyEngine::Finalize()
 	rootSignature_->Release();
 	pixelShaderBlob_->Release();
 	vertexShaderBlob_->Release();
-	dxCommon_->Finalize();
+	dxCommon_->Release();
 }
 
 void MyEngine::Update()
@@ -314,6 +314,24 @@ DirectX::ScratchImage MyEngine::LoadTexture(const std::string& filePath)
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
 	textureResource_ = CreateTextureResource(dxCommon_->GetDevice(), metadata);
 	UploadTexturData(textureResource_, mipImages);
+
+	//metaDataを基にSRVの設定
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
+	srvDesc.Format = metadata.format;
+	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+	srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
+
+	//SRVを作成するDescriptorHeapの場所を決める
+	textureSrvHandleCPU_ = dxCommon_->GetSrvDescriptorHeap()->GetCPUDescriptorHandleForHeapStart();
+	textureSrvHandleGPU_ = dxCommon_->GetSrvDescriptorHeap()->GetGPUDescriptorHandleForHeapStart();
+
+	//先頭はImGuiが使っているのでその次を使う
+	textureSrvHandleCPU_.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	textureSrvHandleGPU_.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+	//SRVの作成
+	dxCommon_->GetDevice()->CreateShaderResourceView(textureResource_, &srvDesc, textureSrvHandleCPU_);
 
 	return mipImages;
 }

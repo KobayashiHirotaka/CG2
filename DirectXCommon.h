@@ -17,7 +17,7 @@ public:
 
 	static inline void ClearRenderTarget();
 
-	static void Finalize();
+	static void Release();
 
 	HRESULT GetHr() { return hr_; }
 
@@ -28,6 +28,8 @@ public:
 	ID3D12GraphicsCommandList* GetCommandList() { return commandList_; }
 
 	static void ImGuiInitialize();
+
+	ID3D12DescriptorHeap* GetSrvDescriptorHeap(){ return srvDescriptorHeap_; }
 
 private:
 	void InitializeDXGIDevice();

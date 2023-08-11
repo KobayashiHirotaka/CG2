@@ -20,7 +20,7 @@ public:
 
 	void EndFrame();
 
-	void Finalize();
+	void Release();
 
 	void Update();
 
@@ -35,6 +35,8 @@ private:
 	Triangle* triangle_[11];
 
 	int triangleCount_;
+
+	const int kMaxTriangle = 5;
 
 	IDxcUtils* dxcUtils_;
 	IDxcCompiler3* dxcCompiler_;
@@ -82,6 +84,9 @@ private:
 	);
 
 	ID3D12Resource* textureResource_ = nullptr;
+
+	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
 
 	DirectX::ScratchImage OpenImage(const std::string& filePath);
 

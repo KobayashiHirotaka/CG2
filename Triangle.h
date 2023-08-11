@@ -13,7 +13,7 @@ public:
 
 	void Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& wvpdata);
 
-	void Finalize();
+	void Release();
 
 private:
 	void SettingVertex();
