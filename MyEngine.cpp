@@ -224,12 +224,13 @@ void MyEngine::Initialize()
 	for (int i = 0; i < 11; i++)
 	{
 		triangle_[i] = new Triangle();
-		triangle_[i]->Initialize(dxCommon_);
+		triangle_[i]->Initialize(dxCommon_,this);
 	}
 }
 
 void MyEngine::Initialization(WindowsApp* win, const wchar_t* title, int32_t width, int32_t height)
 {
+	dxCommon_ = new DirectXCommon();
 	dxCommon_->Initialization(win, title, win->kClientWidth, win->kClientHeight);
 
 	InitializeDxcCompiler();
@@ -278,6 +279,7 @@ void MyEngine::Finalize()
 	for (int i = 0; i < 11; i++)
 	{
 		triangle_[i]->Finalize();
+		textureResource_->Release();
 	}
 
 	graphicsPipelineState_->Release();
@@ -307,6 +309,16 @@ void MyEngine::DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c
 }
 
 DirectX::ScratchImage MyEngine::LoadTexture(const std::string& filePath)
+{
+	DirectX::ScratchImage mipImages = OpenImage(filePath);
+	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
+	textureResource_ = CreateTextureResource(dxCommon_->GetDevice(), metadata);
+	UploadTexturData(textureResource_, mipImages);
+
+	return mipImages;
+}
+
+DirectX::ScratchImage MyEngine::OpenImage(const std::string& filePath)
 {
 	//テクスチャファイルを読んでプログラムで扱えるようにする
 	DirectX::ScratchImage image{};
@@ -365,14 +377,6 @@ void MyEngine::UploadTexturData(ID3D12Resource* texture, const DirectX::ScratchI
 		HRESULT hr = texture->WriteToSubresource(UINT(mipLevel), nullptr, img->pixels, UINT(img->rowPitch), UINT(img->slicePitch));
 		assert(SUCCEEDED(hr));
 	}
-}
-
-void MyEngine::TransferTexture()
-{
-	DirectX::ScratchImage mipImages = LoadTexture("resource/uvChecker.png");
-	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
-	ID3D12Resource* textureResource = CreateTextureResource(dxCommon_->GetDevice(), metadata);
-	UploadTexturData(textureResource, mipImages);
 }
 
 WindowsApp* MyEngine::win_;

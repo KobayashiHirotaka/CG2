@@ -3,12 +3,13 @@
 #include "Vector3.h"
 #include"Vector4.h"
 #include "Matrix4x4.h"
+#include "ConvertString.h"
 
 class MyEngine;
 
 class Triangle {
 public:
-	void Initialize(DirectXCommon* dxCommon);
+	void Initialize(DirectXCommon* dxCommon, MyEngine* engine);
 
 	void Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& wvpdata);
 

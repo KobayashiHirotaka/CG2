@@ -6,6 +6,7 @@
 #include "Triangle.h"
 #include "MyMath.h"
 #include "externals/DirectXTex/DirectXTex.h"
+#include "ConvertString.h"
 #pragma comment(lib,"dxcompiler.lib")
 
 class MyEngine
@@ -24,6 +25,8 @@ public:
 	void Update();
 
 	void DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material);
+
+	DirectX::ScratchImage LoadTexture(const std::string& filePath);
 
 private:
 	static WindowsApp* win_;
@@ -78,13 +81,13 @@ private:
 		IDxcIncludeHandler* includeHandler
 	);
 
-	DirectX::ScratchImage LoadTexture(const std::string& filePath);
+	ID3D12Resource* textureResource_ = nullptr;
+
+	DirectX::ScratchImage OpenImage(const std::string& filePath);
 
 	ID3D12Resource* CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);
 
 	void UploadTexturData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
-
-	void TransferTexture();
 
 	void InitializeDxcCompiler();
 	void CreateRootSignature();

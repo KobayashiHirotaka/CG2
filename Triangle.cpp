@@ -3,11 +3,15 @@
 #include"MyEngine.h"
 
 
-void Triangle::Initialize(DirectXCommon* dxCommon) {
+void Triangle::Initialize(DirectXCommon* dxCommon, MyEngine* engine)
+{
 	dxCommon_ = dxCommon;
+	engine_ = engine;
 	SettingVertex();
 	SettingColor();
 	Move();
+
+	engine_->LoadTexture("resource/uvChecker.png");
 }
 
 void Triangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& wvpdata) {
@@ -33,7 +37,8 @@ void Triangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const 
 
 }
 
-void Triangle::Finalize() {
+void Triangle::Finalize() 
+{
 	materialResource_->Release();
 	vertexResource_->Release();
 	wvpResource_->Release();
