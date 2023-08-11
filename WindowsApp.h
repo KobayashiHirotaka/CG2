@@ -30,6 +30,10 @@ public:
 
 	static void CreateWindowView(const wchar_t* title, int32_t clientWidth, int32_t clientheight);
 
+	static const int32_t GetKClientWidth() { return kClientWidth; }
+
+	static const int32_t GetKClientHeight() { return kClientHeight; }
+
 private:
 	static	UINT windowStyle_;
 

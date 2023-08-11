@@ -327,7 +327,7 @@ void MyEngine::Release()
 
 void MyEngine::Update()
 {
-	transform_.rotate.y += 0.03f;
+	transform_.rotate.y += 0.008f;
 	worldMatrix_ = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
 }
 
