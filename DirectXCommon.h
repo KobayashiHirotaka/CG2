@@ -120,6 +120,10 @@ private:
 	IDxcUtils* dxcUtils_ = nullptr;
 	IDxcCompiler3* dxcCompiler_ = nullptr;
 
+	IDxcBlobUtf8* shaderError_ = nullptr;
+
+	IDxcBlob* shaderBlob_ = nullptr;
+
 	IDxcIncludeHandler* includeHandler_;
 
 	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc_{};
