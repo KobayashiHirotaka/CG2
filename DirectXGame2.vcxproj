@@ -22,6 +22,7 @@
     <ClCompile Include="externals\imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyEngine.cpp" />
+    <ClCompile Include="MyImGui.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="WindowsApp.cpp" />
@@ -57,6 +58,7 @@
     <ClInclude Include="externals\imgui\imstb_truetype.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="MyEngine.h" />
+    <ClInclude Include="MyImGui.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vector2.h" />
