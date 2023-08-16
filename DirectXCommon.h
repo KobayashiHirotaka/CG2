@@ -70,16 +70,20 @@ private:
 
 private:
 	WindowsApp* win_;
+
 	int32_t kClientWidth_;
 	int32_t kClientHeight_;
 
-	HRESULT hr;
-	//TransitionBarrier
+	HRESULT hr_;
+
+	//DXGIファクトリーの生成
+	IDXGIFactory7* dxgiFactory_;
+
+	//使用するアダプタ用の変数
+	IDXGIAdapter4* useAdapter_;
+	
 	D3D12_RESOURCE_BARRIER barrier{};
-	//DXGIファクトリー
-	IDXGIFactory7* dxgiFactory = nullptr;
-	//アダプターを作成
-	IDXGIAdapter4* useAdapter = nullptr;
+
 	//デバイス
 	ID3D12Device* device = nullptr;
 	//コマンドキューを生成

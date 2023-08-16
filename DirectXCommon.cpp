@@ -89,8 +89,8 @@ void DirectXCommon::PostDraw()
 	//TransitionBarrierを張る
 	commandList->ResourceBarrier(1, &barrier);
 
-	hr = commandList->Close();
-	assert(SUCCEEDED(hr));
+	hr_ = commandList->Close();
+	assert(SUCCEEDED(hr_));
 	//コマンドをキック
 	ID3D12CommandList* commandLists[] = { commandList };
 	commandQueue->ExecuteCommandLists(1, commandLists);
@@ -102,10 +102,10 @@ void DirectXCommon::PostDraw()
 		fence->SetEventOnCompletion(fenceValue, fenceEvent);
 		WaitForSingleObject(fenceEvent, INFINITE);
 	}
-	hr = commandAllocator->Reset();
-	assert(SUCCEEDED(hr));
-	hr = commandList->Reset(commandAllocator, nullptr);
-	assert(SUCCEEDED(hr));
+	hr_ = commandAllocator->Reset();
+	assert(SUCCEEDED(hr_));
+	hr_ = commandList->Reset(commandAllocator, nullptr);
+	assert(SUCCEEDED(hr_));
 
 }
 
@@ -125,8 +125,8 @@ void DirectXCommon::Release()
 	commandQueue->Release();
 
 	device->Release();
-	useAdapter->Release();
-	dxgiFactory->Release();
+	useAdapter_->Release();
+	dxgiFactory_->Release();
 
 	graphicsPipelineState->Release();
 	signatureBlob->Release();
@@ -165,9 +165,9 @@ ID3D12DescriptorHeap* DirectXCommon::CreateDescriptorHeap(ID3D12Device* device, 
 	DescriptorHeapDesc.Type = heapType;
 	DescriptorHeapDesc.NumDescriptors = numDescriptors;
 	DescriptorHeapDesc.Flags = shaderVisible ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
-	hr = device->CreateDescriptorHeap(&DescriptorHeapDesc, IID_PPV_ARGS(&descriptorHeap));
+	hr_ = device->CreateDescriptorHeap(&DescriptorHeapDesc, IID_PPV_ARGS(&descriptorHeap));
 	//ディスクリプタヒープの生成ができないので起動できない
-	assert(SUCCEEDED(hr));
+	assert(SUCCEEDED(hr_));
 	return descriptorHeap;
 }
 
@@ -191,7 +191,7 @@ ID3D12Resource* DirectXCommon::CreateDepthStencilTextureResource(int32_t width, 
 	depthClearValue.DepthStencil.Depth = 1.0f;//1.0f(最大値)でクリア
 	depthClearValue.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;//フォーマット　Resourceと合わせる
 	ID3D12Resource* resource = nullptr;
-	hr = device->CreateCommittedResource(
+	hr_ = device->CreateCommittedResource(
 		&heapProperties,//Heapの設定
 		D3D12_HEAP_FLAG_NONE,//Heapの特殊な設定　特になし
 		&resourceDesc,//Resourceの設定
@@ -199,28 +199,28 @@ ID3D12Resource* DirectXCommon::CreateDepthStencilTextureResource(int32_t width, 
 		&depthClearValue,//Clear最適値
 		IID_PPV_ARGS(&resource)//作成するResourceポインタへのポインタ
 	);
-	assert(SUCCEEDED(hr));
+	assert(SUCCEEDED(hr_));
 	return resource;
 }
 
 void DirectXCommon::CreateDXGIDevice()
 {
 	//DXGIファクトリーを作成
-	hr = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory));
-	assert(SUCCEEDED(hr));
+	hr_ = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory_));
+	assert(SUCCEEDED(hr_));
 	//アダプターを作成
-	for (UINT i = 0; dxgiFactory->EnumAdapterByGpuPreference(i, DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE, IID_PPV_ARGS(&useAdapter)) != DXGI_ERROR_NOT_FOUND; i++) {
+	for (UINT i = 0; dxgiFactory_->EnumAdapterByGpuPreference(i, DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE, IID_PPV_ARGS(&useAdapter_)) != DXGI_ERROR_NOT_FOUND; i++) {
 		DXGI_ADAPTER_DESC3 adapterDesc{};
-		hr = useAdapter->GetDesc3(&adapterDesc);
-		assert(SUCCEEDED(hr));
+		hr_ = useAdapter_->GetDesc3(&adapterDesc);
+		assert(SUCCEEDED(hr_));
 		if (!(adapterDesc.Flags & DXGI_ADAPTER_FLAG3_SOFTWARE)) {
 			Log(ConvertString(std::format(L"Use Adapter:{}\n", adapterDesc.Description)));
 			break;
 		}
-		useAdapter = nullptr;
+		useAdapter_ = nullptr;
 	}
 	//アダプターが見つからないので起動できない
-	assert(useAdapter != nullptr);
+	assert(useAdapter_ != nullptr);
 
 	//機能レベル
 	D3D_FEATURE_LEVEL featureLevels[]{
@@ -230,8 +230,8 @@ void DirectXCommon::CreateDXGIDevice()
 	//高い順に生成できるか試す
 	for (size_t i = 0; i < _countof(featureLevels); ++i) {
 		//採用したアダプターでデバイスを生成
-		hr = D3D12CreateDevice(useAdapter, featureLevels[i], IID_PPV_ARGS(&device));
-		if (SUCCEEDED(hr)) {
+		hr_ = D3D12CreateDevice(useAdapter_, featureLevels[i], IID_PPV_ARGS(&device));
+		if (SUCCEEDED(hr_)) {
 			//生成出来たらログを出力してループを抜ける
 			Log(std::format("FeatureLevel : {}\n", featureLevelStrings[i]));
 			break;
@@ -274,19 +274,19 @@ void DirectXCommon::CreateCommand()
 {
 	//コマンドキューを生成
 	D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
-	hr = device->CreateCommandQueue(&commandQueueDesc, IID_PPV_ARGS(&commandQueue));
+	hr_ = device->CreateCommandQueue(&commandQueueDesc, IID_PPV_ARGS(&commandQueue));
 	//コマンドキューの生成ができないので起動できない
-	assert(SUCCEEDED(hr));
+	assert(SUCCEEDED(hr_));
 
 	//コマンドアロケータを作成
-	hr = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
+	hr_ = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
 	//コマンドアロケータの生成ができないので起動できない
-	assert(SUCCEEDED(hr));
+	assert(SUCCEEDED(hr_));
 
 	//コマンドリストを作成
-	hr = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator, nullptr, IID_PPV_ARGS(&commandList));
+	hr_ = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator, nullptr, IID_PPV_ARGS(&commandList));
 	//コマンドリストの生成ができないので起動できない
-	assert(SUCCEEDED(hr));
+	assert(SUCCEEDED(hr_));
 }
 
 void DirectXCommon::CreateSwapChain()
@@ -301,9 +301,9 @@ void DirectXCommon::CreateSwapChain()
 	swapChainDesc.BufferCount = 2;
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 	//コマンドキュー、ウィンドウハンドル、設定を渡して生成
-	hr = dxgiFactory->CreateSwapChainForHwnd(commandQueue, win_->GetHwnd(), &swapChainDesc, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(&swapChain));
+	hr_ = dxgiFactory_->CreateSwapChainForHwnd(commandQueue, win_->GetHwnd(), &swapChainDesc, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(&swapChain));
 	//スワップチェーンの生成ができないので起動できない
-	assert(SUCCEEDED(hr));
+	assert(SUCCEEDED(hr_));
 }
 
 void DirectXCommon::CreateFinalRenderTargets()
@@ -314,12 +314,12 @@ void DirectXCommon::CreateFinalRenderTargets()
 //srv用のディスクリプタ数は128。srvはshader内で触るものなので、ShaderVisibleはtrue
 	srvDescriptorHeap = CreateDescriptorHeap(device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);
 	//SwapChainからResourceを持ってくる
-	hr = swapChain->GetBuffer(0, IID_PPV_ARGS(&swapChainResources[0]));
+	hr_ = swapChain->GetBuffer(0, IID_PPV_ARGS(&swapChainResources[0]));
 	//リソースの取得ができないので起動できない
-	assert(SUCCEEDED(hr));
-	hr = swapChain->GetBuffer(1, IID_PPV_ARGS(&swapChainResources[1]));
+	assert(SUCCEEDED(hr_));
+	hr_ = swapChain->GetBuffer(1, IID_PPV_ARGS(&swapChainResources[1]));
 	//リソースの取得ができないので起動できない
-	assert(SUCCEEDED(hr));
+	assert(SUCCEEDED(hr_));
 	//RTVの設定
 	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
@@ -346,8 +346,8 @@ void DirectXCommon::CreateFinalRenderTargets()
 void DirectXCommon::CreateFence()
 {
 	//Fenceを作る
-	hr = device->CreateFence(fenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
-	assert(SUCCEEDED(hr));
+	hr_ = device->CreateFence(fenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
+	assert(SUCCEEDED(hr_));
 	//FenceのSignalを待つイベント
 	assert(fenceEvent != nullptr);
 }
@@ -355,14 +355,14 @@ void DirectXCommon::CreateFence()
 void DirectXCommon::CreateDxcCompiler()
 {
 	//dxCompiler初期化
-	hr = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils));
-	assert(SUCCEEDED(hr));
-	hr = DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&dxcCompiler));
-	assert(SUCCEEDED(hr));
+	hr_ = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils));
+	assert(SUCCEEDED(hr_));
+	hr_ = DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&dxcCompiler));
+	assert(SUCCEEDED(hr_));
 
 
-	hr = dxcUtils->CreateDefaultIncludeHandler(&includeHandler);
-	assert(SUCCEEDED(hr));
+	hr_ = dxcUtils->CreateDefaultIncludeHandler(&includeHandler);
+	assert(SUCCEEDED(hr_));
 }
 
 IDxcBlob* DirectXCommon::CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler)
@@ -371,8 +371,8 @@ IDxcBlob* DirectXCommon::CompileShader(const std::wstring& filePath, const wchar
 	Log(ConvertString(std::format(L"Begin CompileShader, path:{},profile:{}\n", filePath, profile)));
 	//hlslファイルを読む
 	IDxcBlobEncoding* shaderSource = nullptr;
-	hr = dxcUtils->LoadFile(filePath.c_str(), nullptr, &shaderSource);
-	assert(SUCCEEDED(hr));
+	hr_ = dxcUtils->LoadFile(filePath.c_str(), nullptr, &shaderSource);
+	assert(SUCCEEDED(hr_));
 	DxcBuffer shaderSourceBuffer;
 	shaderSourceBuffer.Ptr = shaderSource->GetBufferPointer();
 	shaderSourceBuffer.Size = shaderSource->GetBufferSize();
@@ -387,7 +387,7 @@ IDxcBlob* DirectXCommon::CompileShader(const std::wstring& filePath, const wchar
 		L"-Zpr",
 	};
 	IDxcResult* shaderResult = nullptr;
-	hr = dxcCompiler->Compile(
+	hr_ = dxcCompiler->Compile(
 		&shaderSourceBuffer,
 		arguments,
 		_countof(arguments),
@@ -395,7 +395,7 @@ IDxcBlob* DirectXCommon::CompileShader(const std::wstring& filePath, const wchar
 		IID_PPV_ARGS(&shaderResult)
 	);
 	//dxcが起動できない
-	assert(SUCCEEDED(hr));
+	assert(SUCCEEDED(hr_));
 
 
 	shaderResult->GetOutput(DXC_OUT_ERRORS, IID_PPV_ARGS(&shaderError), nullptr);
@@ -404,8 +404,8 @@ IDxcBlob* DirectXCommon::CompileShader(const std::wstring& filePath, const wchar
 		assert(false);
 	}
 
-	hr = shaderResult->GetOutput(DXC_OUT_OBJECT, IID_PPV_ARGS(&shaderBlob), nullptr);
-	assert(SUCCEEDED(hr));
+	hr_ = shaderResult->GetOutput(DXC_OUT_OBJECT, IID_PPV_ARGS(&shaderBlob), nullptr);
+	assert(SUCCEEDED(hr_));
 	Log(ConvertString(std::format(L"Compile Succeeded, path:{}, profile:{}\n", filePath, profile)));
 	shaderSource->Release();
 	shaderResult->Release();
@@ -453,14 +453,14 @@ void DirectXCommon::CreateRootSignature()
 	descriptionRootSignature.pStaticSamplers = staticSamplers;
 	descriptionRootSignature.NumStaticSamplers = _countof(staticSamplers);
 
-	hr = D3D12SerializeRootSignature(&descriptionRootSignature, D3D_ROOT_SIGNATURE_VERSION_1, &signatureBlob, &errorBlob);
-	if (FAILED(hr)) {
+	hr_ = D3D12SerializeRootSignature(&descriptionRootSignature, D3D_ROOT_SIGNATURE_VERSION_1, &signatureBlob, &errorBlob);
+	if (FAILED(hr_)) {
 		Log(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
 		assert(false);
 	}
 
-	hr = device->CreateRootSignature(0, signatureBlob->GetBufferPointer(), signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
-	assert(SUCCEEDED(hr));
+	hr_ = device->CreateRootSignature(0, signatureBlob->GetBufferPointer(), signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
+	assert(SUCCEEDED(hr_));
 }
 
 void DirectXCommon::CreateInputLayOut()
@@ -524,8 +524,8 @@ void DirectXCommon::CreatePSO()
 	graphicsPipelineStateDesc.DepthStencilState = depthStencilDesc;
 	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
-	hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&graphicsPipelineState));
-	assert(SUCCEEDED(hr));
+	hr_ = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&graphicsPipelineState));
+	assert(SUCCEEDED(hr_));
 }
 
 void DirectXCommon::CreateViewport()
