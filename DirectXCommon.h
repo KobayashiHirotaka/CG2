@@ -106,7 +106,20 @@ private:
 	//深度
 	ID3D12Resource* depthStencilResource_;
 
-	D3D12_RESOURCE_BARRIER barrier{};
+	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_{};
+
+	//RTVを２つ作るのでディスクリプタを２つ用意
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles_[2];
+	ID3D12Resource* swapChainResources_[2];
+
+	//Fence
+	ID3D12Fence* fence_;
+	UINT64 fenceValue_;
+	HANDLE fenceEvent_;
+
+	D3D12_RESOURCE_BARRIER barrier_{};
+
+
 
 	//RTVの設定
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
