@@ -96,11 +96,11 @@ void DirectXCommon::PostDraw()
 	commandQueue_->ExecuteCommandLists(1, commandLists);
 	swapChain_->Present(1, 0);
 	//Fenceの更新
-	fenceValue++;
-	commandQueue_->Signal(fence, fenceValue);
-	if (fence->GetCompletedValue() < fenceValue) {
-		fence->SetEventOnCompletion(fenceValue, fenceEvent);
-		WaitForSingleObject(fenceEvent, INFINITE);
+	fenceValue_++;
+	commandQueue_->Signal(fence_, fenceValue_);
+	if (fence_->GetCompletedValue() < fenceValue_) {
+		fence_->SetEventOnCompletion(fenceValue_, fenceEvent_);
+		WaitForSingleObject(fenceEvent_, INFINITE);
 	}
 	hr_ = commandAllocator_->Reset();
 	assert(SUCCEEDED(hr_));
@@ -111,8 +111,8 @@ void DirectXCommon::PostDraw()
 
 void DirectXCommon::Release()
 {
-	CloseHandle(fenceEvent);
-	fence->Release();
+	CloseHandle(fenceEvent_);
+	fence_->Release();
 
 	rtvDescriptorHeap_->Release();
 	srvDescriptorHeap_->Release();
@@ -346,10 +346,10 @@ void DirectXCommon::CreateFinalRenderTargets()
 void DirectXCommon::CreateFence()
 {
 	//Fenceを作る
-	hr_ = device_->CreateFence(fenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
+	hr_ = device_->CreateFence(fenceValue_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence_));
 	assert(SUCCEEDED(hr_));
 	//FenceのSignalを待つイベント
-	assert(fenceEvent != nullptr);
+	assert(fenceEvent_ != nullptr);
 }
 
 void DirectXCommon::CreateDxcCompiler()

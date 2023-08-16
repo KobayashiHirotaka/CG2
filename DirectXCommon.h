@@ -115,7 +115,7 @@ private:
 	//Fence
 	ID3D12Fence* fence_;
 	UINT64 fenceValue_;
-	HANDLE fenceEvent_;
+	HANDLE fenceEvent_ = CreateEvent(NULL, FALSE, FALSE, NULL);
 
 	D3D12_RESOURCE_BARRIER barrier_{};
 
@@ -127,11 +127,7 @@ private:
 	ID3D12Resource* swapChainResources[2] = { nullptr };
 	//RTVを2つつくるので2つ用意
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles[2];
-	//Fenceを作る
-	ID3D12Fence* fence = nullptr;
-	uint64_t fenceValue = 0;
-	//FenceのSignalを待つイベント
-	HANDLE fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	
 	//dxCompiler初期化
 	IDxcUtils* dxcUtils = nullptr;
 	IDxcCompiler3* dxcCompiler = nullptr;
