@@ -119,7 +119,14 @@ private:
 
 	D3D12_RESOURCE_BARRIER barrier_{};
 
+	IDxcUtils* dxcUtils_ = nullptr;
+	IDxcCompiler3* dxcCompiler_ = nullptr;
 
+	IDxcBlobUtf8* shaderError_ = nullptr;
+
+	IDxcBlob* shaderBlob_ = nullptr;
+
+	IDxcIncludeHandler* includeHandler_ = nullptr;
 
 	//RTVの設定
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
@@ -128,13 +135,7 @@ private:
 	//RTVを2つつくるので2つ用意
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles[2];
 	
-	//dxCompiler初期化
-	IDxcUtils* dxcUtils = nullptr;
-	IDxcCompiler3* dxcCompiler = nullptr;
-	IDxcIncludeHandler* includeHandler = nullptr;
-	//コンパイルシェーダー
-	IDxcBlobUtf8* shaderError = nullptr;
-	IDxcBlob* shaderBlob = nullptr;
+	
 	//ルートシグネチャ―
 	ID3D12RootSignature* rootSignature = nullptr;
 	ID3DBlob* signatureBlob = nullptr;
