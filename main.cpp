@@ -20,12 +20,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	dxCommon->Initialize(win, kClientWidth, kClientHeight);
 
 	MyEngine* engine = new MyEngine();
-	engine->Initialize(dxCommon);
+	engine->Initialize(dxCommon, kClientWidth, kClientHeight);
 
 	MSG msg{};
 
 	GameScene* triangle = new GameScene();
-	triangle->Initialize(win, dxCommon, engine, kClientWidth, kClientHeight);
+	triangle->Initialize(dxCommon, engine,win, kClientWidth, kClientHeight);
 
 	//ウィンドウのxが押されるまでループ
 	while (msg.message != WM_QUIT)

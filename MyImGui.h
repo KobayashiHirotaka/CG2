@@ -7,7 +7,7 @@ class MyImGui
 public:
 	void Initialize(WindowsApp* win, DirectXCommon* dxCommon);
 
-	void BeginFrame();
+	void BeginFlame();
 
 	void EndFlame();
 };

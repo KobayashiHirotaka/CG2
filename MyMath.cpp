@@ -399,3 +399,18 @@ Matrix4x4 MakeViewportMatrix(float left, float top, float width, float height, f
 	};
 	return result;
 }
+
+Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farCcip)
+{
+	Matrix4x4 result;
+	float dx = right - left;
+	float dy = top - bottom;
+	float dz = farCcip - nearClip;
+	result = {
+		2.0f / dx,0.0f,0.0f,0.0f,
+		0.0f,2.0f / dy,0.0f,0.0f,
+		0.0f,0.0f,-2.0f / dz,0.0f,
+		-((right + left) / dx),-((top + bottom) / dy),-((farCcip + nearClip) / dz),1.0f
+	};
+	return result;
+}

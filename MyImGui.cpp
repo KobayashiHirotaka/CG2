@@ -8,13 +8,13 @@ void MyImGui::Initialize(WindowsApp* win, DirectXCommon* dxCommon)
 	ImGui_ImplWin32_Init(win->GetHwnd());
 	ImGui_ImplDX12_Init(dxCommon->GetDevice(),
 		dxCommon->GetSwapChainDesc().BufferCount,
-		dxCommon->GetrtvDesc().Format,
+		dxCommon->GetRtvDesc().Format,
 		dxCommon->GetSrvDescriptorHeap(),
 		dxCommon->GetSrvDescriptorHeap()->GetCPUDescriptorHandleForHeapStart(),
 		dxCommon->GetSrvDescriptorHeap()->GetGPUDescriptorHandleForHeapStart());
 }
 
-void MyImGui::BeginFrame()
+void MyImGui::BeginFlame()
 {
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();

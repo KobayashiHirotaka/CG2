@@ -1,69 +1,74 @@
 #pragma once
-#include "DirectXCommon.h"
-#include "MyMath.h"
-#include "Matrix4x4.h"
-#include "VertexData.h"
-#include "externals/DirectXTex/DirectXTex.h"
-
+#include"DirectXCommon.h"
+#include"MyMath.h"
+#include"Matrix4x4.h"
+#include"VertexData.h"
+#include"externals/DirectXTex/DirectXTex.h"
 class MyEngine
 {
 public:
-	void Initialize(DirectXCommon* dxCommon);
-
-	void Update();
-
-	void Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& ViewMatrix);
-
+	void Initialize(DirectXCommon* directX, int32_t kClientWidth, int32_t kClientHeight);
+	void Draw(const Vector4& Leftbottom, const Vector4& top, const Vector4& Rightbottom, const Vector4& color, const Matrix4x4& ViewMatrix);
 	void DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, const Vector4& RightTop, const Vector4& RightBottom);
-
-	void Release();
-
 	void ImGui();
+	void Release();
+	void LoadTexture(const std::string& filePath);
 
-	DirectX::ScratchImage LoadTexture(const std::string& filePath);
 
-private:
-	void CreateVerteexBufferView();
-	void CreateVertexBufferViewSprite();
-
-	ID3D12Resource* CreateBufferResource(size_t sizeInBytes);
-
-	DirectX::ScratchImage OpenImage(const std::string& filePath);
-
-	ID3D12Resource* CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);
-
-	ID3D12Resource* UploadTexturData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
 
 private:
-	DirectXCommon* dxCommon_;
-
-	ID3D12Resource* vertexResource_;
-
-	//頂点リソースにデータを書き込む
-	VertexData* vertexData_;
-
-	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{};
-
-	ID3D12Resource* materialResource_;
-
-	Vector4* materialData_;
-
-	//WVP用のリソース
-	ID3D12Resource* wvpResource_;
-
-	Matrix4x4* wvpData_;
-
-	ID3D12Resource* textureResource_ = nullptr;
-
-	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
-	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
-
-	Transform transform_
-	{
+	int32_t kClientWidth_;
+	int32_t kClientHeight_;
+	Transform transform{
 		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f},
+	};
+	Transform transformSprite{
 		{1.0f,1.0f,1.0f},
-		{1.0f,1.0f,1.0f}
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f},
 	};
 
-	Matrix4x4 worldMatrix_;
+	HRESULT hr;
+	DirectXCommon* directX_ = nullptr;
+	//バーテックスリソース
+	ID3D12Resource* vertexResource = nullptr;
+	//頂点データ
+	VertexData* vertexData;
+	//バーテックスバッファビュー
+	D3D12_VERTEX_BUFFER_VIEW vertexBufferView{};
+	//マテリアルリソース
+	ID3D12Resource* materialResource = nullptr;
+	//色データ
+	Vector4* materialData = nullptr;
+	//WVPリソース
+	ID3D12Resource* wvpResource = nullptr;
+	//WVPデータ
+	Matrix4x4* wvpData = nullptr;
+	//テクスチャデータ
+	ID3D12Resource* textureResource = nullptr;
+	//中間リソース
+	ID3D12Resource* intermediateResource = nullptr;
+	//descriptorHandle
+	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU;
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU;
+	//Sprite用頂点データ
+	ID3D12Resource* vertexResourceSprite = nullptr;
+	//Sprite用頂点データ
+	VertexData* vertexDataSprite;
+	//Sprite用バーテックスバッファビュー
+	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite{};
+	//Sprite用WVPリソース
+	ID3D12Resource* transformationMatrixResourceSprite = nullptr;
+	//Sprite用WVPデータ
+	Matrix4x4* transformationMatrixDataSprite = nullptr;
+
+	void MakeVertexBufferView();
+	void MakeVertexBufferViewSprite();
+
+	ID3D12Resource* CreateBufferResource(size_t sizeInBytes);
+	DirectX::ScratchImage ImageFileOpen(const std::string& filePath);
+	ID3D12Resource* CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);
+	ID3D12Resource* UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
 };
