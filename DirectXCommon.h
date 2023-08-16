@@ -30,11 +30,11 @@ public:
 
 	ID3D12GraphicsCommandList* GetcommandList() { return commandList_; }
 
-	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() { return swapChainDesc; }
+	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() { return swapChainDesc_; }
 
 	D3D12_RENDER_TARGET_VIEW_DESC GetRtvDesc() { return rtvDesc; }
 
-	ID3D12DescriptorHeap* GetSrvDescriptorHeap() { return srvDescriptorHeap; }
+	ID3D12DescriptorHeap* GetSrvDescriptorHeap() { return srvDescriptorHeap_; }
 
 private:
 	ID3D12DescriptorHeap* CreateDescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
@@ -94,19 +94,20 @@ private:
 	//コマンドリストを生成する
 	ID3D12GraphicsCommandList* commandList_;
 
+	//スワップチェーン
+	IDXGISwapChain4* swapChain_{};
+	DXGI_SWAP_CHAIN_DESC1 swapChainDesc_;
+
+	//ディスクリプタヒープの生成
+	ID3D12DescriptorHeap* rtvDescriptorHeap_;
+	ID3D12DescriptorHeap* srvDescriptorHeap_;
+	ID3D12DescriptorHeap* dsvDescriptorHeap_;
+
+	//深度
+	ID3D12Resource* depthStencilResource_;
+
 	D3D12_RESOURCE_BARRIER barrier{};
 
-	//スワップチェーンを作成
-	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
-	IDXGISwapChain4* swapChain = nullptr;
-	//RTVDescriptorHeap
-	ID3D12DescriptorHeap* rtvDescriptorHeap = nullptr;
-	//SRVDescriptorHeap
-	ID3D12DescriptorHeap* srvDescriptorHeap = nullptr;
-	//DSVDescriptorHeap
-	ID3D12DescriptorHeap* dsvDescriptorHeap = nullptr;
-	//深度
-	ID3D12Resource* depthStencilResource = nullptr;
 	//RTVの設定
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 	//SwapChainからResourceを持ってくる

@@ -47,7 +47,7 @@ void DirectXCommon::PreDraw()
 {
 	//コマンドを積む
 	//バックバッファのインデックス取得
-	UINT backBufferIndex = swapChain->GetCurrentBackBufferIndex();
+	UINT backBufferIndex = swapChain_->GetCurrentBackBufferIndex();
 	//今回のバリアはTransition
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 	//noneにしておく
@@ -65,9 +65,9 @@ void DirectXCommon::PreDraw()
 	float clearColor[] = { 0.1f,0.25f,0.5f,1.0f };//いつもの青っぽいやつ
 	commandList_->ClearRenderTargetView(rtvHandles[backBufferIndex], clearColor, 0, nullptr);
 	//描画用のDescriptorHeapの設定
-	ID3D12DescriptorHeap* descriptorHeaps[] = { srvDescriptorHeap };
+	ID3D12DescriptorHeap* descriptorHeaps[] = { srvDescriptorHeap_ };
 	//描画先のRTVとDSVを設定する
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = dsvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart();
 	commandList_->OMSetRenderTargets(1, &rtvHandles[backBufferIndex], false, &dsvHandle);
 	//指定した深度で画面全体をクリアする
 	commandList_->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
@@ -94,7 +94,7 @@ void DirectXCommon::PostDraw()
 	//コマンドをキック
 	ID3D12CommandList* commandLists[] = { commandList_ };
 	commandQueue_->ExecuteCommandLists(1, commandLists);
-	swapChain->Present(1, 0);
+	swapChain_->Present(1, 0);
 	//Fenceの更新
 	fenceValue++;
 	commandQueue_->Signal(fence, fenceValue);
@@ -114,12 +114,12 @@ void DirectXCommon::Release()
 	CloseHandle(fenceEvent);
 	fence->Release();
 
-	rtvDescriptorHeap->Release();
-	srvDescriptorHeap->Release();
+	rtvDescriptorHeap_->Release();
+	srvDescriptorHeap_->Release();
 	swapChainResources[0]->Release();
 	swapChainResources[1]->Release();
 
-	swapChain->Release();
+	swapChain_->Release();
 	commandList_->Release();
 	commandAllocator_->Release();
 	commandQueue_->Release();
@@ -138,8 +138,8 @@ void DirectXCommon::Release()
 	rootSignature->Release();
 	pixelShaderBlob->Release();
 	vertexShaderBlob->Release();
-	depthStencilResource->Release();
-	dsvDescriptorHeap->Release();
+	depthStencilResource_->Release();
+	dsvDescriptorHeap_->Release();
 
 #ifdef _DEBUG
 	debugController_->Release();
@@ -293,15 +293,15 @@ void DirectXCommon::CreateSwapChain()
 {
 	//スワップチェーンを作成
 
-	swapChainDesc.Width = kClientWidth_;
-	swapChainDesc.Height = kClientHeight_;
-	swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	swapChainDesc.SampleDesc.Count = 1;
-	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	swapChainDesc.BufferCount = 2;
-	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+	swapChainDesc_.Width = kClientWidth_;
+	swapChainDesc_.Height = kClientHeight_;
+	swapChainDesc_.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	swapChainDesc_.SampleDesc.Count = 1;
+	swapChainDesc_.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	swapChainDesc_.BufferCount = 2;
+	swapChainDesc_.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 	//コマンドキュー、ウィンドウハンドル、設定を渡して生成
-	hr_ = dxgiFactory_->CreateSwapChainForHwnd(commandQueue_, win_->GetHwnd(), &swapChainDesc, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(&swapChain));
+	hr_ = dxgiFactory_->CreateSwapChainForHwnd(commandQueue_, win_->GetHwnd(), &swapChainDesc_, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(&swapChain_));
 	//スワップチェーンの生成ができないので起動できない
 	assert(SUCCEEDED(hr_));
 }
@@ -309,22 +309,22 @@ void DirectXCommon::CreateSwapChain()
 void DirectXCommon::CreateFinalRenderTargets()
 {
 	//rtvディスクリプタヒープの作成
-	rtvDescriptorHeap = CreateDescriptorHeap(device_, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
+	rtvDescriptorHeap_ = CreateDescriptorHeap(device_, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
 	//srvディスクリプタ―ヒープの作成
 //srv用のディスクリプタ数は128。srvはshader内で触るものなので、ShaderVisibleはtrue
-	srvDescriptorHeap = CreateDescriptorHeap(device_, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);
+	srvDescriptorHeap_ = CreateDescriptorHeap(device_, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);
 	//SwapChainからResourceを持ってくる
-	hr_ = swapChain->GetBuffer(0, IID_PPV_ARGS(&swapChainResources[0]));
+	hr_ = swapChain_->GetBuffer(0, IID_PPV_ARGS(&swapChainResources[0]));
 	//リソースの取得ができないので起動できない
 	assert(SUCCEEDED(hr_));
-	hr_ = swapChain->GetBuffer(1, IID_PPV_ARGS(&swapChainResources[1]));
+	hr_ = swapChain_->GetBuffer(1, IID_PPV_ARGS(&swapChainResources[1]));
 	//リソースの取得ができないので起動できない
 	assert(SUCCEEDED(hr_));
 	//RTVの設定
 	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 	//ディスクリプタの先頭を取得
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvStartHandle = rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvStartHandle = rtvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart();
 	//一つ目
 	rtvHandles[0] = rtvStartHandle;
 	device_->CreateRenderTargetView(swapChainResources[0], &rtvDesc, rtvHandles[0]);
@@ -332,15 +332,15 @@ void DirectXCommon::CreateFinalRenderTargets()
 	rtvHandles[1].ptr = rtvHandles[0].ptr + device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 	device_->CreateRenderTargetView(swapChainResources[1], &rtvDesc, rtvHandles[1]);
 	//DSVDescriptorHeap
-	depthStencilResource = CreateDepthStencilTextureResource(kClientWidth_, kClientHeight_);
+	depthStencilResource_ = CreateDepthStencilTextureResource(kClientWidth_, kClientHeight_);
 	//DSV用のヒープでディスクリプタの数は1　DSVはShader内で触るものではないのでShaderVisibleはfalse
-	dsvDescriptorHeap = CreateDescriptorHeap(device_, D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
+	dsvDescriptorHeap_ = CreateDescriptorHeap(device_, D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
 	//DSVの設定
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc{};
 	dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;//Format 基本的にはResourceに合わせる
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;//2dTexture
 	//DSVHeapの先頭にDSVを作る
-	device_->CreateDepthStencilView(depthStencilResource, &dsvDesc, dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
+	device_->CreateDepthStencilView(depthStencilResource_, &dsvDesc, dsvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart());
 }
 
 void DirectXCommon::CreateFence()
