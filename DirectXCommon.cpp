@@ -2,7 +2,7 @@
 
 void DirectXCommon::Initialize(WindowsApp* win, int32_t kClientWidth, int32_t kClientHeight)
 {
-	winApp_ = win;
+	win_ = win;
 	kClientWidth_ = kClientWidth;
 	kClientHeight_ = kClientHeight;
 #ifdef _DEBUG
@@ -125,7 +125,7 @@ void DirectXCommon::Release()
 #ifdef _DEBUG
 	debugController->Release();
 #endif
-	CloseWindow(winApp_->GetHwnd());
+	CloseWindow(win_->GetHwnd());
 	graphicsPipelineState->Release();
 	signatureBlob->Release();
 	if (errorBlob) {
@@ -290,7 +290,7 @@ void DirectXCommon::MakeSwapChain()
 	swapChainDesc.BufferCount = 2;
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 	//コマンドキュー、ウィンドウハンドル、設定を渡して生成
-	hr = dxgiFactory->CreateSwapChainForHwnd(commandQueue, winApp_->GetHwnd(), &swapChainDesc, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(&swapChain));
+	hr = dxgiFactory->CreateSwapChainForHwnd(commandQueue, win_->GetHwnd(), &swapChainDesc, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(&swapChain));
 	//スワップチェーンの生成ができないので起動できない
 	assert(SUCCEEDED(hr));
 }

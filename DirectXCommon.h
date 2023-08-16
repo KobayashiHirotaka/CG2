@@ -18,7 +18,6 @@
 class DirectXCommon
 {
 public:
-
 	void Initialize(WindowsApp* win, int32_t kClientWidth, int32_t kClientHeight);
 
 	void PreDraw();
@@ -27,16 +26,18 @@ public:
 
 	void Release();
 
-	ID3D12GraphicsCommandList* GetcommandList() { return commandList; }
-
 	ID3D12Device* GetDevice() { return device; }
 
+	ID3D12GraphicsCommandList* GetcommandList() { return commandList; }
+
 	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() { return swapChainDesc; }
+
 	D3D12_RENDER_TARGET_VIEW_DESC GetRtvDesc() { return rtvDesc; }
+
 	ID3D12DescriptorHeap* GetSrvDescriptorHeap() { return srvDescriptorHeap; }
 
 private:
-	WindowsApp* winApp_;
+	WindowsApp* win_;
 	int32_t kClientWidth_;
 	int32_t kClientHeight_;
 
