@@ -23,8 +23,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	MSG msg{};
 
-	GameScene* triangle = new GameScene();
-	triangle->Initialize(dxCommon, engine,win, kClientWidth, kClientHeight);
+	GameScene* gameScene = new GameScene();
+	gameScene->Initialize(win, dxCommon, engine, kClientWidth, kClientHeight);
 
 	//ウィンドウのxが押されるまでループ
 	while (msg.message != WM_QUIT)
@@ -37,11 +37,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 		else {
 			//ゲームの処理
-			triangle->Draw();
+			gameScene->Draw();
 		}
 	}
 
-	triangle->Release();
+	gameScene->Release();
 	CoUninitialize();
 
 	return 0;

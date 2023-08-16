@@ -1,55 +1,58 @@
 #include"GameScene.h"
 
-void GameScene::Initialize(DirectXCommon* directX, MyEngine* myEngine, WindowsApp* winApp, int32_t kClientWidth, int32_t kClientHeight)
+void GameScene::Initialize(WindowsApp* win, DirectXCommon* dxCommon, MyEngine* myEngine, int32_t kClientWidth, int32_t kClientHeight)
 {
-	directX_ = directX;
+	dxCommon_ = dxCommon;
 	myEngine_ = myEngine;
+
 	kClientWidth_ = kClientWidth;
 	kClientHeight_ = kClientHeight;
 
 	camera_ = new Camera();
 	camera_->Initialize(kClientWidth_, kClientHeight_);
-	imGui_ = new MyImGui();
-	imGui_->Initialize(winApp, directX_);
 
-	//リソースを作る
+	imGui_ = new MyImGui();
+	imGui_->Initialize(win, dxCommon_);
+
 	myEngine_->LoadTexture("resource/uvChecker.png");
 
+	triangleData[0] = { -0.5f,-0.5f,0.0f,1.0f };
+	triangleData[1] = { 0.0f,0.5f,0.0f,1.0f };
+	triangleData[2] = { 0.5f,-0.5f,0.0f,1.0f };
 }
 
 void GameScene::UpDate()
 {
 	camera_->Update();
-
 }
 
 void GameScene::Draw()
 {
 
 	imGui_->BeginFlame();
-	directX_->PreDraw();
-	//ここから
-#pragma region ImGui
-	/*ImGui::Begin("TriAngleColor");
-	float ImGuiColor[Vector3D] = { Color[0].x,Color[0].y ,Color[0].z };
-	ImGui::SliderFloat3("RGB", ImGuiColor, 0, 1, "%.3f");
-	Color[0] = { ImGuiColor[x],ImGuiColor[y],ImGuiColor[z] };
+	dxCommon_->PreDraw();
+
+	ImGui::Begin("TriAngleColor");
+
+	float color[3] = { material[0].x,material[0].y ,material[0].w };
+	ImGui::SliderFloat3("RGB", color, 0, 1, "%.3f");
+	ImGui::ColorEdit3("MaterialColor", color);
+	material[0] = { color[0],color[1],color[2] };
+
 	ImGui::End();
-	camera_->ImGui();
-	myEngine_->ImGui();*/
 
-#pragma endregion
+	myEngine_->ImGui();
 
-	myEngine_->Draw(Left[0], Top[0], Right[0], Color[0], camera_->transformationMatrixData);
+	myEngine_->Draw(triangleData[0], triangleData[1], triangleData[2], material[0], camera_->transformationMatrixData);
 	myEngine_->DrawSprite(LeftTop, LeftBottom, RightTop, RightBottom);
-	//ここまで
+
 	imGui_->EndFlame();
-	directX_->PostDraw();
+	dxCommon_->PostDraw();
 }
 
 void GameScene::Release()
 {
 	ImGui_ImplDX12_Shutdown();
 	myEngine_->Release();
-	directX_->Release();
+	dxCommon_->Release();
 }

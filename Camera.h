@@ -10,22 +10,20 @@ public:
 
 	void Update();
 
-	void ImGui();
-
 	Matrix4x4 transformationMatrixData;
 
 private:
 	int32_t kClientWidth_;
 	int32_t kClientHeight_;
 
-	Transform cameraTransform
+	Transform cameraTransform_
 	{
 		{1.0f,1.0f,1.0f},
 		{0.0f,0.0f,0.0f},
-		{0.0f,0.0f,-10.0f},
+		{0.0f,0.0f,-7.0f},
 	};
 
-	Transform transform
+	Transform transform_
 	{
 		{1.0f,1.0f,1.0f},
 		{0.0f,0.0f,0.0f},

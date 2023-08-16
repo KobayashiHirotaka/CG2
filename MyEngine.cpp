@@ -94,35 +94,35 @@ void MyEngine::DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, con
 
 void MyEngine::ImGui()
 {
-#pragma region TriAngleImGui
 	ImGui::ShowDemoWindow();
 
-	/*ImGui::Begin("TriAngle");
-	float ImGuiScale[Vector3D] = { transform.scale.x,transform.scale.y ,transform.scale.z };
-	ImGui::SliderFloat3("Scale", ImGuiScale, 1, 30, "%.3f");
-	transform.scale = { ImGuiScale[x],ImGuiScale[y],ImGuiScale[z] };
-	float ImGuiRotate[Vector3D] = { transform.rotate.x,transform.rotate.y ,transform.rotate.z };
-	ImGui::SliderFloat3("Rotate", ImGuiRotate, 0, 7, "%.3f");
-	transform.rotate = { ImGuiRotate[x],ImGuiRotate[y],ImGuiRotate[z] };
-	float ImGuiTranslate[Vector3D] = { transform.translate.x,transform.translate.y ,transform.translate.z };
-	ImGui::SliderFloat3("Translate", ImGuiTranslate, -2, 2, "%.3f");
-	transform.translate = { ImGuiTranslate[x],ImGuiTranslate[y],ImGuiTranslate[z] };
-	ImGui::End();*/
-#pragma endregion
-#pragma region SpriteImGui
+	ImGui::Begin("TriAngle,Sprite");
 
-	/*ImGui::Begin("Sprite");
-	float ImGuiScaleSprite[Vector3D] = { transformSprite.scale.x,transformSprite.scale.y ,transformSprite.scale.z };
-	ImGui::SliderFloat3("ScaleSprite", ImGuiScaleSprite, 1, 30, "%.3f");
-	transformSprite.scale = { ImGuiScaleSprite[x],ImGuiScaleSprite[y],ImGuiScaleSprite[z] };
-	float ImGuiRotateSprite[Vector3D] = { transformSprite.rotate.x,transformSprite.rotate.y ,transformSprite.rotate.z };
-	ImGui::SliderFloat3("RotateSprite", ImGuiRotateSprite, 0, 7, "%.3f");
-	transformSprite.rotate = { ImGuiRotateSprite[x],ImGuiRotateSprite[y],ImGuiRotateSprite[z] };
-	float ImGuiTranslateSprite[Vector3D] = { transformSprite.translate.x,transformSprite.translate.y ,transformSprite.translate.z };
-	ImGui::SliderFloat3("TranslateSprite", ImGuiTranslateSprite, -640, 640, "%.3f");
-	transformSprite.translate = { ImGuiTranslateSprite[x],ImGuiTranslateSprite[y],ImGuiTranslateSprite[z] };
-	ImGui::End();*/
-#pragma endregion
+	float triangleScale[3] = { transform_.scale.x,transform_.scale.y ,transform_.scale.z };
+	ImGui::SliderFloat3("triangleScale", triangleScale, 1, 30, "%.3f");
+	transform_.scale = { triangleScale[0],triangleScale[1],triangleScale[2] };
+
+	float triangleRotate[3] = { transform_.rotate.x,transform_.rotate.y ,transform_.rotate.z };
+	ImGui::SliderFloat3("triangleRotate", triangleRotate, 0, 7, "%.3f");
+	transform_.rotate = { triangleRotate[0],triangleRotate[1],triangleRotate[2] };
+
+	float triangleTranslate[3] = { transform_.translate.x,transform_.translate.y ,transform_.translate.z };
+	ImGui::SliderFloat3("triangleTranslate", triangleTranslate, -2, 2, "%.3f");
+	transform_.translate = { triangleTranslate[0],triangleTranslate[1],triangleTranslate[2] };
+
+	float spriteScale[3] = { transformSprite_.scale.x,transformSprite_.scale.y ,transformSprite_.scale.z };
+	ImGui::SliderFloat3("spriteScale", spriteScale, 1, 30, "%.3f");
+	transformSprite_.scale = { spriteScale[0],spriteScale[1],spriteScale[2] };
+
+	float spriteRotate[3] = { transformSprite_.rotate.x,transformSprite_.rotate.y ,transformSprite_.rotate.z };
+	ImGui::SliderFloat3("spriteRotate", spriteRotate, 0, 7, "%.3f");
+	transformSprite_.rotate = { spriteRotate[0],spriteRotate[1],spriteRotate[2] };
+
+	float spriteTranslate[3] = { transformSprite_.translate.x,transformSprite_.translate.y ,transformSprite_.translate.z };
+	ImGui::SliderFloat3("spriteTranslate", spriteTranslate, -640, 640, "%.3f");
+	transformSprite_.translate = { spriteTranslate[0],spriteTranslate[1],spriteTranslate[2] };
+
+	ImGui::End();
 }
 
 void MyEngine::Release()
