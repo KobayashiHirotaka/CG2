@@ -39,22 +39,28 @@ public:
 private:
 	ID3D12DescriptorHeap* CreateDescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 	ID3D12Resource* CreateDepthStencilTextureResource(int32_t width, int32_t height);
-	void MakeDXGIFactory();
-	void MakeCommandQueue();
-	void MakeSwapChain();
+
+	void CreateDXGIDevice();
+
+	void CreateCommand();
+
+	void CreateSwapChain();
+
 	void CreateFinalRenderTargets();
-	void MakeFence();
-	void MakeDXC();
+
+	void CreateFence();
+
+	void CreateRootSignature();
+	void CreateInputLayOut();
+	void CreateBlendState();
+	void CreateRasterizerState();
+	void CreatePSO();
+
+	void CreateViewport();
+	void CreateScissorRect();
+
+	void CreateDxcCompiler();
 	IDxcBlob* CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler);
-
-	void MakeRootSignature();
-	void MakeInputLayOut();
-	void MakeBlendState();
-	void MakeRasterizarState();
-	void MakePipelineStateObject();
-
-	void MakeViewport();
-	void MakeScissor();
 
 private:
 	WindowsApp* win_;

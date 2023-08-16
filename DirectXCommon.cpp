@@ -16,31 +16,31 @@ void DirectXCommon::Initialize(WindowsApp* win, int32_t kClientWidth, int32_t kC
 	}
 #endif
 
-	MakeDXGIFactory();
+	CreateDXGIDevice();
 
-	MakeCommandQueue();
+	CreateCommand();
 
-	MakeSwapChain();
+	CreateSwapChain();
 
 	CreateFinalRenderTargets();
 
-	MakeFence();
+	CreateFence();
 
-	MakeDXC();
+	CreateDxcCompiler();
 
-	MakeRootSignature();
+	CreateRootSignature();
 
-	MakeInputLayOut();
+	CreateInputLayOut();
 
-	MakeBlendState();
+	CreateBlendState();
 
-	MakeRasterizarState();
+	CreateRasterizerState();
 
-	MakePipelineStateObject();
+	CreatePSO();
 
-	MakeViewport();
+	CreateViewport();
 
-	MakeScissor();
+	CreateScissorRect();
 }
 
 void DirectXCommon::PreDraw()
@@ -194,7 +194,7 @@ ID3D12Resource* DirectXCommon::CreateDepthStencilTextureResource(int32_t width, 
 	return resource;
 }
 
-void DirectXCommon::MakeDXGIFactory()
+void DirectXCommon::CreateDXGIDevice()
 {
 	//DXGIファクトリーを作成
 	hr = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory));
@@ -261,7 +261,7 @@ void DirectXCommon::MakeDXGIFactory()
 }
 
 
-void DirectXCommon::MakeCommandQueue()
+void DirectXCommon::CreateCommand()
 {
 	//コマンドキューを生成
 	D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
@@ -280,7 +280,7 @@ void DirectXCommon::MakeCommandQueue()
 	assert(SUCCEEDED(hr));
 }
 
-void DirectXCommon::MakeSwapChain()
+void DirectXCommon::CreateSwapChain()
 {
 	//スワップチェーンを作成
 
@@ -334,7 +334,7 @@ void DirectXCommon::CreateFinalRenderTargets()
 	device->CreateDepthStencilView(depthStencilResource, &dsvDesc, dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
 }
 
-void DirectXCommon::MakeFence()
+void DirectXCommon::CreateFence()
 {
 	//Fenceを作る
 	hr = device->CreateFence(fenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
@@ -343,7 +343,7 @@ void DirectXCommon::MakeFence()
 	assert(fenceEvent != nullptr);
 }
 
-void DirectXCommon::MakeDXC()
+void DirectXCommon::CreateDxcCompiler()
 {
 	//dxCompiler初期化
 	hr = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils));
@@ -403,7 +403,7 @@ IDxcBlob* DirectXCommon::CompileShader(const std::wstring& filePath, const wchar
 	return shaderBlob;
 }
 
-void DirectXCommon::MakeRootSignature()
+void DirectXCommon::CreateRootSignature()
 {
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
 	descriptionRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
@@ -454,7 +454,7 @@ void DirectXCommon::MakeRootSignature()
 	assert(SUCCEEDED(hr));
 }
 
-void DirectXCommon::MakeInputLayOut()
+void DirectXCommon::CreateInputLayOut()
 {
 	//頂点レイアウト
 	inputElementDescs[0].SemanticName = "POSITION";
@@ -471,12 +471,12 @@ void DirectXCommon::MakeInputLayOut()
 	inputLayoutDesc.NumElements = _countof(inputElementDescs);
 }
 
-void DirectXCommon::MakeBlendState()
+void DirectXCommon::CreateBlendState()
 {
 	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 }
 
-void DirectXCommon::MakeRasterizarState()
+void DirectXCommon::CreateRasterizerState()
 {
 	rasterizerDesc.CullMode = D3D12_CULL_MODE_BACK;
 	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
@@ -487,7 +487,7 @@ void DirectXCommon::MakeRasterizarState()
 	assert(pixelShaderBlob != nullptr);
 }
 
-void DirectXCommon::MakePipelineStateObject()
+void DirectXCommon::CreatePSO()
 {
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
 	graphicsPipelineStateDesc.pRootSignature = rootSignature;
@@ -519,7 +519,7 @@ void DirectXCommon::MakePipelineStateObject()
 	assert(SUCCEEDED(hr));
 }
 
-void DirectXCommon::MakeViewport()
+void DirectXCommon::CreateViewport()
 {
 	viewport.Width = (float)kClientWidth_;
 	viewport.Height = (float)kClientHeight_;
@@ -529,7 +529,7 @@ void DirectXCommon::MakeViewport()
 	viewport.MaxDepth = 1.0f;
 }
 
-void DirectXCommon::MakeScissor()
+void DirectXCommon::CreateScissorRect()
 {
 	scissorRect.left = 0;
 	scissorRect.right = kClientWidth_;
