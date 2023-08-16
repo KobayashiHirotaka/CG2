@@ -22,7 +22,12 @@ public:
 
 private:
 	void CreateVertexBufferView();
+
 	void CreateVertexBufferViewSprite();
+	
+	void SettingColor();
+
+	void SettingWVP();
 
 	ID3D12Resource* CreateBufferResource(size_t sizeInBytes);
 	DirectX::ScratchImage OpenImage(const std::string& filePath);
@@ -61,24 +66,24 @@ private:
 
 	Vector4* materialData_ = nullptr;
 
-	ID3D12Resource* wvpResource = nullptr;
+	ID3D12Resource* wvpResource_ = nullptr;
 
-	Matrix4x4* wvpData = nullptr;
+	Matrix4x4* wvpData_ = nullptr;
 	
-	ID3D12Resource* textureResource = nullptr;
+	ID3D12Resource* textureResource_ = nullptr;
 
-	ID3D12Resource* intermediateResource = nullptr;
+	ID3D12Resource* intermediateResource_ = nullptr;
 	
-	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU;
-	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU;
+	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
 	
-	ID3D12Resource* vertexResourceSprite = nullptr;
+	ID3D12Resource* vertexResourceSprite_ = nullptr;
 	
-	VertexData* vertexDataSprite;
+	VertexData* vertexDataSprite_;
 
-	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite{};
+	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite_{};
 	
-	ID3D12Resource* transformationMatrixResourceSprite = nullptr;
+	ID3D12Resource* transformationMatrixResourceSprite_ = nullptr;
 
-	Matrix4x4* transformationMatrixDataSprite = nullptr;
+	Matrix4x4* transformationMatrixDataSprite_ = nullptr;
 };

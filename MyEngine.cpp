@@ -5,15 +5,12 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t
 	kClientWidth_ = kClientWidth;
 	kClientHeight_ = kClientHeight;
 	dxCommon_ = dxCommon;
-	vertexResource_ = CreateBufferResource(sizeof(VertexData) * 6);
-	materialResource_ = CreateBufferResource(sizeof(Vector4) * 3);
-	wvpResource = CreateBufferResource(sizeof(Matrix4x4));
-
-	vertexResourceSprite = CreateBufferResource(sizeof(VertexData) * 6);
-	transformationMatrixResourceSprite = CreateBufferResource(sizeof(Matrix4x4));
 
 	CreateVertexBufferView();
 	CreateVertexBufferViewSprite();
+
+	SettingColor();
+	SettingWVP();
 }
 
 void MyEngine::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& ViewMatrix)
@@ -27,76 +24,71 @@ void MyEngine::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const 
 	//右下
 	vertexData_[2].position = c;
 	vertexData_[2].texcoord = { 1.0f,1.0f };
-	//2枚目左下
+
 	vertexData_[3].position = { -0.7f,-0.5f,0.5f,1.0f };
 	vertexData_[3].texcoord = { 0.0f,1.0f };
-	//2枚目上
+
 	vertexData_[4].position = { 0.0f,0.0f,0.0f,1.0f };
 	vertexData_[4].texcoord = { 0.5f,0.0f };
-	//2枚目右下
+	
 	vertexData_[5].position = { 0.7f,-0.5f,-0.5f,1.0f };
 	vertexData_[5].texcoord = { 1.0f,1.0f };
-
-	//色を書き込むアドレスを取得
-	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
-	//色情報を書き込む
+	
 	*materialData_ = material;
-	//行列を作る
+
 	Matrix4x4 worldMatrix = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
-	//WVPを書き込むアドレスを取得
-	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvpData));
-	//単位行列を書き込む
-	*wvpData = Multiply(worldMatrix, ViewMatrix);
+	*wvpData_ = Multiply(worldMatrix, ViewMatrix);
+
+	//VBVを設定
 	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
+	//形状を設定。PSOに設定しているものとはまた別。同じものを設定する
 	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	//色用のCBufferの場所を特定
+	//マテリアルCBufferの場所を特定
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
-	//WVP用のCBufferの場所を特定
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, wvpResource->GetGPUVirtualAddress());
-	//SRVのDescriptorTableの先頭を設定　2はrootParameter[2]の2
-	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU);
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
+	//SRVのDescriptorTableの先頭を設定。2はrootParameter[2]である。
+	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_);
+	//描画
 	dxCommon_->GetcommandList()->DrawInstanced(6, 1, 0, 0);
 }
 
 void MyEngine::DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, const Vector4& RightTop, const Vector4& RightBottom)
 {
-	//三角形1枚目
-	//左下
-	vertexDataSprite[0].position = LeftBottom;
-	vertexDataSprite[0].texcoord = { 0.0f,1.0f };
-	//左上
-	vertexDataSprite[1].position = LeftTop;
-	vertexDataSprite[1].texcoord = { 0.0f,0.0f };
-	//右下
-	vertexDataSprite[2].position = RightBottom;
-	vertexDataSprite[2].texcoord = { 1.0f,1.0f };
-	//三角形2枚目
-	//左上
-	vertexDataSprite[3].position = LeftTop;
-	vertexDataSprite[3].texcoord = { 0.0f,0.0f };
-	//右上
-	vertexDataSprite[4].position = RightTop;
-	vertexDataSprite[4].texcoord = { 1.0f,0.0f };
-	//右下
-	vertexDataSprite[5].position = RightBottom;
-	vertexDataSprite[5].texcoord = { 1.0f,1.0f };
+	vertexDataSprite_[0].position = LeftBottom;
+	vertexDataSprite_[0].texcoord = { 0.0f,1.0f };
+	
+	vertexDataSprite_[1].position = LeftTop;
+	vertexDataSprite_[1].texcoord = { 0.0f,0.0f };
+
+	vertexDataSprite_[2].position = RightBottom;
+	vertexDataSprite_[2].texcoord = { 1.0f,1.0f };
+
+	vertexDataSprite_[3].position = LeftTop;
+	vertexDataSprite_[3].texcoord = { 0.0f,0.0f };
+
+	vertexDataSprite_[4].position = RightTop;
+	vertexDataSprite_[4].texcoord = { 1.0f,0.0f };
+
+	vertexDataSprite_[5].position = RightBottom;
+	vertexDataSprite_[5].texcoord = { 1.0f,1.0f };
 
 	//書き込むためのアドレス取得
-	transformationMatrixResourceSprite->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixDataSprite));
+	transformationMatrixResourceSprite_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixDataSprite_));
 
 	Matrix4x4 worldMatrixSprite = MakeAffineMatrix(transformSprite_.scale, transformSprite_.rotate, transformSprite_.translate);
 	Matrix4x4 viewMatrixSprite = MakeIdentity4x4();
 	Matrix4x4 ProjectionMatrixSprite = MakeOrthographicMatrix(0.0f, 0.0f, float(kClientWidth_), float(kClientHeight_), 0.0f, 100.0f);
 	Matrix4x4 worldViewProjectionMatrixSprite = Multiply(worldMatrixSprite, Multiply(viewMatrixSprite, ProjectionMatrixSprite));
-	*transformationMatrixDataSprite = worldViewProjectionMatrixSprite;
+	*transformationMatrixDataSprite_ = worldViewProjectionMatrixSprite;
+
 	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	//色用のCBufferの場所を特定
+	//マテリアルCBufferの場所を特定
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
-	//頂点
-	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewSprite);
-	//WVP
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transformationMatrixResourceSprite->GetGPUVirtualAddress());
-	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU);
+
+	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewSprite_);
+
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transformationMatrixResourceSprite_->GetGPUVirtualAddress());
+	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_);
 	dxCommon_->GetcommandList()->DrawInstanced(6, 1, 0, 0);
 }
 
@@ -137,18 +129,33 @@ void MyEngine::Release()
 {
 	vertexResource_->Release();
 	materialResource_->Release();
-	wvpResource->Release();
-	textureResource->Release();
-	intermediateResource->Release();
-	vertexResourceSprite->Release();
-	transformationMatrixResourceSprite->Release();
+	wvpResource_->Release();
+	textureResource_->Release();
+	intermediateResource_->Release();
+	vertexResourceSprite_->Release();
+	transformationMatrixResourceSprite_->Release();
 }
 void MyEngine::CreateVertexBufferView()
 {
+	vertexResource_ = CreateBufferResource(sizeof(VertexData) * 6);
 	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress();
 	vertexBufferView_.SizeInBytes = sizeof(VertexData) * 6;
 	vertexBufferView_.StrideInBytes = sizeof(VertexData);
 	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
+}
+
+void MyEngine::SettingColor()
+{
+	materialResource_ = CreateBufferResource(sizeof(Vector4) * 3);
+	//書き込むアドレスを取得
+	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
+}
+
+void MyEngine::SettingWVP()
+{
+	wvpResource_ = CreateBufferResource(sizeof(Matrix4x4));
+	//WVPを書き込むアドレスを取得
+	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&wvpData_));
 }
 
 void MyEngine::LoadTexture(const std::string& filePath)
@@ -156,8 +163,9 @@ void MyEngine::LoadTexture(const std::string& filePath)
 	//Textureを読んで転送する
 	DirectX::ScratchImage mipImages = OpenImage(filePath);
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
-	textureResource = CreateTextureResource(dxCommon_->GetDevice(), metadata);
-	intermediateResource = UploadTextureData(textureResource, mipImages);
+	textureResource_ = CreateTextureResource(dxCommon_->GetDevice(), metadata);
+	intermediateResource_ = UploadTextureData(textureResource_, mipImages);
+
 	//metadataを基にSRVの設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 	srvDesc.Format = metadata.format;
@@ -165,13 +173,13 @@ void MyEngine::LoadTexture(const std::string& filePath)
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
 	//SRVを作成するDescriptorHeapの場所を決める
-	textureSrvHandleCPU = dxCommon_->GetSrvDescriptorHeap()->GetCPUDescriptorHandleForHeapStart();
-	textureSrvHandleGPU = dxCommon_->GetSrvDescriptorHeap()->GetGPUDescriptorHandleForHeapStart();
+	textureSrvHandleCPU_ = dxCommon_->GetSrvDescriptorHeap()->GetCPUDescriptorHandleForHeapStart();
+	textureSrvHandleGPU_ = dxCommon_->GetSrvDescriptorHeap()->GetGPUDescriptorHandleForHeapStart();
 	//先頭はImGuiが使っているので次のを使う
-	textureSrvHandleCPU.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	textureSrvHandleGPU.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	textureSrvHandleCPU_.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	textureSrvHandleGPU_.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	//SRVの作成
-	dxCommon_->GetDevice()->CreateShaderResourceView(textureResource, &srvDesc, textureSrvHandleCPU);
+	dxCommon_->GetDevice()->CreateShaderResourceView(textureResource_, &srvDesc, textureSrvHandleCPU_);
 }
 
 DirectX::ScratchImage MyEngine::OpenImage(const std::string& filePath)
@@ -201,17 +209,17 @@ ID3D12Resource* MyEngine::CreateTextureResource(ID3D12Device* device, const Dire
 	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION(metadata.dimension);
 	//利用するheapの設定
 	D3D12_HEAP_PROPERTIES heapProperties{};
-	heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;//細かい設定を行う
+	heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;
 
 	//Resourceの生成
 	ID3D12Resource* resource = nullptr;
 	hr_ = device->CreateCommittedResource(
-		&heapProperties,//Heapの設定
-		D3D12_HEAP_FLAG_NONE,//Heapの特殊な設定
-		&resourceDesc,//Resourceの設定
-		D3D12_RESOURCE_STATE_COPY_DEST,//初回のResourceState　Textureは基本読むだけ
-		nullptr,//Clear最適値　使わないためnullptr
-		IID_PPV_ARGS(&resource)//作成するResourceポインタへのポインタ
+		&heapProperties,
+		D3D12_HEAP_FLAG_NONE,
+		&resourceDesc,
+		D3D12_RESOURCE_STATE_COPY_DEST,
+		nullptr,
+		IID_PPV_ARGS(&resource)
 	);
 
 	assert(SUCCEEDED(hr_));
@@ -226,6 +234,7 @@ ID3D12Resource* MyEngine::UploadTextureData(ID3D12Resource* texture, const Direc
 	uint64_t intermediateSize = GetRequiredIntermediateSize(texture, 0, UINT(subresources.size()));
 	ID3D12Resource* intermediateResource = CreateBufferResource(intermediateSize);
 	UpdateSubresources(dxCommon_->GetcommandList(), texture, intermediateResource, 0, 0, UINT(subresources.size()), subresources.data());
+
 	//Tetureへの転送後は利用できるようにD3D12_RESOURCE_STATE_COPY_DESTからD3D12_RESOURCE_STATE_GENERIC_READへResourceStateを変更する
 	D3D12_RESOURCE_BARRIER barrier{};
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
@@ -235,18 +244,21 @@ ID3D12Resource* MyEngine::UploadTextureData(ID3D12Resource* texture, const Direc
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
 	dxCommon_->GetcommandList()->ResourceBarrier(1, &barrier);
+
 	return intermediateResource;
 }
 
 void MyEngine::CreateVertexBufferViewSprite()
 {
-	vertexResourceSprite->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataSprite));
-	//リソースの先頭のアドレス
-	vertexBufferViewSprite.BufferLocation = vertexResourceSprite->GetGPUVirtualAddress();
-	//使用する頂点サイズ
-	vertexBufferViewSprite.SizeInBytes = sizeof(VertexData) * 6;
-	//1頂点あたりのアドレス
-	vertexBufferViewSprite.StrideInBytes = sizeof(VertexData);
+	vertexResourceSprite_ = CreateBufferResource(sizeof(VertexData) * 6);
+	transformationMatrixResourceSprite_ = CreateBufferResource(sizeof(Matrix4x4));
+	vertexResourceSprite_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataSprite_));
+	
+	vertexBufferViewSprite_.BufferLocation = vertexResourceSprite_->GetGPUVirtualAddress();
+
+	vertexBufferViewSprite_.SizeInBytes = sizeof(VertexData) * 6;
+
+	vertexBufferViewSprite_.StrideInBytes = sizeof(VertexData);
 }
 
 ID3D12Resource* MyEngine::CreateBufferResource(size_t sizeInBytes)
@@ -262,9 +274,10 @@ ID3D12Resource* MyEngine::CreateBufferResource(size_t sizeInBytes)
 	ResourceDesc.MipLevels = 1;
 	ResourceDesc.SampleDesc.Count = 1;
 	ResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-	//頂点リソースを作る
+	
 	hr_ = dxCommon_->GetDevice()->CreateCommittedResource(&uploadHeapProperties, D3D12_HEAP_FLAG_NONE, &ResourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&Resource));
 	assert(SUCCEEDED(hr_));
+
 	return Resource;
 }
 
