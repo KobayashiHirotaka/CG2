@@ -128,6 +128,21 @@ private:
 
 	IDxcIncludeHandler* includeHandler_ = nullptr;
 
+	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc_{};
+	D3D12_INPUT_ELEMENT_DESC inputElementDescs_[2];
+
+	D3D12_BLEND_DESC blendDesc_{};
+
+	D3D12_RASTERIZER_DESC rasterizerDesc_{};
+
+	ID3D12PipelineState* graphicsPipelineState_;
+
+	ID3DBlob* signatureBlob_;
+	ID3DBlob* errorBlob_;
+
+	ID3D12RootSignature* rootSignature_;
+
+
 	//RTVの設定
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 	//SwapChainからResourceを持ってくる
@@ -135,23 +150,12 @@ private:
 	//RTVを2つつくるので2つ用意
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles[2];
 	
+
 	
-	//ルートシグネチャ―
-	ID3D12RootSignature* rootSignature = nullptr;
-	ID3DBlob* signatureBlob = nullptr;
-	ID3DBlob* errorBlob = nullptr;
-	//インプットレイアウト
-	D3D12_INPUT_ELEMENT_DESC inputElementDescs[2] = {};
-	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
-	//ブレンドステート
-	D3D12_BLEND_DESC blendDesc{};
-	//ラスタライザステート
-	D3D12_RASTERIZER_DESC rasterizerDesc{};
 	//シェーダーコンパイル
 	IDxcBlob* vertexShaderBlob = nullptr;
 	IDxcBlob* pixelShaderBlob = nullptr;
-	//PSO
-	ID3D12PipelineState* graphicsPipelineState = nullptr;
+
 	//ビューポート
 	D3D12_VIEWPORT viewport{};
 	//シザー
