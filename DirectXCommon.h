@@ -5,6 +5,9 @@
 #include <dxgi1_6.h>
 #include <dxcapi.h>
 #include "dxgidebug.h"
+#include "Vector3.h"
+#include "Vector4.h"
+#include <cassert>
 #include "externals/DirectXTex/d3dx12.h"
 
 #pragma comment(lib,"d3d12.lib")

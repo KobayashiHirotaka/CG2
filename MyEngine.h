@@ -12,7 +12,9 @@ public:
 
 	void Update();
 
-	void Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& wvpData);
+	void Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& ViewMatrix);
+
+	void DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, const Vector4& RightTop, const Vector4& RightBottom);
 
 	void Release();
 
@@ -22,6 +24,7 @@ public:
 
 private:
 	void CreateVerteexBufferView();
+	void CreateVertexBufferViewSprite();
 
 	ID3D12Resource* CreateBufferResource(size_t sizeInBytes);
 
@@ -29,7 +32,7 @@ private:
 
 	ID3D12Resource* CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);
 
-	void UploadTexturData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
+	ID3D12Resource* UploadTexturData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
 
 private:
 	DirectXCommon* dxCommon_;

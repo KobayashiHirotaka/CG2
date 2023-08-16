@@ -1,7 +1,7 @@
 #include "WindowsApp.h"
 #include "DirectXCommon.h"
 #include "MyEngine.h"
-#include "Triangle.h"
+#include "GameScene.h"
 
 //Windowsアプリでのエントリーポイント
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
@@ -24,7 +24,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	MSG msg{};
 
-	Triangle* triangle = new Triangle();
+	GameScene* triangle = new GameScene();
 	triangle->Initialize(win, dxCommon, engine, kClientWidth, kClientHeight);
 
 	//ウィンドウのxが押されるまでループ
