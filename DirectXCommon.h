@@ -26,9 +26,9 @@ public:
 
 	void Release();
 
-	ID3D12Device* GetDevice() { return device; }
+	ID3D12Device* GetDevice() { return device_; }
 
-	ID3D12GraphicsCommandList* GetcommandList() { return commandList; }
+	ID3D12GraphicsCommandList* GetcommandList() { return commandList_; }
 
 	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() { return swapChainDesc; }
 
@@ -81,17 +81,21 @@ private:
 
 	//使用するアダプタ用の変数
 	IDXGIAdapter4* useAdapter_;
-	
+
+	//D3D12Deviceの生成
+	ID3D12Device* device_;
+
+	//コマンドキュー生成
+	ID3D12CommandQueue* commandQueue_;
+
+	//コマンドアロケータの生成
+	ID3D12CommandAllocator* commandAllocator_;
+
+	//コマンドリストを生成する
+	ID3D12GraphicsCommandList* commandList_;
+
 	D3D12_RESOURCE_BARRIER barrier{};
 
-	//デバイス
-	ID3D12Device* device = nullptr;
-	//コマンドキューを生成
-	ID3D12CommandQueue* commandQueue = nullptr;
-	//コマンドアロケータを作成
-	ID3D12CommandAllocator* commandAllocator = nullptr;
-	//コマンドリストを作成
-	ID3D12GraphicsCommandList* commandList = nullptr;
 	//スワップチェーンを作成
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 	IDXGISwapChain4* swapChain = nullptr;
