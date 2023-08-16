@@ -9,7 +9,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//COMの初期化
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 
-	//初期化
 	WindowsApp* win = new WindowsApp();
 	int32_t kClientWidth = 1280;
 	int32_t kClientHeight = 720;
