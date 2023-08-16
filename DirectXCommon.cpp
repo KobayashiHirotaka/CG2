@@ -5,8 +5,10 @@ void DirectXCommon::Initialize(WindowsApp* win, int32_t kClientWidth, int32_t kC
 	win_ = win;
 	kClientWidth_ = kClientWidth;
 	kClientHeight_ = kClientHeight;
+
 #ifdef _DEBUG
-	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) 
+	{
 		//デバッグレイヤ―を有効化
 		debugController->EnableDebugLayer();
 		//GPU側のチェック
@@ -20,7 +22,7 @@ void DirectXCommon::Initialize(WindowsApp* win, int32_t kClientWidth, int32_t kC
 
 	MakeSwapChain();
 
-	MakeDescriptorHeap();
+	CreateFinalRenderTargets();
 
 	MakeFence();
 
@@ -295,7 +297,7 @@ void DirectXCommon::MakeSwapChain()
 	assert(SUCCEEDED(hr));
 }
 
-void DirectXCommon::MakeDescriptorHeap()
+void DirectXCommon::CreateFinalRenderTargets()
 {
 	//rtvディスクリプタヒープの作成
 	rtvDescriptorHeap = CreateDescriptorHeap(device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
@@ -330,11 +332,6 @@ void DirectXCommon::MakeDescriptorHeap()
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;//2dTexture
 	//DSVHeapの先頭にDSVを作る
 	device->CreateDepthStencilView(depthStencilResource, &dsvDesc, dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
-}
-
-void DirectXCommon::CreateFinalRenderTargets()
-{
-
 }
 
 void DirectXCommon::MakeFence()

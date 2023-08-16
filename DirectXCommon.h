@@ -37,6 +37,26 @@ public:
 	ID3D12DescriptorHeap* GetSrvDescriptorHeap() { return srvDescriptorHeap; }
 
 private:
+	ID3D12DescriptorHeap* CreateDescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
+	ID3D12Resource* CreateDepthStencilTextureResource(int32_t width, int32_t height);
+	void MakeDXGIFactory();
+	void MakeCommandQueue();
+	void MakeSwapChain();
+	void CreateFinalRenderTargets();
+	void MakeFence();
+	void MakeDXC();
+	IDxcBlob* CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler);
+
+	void MakeRootSignature();
+	void MakeInputLayOut();
+	void MakeBlendState();
+	void MakeRasterizarState();
+	void MakePipelineStateObject();
+
+	void MakeViewport();
+	void MakeScissor();
+
+private:
 	WindowsApp* win_;
 	int32_t kClientWidth_;
 	int32_t kClientHeight_;
@@ -108,27 +128,6 @@ private:
 #ifdef _DEBUG
 	ID3D12Debug1* debugController = nullptr;
 #endif
-
-	//プライベート関数
-	ID3D12DescriptorHeap* CreateDescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
-	ID3D12Resource* CreateDepthStencilTextureResource(int32_t width, int32_t height);
-	void MakeDXGIFactory();
-	void MakeCommandQueue();
-	void MakeSwapChain();
-	void MakeDescriptorHeap();
-	void CreateFinalRenderTargets();
-	void MakeFence();
-	void MakeDXC();
-	IDxcBlob* CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler);
-	//PSO
-	void MakeRootSignature();
-	void MakeInputLayOut();
-	void MakeBlendState();
-	void MakeRasterizarState();
-	void MakePipelineStateObject();
-
-	void MakeViewport();
-	void MakeScissor();
 };
 
 
