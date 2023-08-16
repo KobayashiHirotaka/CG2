@@ -10,7 +10,7 @@ class MyEngine
 public:
 	void Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t kClientHeight);
 
-	void Draw(const Vector4& Leftbottom, const Vector4& top, const Vector4& Rightbottom, const Vector4& color, const Matrix4x4& ViewMatrix);
+	void Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& ViewMatrix);
 
 	void DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, const Vector4& RightTop, const Vector4& RightBottom);
 
@@ -51,15 +51,15 @@ private:
 	DirectXCommon* dxCommon_ = nullptr;
 
 	
-	ID3D12Resource* vertexResource = nullptr;
+	ID3D12Resource* vertexResource_ = nullptr;
 	
-	VertexData* vertexData;
+	VertexData* vertexData_;
 
-	D3D12_VERTEX_BUFFER_VIEW vertexBufferView{};
+	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{};
 	
-	ID3D12Resource* materialResource = nullptr;
+	ID3D12Resource* materialResource_ = nullptr;
 
-	Vector4* materialData = nullptr;
+	Vector4* materialData_ = nullptr;
 
 	ID3D12Resource* wvpResource = nullptr;
 

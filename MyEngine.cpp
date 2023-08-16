@@ -5,8 +5,8 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t
 	kClientWidth_ = kClientWidth;
 	kClientHeight_ = kClientHeight;
 	dxCommon_ = dxCommon;
-	vertexResource = CreateBufferResource(sizeof(VertexData) * 6);
-	materialResource = CreateBufferResource(sizeof(Vector4) * 3);
+	vertexResource_ = CreateBufferResource(sizeof(VertexData) * 6);
+	materialResource_ = CreateBufferResource(sizeof(Vector4) * 3);
 	wvpResource = CreateBufferResource(sizeof(Matrix4x4));
 
 	vertexResourceSprite = CreateBufferResource(sizeof(VertexData) * 6);
@@ -16,41 +16,41 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t
 	CreateVertexBufferViewSprite();
 }
 
-void MyEngine::Draw(const Vector4& Leftbottom, const Vector4& top, const Vector4& Rightbottom, const Vector4& color, const Matrix4x4& ViewMatrix)
+void MyEngine::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& ViewMatrix)
 {
 	//左下
-	vertexData[0].position = Leftbottom;
-	vertexData[0].texcoord = { 0.0f,1.0f };
+	vertexData_[0].position = a;
+	vertexData_[0].texcoord = { 0.0f,1.0f };
 	//上
-	vertexData[1].position = top;
-	vertexData[1].texcoord = { 0.5f,0.0f };
+	vertexData_[1].position = b;
+	vertexData_[1].texcoord = { 0.5f,0.0f };
 	//右下
-	vertexData[2].position = Rightbottom;
-	vertexData[2].texcoord = { 1.0f,1.0f };
+	vertexData_[2].position = c;
+	vertexData_[2].texcoord = { 1.0f,1.0f };
 	//2枚目左下
-	vertexData[3].position = { -0.7f,-0.5f,0.5f,1.0f };
-	vertexData[3].texcoord = { 0.0f,1.0f };
+	vertexData_[3].position = { -0.7f,-0.5f,0.5f,1.0f };
+	vertexData_[3].texcoord = { 0.0f,1.0f };
 	//2枚目上
-	vertexData[4].position = { 0.0f,0.0f,0.0f,1.0f };
-	vertexData[4].texcoord = { 0.5f,0.0f };
+	vertexData_[4].position = { 0.0f,0.0f,0.0f,1.0f };
+	vertexData_[4].texcoord = { 0.5f,0.0f };
 	//2枚目右下
-	vertexData[5].position = { 0.7f,-0.5f,-0.5f,1.0f };
-	vertexData[5].texcoord = { 1.0f,1.0f };
+	vertexData_[5].position = { 0.7f,-0.5f,-0.5f,1.0f };
+	vertexData_[5].texcoord = { 1.0f,1.0f };
 
 	//色を書き込むアドレスを取得
-	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
+	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 	//色情報を書き込む
-	*materialData = color;
+	*materialData_ = material;
 	//行列を作る
 	Matrix4x4 worldMatrix = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
 	//WVPを書き込むアドレスを取得
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvpData));
 	//単位行列を書き込む
 	*wvpData = Multiply(worldMatrix, ViewMatrix);
-	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);
+	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
 	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//色用のCBufferの場所を特定
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	//WVP用のCBufferの場所を特定
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, wvpResource->GetGPUVirtualAddress());
 	//SRVのDescriptorTableの先頭を設定　2はrootParameter[2]の2
@@ -91,7 +91,7 @@ void MyEngine::DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, con
 	*transformationMatrixDataSprite = worldViewProjectionMatrixSprite;
 	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//色用のCBufferの場所を特定
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	//頂点
 	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewSprite);
 	//WVP
@@ -135,8 +135,8 @@ void MyEngine::ImGui()
 
 void MyEngine::Release()
 {
-	vertexResource->Release();
-	materialResource->Release();
+	vertexResource_->Release();
+	materialResource_->Release();
 	wvpResource->Release();
 	textureResource->Release();
 	intermediateResource->Release();
@@ -145,10 +145,10 @@ void MyEngine::Release()
 }
 void MyEngine::CreateVertexBufferView()
 {
-	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
-	vertexBufferView.SizeInBytes = sizeof(VertexData) * 6;
-	vertexBufferView.StrideInBytes = sizeof(VertexData);
-	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
+	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress();
+	vertexBufferView_.SizeInBytes = sizeof(VertexData) * 6;
+	vertexBufferView_.StrideInBytes = sizeof(VertexData);
+	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
 }
 
 void MyEngine::LoadTexture(const std::string& filePath)
