@@ -32,7 +32,7 @@ public:
 
 	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() { return swapChainDesc_; }
 
-	D3D12_RENDER_TARGET_VIEW_DESC GetRtvDesc() { return rtvDesc; }
+	D3D12_RENDER_TARGET_VIEW_DESC GetRtvDesc() { return rtvDesc_; }
 
 	ID3D12DescriptorHeap* GetSrvDescriptorHeap() { return srvDescriptorHeap_; }
 
@@ -119,22 +119,25 @@ private:
 
 	D3D12_RESOURCE_BARRIER barrier_{};
 
+	//DXCの初期化
 	IDxcUtils* dxcUtils_ = nullptr;
 	IDxcCompiler3* dxcCompiler_ = nullptr;
-
-	IDxcBlobUtf8* shaderError_ = nullptr;
-
-	IDxcBlob* shaderBlob_ = nullptr;
-
 	IDxcIncludeHandler* includeHandler_ = nullptr;
 
+	IDxcBlobUtf8* shaderError_ = nullptr;
+	IDxcBlob* shaderBlob_ = nullptr;
+
+	//inputLayout
 	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc_{};
 	D3D12_INPUT_ELEMENT_DESC inputElementDescs_[2];
 
+	//blend
 	D3D12_BLEND_DESC blendDesc_{};
 
+	//rasterizer
 	D3D12_RASTERIZER_DESC rasterizerDesc_{};
 
+	//PSO
 	ID3D12PipelineState* graphicsPipelineState_;
 
 	ID3DBlob* signatureBlob_;
@@ -142,25 +145,16 @@ private:
 
 	ID3D12RootSignature* rootSignature_;
 
+	IDxcBlob* vertexShaderBlob_;
 
-	//RTVの設定
-	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
-	//SwapChainからResourceを持ってくる
-	ID3D12Resource* swapChainResources[2] = { nullptr };
-	//RTVを2つつくるので2つ用意
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles[2];
+	IDxcBlob* pixelShaderBlob_;
+
+	//viewport
+	D3D12_VIEWPORT viewport_{};
+
+	//scissor
+	D3D12_RECT scissorRect_{};
 	
-
-	
-	//シェーダーコンパイル
-	IDxcBlob* vertexShaderBlob = nullptr;
-	IDxcBlob* pixelShaderBlob = nullptr;
-
-	//ビューポート
-	D3D12_VIEWPORT viewport{};
-	//シザー
-	D3D12_RECT scissorRect{};
-
 #ifdef _DEBUG
 	ID3D12Debug1* debugController_ = nullptr;
 #endif
