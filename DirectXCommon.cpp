@@ -7,12 +7,12 @@ void DirectXCommon::Initialize(WindowsApp* win, int32_t kClientWidth, int32_t kC
 	kClientHeight_ = kClientHeight;
 
 #ifdef _DEBUG
-	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) 
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController_)))) 
 	{
 		//デバッグレイヤ―を有効化
-		debugController->EnableDebugLayer();
+		debugController_->EnableDebugLayer();
 		//GPU側のチェック
-		debugController->SetEnableGPUBasedValidation(TRUE);
+		debugController_->SetEnableGPUBasedValidation(TRUE);
 	}
 #endif
 
@@ -113,33 +113,42 @@ void DirectXCommon::Release()
 {
 	CloseHandle(fenceEvent);
 	fence->Release();
+
 	rtvDescriptorHeap->Release();
 	srvDescriptorHeap->Release();
 	swapChainResources[0]->Release();
 	swapChainResources[1]->Release();
+
 	swapChain->Release();
 	commandList->Release();
 	commandAllocator->Release();
 	commandQueue->Release();
+
 	device->Release();
 	useAdapter->Release();
 	dxgiFactory->Release();
-#ifdef _DEBUG
-	debugController->Release();
-#endif
-	CloseWindow(win_->GetHwnd());
+
 	graphicsPipelineState->Release();
 	signatureBlob->Release();
-	if (errorBlob) {
+	if (errorBlob) 
+	{
 		errorBlob->Release();
 	}
+
 	rootSignature->Release();
 	pixelShaderBlob->Release();
 	vertexShaderBlob->Release();
 	depthStencilResource->Release();
 	dsvDescriptorHeap->Release();
+
+#ifdef _DEBUG
+	debugController_->Release();
+#endif
+	CloseWindow(win_->GetHwnd());
+	
 	IDXGIDebug1* debug;
-	if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&debug)))) {
+	if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&debug)))) 
+	{
 		debug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
 		debug->ReportLiveObjects(DXGI_DEBUG_APP, DXGI_DEBUG_RLO_ALL);
 		debug->ReportLiveObjects(DXGI_DEBUG_D3D12, DXGI_DEBUG_RLO_ALL);
