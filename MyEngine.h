@@ -3,6 +3,7 @@
 #include"MyMath.h"
 #include"Matrix4x4.h"
 #include"VertexData.h"
+#include "Sphere.h"
 #include"externals/DirectXTex/DirectXTex.h"
 
 class MyEngine
@@ -14,6 +15,8 @@ public:
 
 	void DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, const Vector4& RightTop, const Vector4& RightBottom);
 
+	void DrawSphere(const Sphere& sphere, const Matrix4x4& ViewMatrix);
+
 	void ImGui();
 
 	void Release();
@@ -24,6 +27,8 @@ private:
 	void CreateVertexBufferView();
 
 	void CreateVertexBufferViewSprite();
+
+	void CreateVertexBufferViewSphere();
 	
 	void SettingColor();
 
@@ -46,6 +51,13 @@ private:
 	};
 
 	Transform transformSprite_
+	{
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f},
+	};
+
+	Transform transformSphere_
 	{
 		{1.0f,1.0f,1.0f},
 		{0.0f,0.0f,0.0f},
@@ -76,7 +88,8 @@ private:
 	
 	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
-	
+
+	//Sprite
 	ID3D12Resource* vertexResourceSprite_ = nullptr;
 	
 	VertexData* vertexDataSprite_;
@@ -86,4 +99,17 @@ private:
 	ID3D12Resource* transformationMatrixResourceSprite_ = nullptr;
 
 	Matrix4x4* transformationMatrixDataSprite_ = nullptr;
+
+	//Sphere
+	const int kSubdivision_ = 16;
+
+	ID3D12Resource* vertexResourceSphere_ = nullptr;
+
+	VertexData* vertexDataSphere_;
+
+	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSphere_{};
+
+	ID3D12Resource* transformationMatrixResourceSphere_ = nullptr;
+
+	Matrix4x4* transformationMatrixDataSphere_ = nullptr;
 };

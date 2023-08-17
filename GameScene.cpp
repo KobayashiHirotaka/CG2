@@ -1,9 +1,9 @@
 #include"GameScene.h"
 
-void GameScene::Initialize(WindowsApp* win, DirectXCommon* dxCommon, MyEngine* myEngine, int32_t kClientWidth, int32_t kClientHeight)
+void GameScene::Initialize(WindowsApp* win, DirectXCommon* dxCommon, MyEngine* engine, int32_t kClientWidth, int32_t kClientHeight)
 {
 	dxCommon_ = dxCommon;
-	myEngine_ = myEngine;
+	engine_ = engine;
 
 	kClientWidth_ = kClientWidth;
 	kClientHeight_ = kClientHeight;
@@ -14,7 +14,7 @@ void GameScene::Initialize(WindowsApp* win, DirectXCommon* dxCommon, MyEngine* m
 	imGui_ = new MyImGui();
 	imGui_->Initialize(win, dxCommon_);
 
-	myEngine_->LoadTexture("resource/uvChecker.png");
+	engine_->LoadTexture("resource/uvChecker.png");
 
 	triangleData[0] = { -0.5f,-0.5f,0.0f,1.0f };
 	triangleData[1] = { 0.0f,0.5f,0.0f,1.0f };
@@ -41,10 +41,11 @@ void GameScene::Draw()
 
 	ImGui::End();
 
-	myEngine_->ImGui();
-
-	myEngine_->Draw(triangleData[0], triangleData[1], triangleData[2], material[0], camera_->transformationMatrixData);
-	myEngine_->DrawSprite(LeftTop, LeftBottom, RightTop, RightBottom);
+	engine_->ImGui();
+	
+	engine_->Draw(triangleData[0], triangleData[1], triangleData[2], material[0], camera_->transformationMatrixData);
+	engine_->DrawSprite(LeftTop, LeftBottom, RightTop, RightBottom);
+	engine_->DrawSphere(sphere, camera_->transformationMatrixData);
 
 	imGui_->EndFlame();
 	dxCommon_->PostDraw();
@@ -53,6 +54,6 @@ void GameScene::Draw()
 void GameScene::Release()
 {
 	ImGui_ImplDX12_Shutdown();
-	myEngine_->Release();
+	engine_->Release();
 	dxCommon_->Release();
 }

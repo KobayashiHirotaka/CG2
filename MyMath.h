@@ -4,6 +4,7 @@
 #include "Vector4.h"
 #include <assert.h>
 #include <cmath>
+#include <numbers>
 
 struct Transform
 {

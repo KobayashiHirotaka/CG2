@@ -63,6 +63,7 @@
     <ClInclude Include="MyImGui.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="VertexData.h" />

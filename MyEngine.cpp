@@ -8,6 +8,7 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t
 
 	CreateVertexBufferView();
 	CreateVertexBufferViewSprite();
+	CreateVertexBufferViewSphere();
 
 	SettingColor();
 	SettingWVP();
@@ -92,11 +93,87 @@ void MyEngine::DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, con
 	dxCommon_->GetcommandList()->DrawInstanced(6, 1, 0, 0);
 }
 
+void MyEngine::DrawSphere(const Sphere& sphere, const Matrix4x4& ViewMatrix)
+{
+	//経度分割1つ分の角度φ
+	const float kLonEvery = float(std::numbers::pi) * 2.0f / float(kSubdivision_);
+	//緯度分割1つ分の角度θ
+	const float kLatEvery = float(std::numbers::pi) / float(kSubdivision_);
+
+	//緯度の方向に分割
+	for (int latIndex = 0; latIndex < kSubdivision_; ++latIndex)
+	{
+		float lat = -float(std::numbers::pi) / 2.0f + kLatEvery * latIndex;
+		float uvLength = 1.0f / kSubdivision_;
+
+		//経度の方向に分割しながら線を描く
+		for (int lonIndex = 0; lonIndex < kSubdivision_; ++lonIndex)
+		{
+			uint32_t start = (latIndex * kSubdivision_ + lonIndex) * 6;
+			float lon = lonIndex * kLonEvery;
+			float u = float(lonIndex) / float(kSubdivision_);
+			float v = 1.0f - float(latIndex) / float(kSubdivision_);
+
+			vertexDataSphere_[start].position.x = cos(lat) * cos(lon) + sphere.center.x;
+			vertexDataSphere_[start].position.y = sin(lat) + sphere.center.y;
+			vertexDataSphere_[start].position.w = cos(lat) * sin(lon) + sphere.center.z;
+			vertexDataSphere_[start].position.h = 1.0f;
+			vertexDataSphere_[start].texcoord = { u,v + uvLength };
+
+			vertexDataSphere_[start + 1].position.x = cos(lat + kLatEvery) * cos(lon) + sphere.center.x;
+			vertexDataSphere_[start + 1].position.y = sin(lat + kLatEvery) + sphere.center.y;
+			vertexDataSphere_[start + 1].position.w = cos(lat + kLatEvery) * sin(lon) + sphere.center.z;
+			vertexDataSphere_[start + 1].position.h = 1.0f;
+			vertexDataSphere_[start + 1].texcoord = { u,v };
+
+			vertexDataSphere_[start + 2].position.x = cos(lat) * cos(lon + kLonEvery) + sphere.center.x;
+			vertexDataSphere_[start + 2].position.y = sin(lat) + sphere.center.y;
+			vertexDataSphere_[start + 2].position.w = cos(lat) * sin(lon + kLonEvery) + sphere.center.z;
+			vertexDataSphere_[start + 2].position.h = 1.0f;
+			vertexDataSphere_[start + 2].texcoord = { u + uvLength, v + uvLength };
+
+			vertexDataSphere_[start + 3].position.x = cos(lat + kLatEvery) * cos(lon + kLonEvery) + sphere.center.x;
+			vertexDataSphere_[start + 3].position.y = sin(lat + kLatEvery) + sphere.center.y;
+			vertexDataSphere_[start + 3].position.w = cos(lat + kLatEvery) * sin(lon + kLonEvery) + sphere.center.z;
+			vertexDataSphere_[start + 3].position.h = 1.0f;
+			vertexDataSphere_[start + 3].texcoord = { u + uvLength,v };
+
+			vertexDataSphere_[start + 4].position.x = cos(lat) * cos(lon + kLonEvery) + sphere.center.x;
+			vertexDataSphere_[start + 4].position.y = sin(lat) + sphere.center.y;
+			vertexDataSphere_[start + 4].position.w = cos(lat) * sin(lon + kLonEvery) + sphere.center.z;
+			vertexDataSphere_[start + 4].position.h = 1.0f;
+			vertexDataSphere_[start + 4].texcoord = { u + uvLength, v + uvLength };
+
+			vertexDataSphere_[start + 5].position.x = cos(lat + kLatEvery) * cos(lon) + sphere.center.x;
+			vertexDataSphere_[start + 5].position.y = sin(lat + kLatEvery) + sphere.center.y;
+			vertexDataSphere_[start + 5].position.w = cos(lat + kLatEvery) * sin(lon) + sphere.center.z;
+			vertexDataSphere_[start + 5].position.h = 1.0f;
+			vertexDataSphere_[start + 5].texcoord = { u,v };
+		}
+	}
+
+	//書き込むためのアドレス取得
+	transformationMatrixResourceSphere_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixDataSphere_));
+
+	Matrix4x4 worldMatrixSphere = MakeAffineMatrix(transformSphere_.scale, transformSphere_.rotate, transformSphere_.translate);
+	*transformationMatrixDataSphere_ = Multiply(worldMatrixSphere, ViewMatrix);
+
+	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	//マテリアルCBufferの場所を特定
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+
+	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewSphere_);
+
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transformationMatrixResourceSphere_->GetGPUVirtualAddress());
+	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_);
+	dxCommon_->GetcommandList()->DrawInstanced(kSubdivision_ * kSubdivision_ * 6, 1, 0, 0);
+}
+
 void MyEngine::ImGui()
 {
 	ImGui::ShowDemoWindow();
 
-	ImGui::Begin("TriAngle,Sprite");
+	ImGui::Begin("TriAngle,Sprite,Sphere");
 
 	float triangleScale[3] = { transform_.scale.x,transform_.scale.y ,transform_.scale.z };
 	ImGui::SliderFloat3("triangleScale", triangleScale, 1, 30, "%.3f");
@@ -122,6 +199,18 @@ void MyEngine::ImGui()
 	ImGui::SliderFloat3("spriteTranslate", spriteTranslate, -640, 640, "%.3f");
 	transformSprite_.translate = { spriteTranslate[0],spriteTranslate[1],spriteTranslate[2] };
 
+	float sphereScale[3] = { transformSphere_.scale.x,transformSphere_.scale.y ,transformSphere_.scale.z };
+	ImGui::SliderFloat3("sphereScale", sphereScale, -3, 3, "%.3f");
+	transformSphere_.scale = { sphereScale[0],sphereScale[1],sphereScale[2] };
+
+	float sphereRotate[3] = { transformSphere_.rotate.x,transformSphere_.rotate.y ,transformSphere_.rotate.z };
+	ImGui::SliderFloat3("sphereRotate", sphereRotate, -7, 7, "%.3f");
+	transformSphere_.rotate = { sphereRotate[0],sphereRotate[1],sphereRotate[2] };
+
+	float sphereTranslate[3] = { transformSphere_.translate.x,transformSphere_.translate.y ,transformSphere_.translate.z };
+	ImGui::SliderFloat3("sphereTranslate", sphereTranslate, -3, 3, "%.3f");
+	transformSphere_.translate = { sphereTranslate[0],sphereTranslate[1],sphereTranslate[2] };
+
 	ImGui::End();
 }
 
@@ -130,10 +219,15 @@ void MyEngine::Release()
 	vertexResource_->Release();
 	materialResource_->Release();
 	wvpResource_->Release();
+
 	textureResource_->Release();
 	intermediateResource_->Release();
+
 	vertexResourceSprite_->Release();
 	transformationMatrixResourceSprite_->Release();
+
+	vertexResourceSphere_->Release();
+	transformationMatrixResourceSphere_->Release();
 }
 void MyEngine::CreateVertexBufferView()
 {
@@ -281,3 +375,15 @@ ID3D12Resource* MyEngine::CreateBufferResource(size_t sizeInBytes)
 	return Resource;
 }
 
+void MyEngine::CreateVertexBufferViewSphere()
+{
+	vertexResourceSphere_ = CreateBufferResource(sizeof(VertexData) * 6 * kSubdivision_ * kSubdivision_);
+	transformationMatrixResourceSphere_ = CreateBufferResource(sizeof(Matrix4x4));
+	vertexResourceSphere_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataSphere_));
+
+	vertexBufferViewSphere_.BufferLocation = vertexResourceSphere_->GetGPUVirtualAddress();
+
+	vertexBufferViewSphere_.SizeInBytes = sizeof(VertexData) * 6 * kSubdivision_ * kSubdivision_;
+
+	vertexBufferViewSphere_.StrideInBytes = sizeof(VertexData);
+}
