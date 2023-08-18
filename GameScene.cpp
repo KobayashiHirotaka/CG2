@@ -14,7 +14,8 @@ void GameScene::Initialize(WindowsApp* win, DirectXCommon* dxCommon, MyEngine* e
 	imGui_ = new MyImGui();
 	imGui_->Initialize(win, dxCommon_);
 
-	engine_->LoadTexture("resource/uvChecker.png");
+	uvChecker = engine_->LoadTexture("resource/uvChecker.png");
+	monsterBall = engine_->LoadTexture("resource/monsterBall.png");
 
 	triangleData[0] = { -0.5f,-0.5f,0.0f,1.0f };
 	triangleData[1] = { 0.0f,0.5f,0.0f,1.0f };
@@ -41,11 +42,23 @@ void GameScene::Draw()
 
 	ImGui::End();
 
+	ImGui::Begin("sphereTexture");
+	ImGui::Checkbox("texture", &changeTexture);
+	ImGui::End();
+
 	engine_->ImGui();
+
+	if (changeTexture == true)
+	{
+		sphereTexture = monsterBall;
+
+	}else {
+		sphereTexture = uvChecker;
+	}
 	
-	engine_->Draw(triangleData[0], triangleData[1], triangleData[2], material[0], camera_->transformationMatrixData);
-	engine_->DrawSprite(LeftTop, LeftBottom, RightTop, RightBottom);
-	engine_->DrawSphere(sphere, camera_->transformationMatrixData);
+	engine_->Draw(triangleData[0], triangleData[1], triangleData[2], material[0], camera_->transformationMatrixData, uvChecker);
+	engine_->DrawSprite(LeftTop, LeftBottom, RightTop, RightBottom, uvChecker);
+	engine_->DrawSphere(sphere, camera_->transformationMatrixData,sphereTexture);
 
 	imGui_->EndFlame();
 	dxCommon_->PostDraw();
