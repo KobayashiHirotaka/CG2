@@ -267,11 +267,11 @@ void MyEngine::ImGui()
 
 	ImGui::Begin("Light");
 
-	float directionalLight[3] = { directionalLightData_->direction.x,directionalLightData_->direction.y,directionalLightData_->direction.z };
-	ImGui::SliderFloat3("directionalLight", directionalLight, -10, 10, "%.3f");
-	directionalLightData_->direction.x = directionalLight[0];
-	directionalLightData_->direction.y = directionalLight[1];
-	directionalLightData_->direction.z = directionalLight[2];
+	float directionalLightPosition[3] = { directionalLightData_->direction.x,directionalLightData_->direction.y,directionalLightData_->direction.z };
+	ImGui::SliderFloat3("directionalLightPosition", directionalLightPosition, -1, 1, "%.3f");
+	directionalLightData_->direction.x = directionalLightPosition[0];
+	directionalLightData_->direction.y = directionalLightPosition[1];
+	directionalLightData_->direction.z = directionalLightPosition[2];
 
 	float directionalLightColor[3] = { directionalLightData_->color.x,directionalLightData_->color.y,directionalLightData_->color.w };
 	ImGui::SliderFloat3("directionalLightColor", directionalLightColor, 0, 1, "%.3f");
