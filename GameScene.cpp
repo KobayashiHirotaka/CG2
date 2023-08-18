@@ -56,9 +56,9 @@ void GameScene::Draw()
 		sphereTexture = uvChecker;
 	}
 	
-	engine_->Draw(triangleData[0], triangleData[1], triangleData[2], material[0], camera_->transformationMatrixData, uvChecker);
-	engine_->DrawSprite(LeftTop, LeftBottom, RightTop, RightBottom, uvChecker);
-	engine_->DrawSphere(sphere, camera_->transformationMatrixData,sphereTexture);
+	/*engine_->Draw(triangleData[0], triangleData[1], triangleData[2], material[0], camera_->transformationMatrixData, uvChecker);
+	engine_->DrawSprite(LeftTop, LeftBottom, RightTop, RightBottom, material[0], uvChecker);*/
+	engine_->DrawSphere(sphere, camera_->transformationMatrixData, material[0], sphereTexture);
 
 	imGui_->EndFlame();
 	dxCommon_->PostDraw();

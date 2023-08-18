@@ -4,7 +4,10 @@
 #include"Matrix4x4.h"
 #include"VertexData.h"
 #include "Sphere.h"
-#include"externals/DirectXTex/DirectXTex.h"
+#include "Material.h"
+#include "TransformationMatrix.h"
+#include "DirectionalLight.h"
+#include "externals/DirectXTex/DirectXTex.h"
 
 class MyEngine
 {
@@ -13,9 +16,9 @@ public:
 
 	void Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& ViewMatrix, const int index);
 
-	void DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, const Vector4& RightTop, const Vector4& RightBottom, const int index);
+	void DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, const Vector4& RightTop, const Vector4& RightBottom, const Vector4& material, const int index);
 
-	void DrawSphere(const Sphere& sphere, const Matrix4x4& ViewMatrix, const int index);
+	void DrawSphere(const Sphere& sphere, const Matrix4x4& ViewMatrix, const Vector4& material, const int index);
 
 	void ImGui();
 
@@ -102,10 +105,14 @@ private:
 	VertexData* vertexDataSprite_;
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite_{};
+
+	ID3D12Resource* materialResourceSprite_ = nullptr;
+
+	Material* materialDataSprite_ = nullptr;
 	
 	ID3D12Resource* transformationMatrixResourceSprite_ = nullptr;
 
-	Matrix4x4* transformationMatrixDataSprite_ = nullptr;
+	TransformationMatrix* transformationMatrixDataSprite_ = nullptr;
 
 	//Sphere
 	const int kSubdivision_ = 16;
@@ -116,12 +123,19 @@ private:
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSphere_{};
 
+	ID3D12Resource* materialResourceSphere_ = nullptr;
+
+	Material* materialDataSphere_ = nullptr;
+
 	ID3D12Resource* transformationMatrixResourceSphere_ = nullptr;
 
-	Matrix4x4* transformationMatrixDataSphere_ = nullptr;
+	TransformationMatrix* transformationMatrixDataSphere_ = nullptr;
 
 	//DescriptorSizeを取得しておく
 	uint32_t descriptorSizeSRV_;
 	uint32_t descriptorSizeRTV_;
 	uint32_t descriptorSizeDSV_;
+
+	ID3D12Resource* directionalLightResource_ = nullptr;
+	DirectionalLight* directionalLightData_ = nullptr;
 };
