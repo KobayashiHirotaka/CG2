@@ -26,10 +26,13 @@ public:
 
 	int LoadTexture(const std::string& filePath);
 
+	void VertexReset();
+
 private:
 	void CreateVertexBufferView();
 
 	void CreateVertexBufferViewSprite();
+	void CreateIndexBufferViewSprite();
 
 	void CreateVertexBufferViewSphere();
 	
@@ -77,7 +80,11 @@ private:
 	HRESULT hr_;
 	DirectXCommon* dxCommon_ = nullptr;
 
-	
+	//Triangle
+	static const int kMaxTriangle = 3;
+	static const int kMaxVertex = kMaxTriangle * 3;
+	bool CheckTriangleIndex[kMaxTriangle];
+
 	ID3D12Resource* vertexResource_ = nullptr;
 	
 	VertexData* vertexData_;
@@ -86,7 +93,7 @@ private:
 	
 	ID3D12Resource* materialResource_ = nullptr;
 
-	Vector4* materialData_ = nullptr;
+	Material* materialData_ = nullptr;
 
 	ID3D12Resource* wvpResource_ = nullptr;
 
@@ -100,6 +107,10 @@ private:
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_[kMaxTexture];
 
 	//Sprite
+	static const int kMaxSprite = 3;
+	static const int kMaxSpriteVertex = kMaxSprite * 6;
+	bool CheckSpriteIndex[kMaxSprite];
+
 	ID3D12Resource* vertexResourceSprite_ = nullptr;
 	
 	VertexData* vertexDataSprite_;
@@ -113,6 +124,12 @@ private:
 	ID3D12Resource* transformationMatrixResourceSprite_ = nullptr;
 
 	TransformationMatrix* transformationMatrixDataSprite_ = nullptr;
+
+	ID3D12Resource* indexResourceSprite_ = nullptr;
+
+	uint32_t* indexDataSprite_;
+
+	D3D12_INDEX_BUFFER_VIEW indexBufferViewSprite_{};
 
 	//Sphere
 	const int kSubdivision_ = 16;

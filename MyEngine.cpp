@@ -8,6 +8,7 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t
 
 	CreateVertexBufferView();
 	CreateVertexBufferViewSprite();
+	CreateIndexBufferViewSprite();
 	CreateVertexBufferViewSphere();
 
 	SettingColor();
@@ -34,26 +35,49 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t
 
 void MyEngine::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& ViewMatrix, const int index)
 {
+	int triangleIndex = kMaxVertex + 1;
+
+	for (int i = 0; i < kMaxTriangle; i++)
+	{
+		if (CheckTriangleIndex[i] == false)
+		{
+			triangleIndex = i * 3;
+
+			CheckTriangleIndex[i] = true;
+			break;
+		}
+	}
+
+	if (triangleIndex < 0)
+	{
+		assert(false);
+	}
+
+	if (kMaxVertex < triangleIndex)
+	{
+		assert(false);
+	}
+
 	//左下
-	vertexData_[0].position = a;
-	vertexData_[0].texcoord = { 0.0f,1.0f };
+	vertexData_[triangleIndex].position = a;
+	vertexData_[triangleIndex].texcoord = { 0.0f,1.0f };
 	//上
-	vertexData_[1].position = b;
-	vertexData_[1].texcoord = { 0.5f,0.0f };
+	vertexData_[triangleIndex + 1].position = b;
+	vertexData_[triangleIndex + 1].texcoord = { 0.5f,0.0f };
 	//右下
-	vertexData_[2].position = c;
-	vertexData_[2].texcoord = { 1.0f,1.0f };
+	vertexData_[triangleIndex + 2].position = c;
+	vertexData_[triangleIndex + 2].texcoord = { 1.0f,1.0f };
 
-	vertexData_[3].position = { -0.7f,-0.5f,0.5f,1.0f };
-	vertexData_[3].texcoord = { 0.0f,1.0f };
+	/*vertexData_[triangleIndex].position = { -0.7f,-0.5f,0.5f,1.0f };
+	vertexData_[triangleIndex].texcoord = { 0.0f,1.0f };
 
-	vertexData_[4].position = { 0.0f,0.0f,0.0f,1.0f };
-	vertexData_[4].texcoord = { 0.5f,0.0f };
+	vertexData_[triangleIndex].position = { 0.0f,0.0f,0.0f,1.0f };
+	vertexData_[triangleIndex].texcoord = { 0.5f,0.0f };
 	
-	vertexData_[5].position = { 0.7f,-0.5f,-0.5f,1.0f };
-	vertexData_[5].texcoord = { 1.0f,1.0f };
+	vertexData_[triangleIndex].position = { 0.7f,-0.5f,-0.5f,1.0f };
+	vertexData_[triangleIndex].texcoord = { 1.0f,1.0f };*/
 	
-	*materialData_ = material;
+	materialData_->color = material;
 
 	Matrix4x4 worldMatrix = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
 	*wvpData_ = Multiply(worldMatrix, ViewMatrix);
@@ -68,14 +92,35 @@ void MyEngine::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const 
 	//SRVのDescriptorTableの先頭を設定。2はrootParameter[2]である。
 	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_[index]);
 	//描画
-	dxCommon_->GetcommandList()->DrawInstanced(6, 1, 0, 0);
+	dxCommon_->GetcommandList()->DrawInstanced(triangleIndex + 3, 1, 0, 0);
 }
 
 void MyEngine::DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, const Vector4& RightTop, const Vector4& RightBottom, const Vector4& material, const int index)
 {
+	int spriteIndex = kMaxSpriteVertex + 1;
+
+	for (int i = 0; i < kMaxSprite; ++i)
+	{
+		if (CheckSpriteIndex[i] == false)
+		{
+			spriteIndex = (i * 6);
+			CheckSpriteIndex[i] = true;
+			break;
+		}
+	}
+
+	if (spriteIndex < 0)
+	{
+		assert(false);
+	}
+
+	if (kMaxSpriteVertex < spriteIndex)
+	{
+		assert(false);
+	}
+
 	vertexDataSprite_[0].position = LeftBottom;
 	vertexDataSprite_[0].texcoord = { 0.0f,1.0f };
-	vertexDataSphere_[0].normal = { 0.0f,0.0f,-1.0f };
 	
 	vertexDataSprite_[1].position = LeftTop;
 	vertexDataSprite_[1].texcoord = { 0.0f,0.0f };
@@ -83,14 +128,27 @@ void MyEngine::DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, con
 	vertexDataSprite_[2].position = RightBottom;
 	vertexDataSprite_[2].texcoord = { 1.0f,1.0f };
 
-	vertexDataSprite_[3].position = LeftTop;
+	vertexDataSprite_[3].position = RightTop;
+	vertexDataSprite_[3].texcoord = { 1.0f,0.0f };
+
+	indexResourceSprite_->Map(0, nullptr, reinterpret_cast<void**>(&indexDataSprite_));
+
+	indexDataSprite_[spriteIndex] = 0;
+	indexDataSprite_[spriteIndex + 1] = 1;
+	indexDataSprite_[spriteIndex + 2] = 2;
+
+	indexDataSprite_[spriteIndex + 3] = 1;
+	indexDataSprite_[spriteIndex + 4] = 3;
+	indexDataSprite_[spriteIndex + 5] = 2;
+
+	/*vertexDataSprite_[3].position = LeftTop;
 	vertexDataSprite_[3].texcoord = { 0.0f,0.0f };
 
 	vertexDataSprite_[4].position = RightTop;
 	vertexDataSprite_[4].texcoord = { 1.0f,0.0f };
 
 	vertexDataSprite_[5].position = RightBottom;
-	vertexDataSprite_[5].texcoord = { 1.0f,1.0f };
+	vertexDataSprite_[5].texcoord = { 1.0f,1.0f };*/
 
 	materialResourceSprite_->Map(0, nullptr, reinterpret_cast<void**>(&materialDataSprite_));
 	materialDataSprite_->color = material;
@@ -110,6 +168,7 @@ void MyEngine::DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, con
 	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewSprite_);
+	dxCommon_->GetcommandList()->IASetIndexBuffer(&indexBufferViewSprite_);
 
 	//マテリアルCBufferの場所を特定
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite_->GetGPUVirtualAddress());
@@ -117,7 +176,7 @@ void MyEngine::DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, con
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transformationMatrixResourceSprite_->GetGPUVirtualAddress());
 	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_[index]);
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource_->GetGPUVirtualAddress());
-	dxCommon_->GetcommandList()->DrawInstanced(6, 1, 0, 0);
+	dxCommon_->GetcommandList()->DrawIndexedInstanced(spriteIndex + 6, 1, 0, 0, 0);
 }
 
 void MyEngine::DrawSphere(const Sphere& sphere, const Matrix4x4& ViewMatrix, const Vector4& material, const int index)
@@ -300,6 +359,7 @@ void MyEngine::Release()
 	vertexResourceSprite_->Release();
 	transformationMatrixResourceSprite_->Release();
 	materialResourceSprite_->Release();
+	indexResourceSprite_->Release();
 
 	vertexResourceSphere_->Release();
 	transformationMatrixResourceSphere_->Release();
@@ -310,16 +370,16 @@ void MyEngine::Release()
 
 void MyEngine::CreateVertexBufferView()
 {
-	vertexResource_ = CreateBufferResource(sizeof(VertexData) * 6);
+	vertexResource_ = CreateBufferResource(sizeof(VertexData) * kMaxVertex);
 	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress();
-	vertexBufferView_.SizeInBytes = sizeof(VertexData) * 6;
+	vertexBufferView_.SizeInBytes = sizeof(VertexData) * kMaxVertex;
 	vertexBufferView_.StrideInBytes = sizeof(VertexData);
 	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
 }
 
 void MyEngine::SettingColor()
 {
-	materialResource_ = CreateBufferResource(sizeof(Material) * 3);
+	materialResource_ = CreateBufferResource(sizeof(Material) * kMaxTriangle);
 	//書き込むアドレスを取得
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 }
@@ -447,16 +507,27 @@ ID3D12Resource* MyEngine::UploadTextureData(ID3D12Resource* texture, const Direc
 
 void MyEngine::CreateVertexBufferViewSprite()
 {
-	vertexResourceSprite_ = CreateBufferResource(sizeof(VertexData) * 6);
-	materialResourceSprite_ = CreateBufferResource(sizeof(Material));
+	vertexResourceSprite_ = CreateBufferResource(sizeof(VertexData) * 4);
+	materialResourceSprite_ = CreateBufferResource(sizeof(Material)*kMaxSprite);
 	transformationMatrixResourceSprite_ = CreateBufferResource(sizeof(TransformationMatrix));
+	indexResourceSprite_ = CreateBufferResource(sizeof(uint32_t) * kMaxSpriteVertex);
+
 	vertexResourceSprite_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataSprite_));
 	
 	vertexBufferViewSprite_.BufferLocation = vertexResourceSprite_->GetGPUVirtualAddress();
 
-	vertexBufferViewSprite_.SizeInBytes = sizeof(VertexData) * 6;
+	vertexBufferViewSprite_.SizeInBytes = sizeof(VertexData) * 4;
 
 	vertexBufferViewSprite_.StrideInBytes = sizeof(VertexData);
+}
+
+void MyEngine::CreateIndexBufferViewSprite()
+{
+	indexBufferViewSprite_.BufferLocation = indexResourceSprite_->GetGPUVirtualAddress();
+
+	indexBufferViewSprite_.SizeInBytes = sizeof(uint32_t) * kMaxSpriteVertex;
+
+	indexBufferViewSprite_.Format = DXGI_FORMAT_R32_UINT;
 }
 
 ID3D12Resource* MyEngine::CreateBufferResource(size_t sizeInBytes)
@@ -491,6 +562,22 @@ void MyEngine::CreateVertexBufferViewSphere()
 	vertexBufferViewSphere_.SizeInBytes = sizeof(VertexData) * 6 * kSubdivision_ * kSubdivision_;
 
 	vertexBufferViewSphere_.StrideInBytes = sizeof(VertexData);
+}
+
+void MyEngine::VertexReset()
+{
+	for (int i = 0; i < kMaxTriangle; ++i)
+	{
+		if (CheckTriangleIndex[i] == true)
+		{
+			CheckTriangleIndex[i] = false;
+		}
+
+		if (CheckSpriteIndex[i] == true)
+		{
+			CheckSpriteIndex[i] = false;
+		}
+	}
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE MyEngine::GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index)
