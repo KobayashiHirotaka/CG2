@@ -81,9 +81,9 @@ private:
 	DirectXCommon* dxCommon_ = nullptr;
 
 	//Triangle
-	static const int kMaxTriangle = 3;
-	static const int kMaxVertex = kMaxTriangle * 3;
-	bool CheckTriangleIndex[kMaxTriangle];
+	static const int kMaxTriangle_ = 3;
+	static const int kMaxVertex_ = kMaxTriangle_ * 3;
+	bool CheckTriangleIndex_[kMaxTriangle_];
 
 	ID3D12Resource* vertexResource_ = nullptr;
 	
@@ -107,9 +107,9 @@ private:
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_[kMaxTexture];
 
 	//Sprite
-	static const int kMaxSprite = 3;
-	static const int kMaxSpriteVertex = kMaxSprite * 6;
-	bool CheckSpriteIndex[kMaxSprite];
+	static const int kMaxSprite_ = 3;
+	static const int kMaxSpriteVertex_ = kMaxSprite_ * 6;
+	bool CheckSpriteIndex_[kMaxSprite_];
 
 	ID3D12Resource* vertexResourceSprite_ = nullptr;
 	

@@ -35,15 +35,15 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t
 
 void MyEngine::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& ViewMatrix, const int index)
 {
-	int triangleIndex = kMaxVertex + 1;
+	int triangleIndex = kMaxVertex_ + 1;
 
-	for (int i = 0; i < kMaxTriangle; i++)
+	for (int i = 0; i < kMaxTriangle_; i++)
 	{
-		if (CheckTriangleIndex[i] == false)
+		if (CheckTriangleIndex_[i] == false)
 		{
 			triangleIndex = i * 3;
 
-			CheckTriangleIndex[i] = true;
+			CheckTriangleIndex_[i] = true;
 			break;
 		}
 	}
@@ -53,7 +53,7 @@ void MyEngine::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const 
 		assert(false);
 	}
 
-	if (kMaxVertex < triangleIndex)
+	if (kMaxVertex_ < triangleIndex)
 	{
 		assert(false);
 	}
@@ -97,14 +97,14 @@ void MyEngine::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const 
 
 void MyEngine::DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, const Vector4& RightTop, const Vector4& RightBottom, const Vector4& material, const int index)
 {
-	int spriteIndex = kMaxSpriteVertex + 1;
+	int spriteIndex = kMaxSpriteVertex_ + 1;
 
-	for (int i = 0; i < kMaxSprite; ++i)
+	for (int i = 0; i < kMaxSprite_; ++i)
 	{
-		if (CheckSpriteIndex[i] == false)
+		if (CheckSpriteIndex_[i] == false)
 		{
 			spriteIndex = (i * 6);
-			CheckSpriteIndex[i] = true;
+			CheckSpriteIndex_[i] = true;
 			break;
 		}
 	}
@@ -114,7 +114,7 @@ void MyEngine::DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, con
 		assert(false);
 	}
 
-	if (kMaxSpriteVertex < spriteIndex)
+	if (kMaxSpriteVertex_ < spriteIndex)
 	{
 		assert(false);
 	}
@@ -370,16 +370,16 @@ void MyEngine::Release()
 
 void MyEngine::CreateVertexBufferView()
 {
-	vertexResource_ = CreateBufferResource(sizeof(VertexData) * kMaxVertex);
+	vertexResource_ = CreateBufferResource(sizeof(VertexData) * kMaxVertex_);
 	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress();
-	vertexBufferView_.SizeInBytes = sizeof(VertexData) * kMaxVertex;
+	vertexBufferView_.SizeInBytes = sizeof(VertexData) * kMaxVertex_;
 	vertexBufferView_.StrideInBytes = sizeof(VertexData);
 	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
 }
 
 void MyEngine::SettingColor()
 {
-	materialResource_ = CreateBufferResource(sizeof(Material) * kMaxTriangle);
+	materialResource_ = CreateBufferResource(sizeof(Material) * kMaxTriangle_);
 	//書き込むアドレスを取得
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 }
@@ -508,9 +508,9 @@ ID3D12Resource* MyEngine::UploadTextureData(ID3D12Resource* texture, const Direc
 void MyEngine::CreateVertexBufferViewSprite()
 {
 	vertexResourceSprite_ = CreateBufferResource(sizeof(VertexData) * 4);
-	materialResourceSprite_ = CreateBufferResource(sizeof(Material)*kMaxSprite);
+	materialResourceSprite_ = CreateBufferResource(sizeof(Material)*kMaxSprite_);
 	transformationMatrixResourceSprite_ = CreateBufferResource(sizeof(TransformationMatrix));
-	indexResourceSprite_ = CreateBufferResource(sizeof(uint32_t) * kMaxSpriteVertex);
+	indexResourceSprite_ = CreateBufferResource(sizeof(uint32_t) * kMaxSpriteVertex_);
 
 	vertexResourceSprite_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataSprite_));
 	
@@ -525,7 +525,7 @@ void MyEngine::CreateIndexBufferViewSprite()
 {
 	indexBufferViewSprite_.BufferLocation = indexResourceSprite_->GetGPUVirtualAddress();
 
-	indexBufferViewSprite_.SizeInBytes = sizeof(uint32_t) * kMaxSpriteVertex;
+	indexBufferViewSprite_.SizeInBytes = sizeof(uint32_t) * kMaxSpriteVertex_;
 
 	indexBufferViewSprite_.Format = DXGI_FORMAT_R32_UINT;
 }
@@ -566,16 +566,16 @@ void MyEngine::CreateVertexBufferViewSphere()
 
 void MyEngine::VertexReset()
 {
-	for (int i = 0; i < kMaxTriangle; ++i)
+	for (int i = 0; i < kMaxTriangle_; ++i)
 	{
-		if (CheckTriangleIndex[i] == true)
+		if (CheckTriangleIndex_[i] == true)
 		{
-			CheckTriangleIndex[i] = false;
+			CheckTriangleIndex_[i] = false;
 		}
 
-		if (CheckSpriteIndex[i] == true)
+		if (CheckSpriteIndex_[i] == true)
 		{
-			CheckSpriteIndex[i] = false;
+			CheckSpriteIndex_[i] = false;
 		}
 	}
 }
