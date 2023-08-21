@@ -64,11 +64,25 @@ private:
 		{0.0f,0.0f,0.0f},
 	};
 
+	Transform uvTransformTriangle_
+	{
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f}
+	};
+
 	Transform transformSprite_
 	{
 		{1.0f,1.0f,1.0f},
 		{0.0f,0.0f,0.0f},
 		{0.0f,0.0f,0.0f},
+	};
+
+	Transform uvTransformSprite_
+	{
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f}
 	};
 
 	Transform transformSphere_

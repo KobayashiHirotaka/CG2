@@ -81,6 +81,11 @@ void MyEngine::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const 
 	vertexData_[triangleIndex].texcoord = { 1.0f,1.0f };*/
 	
 	materialData_->color = material;
+	materialData_->uvTransform = MakeIdentity4x4();
+	Matrix4x4 uvTransformMatrix = MakeScaleMatrix(uvTransformTriangle_.scale);
+	uvTransformMatrix = Multiply(uvTransformMatrix, MakeRotateZmatrix(uvTransformTriangle_.rotate.z));
+	uvTransformMatrix = Multiply(uvTransformMatrix, MakeTranslateMatrix(uvTransformTriangle_.translate));
+	materialData_->uvTransform = uvTransformMatrix;
 
 	Matrix4x4 worldMatrix = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
 	*wvpData_ = Multiply(worldMatrix, ViewMatrix);
@@ -157,6 +162,12 @@ void MyEngine::DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, con
 	materialDataSprite_->color = material;
 
 	materialDataSprite_->enableLighting = false;
+
+	materialDataSprite_->uvTransform = MakeIdentity4x4();
+	Matrix4x4 uvTransformMatrix = MakeScaleMatrix(uvTransformSprite_.scale);
+	uvTransformMatrix = Multiply(uvTransformMatrix, MakeRotateZmatrix(uvTransformSprite_.rotate.z));
+	uvTransformMatrix = Multiply(uvTransformMatrix, MakeTranslateMatrix(uvTransformSprite_.translate));
+	materialDataSprite_->uvTransform = uvTransformMatrix;
 
 	//書き込むためのアドレス取得
 	transformationMatrixResourceSprite_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixDataSprite_));
@@ -301,6 +312,7 @@ void MyEngine::ImGui()
 
 	ImGui::Begin("TriAngle,Sprite,Sphere");
 
+	//Triangle
 	float triangleScale[3] = { transform_.scale.x,transform_.scale.y ,transform_.scale.z };
 	ImGui::SliderFloat3("triangleScale", triangleScale, 1, 30, "%.3f");
 	transform_.scale = { triangleScale[0],triangleScale[1],triangleScale[2] };
@@ -313,6 +325,11 @@ void MyEngine::ImGui()
 	ImGui::SliderFloat3("triangleTranslate", triangleTranslate, -2, 2, "%.3f");
 	transform_.translate = { triangleTranslate[0],triangleTranslate[1],triangleTranslate[2] };
 
+	ImGui::DragFloat2("uvTranslateTriangle", &uvTransformTriangle_.translate.x, 0.01f, -10.0f, 10.0f);
+	ImGui::DragFloat2("uvScaleTriangle", &uvTransformTriangle_.scale.x, 0.01f, -10.0f, 10.0f);
+	ImGui::SliderAngle("uvRotateTriangle", &uvTransformTriangle_.rotate.z);
+
+	//Sprite
 	float spriteScale[3] = { transformSprite_.scale.x,transformSprite_.scale.y ,transformSprite_.scale.z };
 	ImGui::SliderFloat3("spriteScale", spriteScale, 1, 30, "%.3f");
 	transformSprite_.scale = { spriteScale[0],spriteScale[1],spriteScale[2] };
@@ -324,6 +341,10 @@ void MyEngine::ImGui()
 	float spriteTranslate[3] = { transformSprite_.translate.x,transformSprite_.translate.y ,transformSprite_.translate.z };
 	ImGui::SliderFloat3("spriteTranslate", spriteTranslate, -640, 640, "%.3f");
 	transformSprite_.translate = { spriteTranslate[0],spriteTranslate[1],spriteTranslate[2] };
+
+	ImGui::DragFloat2("uvTranslateSprite", &uvTransformSprite_.translate.x, 0.01f, -10.0f, 10.0f);
+	ImGui::DragFloat2("uvScaleSprite", &uvTransformSprite_.scale.x, 0.01f, -10.0f, 10.0f);
+	ImGui::SliderAngle("uvRotateSprite", &uvTransformSprite_.rotate.z);
 
 	float sphereScale[3] = { transformSphere_.scale.x,transformSphere_.scale.y ,transformSphere_.scale.z };
 	ImGui::SliderFloat3("sphereScale", sphereScale, -3, 3, "%.3f");
