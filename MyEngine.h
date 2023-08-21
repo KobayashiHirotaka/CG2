@@ -7,6 +7,9 @@
 #include "Material.h"
 #include "TransformationMatrix.h"
 #include "DirectionalLight.h"
+#include "ModelData.h"
+#include <fstream>
+#include <sstream>
 #include "externals/DirectXTex/DirectXTex.h"
 
 class MyEngine
@@ -27,6 +30,8 @@ public:
 	int LoadTexture(const std::string& filePath);
 
 	void VertexReset();
+
+	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
 
 private:
 	void CreateVertexBufferView();
@@ -86,6 +91,13 @@ private:
 	};
 
 	Transform transformSphere_
+	{
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f},
+	};
+
+	Transform transformObj_
 	{
 		{1.0f,1.0f,1.0f},
 		{0.0f,0.0f,0.0f},
@@ -168,6 +180,23 @@ private:
 	uint32_t* indexDataSphere_;
 
 	D3D12_INDEX_BUFFER_VIEW indexBufferViewSphere_{};
+
+	//Obj
+	ModelData modelData_;
+
+	ID3D12Resource* vertexResourceObj_;
+
+	VertexData* vertexDataObj_;
+
+	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewObj_{};
+
+	ID3D12Resource* materialResourceObj_ = nullptr;
+
+	Material* materialDataObj_ = nullptr;
+
+	ID3D12Resource* transformationMatrixResourceObj_ = nullptr;
+
+	TransformationMatrix* transformationMatrixDataObj_ = nullptr;
 
 	//DescriptorSizeを取得しておく
 	uint32_t descriptorSizeSRV_;
