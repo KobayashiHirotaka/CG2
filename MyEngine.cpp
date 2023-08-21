@@ -285,6 +285,7 @@ void MyEngine::DrawSphere(const Sphere& sphere, const Matrix4x4& ViewMatrix, con
 
 	materialDataSphere_->enableLighting = true;
 	materialDataSphere_->color = material;
+	materialDataSphere_->uvTransform = MakeIdentity4x4();
 
 	//書き込むためのアドレス取得
 	transformationMatrixResourceSphere_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixDataSphere_));
