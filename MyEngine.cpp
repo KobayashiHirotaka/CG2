@@ -7,9 +7,12 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t
 	dxCommon_ = dxCommon;
 
 	CreateVertexBufferView();
+
 	CreateVertexBufferViewSprite();
 	CreateIndexBufferViewSprite();
+
 	CreateVertexBufferViewSphere();
+	CreateIndexBufferViewSphere();
 
 	SettingColor();
 	SettingWVP();
@@ -181,6 +184,8 @@ void MyEngine::DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, con
 
 void MyEngine::DrawSphere(const Sphere& sphere, const Matrix4x4& ViewMatrix, const Vector4& material, const int index)
 {
+	indexResourceSphere_->Map(0, nullptr, reinterpret_cast<void**>(&indexDataSphere_));
+
 	//経度分割1つ分の角度φ
 	const float kLonEvery = float(std::numbers::pi) * 2.0f / float(kSubdivision_);
 	//緯度分割1つ分の角度θ
@@ -195,7 +200,8 @@ void MyEngine::DrawSphere(const Sphere& sphere, const Matrix4x4& ViewMatrix, con
 		//経度の方向に分割しながら線を描く
 		for (int lonIndex = 0; lonIndex < kSubdivision_; ++lonIndex)
 		{
-			uint32_t start = (latIndex * kSubdivision_ + lonIndex) * 6;
+			uint32_t start = (latIndex * kSubdivision_ + lonIndex) * 4;
+			uint32_t indexStart = (latIndex * kSubdivision_ + lonIndex) * 6;
 			float lon = lonIndex * kLonEvery;
 			float u = float(lonIndex) / float(kSubdivision_);
 			float v = 1.0f - float(latIndex) / float(kSubdivision_);
@@ -236,7 +242,7 @@ void MyEngine::DrawSphere(const Sphere& sphere, const Matrix4x4& ViewMatrix, con
 			vertexDataSphere_[start + 3].normal.y = vertexDataSphere_[start + 3].position.y;
 			vertexDataSphere_[start + 3].normal.z = vertexDataSphere_[start + 3].position.w;
 
-			vertexDataSphere_[start + 4].position.x = cos(lat) * cos(lon + kLonEvery) + sphere.center.x;
+			/*vertexDataSphere_[start + 4].position.x = cos(lat) * cos(lon + kLonEvery) + sphere.center.x;
 			vertexDataSphere_[start + 4].position.y = sin(lat) + sphere.center.y;
 			vertexDataSphere_[start + 4].position.w = cos(lat) * sin(lon + kLonEvery) + sphere.center.z;
 			vertexDataSphere_[start + 4].position.h = 1.0f;
@@ -252,7 +258,15 @@ void MyEngine::DrawSphere(const Sphere& sphere, const Matrix4x4& ViewMatrix, con
 			vertexDataSphere_[start + 5].texcoord = { u,v };
 			vertexDataSphere_[start + 5].normal.x = vertexDataSphere_[start + 5].position.x;
 			vertexDataSphere_[start + 5].normal.y = vertexDataSphere_[start + 5].position.y;
-			vertexDataSphere_[start + 5].normal.z = vertexDataSphere_[start + 5].position.w;
+			vertexDataSphere_[start + 5].normal.z = vertexDataSphere_[start + 5].position.w;*/
+
+			indexDataSphere_[indexStart] = start;
+			indexDataSphere_[indexStart + 1] = start + 1;
+			indexDataSphere_[indexStart + 2] = start + 2;
+
+			indexDataSphere_[indexStart + 3] = start + 1;
+			indexDataSphere_[indexStart + 4] = start + 3;
+			indexDataSphere_[indexStart + 5] = start + 2;
 		}
 	}
 
@@ -273,11 +287,12 @@ void MyEngine::DrawSphere(const Sphere& sphere, const Matrix4x4& ViewMatrix, con
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSphere_->GetGPUVirtualAddress());
 
 	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewSphere_);
+	dxCommon_->GetcommandList()->IASetIndexBuffer(&indexBufferViewSphere_);
 
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transformationMatrixResourceSphere_->GetGPUVirtualAddress());
 	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_[index]);
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource_->GetGPUVirtualAddress());
-	dxCommon_->GetcommandList()->DrawInstanced(kSubdivision_ * kSubdivision_ * 6, 1, 0, 0);
+	dxCommon_->GetcommandList()->DrawIndexedInstanced(kSubdivision_ * kSubdivision_ * 6, 1, 0, 0, 0);
 }
 
 void MyEngine::ImGui()
@@ -364,6 +379,7 @@ void MyEngine::Release()
 	vertexResourceSphere_->Release();
 	transformationMatrixResourceSphere_->Release();
 	materialResourceSphere_->Release();
+	indexResourceSphere_->Release();
 
 	directionalLightResource_->Release();
 }
@@ -552,16 +568,27 @@ ID3D12Resource* MyEngine::CreateBufferResource(size_t sizeInBytes)
 
 void MyEngine::CreateVertexBufferViewSphere()
 {
-	vertexResourceSphere_ = CreateBufferResource(sizeof(VertexData) * 6 * kSubdivision_ * kSubdivision_);
+	vertexResourceSphere_ = CreateBufferResource(sizeof(VertexData) * 4 * kSubdivision_ * kSubdivision_);
 	materialResourceSphere_ = CreateBufferResource(sizeof(Material));
 	transformationMatrixResourceSphere_ = CreateBufferResource(sizeof(TransformationMatrix));
+	indexResourceSphere_ = CreateBufferResource(sizeof(uint32_t) * 6 * kSubdivision_ * kSubdivision_);
+
 	vertexResourceSphere_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataSphere_));
 
 	vertexBufferViewSphere_.BufferLocation = vertexResourceSphere_->GetGPUVirtualAddress();
 
-	vertexBufferViewSphere_.SizeInBytes = sizeof(VertexData) * 6 * kSubdivision_ * kSubdivision_;
+	vertexBufferViewSphere_.SizeInBytes = sizeof(VertexData) * 4 * kSubdivision_ * kSubdivision_;
 
 	vertexBufferViewSphere_.StrideInBytes = sizeof(VertexData);
+}
+
+void MyEngine::CreateIndexBufferViewSphere()
+{
+	indexBufferViewSphere_.BufferLocation = indexResourceSphere_->GetGPUVirtualAddress();
+
+	indexBufferViewSphere_.SizeInBytes = sizeof(uint32_t) * 6 * kSubdivision_ * kSubdivision_;
+
+	indexBufferViewSphere_.Format = DXGI_FORMAT_R32_UINT;
 }
 
 void MyEngine::VertexReset()

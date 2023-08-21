@@ -35,6 +35,7 @@ private:
 	void CreateIndexBufferViewSprite();
 
 	void CreateVertexBufferViewSphere();
+	void CreateIndexBufferViewSphere();
 	
 	void SettingColor();
 
@@ -147,6 +148,12 @@ private:
 	ID3D12Resource* transformationMatrixResourceSphere_ = nullptr;
 
 	TransformationMatrix* transformationMatrixDataSphere_ = nullptr;
+
+	ID3D12Resource* indexResourceSphere_ = nullptr;
+
+	uint32_t* indexDataSphere_;
+
+	D3D12_INDEX_BUFFER_VIEW indexBufferViewSphere_{};
 
 	//DescriptorSizeを取得しておく
 	uint32_t descriptorSizeSRV_;
