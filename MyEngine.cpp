@@ -7,6 +7,8 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t
 	dxCommon_ = dxCommon;
 
 	CreateVertexBufferView();
+	SettingColor();
+	SettingWVP();
 
 	CreateVertexBufferViewSprite();
 	CreateIndexBufferViewSprite();
@@ -14,8 +16,9 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t
 	CreateVertexBufferViewSphere();
 	CreateIndexBufferViewSphere();
 
-	SettingColor();
-	SettingWVP();
+	materialResourceObj_ = CreateBufferResource(sizeof(Material));
+	transformationMatrixResourceObj_ = CreateBufferResource(sizeof(TransformationMatrix));
+
 
 	directionalLightResource_ = CreateBufferResource(sizeof(DirectionalLight));
 	directionalLightResource_->Map(0, nullptr, reinterpret_cast<void**>(&directionalLightData_));
@@ -307,6 +310,39 @@ void MyEngine::DrawSphere(const Sphere& sphere, const Matrix4x4& ViewMatrix, con
 	dxCommon_->GetcommandList()->DrawIndexedInstanced(kSubdivision_ * kSubdivision_ * 6, 1, 0, 0, 0);
 }
 
+void MyEngine::DrawModel(const ModelData& modelData, const Vector3& position, const Matrix4x4& ViewMatrix, const Vector4& material)
+{
+	vertexResourceObj_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataObj_));
+	std::memcpy(vertexDataObj_, modelData.vertices.data(), sizeof(VertexData) * modelData.vertices.size());
+
+	materialResourceObj_->Map(0, nullptr, reinterpret_cast<void**>(&materialDataObj_));
+
+	materialDataObj_->enableLighting = false;
+	materialDataObj_->color = material;
+	materialDataObj_->uvTransform = MakeIdentity4x4();
+
+	//書き込むためのアドレス取得
+	transformationMatrixResourceObj_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixDataObj_));
+
+	Matrix4x4 worldMatrixObj = MakeAffineMatrix(transformObj_.scale, transformObj_.rotate, transformObj_.translate);
+	transformationMatrixDataObj_->WVP = Multiply(worldMatrixObj, ViewMatrix);
+	transformationMatrixDataObj_->World = MakeIdentity4x4();
+
+	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	
+	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewObj_);
+
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceObj_->GetGPUVirtualAddress());
+
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transformationMatrixResourceObj_->GetGPUVirtualAddress());
+
+	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_[modelData.TextureIndex]);
+
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource_->GetGPUVirtualAddress());
+
+	dxCommon_->GetcommandList()->DrawInstanced(UINT(modelData.vertices.size()), 1, 0, 0);
+}
+
 void MyEngine::ImGui()
 {
 	ImGui::ShowDemoWindow();
@@ -361,6 +397,18 @@ void MyEngine::ImGui()
 
 	ImGui::End();
 
+	ImGui::Begin("Obj");
+	float ImGuiScaleObj[3] = { transformObj_.scale.x,transformObj_.scale.y ,transformObj_.scale.z };
+	ImGui::SliderFloat3("ScaleObj", ImGuiScaleObj, 1, 30, "%.3f");
+	transformObj_.scale = { ImGuiScaleObj[0],ImGuiScaleObj[1],ImGuiScaleObj[2] };
+	float ImGuiRotateObj[3] = { transformObj_.rotate.x,transformObj_.rotate.y ,transformObj_.rotate.z };
+	ImGui::SliderFloat3("RotateObj", ImGuiRotateObj, -7, 7, "%.3f");
+	transformObj_.rotate = { ImGuiRotateObj[0],ImGuiRotateObj[1],ImGuiRotateObj[2] };
+	float ImGuiTranslateObj[3] = { transformObj_.translate.x,transformObj_.translate.y ,transformObj_.translate.z };
+	ImGui::SliderFloat3("TranslateObj", ImGuiTranslateObj, -10, 10, "%.3f");
+	transformObj_.translate = { ImGuiTranslateObj[0],ImGuiTranslateObj[1],ImGuiTranslateObj[2] };
+	ImGui::End();
+
 	ImGui::Begin("Light");
 
 	float directionalLightPosition[3] = { directionalLightData_->direction.x,directionalLightData_->direction.y,directionalLightData_->direction.z };
@@ -403,8 +451,14 @@ void MyEngine::Release()
 	materialResourceSphere_->Release();
 	indexResourceSphere_->Release();
 
+	vertexResourceObj_->Release();
+	materialResourceObj_->Release();
+	transformationMatrixResourceObj_->Release();
+
+
 	directionalLightResource_->Release();
 }
+
 
 void MyEngine::CreateVertexBufferView()
 {
@@ -641,4 +695,121 @@ D3D12_GPU_DESCRIPTOR_HANDLE MyEngine::GetGPUDescriptorHandle(ID3D12DescriptorHea
 	D3D12_GPU_DESCRIPTOR_HANDLE handleGPU = descriptorHeap->GetGPUDescriptorHandleForHeapStart();
 	handleGPU.ptr += (descriptorSize * index);
 	return handleGPU;
+}
+
+ModelData MyEngine::LoadObjFile(const std::string& directoryPath, const std::string& filename)
+{
+	ModelData modelData;
+	std::vector<Vector4>positions;
+	std::vector<Vector2>texcoords;
+	std::vector<Vector3>normals;
+	std::string line;
+
+	std::ifstream file(directoryPath + "/" + filename);
+	assert(file.is_open());
+
+	while (std::getline(file, line))
+	{
+		std::string identifier;
+		std::istringstream s(line);
+
+		s >> identifier;
+
+		if (identifier == "v")
+		{
+			Vector4 position;
+			s >> position.x >> position.y >> position.w;
+			
+			position.w *= -1.0f;
+			position.h = 1.0f;
+			positions.push_back(position);
+
+		}else if (identifier == "vt") 
+		{
+			Vector2 texcoord;
+			s >> texcoord.x >> texcoord.y;
+			texcoord.y = 1.0f - texcoord.y;
+			texcoords.push_back(texcoord);
+
+		}else if (identifier == "vn") 
+		{
+			Vector3 normal;
+			s >> normal.x >> normal.y >> normal.z;
+		
+			normal.z *= -1.0f;
+			normals.push_back(normal);
+
+		}else if (identifier == "f") 
+		{
+			VertexData triamgle[3];
+
+			for (int32_t faceVertex = 0; faceVertex < 3; ++faceVertex)
+			{
+				std::string vertexDefinition;
+				s >> vertexDefinition;
+				
+				std::istringstream v(vertexDefinition);
+
+				uint32_t elementIndices[3];
+
+				for (int32_t element = 0; element < 3; ++element)
+				{
+					std::string index;
+					std::getline(v, index, '/');
+					elementIndices[element] = std::stoi(index);
+				}
+
+				Vector4 position = positions[elementIndices[0] - 1];
+				Vector2 texcoord = texcoords[elementIndices[1] - 1];
+				Vector3 normal = normals[elementIndices[2] - 1];
+				
+				triamgle[faceVertex] = { position,texcoord,normal };
+
+			}
+
+			modelData.vertices.push_back(triamgle[2]);
+			modelData.vertices.push_back(triamgle[1]);
+			modelData.vertices.push_back(triamgle[0]);
+		}else if (identifier == "mtllib")
+		{
+			std::string materialFilename;
+			s >> materialFilename;
+			modelData.material = LoadMaterialTemplateFile(directoryPath, materialFilename);
+		}
+	}
+
+	modelData.TextureIndex = LoadTexture(modelData.material.textureFilePath);
+
+	vertexResourceObj_ = CreateBufferResource(sizeof(VertexData) * modelData.vertices.size());
+	vertexBufferViewObj_.BufferLocation = vertexResourceObj_->GetGPUVirtualAddress();
+	vertexBufferViewObj_.SizeInBytes = UINT(sizeof(VertexData) * modelData.vertices.size());
+	vertexBufferViewObj_.StrideInBytes = sizeof(VertexData);
+
+	return modelData;
+}
+
+MaterialData MyEngine::LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename)
+{
+	MaterialData materialData;
+	std::string line;
+
+	std::ifstream file(directoryPath + '/' + filename);
+	assert(file.is_open());
+
+	while (std::getline(file, line))
+	{
+		std::string identifier;
+		std::istringstream s(line);
+		s >> identifier;
+		
+		if (identifier == "map_Kd") 
+		{
+			std::string textureFilename;
+			s >> textureFilename;
+			
+			materialData.textureFilePath = directoryPath + "/" + textureFilename;
+		}
+	}
+
+	return materialData;
 }

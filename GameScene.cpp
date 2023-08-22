@@ -16,6 +16,7 @@ void GameScene::Initialize(WindowsApp* win, DirectXCommon* dxCommon, MyEngine* e
 
 	uvChecker = engine_->LoadTexture("resource/uvChecker.png");
 	monsterBall = engine_->LoadTexture("resource/monsterBall.png");
+	modelData_ = engine_->LoadObjFile("resource", "plane.obj");
 
 	triangleData[0] = { -0.5f,-0.5f,0.0f,1.0f };
 	triangleData[1] = { 0.0f,0.5f,0.0f,1.0f };
@@ -57,8 +58,9 @@ void GameScene::Draw()
 	}
 	
 	/*engine_->Draw(triangleData[0], triangleData[1], triangleData[2], material[0], camera_->transformationMatrixData, uvChecker);*/
-	engine_->DrawSprite(LeftTop, LeftBottom, RightTop, RightBottom, material[0], uvChecker);
-	engine_->DrawSphere(sphere, camera_->transformationMatrixData, material[0], sphereTexture);
+	/*engine_->DrawSprite(LeftTop, LeftBottom, RightTop, RightBottom, material[0], uvChecker);
+	engine_->DrawSphere(sphere, camera_->transformationMatrixData, material[0], sphereTexture);*/
+	engine_->DrawModel(modelData_, { 0,0,0 }, camera_->transformationMatrixData, material[0]);
 
 	engine_->VertexReset();
 	imGui_->EndFlame();

@@ -38,5 +38,7 @@ private:
 
 	int sphereTexture = 0;
 	bool changeTexture = true;
+
+	ModelData modelData_;
 };
 

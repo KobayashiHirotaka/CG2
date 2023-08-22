@@ -23,6 +23,8 @@ public:
 
 	void DrawSphere(const Sphere& sphere, const Matrix4x4& ViewMatrix, const Vector4& material, const int index);
 
+	void DrawModel(const ModelData& modelData, const Vector3& position, const Matrix4x4& ViewMatrix, const Vector4& material);
+
 	void ImGui();
 
 	void Release();
@@ -32,6 +34,8 @@ public:
 	void VertexReset();
 
 	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
+
+	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 private:
 	void CreateVertexBufferView();
@@ -58,7 +62,7 @@ private:
 	int32_t kClientWidth_;
 	int32_t kClientHeight_;
 
-	static const int kMaxTexture = 2;
+	static const int kMaxTexture = 3;
 
 	bool CheckTextureIndex[kMaxTexture];
 
