@@ -36,7 +36,6 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t
 		textureResource_[i] = nullptr;
 		intermediateResource_[i] = nullptr;
 	}
-
 }
 
 void MyEngine::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& ViewMatrix, const int index)
