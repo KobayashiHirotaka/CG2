@@ -542,7 +542,6 @@ void MyEngine::Release()
 	materialResourceObj_->Release();
 	transformationMatrixResourceObj_->Release();
 
-
 	directionalLightResource_->Release();
 }
 

@@ -200,6 +200,7 @@ private:
 
 	TransformationMatrix* transformationMatrixDataObj_ = nullptr;
 
+
 	//DescriptorSizeを取得しておく
 	uint32_t descriptorSizeSRV_;
 	uint32_t descriptorSizeRTV_;
