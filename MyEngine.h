@@ -39,16 +39,14 @@ public:
 
 private:
 	void CreateVertexBufferView();
+	void SettingColor();
+	void SettingWVP();
 
 	void CreateVertexBufferViewSprite();
 	void CreateIndexBufferViewSprite();
 
 	void CreateVertexBufferViewSphere();
 	void CreateIndexBufferViewSphere();
-	
-	void SettingColor();
-
-	void SettingWVP();
 
 	ID3D12Resource* CreateBufferResource(size_t sizeInBytes);
 	DirectX::ScratchImage OpenImage(const std::string& filePath);

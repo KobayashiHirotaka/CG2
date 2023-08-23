@@ -19,7 +19,6 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t
 	materialResourceObj_ = CreateBufferResource(sizeof(Material));
 	transformationMatrixResourceObj_ = CreateBufferResource(sizeof(TransformationMatrix));
 
-
 	directionalLightResource_ = CreateBufferResource(sizeof(DirectionalLight));
 	directionalLightResource_->Map(0, nullptr, reinterpret_cast<void**>(&directionalLightData_));
 	directionalLightData_->color = { 1.0f,1.0f,1.0f,1.0f };
@@ -425,6 +424,95 @@ void MyEngine::ImGui()
 	ImGui::End();
 }
 
+void MyEngine::CreateVertexBufferView()
+{
+	vertexResource_ = CreateBufferResource(sizeof(VertexData) * kMaxVertex_);
+	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress();
+	vertexBufferView_.SizeInBytes = sizeof(VertexData) * kMaxVertex_;
+	vertexBufferView_.StrideInBytes = sizeof(VertexData);
+	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
+}
+
+void MyEngine::SettingColor()
+{
+	materialResource_ = CreateBufferResource(sizeof(Material) * kMaxTriangle_);
+	//書き込むアドレスを取得
+	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
+}
+
+void MyEngine::SettingWVP()
+{
+	wvpResource_ = CreateBufferResource(sizeof(TransformationMatrix));
+	//WVPを書き込むアドレスを取得
+	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&wvpData_));
+}
+
+void MyEngine::CreateVertexBufferViewSprite()
+{
+	vertexResourceSprite_ = CreateBufferResource(sizeof(VertexData) * 4);
+	materialResourceSprite_ = CreateBufferResource(sizeof(Material)*kMaxSprite_);
+	transformationMatrixResourceSprite_ = CreateBufferResource(sizeof(TransformationMatrix));
+	indexResourceSprite_ = CreateBufferResource(sizeof(uint32_t) * kMaxSpriteVertex_);
+
+	vertexResourceSprite_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataSprite_));
+	
+	vertexBufferViewSprite_.BufferLocation = vertexResourceSprite_->GetGPUVirtualAddress();
+
+	vertexBufferViewSprite_.SizeInBytes = sizeof(VertexData) * 4;
+
+	vertexBufferViewSprite_.StrideInBytes = sizeof(VertexData);
+}
+
+void MyEngine::CreateIndexBufferViewSprite()
+{
+	indexBufferViewSprite_.BufferLocation = indexResourceSprite_->GetGPUVirtualAddress();
+
+	indexBufferViewSprite_.SizeInBytes = sizeof(uint32_t) * kMaxSpriteVertex_;
+
+	indexBufferViewSprite_.Format = DXGI_FORMAT_R32_UINT;
+}
+
+void MyEngine::CreateVertexBufferViewSphere()
+{
+	vertexResourceSphere_ = CreateBufferResource(sizeof(VertexData) * 4 * kSubdivision_ * kSubdivision_);
+	materialResourceSphere_ = CreateBufferResource(sizeof(Material));
+	transformationMatrixResourceSphere_ = CreateBufferResource(sizeof(TransformationMatrix));
+	indexResourceSphere_ = CreateBufferResource(sizeof(uint32_t) * 6 * kSubdivision_ * kSubdivision_);
+
+	vertexResourceSphere_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataSphere_));
+
+	vertexBufferViewSphere_.BufferLocation = vertexResourceSphere_->GetGPUVirtualAddress();
+
+	vertexBufferViewSphere_.SizeInBytes = sizeof(VertexData) * 4 * kSubdivision_ * kSubdivision_;
+
+	vertexBufferViewSphere_.StrideInBytes = sizeof(VertexData);
+}
+
+void MyEngine::CreateIndexBufferViewSphere()
+{
+	indexBufferViewSphere_.BufferLocation = indexResourceSphere_->GetGPUVirtualAddress();
+
+	indexBufferViewSphere_.SizeInBytes = sizeof(uint32_t) * 6 * kSubdivision_ * kSubdivision_;
+
+	indexBufferViewSphere_.Format = DXGI_FORMAT_R32_UINT;
+}
+
+void MyEngine::VertexReset()
+{
+	for (int i = 0; i < kMaxTriangle_; ++i)
+	{
+		if (CheckTriangleIndex_[i] == true)
+		{
+			CheckTriangleIndex_[i] = false;
+		}
+
+		if (CheckSpriteIndex_[i] == true)
+		{
+			CheckSpriteIndex_[i] = false;
+		}
+	}
+}
+
 void MyEngine::Release()
 {
 	vertexResource_->Release();
@@ -458,28 +546,24 @@ void MyEngine::Release()
 	directionalLightResource_->Release();
 }
 
-
-void MyEngine::CreateVertexBufferView()
+ID3D12Resource* MyEngine::CreateBufferResource(size_t sizeInBytes)
 {
-	vertexResource_ = CreateBufferResource(sizeof(VertexData) * kMaxVertex_);
-	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress();
-	vertexBufferView_.SizeInBytes = sizeof(VertexData) * kMaxVertex_;
-	vertexBufferView_.StrideInBytes = sizeof(VertexData);
-	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
-}
+	ID3D12Resource* Resource = nullptr;
+	D3D12_HEAP_PROPERTIES uploadHeapProperties{};
+	uploadHeapProperties.Type = D3D12_HEAP_TYPE_UPLOAD;
+	D3D12_RESOURCE_DESC ResourceDesc{};
+	ResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	ResourceDesc.Width = sizeInBytes;
+	ResourceDesc.Height = 1;
+	ResourceDesc.DepthOrArraySize = 1;
+	ResourceDesc.MipLevels = 1;
+	ResourceDesc.SampleDesc.Count = 1;
+	ResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+	
+	hr_ = dxCommon_->GetDevice()->CreateCommittedResource(&uploadHeapProperties, D3D12_HEAP_FLAG_NONE, &ResourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&Resource));
+	assert(SUCCEEDED(hr_));
 
-void MyEngine::SettingColor()
-{
-	materialResource_ = CreateBufferResource(sizeof(Material) * kMaxTriangle_);
-	//書き込むアドレスを取得
-	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
-}
-
-void MyEngine::SettingWVP()
-{
-	wvpResource_ = CreateBufferResource(sizeof(TransformationMatrix));
-	//WVPを書き込むアドレスを取得
-	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&wvpData_));
+	return Resource;
 }
 
 int MyEngine::LoadTexture(const std::string& filePath)
@@ -594,92 +678,6 @@ ID3D12Resource* MyEngine::UploadTextureData(ID3D12Resource* texture, const Direc
 	dxCommon_->GetcommandList()->ResourceBarrier(1, &barrier);
 
 	return intermediateResource;
-}
-
-void MyEngine::CreateVertexBufferViewSprite()
-{
-	vertexResourceSprite_ = CreateBufferResource(sizeof(VertexData) * 4);
-	materialResourceSprite_ = CreateBufferResource(sizeof(Material)*kMaxSprite_);
-	transformationMatrixResourceSprite_ = CreateBufferResource(sizeof(TransformationMatrix));
-	indexResourceSprite_ = CreateBufferResource(sizeof(uint32_t) * kMaxSpriteVertex_);
-
-	vertexResourceSprite_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataSprite_));
-	
-	vertexBufferViewSprite_.BufferLocation = vertexResourceSprite_->GetGPUVirtualAddress();
-
-	vertexBufferViewSprite_.SizeInBytes = sizeof(VertexData) * 4;
-
-	vertexBufferViewSprite_.StrideInBytes = sizeof(VertexData);
-}
-
-void MyEngine::CreateIndexBufferViewSprite()
-{
-	indexBufferViewSprite_.BufferLocation = indexResourceSprite_->GetGPUVirtualAddress();
-
-	indexBufferViewSprite_.SizeInBytes = sizeof(uint32_t) * kMaxSpriteVertex_;
-
-	indexBufferViewSprite_.Format = DXGI_FORMAT_R32_UINT;
-}
-
-ID3D12Resource* MyEngine::CreateBufferResource(size_t sizeInBytes)
-{
-	ID3D12Resource* Resource = nullptr;
-	D3D12_HEAP_PROPERTIES uploadHeapProperties{};
-	uploadHeapProperties.Type = D3D12_HEAP_TYPE_UPLOAD;
-	D3D12_RESOURCE_DESC ResourceDesc{};
-	ResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	ResourceDesc.Width = sizeInBytes;
-	ResourceDesc.Height = 1;
-	ResourceDesc.DepthOrArraySize = 1;
-	ResourceDesc.MipLevels = 1;
-	ResourceDesc.SampleDesc.Count = 1;
-	ResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-	
-	hr_ = dxCommon_->GetDevice()->CreateCommittedResource(&uploadHeapProperties, D3D12_HEAP_FLAG_NONE, &ResourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&Resource));
-	assert(SUCCEEDED(hr_));
-
-	return Resource;
-}
-
-void MyEngine::CreateVertexBufferViewSphere()
-{
-	vertexResourceSphere_ = CreateBufferResource(sizeof(VertexData) * 4 * kSubdivision_ * kSubdivision_);
-	materialResourceSphere_ = CreateBufferResource(sizeof(Material));
-	transformationMatrixResourceSphere_ = CreateBufferResource(sizeof(TransformationMatrix));
-	indexResourceSphere_ = CreateBufferResource(sizeof(uint32_t) * 6 * kSubdivision_ * kSubdivision_);
-
-	vertexResourceSphere_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataSphere_));
-
-	vertexBufferViewSphere_.BufferLocation = vertexResourceSphere_->GetGPUVirtualAddress();
-
-	vertexBufferViewSphere_.SizeInBytes = sizeof(VertexData) * 4 * kSubdivision_ * kSubdivision_;
-
-	vertexBufferViewSphere_.StrideInBytes = sizeof(VertexData);
-}
-
-void MyEngine::CreateIndexBufferViewSphere()
-{
-	indexBufferViewSphere_.BufferLocation = indexResourceSphere_->GetGPUVirtualAddress();
-
-	indexBufferViewSphere_.SizeInBytes = sizeof(uint32_t) * 6 * kSubdivision_ * kSubdivision_;
-
-	indexBufferViewSphere_.Format = DXGI_FORMAT_R32_UINT;
-}
-
-void MyEngine::VertexReset()
-{
-	for (int i = 0; i < kMaxTriangle_; ++i)
-	{
-		if (CheckTriangleIndex_[i] == true)
-		{
-			CheckTriangleIndex_[i] = false;
-		}
-
-		if (CheckSpriteIndex_[i] == true)
-		{
-			CheckSpriteIndex_[i] = false;
-		}
-	}
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE MyEngine::GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index)
