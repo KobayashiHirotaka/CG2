@@ -7,6 +7,7 @@
 #include "dxgidebug.h"
 #include "Vector3.h"
 #include "Vector4.h"
+#include <wrl.h>
 #include <cassert>
 #include "externals/DirectXTex/d3dx12.h"
 
@@ -26,18 +27,22 @@ public:
 
 	void Release();
 
-	ID3D12Device* GetDevice() { return device_; }
+	Microsoft::WRL::ComPtr<ID3D12Device>
+	GetDevice() { return device_.Get(); }
 
-	ID3D12GraphicsCommandList* GetcommandList() { return commandList_; }
+	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>
+	GetcommandList() { return commandList_.Get(); }
 
 	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() { return swapChainDesc_; }
 
 	D3D12_RENDER_TARGET_VIEW_DESC GetRtvDesc() { return rtvDesc_; }
 
-	ID3D12DescriptorHeap* GetSrvDescriptorHeap() { return srvDescriptorHeap_; }
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>
+	GetSrvDescriptorHeap() { return srvDescriptorHeap_.Get(); }
 
 private:
-	ID3D12DescriptorHeap* CreateDescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(Microsoft::WRL::ComPtr<ID3D12Device> device,
+		D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 
 	void CreateDXGIDevice();
 
@@ -66,7 +71,7 @@ private:
 	void CreateDxcCompiler();
 	IDxcBlob* CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler);
 
-	ID3D12Resource* CreateDepthStencilTextureResource(int32_t width, int32_t height);
+	Microsoft::WRL::ComPtr<ID3D12Resource> CreateDepthStencilTextureResource(int32_t width, int32_t height);
 
 private:
 	WindowsApp* win_;
@@ -77,43 +82,43 @@ private:
 	HRESULT hr_;
 
 	//DXGIファクトリーの生成
-	IDXGIFactory7* dxgiFactory_;
+	Microsoft::WRL::ComPtr<IDXGIFactory7> dxgiFactory_;
 
 	//使用するアダプタ用の変数
-	IDXGIAdapter4* useAdapter_;
+	Microsoft::WRL::ComPtr<IDXGIAdapter4> useAdapter_;
 
 	//D3D12Deviceの生成
-	ID3D12Device* device_;
+	Microsoft::WRL::ComPtr<ID3D12Device> device_;
 
 	//コマンドキュー生成
-	ID3D12CommandQueue* commandQueue_;
+	Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue_;
 
 	//コマンドアロケータの生成
-	ID3D12CommandAllocator* commandAllocator_;
+	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator_;
 
 	//コマンドリストを生成する
-	ID3D12GraphicsCommandList* commandList_;
+	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList_;
 
 	//スワップチェーン
-	IDXGISwapChain4* swapChain_{};
+	Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_{};
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc_;
 
 	//ディスクリプタヒープの生成
-	ID3D12DescriptorHeap* rtvDescriptorHeap_;
-	ID3D12DescriptorHeap* srvDescriptorHeap_;
-	ID3D12DescriptorHeap* dsvDescriptorHeap_;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvDescriptorHeap_;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvDescriptorHeap_;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvDescriptorHeap_;
 
 	//深度
-	ID3D12Resource* depthStencilResource_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> depthStencilResource_;
 
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_{};
 
 	//RTVを２つ作るのでディスクリプタを２つ用意
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles_[2];
-	ID3D12Resource* swapChainResources_[2];
+	Microsoft::WRL::ComPtr<ID3D12Resource> swapChainResources_[2];
 
 	//Fence
-	ID3D12Fence* fence_;
+	Microsoft::WRL::ComPtr<ID3D12Fence> fence_;
 	UINT64 fenceValue_;
 	HANDLE fenceEvent_ = CreateEvent(NULL, FALSE, FALSE, NULL);
 
@@ -138,12 +143,12 @@ private:
 	D3D12_RASTERIZER_DESC rasterizerDesc_{};
 
 	//PSO
-	ID3D12PipelineState* graphicsPipelineState_;
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineState_;
 
 	ID3DBlob* signatureBlob_;
 	ID3DBlob* errorBlob_;
 
-	ID3D12RootSignature* rootSignature_;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_;
 
 	IDxcBlob* vertexShaderBlob_;
 
@@ -156,7 +161,7 @@ private:
 	D3D12_RECT scissorRect_{};
 	
 #ifdef _DEBUG
-	ID3D12Debug1* debugController_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Debug1> debugController_ = nullptr;
 #endif
 };
 
