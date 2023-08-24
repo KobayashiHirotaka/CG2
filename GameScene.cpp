@@ -16,7 +16,7 @@ void GameScene::Initialize(WindowsApp* win, DirectXCommon* dxCommon, MyEngine* e
 
 	uvChecker = engine_->LoadTexture("resource/uvChecker.png");
 	monsterBall = engine_->LoadTexture("resource/monsterBall.png");
-	modelData_ = engine_->LoadObjFile("resource", "plane.obj");
+	modelData_ = engine_->LoadObjFile("resource", "Axis.obj");
 
 	triangleData[0] = { -0.5f,-0.5f,0.0f,1.0f };
 	triangleData[1] = { 0.0f,0.5f,0.0f,1.0f };
