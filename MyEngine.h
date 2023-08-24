@@ -27,8 +27,6 @@ public:
 
 	void ImGui();
 
-	void Release();
-
 	int LoadTexture(const std::string& filePath);
 
 	void VertexReset();
@@ -48,13 +46,13 @@ private:
 	void CreateVertexBufferViewSphere();
 	void CreateIndexBufferViewSphere();
 
-	ID3D12Resource* CreateBufferResource(size_t sizeInBytes);
+	Microsoft::WRL::ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
 	DirectX::ScratchImage OpenImage(const std::string& filePath);
-	ID3D12Resource* CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);
-	ID3D12Resource* UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
+	Microsoft::WRL::ComPtr<ID3D12Resource> CreateTextureResource(Microsoft::WRL::ComPtr<ID3D12Resource> device, const DirectX::TexMetadata& metadata);
+	Microsoft::WRL::ComPtr<ID3D12Resource> UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> texture, const DirectX::ScratchImage& mipImages);
 
-	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
-	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
+	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index);
+	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index);
 
 private:
 	int32_t kClientWidth_;
@@ -114,23 +112,23 @@ private:
 	static const int kMaxVertex_ = kMaxTriangle_ * 3;
 	bool CheckTriangleIndex_[kMaxTriangle_];
 
-	ID3D12Resource* vertexResource_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource_ = nullptr;
 	
 	VertexData* vertexData_;
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{};
 	
-	ID3D12Resource* materialResource_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource_ = nullptr;
 
 	Material* materialData_ = nullptr;
 
-	ID3D12Resource* wvpResource_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource_ = nullptr;
 
 	Matrix4x4* wvpData_ = nullptr;
 	
-	ID3D12Resource* textureResource_[kMaxTexture];
+	Microsoft::WRL::ComPtr<ID3D12Resource> textureResource_[kMaxTexture];
 
-	ID3D12Resource* intermediateResource_[kMaxTexture];
+	Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource_[kMaxTexture];
 	
 	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_[kMaxTexture];
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_[kMaxTexture];
@@ -140,21 +138,21 @@ private:
 	static const int kMaxSpriteVertex_ = kMaxSprite_ * 6;
 	bool CheckSpriteIndex_[kMaxSprite_];
 
-	ID3D12Resource* vertexResourceSprite_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResourceSprite_ = nullptr;
 	
 	VertexData* vertexDataSprite_;
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite_{};
 
-	ID3D12Resource* materialResourceSprite_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> materialResourceSprite_ = nullptr;
 
 	Material* materialDataSprite_ = nullptr;
 	
-	ID3D12Resource* transformationMatrixResourceSprite_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> transformationMatrixResourceSprite_ = nullptr;
 
 	TransformationMatrix* transformationMatrixDataSprite_ = nullptr;
 
-	ID3D12Resource* indexResourceSprite_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> indexResourceSprite_ = nullptr;
 
 	uint32_t* indexDataSprite_;
 
@@ -163,21 +161,21 @@ private:
 	//Sphere
 	const int kSubdivision_ = 16;
 
-	ID3D12Resource* vertexResourceSphere_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResourceSphere_ = nullptr;
 
 	VertexData* vertexDataSphere_;
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSphere_{};
 
-	ID3D12Resource* materialResourceSphere_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> materialResourceSphere_ = nullptr;
 
 	Material* materialDataSphere_ = nullptr;
 
-	ID3D12Resource* transformationMatrixResourceSphere_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> transformationMatrixResourceSphere_ = nullptr;
 
 	TransformationMatrix* transformationMatrixDataSphere_ = nullptr;
 
-	ID3D12Resource* indexResourceSphere_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> indexResourceSphere_ = nullptr;
 
 	uint32_t* indexDataSphere_;
 
@@ -186,17 +184,17 @@ private:
 	//Obj
 	ModelData modelData_;
 
-	ID3D12Resource* vertexResourceObj_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResourceObj_;
 
 	VertexData* vertexDataObj_;
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewObj_{};
 
-	ID3D12Resource* materialResourceObj_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> materialResourceObj_ = nullptr;
 
 	Material* materialDataObj_ = nullptr;
 
-	ID3D12Resource* transformationMatrixResourceObj_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> transformationMatrixResourceObj_ = nullptr;
 
 	TransformationMatrix* transformationMatrixDataObj_ = nullptr;
 
@@ -205,6 +203,6 @@ private:
 	uint32_t descriptorSizeRTV_;
 	uint32_t descriptorSizeDSV_;
 
-	ID3D12Resource* directionalLightResource_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource_ = nullptr;
 	DirectionalLight* directionalLightData_ = nullptr;
 };
