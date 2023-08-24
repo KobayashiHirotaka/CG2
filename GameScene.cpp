@@ -70,6 +70,6 @@ void GameScene::Draw()
 void GameScene::Release()
 {
 	ImGui_ImplDX12_Shutdown();
-	engine_->Release();
-	dxCommon_->Release();
+	delete dxCommon_;
+	delete engine_;
 }
