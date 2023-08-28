@@ -162,6 +162,7 @@ void DirectXCommon::CreateDXGIDevice()
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
 		//警告
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
+
 		//リリース
 		infoQueue->Release();
 		//エラーの抑制
@@ -576,7 +577,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> DirectXCommon::CreateDepthStencilTextureR
 	depthClearValue.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
 	//Resourceの生成
-	ID3D12Resource* resource = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> resource = nullptr;
 	hr_ = device_->CreateCommittedResource(
 		&heapProperties,//Heapの設定
 		D3D12_HEAP_FLAG_NONE,//Heapの特殊な設定　特になし
