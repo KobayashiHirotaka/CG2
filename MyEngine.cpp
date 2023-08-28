@@ -515,7 +515,7 @@ void MyEngine::VertexReset()
 
 Microsoft::WRL::ComPtr<ID3D12Resource> MyEngine::CreateBufferResource(size_t sizeInBytes)
 {
-	ID3D12Resource* Resource = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> Resource = nullptr;
 	D3D12_HEAP_PROPERTIES uploadHeapProperties{};
 	uploadHeapProperties.Type = D3D12_HEAP_TYPE_UPLOAD;
 	D3D12_RESOURCE_DESC ResourceDesc{};
