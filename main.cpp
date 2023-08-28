@@ -60,5 +60,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	gameScene->Release();
 	CoUninitialize();
 
+
 	return 0;
 }
