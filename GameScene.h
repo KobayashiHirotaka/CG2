@@ -7,6 +7,7 @@
 #include "GameStartScene.h"
 #include "GamePlayScene.h"
 #include "GameEndScene.h"
+#include "Input.h"
 
 class GameScene
 {
@@ -25,6 +26,7 @@ private:
 	DirectXCommon* dxCommon_ = nullptr;
 	MyEngine* engine_ = nullptr;
 	MyImGui* imGui_ = nullptr;
+	Input* input_ = nullptr;
 
 	MSG msg{};
 

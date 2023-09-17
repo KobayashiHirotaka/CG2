@@ -24,6 +24,7 @@
     <ClCompile Include="GameEndScene.cpp" />
     <ClCompile Include="GamePlayScene.cpp" />
     <ClCompile Include="GameStartScene.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyEngine.cpp" />
     <ClCompile Include="MyImGui.cpp" />
@@ -68,6 +69,7 @@
     <ClInclude Include="GameEndScene.h" />
     <ClInclude Include="GamePlayScene.h" />
     <ClInclude Include="GameStartScene.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Matrix4x4.h" />

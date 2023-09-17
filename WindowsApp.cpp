@@ -1,5 +1,11 @@
 #include "WindowsApp.h"
 
+WindowsApp* WindowsApp::GetInstance()
+{
+	static WindowsApp instance;
+	return &instance;
+}
+
 //ウィンドウプロシージャ
 LRESULT WindowsApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {

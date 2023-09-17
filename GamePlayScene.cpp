@@ -4,6 +4,8 @@ void GamePlayScene::Initialize()
 {
 	camera_ = new Camera();
 	camera_->Initialize(1280, 720);
+	
+	input_ = Input::GetInstance();
 
 	engine_ = MyEngine::GetInstance();
 
@@ -19,6 +21,11 @@ void GamePlayScene::Initialize()
 void GamePlayScene::Update()
 {
 	camera_->Update();
+
+	if (input_->PushKey(DIK_SPACE))
+	{
+		count_ += 1;
+	}
 }
 
 void GamePlayScene::Draw()
@@ -39,6 +46,10 @@ void GamePlayScene::Draw()
 
 	ImGui::Begin("sphereTexture");
 	ImGui::Checkbox("texture", &changeTexture);
+	ImGui::End();
+
+	ImGui::Begin("count");
+	ImGui::Text("count %d", count_);
 	ImGui::End();
 
 	engine_->ImGui();

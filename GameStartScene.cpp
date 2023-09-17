@@ -2,7 +2,7 @@
 
 void GameStartScene::Initialize()
 {
-
+	
 }
 
 void GameStartScene::Update()

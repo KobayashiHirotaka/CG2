@@ -20,6 +20,9 @@ void GameScene::Initialize()
 	imGui_ = new MyImGui();
 	imGui_->Initialize(win_, dxCommon_);
 
+	input_ = Input::GetInstance();
+	input_->Initialize(win_);
+
 	state[START] = std::make_unique<GameStartScene>();
 	state[PLAY] = std::make_unique<GamePlayScene>();
 	state[PLAY]->Initialize();
@@ -42,6 +45,7 @@ void GameScene::UpDate()
 			//ゲームの処理
 			imGui_->BeginFlame();
 			dxCommon_->PreDraw();
+			input_->Update();
 
 			state[GameStartScene::stateNum]->Update();
 			state[GameStartScene::stateNum]->Draw();

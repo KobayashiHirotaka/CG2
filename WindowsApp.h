@@ -11,9 +11,13 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg
 class WindowsApp 
 {
 public:
+	static WindowsApp* GetInstance();
+
 	static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
 	HWND GetHwnd() { return hwnd_; }
+
+	HINSTANCE GetHinstance()const { return wc_.hInstance; }
 
 	void Initialize(int32_t kClientWidth, int32_t kClientHeight);
 

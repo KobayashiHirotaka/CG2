@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "Sphere.h"
 #include "ModelData.h"
+#include "Input.h"
 
 class GamePlayScene : public IScene
 {
@@ -15,6 +16,7 @@ public:
 private:
 	MyEngine* engine_ = nullptr;
 	Camera* camera_ = nullptr;
+	Input* input_ = nullptr;
 
 	Vector4 triangleData[3] = {};
 	Vector4 material[2] = { 1.0f,1.0f,1.0f,1.0f };
@@ -33,4 +35,6 @@ private:
 	bool changeTexture = true;
 
 	ModelData modelData_;
+
+	int count_ = 0;
 };
