@@ -68,6 +68,7 @@
     <ClInclude Include="GameEndScene.h" />
     <ClInclude Include="GamePlayScene.h" />
     <ClInclude Include="GameStartScene.h" />
+    <ClInclude Include="IScene.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="ModelData.h" />

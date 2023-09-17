@@ -1,17 +1,17 @@
-#include "GameStartState.h"
+#include "GameStartScene.h"
 
-void GameStartState::Initialize()
+void GameStartScene::Initialize()
 {
 
 }
 
-void GameStartState::Update()
+void GameStartScene::Update()
 {
-	/*time_++;
+	time_++;
 	if (time_ >= 60)
 	{
 		stateNum = 1;
-	}*/
+	}
 
 	ImGui::Begin("StateNum");
 	ImGui::Text("StateNum %d", stateNum);
@@ -19,7 +19,7 @@ void GameStartState::Update()
 	ImGui::End();
 }
 
-void GameStartState::Draw()
+void GameStartScene::Draw()
 {
 
 }

@@ -1,75 +1,60 @@
 #include"GameScene.h"
 
-void GameScene::Initialize(WindowsApp* win, DirectXCommon* dxCommon, MyEngine* engine, int32_t kClientWidth, int32_t kClientHeight)
+void GameScene::Initialize()
 {
-	dxCommon_ = dxCommon;
-	engine_ = engine;
+	//COMの初期化
+	CoInitializeEx(0, COINIT_MULTITHREADED);
 
-	kClientWidth_ = kClientWidth;
-	kClientHeight_ = kClientHeight;
+	win_ = new WindowsApp();
+	kClientWidth_ = 1280;
+	kClientHeight_ = 720;
 
-	camera_ = new Camera();
-	camera_->Initialize(kClientWidth_, kClientHeight_);
+	win_->Initialize(kClientWidth_, kClientHeight_);
+
+	dxCommon_ = new DirectXCommon();
+	dxCommon_->Initialize(win_, kClientWidth_, kClientHeight_);
+
+	engine_ = MyEngine::GetInstance();
+	engine_->Initialize(dxCommon_, kClientWidth_, kClientHeight_);
 
 	imGui_ = new MyImGui();
-	imGui_->Initialize(win, dxCommon_);
+	imGui_->Initialize(win_, dxCommon_);
 
-	uvChecker = engine_->LoadTexture("resource/uvChecker.png");
-	monsterBall = engine_->LoadTexture("resource/monsterBall.png");
-	modelData_ = engine_->LoadObjFile("resource", "plane.obj");
+	state[START] = std::make_unique<GameStartScene>();
+	state[PLAY] = std::make_unique<GamePlayScene>();
+	state[PLAY]->Initialize();
 
-	triangleData[0] = { -0.5f,-0.5f,0.0f,1.0f };
-	triangleData[1] = { 0.0f,0.5f,0.0f,1.0f };
-	triangleData[2] = { 0.5f,-0.5f,0.0f,1.0f };
+	IScene::stateNum = START;
 }
 
 void GameScene::UpDate()
 {
-	camera_->Update();
-}
-
-void GameScene::Draw()
-{
-
-	imGui_->BeginFlame();
-	dxCommon_->PreDraw();
-
-	ImGui::Begin("TriAngleColor");
-
-	float color[3] = { material[0].x,material[0].y ,material[0].w };
-	ImGui::SliderFloat3("RGB", color, 0, 1, "%.3f");
-	ImGui::ColorEdit3("MaterialColor", color);
-	material[0] = { color[0],color[1],color[2] };
-
-	ImGui::End();
-
-	ImGui::Begin("sphereTexture");
-	ImGui::Checkbox("texture", &changeTexture);
-	ImGui::End();
-
-	engine_->ImGui();
-
-	if (changeTexture == true)
+	//ウィンドウのxが押されるまでループ
+	while (msg.message != WM_QUIT)
 	{
-		sphereTexture = monsterBall;
+		//windowのメッセージを最優先で処理させる
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		else {
+			//ゲームの処理
+			imGui_->BeginFlame();
+			dxCommon_->PreDraw();
 
-	}else {
-		sphereTexture = uvChecker;
+			state[GameStartScene::stateNum]->Update();
+			state[GameStartScene::stateNum]->Draw();
+
+			imGui_->EndFlame();
+			dxCommon_->PostDraw();
+		}
 	}
-	
-	/*engine_->Draw(triangleData[0], triangleData[1], triangleData[2], material[0], camera_->transformationMatrixData, uvChecker);*/
-	/*engine_->DrawSprite(LeftTop, LeftBottom, RightTop, RightBottom, material[0], uvChecker);
-	engine_->DrawSphere(sphere, camera_->transformationMatrixData, material[0], sphereTexture);*/
-	engine_->DrawModel(modelData_, { 0,0,0 }, camera_->transformationMatrixData, material[0]);
-
-	engine_->VertexReset();
-	imGui_->EndFlame();
-	dxCommon_->PostDraw();
+	Release();
 }
 
 void GameScene::Release()
 {
 	ImGui_ImplDX12_Shutdown();
-	delete dxCommon_;
-	delete engine_;
+	CoUninitialize();
 }

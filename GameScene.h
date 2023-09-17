@@ -1,44 +1,41 @@
 #pragma once
-#include"MyEngine.h"
-#include"Camera.h"
-#include"MyImGui.h"
+#include "WindowsApp.h"
+#include "DirectXCommon.h"
+#include "MyEngine.h"
+#include "MyImGui.h"
+#include "IScene.h"
+#include "GameStartScene.h"
+#include "GamePlayScene.h"
+#include "GameEndScene.h"
 
 class GameScene
 {
 public:
-	void Initialize(WindowsApp* win, DirectXCommon* dxCommon, MyEngine* engine, int32_t kClientWidth, int32_t kClientHeight);
+	void Initialize();
 
 	void UpDate();
 
-	void Draw();
-
-	void Release();
+	//void Draw();
 
 private:
-	int32_t kClientWidth_ = 0;
-	int32_t kClientHeight_ = 0;
+	int32_t kClientWidth_;
+	int32_t kClientHeight_;
 
+	WindowsApp* win_ = nullptr;
 	DirectXCommon* dxCommon_ = nullptr;
 	MyEngine* engine_ = nullptr;
-	Camera* camera_ = nullptr;
 	MyImGui* imGui_ = nullptr;
 
-	Vector4 triangleData[3] = {};
-	Vector4 material[2] = { 1.0f,1.0f,1.0f,1.0f };
+	MSG msg{};
 
-	Vector4 LeftTop = { 0.0f,0.0f,0.0f,1.0f };
-	Vector4 LeftBottom = { 0.0f,360.0f,0.0f,1.0f };
-	Vector4 RightTop = { 640.0f,0.0f,0.0f,1.0f };
-	Vector4 RightBottom = { 640.0f,360.0f,0.0f,1.0f };
+	enum GameStateNo
+	{
+		START,
+		PLAY,
+		END
+	};
 
-	Sphere sphere = { {0.0f,0.0f,0.0f},16 };
+	std::unique_ptr<IScene>state[END];
 
-	int uvChecker;
-	int monsterBall;
-
-	int sphereTexture = 0;
-	bool changeTexture = true;
-
-	ModelData modelData_;
+	void Release();
 };
-
