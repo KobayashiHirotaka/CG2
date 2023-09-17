@@ -15,6 +15,8 @@
 class MyEngine
 {
 public:
+	static MyEngine* GetInstance();
+
 	void Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t kClientHeight);
 
 	void Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& ViewMatrix, const int index);
@@ -113,11 +115,11 @@ private:
 	bool CheckTriangleIndex_[kMaxTriangle_];
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource_ = nullptr;
-	
+
 	VertexData* vertexData_;
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{};
-	
+
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource_ = nullptr;
 
 	Material* materialData_ = nullptr;
@@ -125,11 +127,11 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource_ = nullptr;
 
 	Matrix4x4* wvpData_ = nullptr;
-	
+
 	Microsoft::WRL::ComPtr<ID3D12Resource> textureResource_[kMaxTexture];
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource_[kMaxTexture];
-	
+
 	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_[kMaxTexture];
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_[kMaxTexture];
 
@@ -139,7 +141,7 @@ private:
 	bool CheckSpriteIndex_[kMaxSprite_];
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResourceSprite_ = nullptr;
-	
+
 	VertexData* vertexDataSprite_;
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite_{};
@@ -147,7 +149,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResourceSprite_ = nullptr;
 
 	Material* materialDataSprite_ = nullptr;
-	
+
 	Microsoft::WRL::ComPtr<ID3D12Resource> transformationMatrixResourceSprite_ = nullptr;
 
 	TransformationMatrix* transformationMatrixDataSprite_ = nullptr;

@@ -1,5 +1,11 @@
 #include "MyEngine.h"
 
+MyEngine* MyEngine::GetInstance()
+{
+	static MyEngine instance;
+	return &instance;
+}
+
 void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t kClientHeight)
 {
 	kClientWidth_ = kClientWidth;
@@ -77,10 +83,10 @@ void MyEngine::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const 
 
 	vertexData_[triangleIndex].position = { 0.0f,0.0f,0.0f,1.0f };
 	vertexData_[triangleIndex].texcoord = { 0.5f,0.0f };
-	
+
 	vertexData_[triangleIndex].position = { 0.7f,-0.5f,-0.5f,1.0f };
 	vertexData_[triangleIndex].texcoord = { 1.0f,1.0f };*/
-	
+
 	materialData_->color = material;
 	materialData_->uvTransform = MakeIdentity4x4();
 	Matrix4x4 uvTransformMatrix = MakeScaleMatrix(uvTransformTriangle_.scale);
@@ -130,7 +136,7 @@ void MyEngine::DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, con
 
 	vertexDataSprite_[0].position = LeftBottom;
 	vertexDataSprite_[0].texcoord = { 0.0f,1.0f };
-	
+
 	vertexDataSprite_[1].position = LeftTop;
 	vertexDataSprite_[1].texcoord = { 0.0f,0.0f };
 
@@ -327,7 +333,7 @@ void MyEngine::DrawModel(const ModelData& modelData, const Vector3& position, co
 	transformationMatrixDataObj_->World = MakeIdentity4x4();
 
 	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	
+
 	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewObj_);
 
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceObj_->GetGPUVirtualAddress());
@@ -450,12 +456,12 @@ void MyEngine::SettingWVP()
 void MyEngine::CreateVertexBufferViewSprite()
 {
 	vertexResourceSprite_ = CreateBufferResource(sizeof(VertexData) * 4);
-	materialResourceSprite_ = CreateBufferResource(sizeof(Material)*kMaxSprite_);
+	materialResourceSprite_ = CreateBufferResource(sizeof(Material) * kMaxSprite_);
 	transformationMatrixResourceSprite_ = CreateBufferResource(sizeof(TransformationMatrix));
 	indexResourceSprite_ = CreateBufferResource(sizeof(uint32_t) * kMaxSpriteVertex_);
 
 	vertexResourceSprite_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataSprite_));
-	
+
 	vertexBufferViewSprite_.BufferLocation = vertexResourceSprite_->GetGPUVirtualAddress();
 
 	vertexBufferViewSprite_.SizeInBytes = sizeof(VertexData) * 4;
@@ -526,7 +532,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> MyEngine::CreateBufferResource(size_t siz
 	ResourceDesc.MipLevels = 1;
 	ResourceDesc.SampleDesc.Count = 1;
 	ResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-	
+
 	hr_ = dxCommon_->GetDevice()->CreateCommittedResource(&uploadHeapProperties, D3D12_HEAP_FLAG_NONE, &ResourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&Resource));
 	assert(SUCCEEDED(hr_));
 
@@ -683,27 +689,30 @@ ModelData MyEngine::LoadObjFile(const std::string& directoryPath, const std::str
 		{
 			Vector4 position;
 			s >> position.x >> position.y >> position.w;
-			
+
 			position.w *= -1.0f;
 			position.h = 1.0f;
 			positions.push_back(position);
 
-		}else if (identifier == "vt") 
+		}
+		else if (identifier == "vt")
 		{
 			Vector2 texcoord;
 			s >> texcoord.x >> texcoord.y;
 			texcoord.y = 1.0f - texcoord.y;
 			texcoords.push_back(texcoord);
 
-		}else if (identifier == "vn") 
+		}
+		else if (identifier == "vn")
 		{
 			Vector3 normal;
 			s >> normal.x >> normal.y >> normal.z;
-		
+
 			normal.z *= -1.0f;
 			normals.push_back(normal);
 
-		}else if (identifier == "f") 
+		}
+		else if (identifier == "f")
 		{
 			VertexData triamgle[3];
 
@@ -711,7 +720,7 @@ ModelData MyEngine::LoadObjFile(const std::string& directoryPath, const std::str
 			{
 				std::string vertexDefinition;
 				s >> vertexDefinition;
-				
+
 				std::istringstream v(vertexDefinition);
 
 				uint32_t elementIndices[3];
@@ -726,7 +735,7 @@ ModelData MyEngine::LoadObjFile(const std::string& directoryPath, const std::str
 				Vector4 position = positions[elementIndices[0] - 1];
 				Vector2 texcoord = texcoords[elementIndices[1] - 1];
 				Vector3 normal = normals[elementIndices[2] - 1];
-				
+
 				triamgle[faceVertex] = { position,texcoord,normal };
 
 			}
@@ -734,7 +743,8 @@ ModelData MyEngine::LoadObjFile(const std::string& directoryPath, const std::str
 			modelData.vertices.push_back(triamgle[2]);
 			modelData.vertices.push_back(triamgle[1]);
 			modelData.vertices.push_back(triamgle[0]);
-		}else if (identifier == "mtllib")
+		}
+		else if (identifier == "mtllib")
 		{
 			std::string materialFilename;
 			s >> materialFilename;
@@ -765,12 +775,12 @@ MaterialData MyEngine::LoadMaterialTemplateFile(const std::string& directoryPath
 		std::string identifier;
 		std::istringstream s(line);
 		s >> identifier;
-		
-		if (identifier == "map_Kd") 
+
+		if (identifier == "map_Kd")
 		{
 			std::string textureFilename;
 			s >> textureFilename;
-			
+
 			materialData.textureFilePath = directoryPath + "/" + textureFilename;
 		}
 	}
