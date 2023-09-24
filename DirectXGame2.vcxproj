@@ -26,6 +26,7 @@
     <ClCompile Include="GamePlayScene.cpp" />
     <ClCompile Include="GameStartScene.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="LoadCSV.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyEngine.cpp" />
     <ClCompile Include="MyImGui.cpp" />
@@ -75,6 +76,7 @@
     <ClInclude Include="GameStartScene.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IScene.h" />
+    <ClInclude Include="LoadCSV.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="ModelData.h" />
