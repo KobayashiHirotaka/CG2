@@ -74,25 +74,25 @@ void Camera::DebugCameraMove()
 
 	if (input->PressKey(DIK_UP))
 	{
-		const float speed = -0.05f;
+		const float speed = -0.01f;
 		matRotDelta = Multiply(matRotDelta, MakeRotateXMatrix(speed));
 	}
 
 	if (input->PressKey(DIK_DOWN)) 
 	{
-		const float speed = 0.05f;
+		const float speed = 0.01f;
 		matRotDelta = Multiply(matRotDelta, MakeRotateXMatrix(speed));
 	}
 
 	if (input->PressKey(DIK_LEFT))
 	{
-		const float speed = -0.05f;
+		const float speed = -0.01f;
 		matRotDelta = Multiply(matRotDelta, MakeRotateYMatrix(speed));
 	}
 
 	if (input->PressKey(DIK_RIGHT))
 	{
-		const float speed = 0.05f;
+		const float speed = 0.01f;
 		matRotDelta = Multiply(matRotDelta, MakeRotateYMatrix(speed));
 	}
 
@@ -100,50 +100,38 @@ void Camera::DebugCameraMove()
 
 	if (input->PressKey(DIK_A))
 	{
-		const float speed = -0.05f;
-
 		Vector3 translate{ speed,0,0 };
-		translation_ = Add(translation_, translate);
+		translation_ = Sub(translation_, translate);
 	}
 
 	if (input->PressKey(DIK_D)) 
 	{
-		const float speed = 0.05f;
-
 		Vector3 translate{ speed,0,0 };
 		translation_ = Add(translation_, translate);
 	}
 
 	if (input->PressKey(DIK_W))
 	{
-		const float speed = 0.05f;
-
 		Vector3 translate{ 0,speed,0 };
 		translation_ = Add(translation_, translate);
 	}
 
 	if (input->PressKey(DIK_S))
 	{
-		const float speed = -0.05f;
-
 		Vector3 translate{ 0,speed,0 };
-		translation_ = Add(translation_, translate);
+		translation_ = Sub(translation_, translate);
 	}
 
 	if (input->PressKey(DIK_E)) 
 	{
-		const float speed = 0.05f;
-
 		Vector3 translate{ 0,0,speed };
 		translation_ = Add(translation_, translate);
 	}
 
 	if (input->PressKey(DIK_Q))
 	{
-		const float speed = -0.05f;
-
 		Vector3 translate{ 0,0,speed };
-		translation_ = Add(translation_, translate);
+		translation_ = Sub(translation_, translate);
 	}
 }
 #endif // DEBUG

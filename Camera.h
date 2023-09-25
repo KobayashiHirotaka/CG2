@@ -53,6 +53,8 @@ private:
 
 #ifdef _DEBUG
 	bool DebucCameraFlag = false;
+
+	const float speed = 0.03f;
 #endif // DEBUG
 };
 

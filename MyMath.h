@@ -61,3 +61,5 @@ Matrix4x4 MakeViewportMatrix(float left, float top, float width, float height, f
 Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farCcip);
 
 Vector3 Add(const Vector3& v1, const Vector3& v2);
+
+Vector3 Sub(const Vector3& v1, const Vector3& v2);
