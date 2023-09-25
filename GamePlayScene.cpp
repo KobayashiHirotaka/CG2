@@ -26,6 +26,18 @@ void GamePlayScene::Update()
 	{
 		count_ += 1;
 	}
+
+#ifdef _DEBUG
+	if (input_->PushKey(DIK_1)) 
+	{
+		camera_->DebugCamera(true);
+	}
+
+	if (input_->PushKey(DIK_2)) 
+	{
+		camera_->DebugCamera(false);
+	}
+#endif // _DEBUG
 }
 
 void GamePlayScene::Draw()

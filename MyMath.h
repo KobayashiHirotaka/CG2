@@ -14,16 +14,19 @@ struct Transform
 };
 
 //X軸回転行列
-Matrix4x4 MakeRotateXmatrix(float radian);
+Matrix4x4 MakeRotateXMatrix(float radian);
 
 //Y軸回転行列
-Matrix4x4 MakeRotateYmatrix(float radian);
+Matrix4x4 MakeRotateYMatrix(float radian);
 
 //Z軸回転行列
-Matrix4x4 MakeRotateZmatrix(float radian);
+Matrix4x4 MakeRotateZMatrix(float radian);
 
 //平行移動
 Matrix4x4 MakeTranslateMatrix(Vector3 translate);
+
+//回転
+Matrix4x4 MakeRotateMatrix(Vector3 rotation);
 
 //拡大縮小
 Matrix4x4 MakeScaleMatrix(const Vector3& scale);
@@ -56,3 +59,5 @@ Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRadio, float nearClip
 Matrix4x4 MakeViewportMatrix(float left, float top, float width, float height, float minDepth, float maxDepth);
 
 Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farCcip);
+
+Vector3 Add(const Vector3& v1, const Vector3& v2);

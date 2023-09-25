@@ -1,7 +1,8 @@
 #include "Mymath.h"
 
 //X軸回転行列
-Matrix4x4 MakeRotateXmatrix(float radian) {
+Matrix4x4 MakeRotateXMatrix(float radian)
+{
 	Matrix4x4 result;
 	result.m[0][0] = 1.0f;
 	result.m[0][1] = 0.0f;
@@ -26,7 +27,8 @@ Matrix4x4 MakeRotateXmatrix(float radian) {
 }
 
 //Y軸回転行列
-Matrix4x4 MakeRotateYmatrix(float radian) {
+Matrix4x4 MakeRotateYMatrix(float radian)
+{
 	Matrix4x4 result;
 	result.m[0][0] = std::cos(radian);
 	result.m[0][1] = 0.0f;
@@ -51,7 +53,8 @@ Matrix4x4 MakeRotateYmatrix(float radian) {
 }
 
 //Z軸回転行列
-Matrix4x4 MakeRotateZmatrix(float radian) {
+Matrix4x4 MakeRotateZMatrix(float radian)
+{
 	Matrix4x4 result;
 	result.m[0][0] = std::cos(radian);
 	result.m[0][1] = std::sin(radian);
@@ -76,7 +79,8 @@ Matrix4x4 MakeRotateZmatrix(float radian) {
 }
 
 //平行移動
-Matrix4x4 MakeTranslateMatrix(Vector3 translate) {
+Matrix4x4 MakeTranslateMatrix(Vector3 translate)
+{
 	Matrix4x4 result;
 	result.m[0][0] = 1.0f;
 	result.m[0][1] = 0.0f;
@@ -100,6 +104,15 @@ Matrix4x4 MakeTranslateMatrix(Vector3 translate) {
 
 	return result;
 };
+
+//回転
+Matrix4x4 MakeRotateMatrix(Vector3 rotation)
+{
+	Matrix4x4 result;
+	result = MakeIdentity4x4();
+	result = Multiply(MakeRotateXMatrix(rotation.x), Multiply(MakeRotateYMatrix(rotation.y), MakeRotateZMatrix(rotation.z)));
+	return result;
+}
 
 //拡大縮小
 Matrix4x4 MakeScaleMatrix(const Vector3& scale) {
@@ -133,9 +146,9 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Ve
 	Matrix4x4 result;
 	Matrix4x4 scaleMatrix = MakeScaleMatrix(scale);
 
-	Matrix4x4 rotateXMatrix = MakeRotateXmatrix(rotate.x);
-	Matrix4x4 rotateYMatrix = MakeRotateYmatrix(rotate.y);
-	Matrix4x4 rotateZMatrix = MakeRotateZmatrix(rotate.z);
+	Matrix4x4 rotateXMatrix = MakeRotateXMatrix(rotate.x);
+	Matrix4x4 rotateYMatrix = MakeRotateYMatrix(rotate.y);
+	Matrix4x4 rotateZMatrix = MakeRotateZMatrix(rotate.z);
 	Matrix4x4 rotateXYZMatrix = Multiply(rotateXMatrix, Multiply(rotateYMatrix, rotateZMatrix));
 
 	Matrix4x4 translateMatrix = MakeTranslateMatrix(translate);
@@ -350,9 +363,9 @@ Matrix4x4 Transpose(const Matrix4x4& m) {
 }
 
 //単位行列
-Matrix4x4 MakeIdentity4x4() 
+Matrix4x4 MakeIdentity4x4()
 {
-	Matrix4x4 result= 
+	Matrix4x4 result =
 	{
 		1.0f,0.0f,0.0f,0.0f,
 		0.0f,1.0f,0.0f,0.0f,
@@ -416,4 +429,9 @@ Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float botto
 		-((right + left) / dx),-((top + bottom) / dy),-((farCcip + nearClip) / dz),1.0f
 	};
 	return result;
+}
+
+Vector3 Add(const Vector3& v1, const Vector3& v2)
+{
+	return Vector3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
 }

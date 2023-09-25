@@ -90,7 +90,7 @@ void MyEngine::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const 
 	materialData_->color = material;
 	materialData_->uvTransform = MakeIdentity4x4();
 	Matrix4x4 uvTransformMatrix = MakeScaleMatrix(uvTransformTriangle_.scale);
-	uvTransformMatrix = Multiply(uvTransformMatrix, MakeRotateZmatrix(uvTransformTriangle_.rotate.z));
+	uvTransformMatrix = Multiply(uvTransformMatrix, MakeRotateZMatrix(uvTransformTriangle_.rotate.z));
 	uvTransformMatrix = Multiply(uvTransformMatrix, MakeTranslateMatrix(uvTransformTriangle_.translate));
 	materialData_->uvTransform = uvTransformMatrix;
 
@@ -172,7 +172,7 @@ void MyEngine::DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, con
 
 	materialDataSprite_->uvTransform = MakeIdentity4x4();
 	Matrix4x4 uvTransformMatrix = MakeScaleMatrix(uvTransformSprite_.scale);
-	uvTransformMatrix = Multiply(uvTransformMatrix, MakeRotateZmatrix(uvTransformSprite_.rotate.z));
+	uvTransformMatrix = Multiply(uvTransformMatrix, MakeRotateZMatrix(uvTransformSprite_.rotate.z));
 	uvTransformMatrix = Multiply(uvTransformMatrix, MakeTranslateMatrix(uvTransformSprite_.translate));
 	materialDataSprite_->uvTransform = uvTransformMatrix;
 
