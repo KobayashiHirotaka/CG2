@@ -23,6 +23,9 @@ void GameScene::Initialize()
 	input_ = Input::GetInstance();
 	input_->Initialize(win_);
 
+	audio_ = Audio::GetInstance();
+	audio_->Initialize();
+
 	state[START] = std::make_unique<GameStartScene>();
 	state[PLAY] = std::make_unique<GamePlayScene>();
 	state[PLAY]->Initialize();

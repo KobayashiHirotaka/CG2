@@ -3,11 +3,12 @@
 #include "DirectXCommon.h"
 #include "MyEngine.h"
 #include "MyImGui.h"
+#include "Input.h"
+#include "Audio.h"
 #include "IScene.h"
 #include "GameStartScene.h"
 #include "GamePlayScene.h"
 #include "GameEndScene.h"
-#include "Input.h"
 
 class GameScene
 {
@@ -27,6 +28,7 @@ private:
 	MyEngine* engine_ = nullptr;
 	MyImGui* imGui_ = nullptr;
 	Input* input_ = nullptr;
+	Audio* audio_ = nullptr;
 
 	MSG msg{};
 
