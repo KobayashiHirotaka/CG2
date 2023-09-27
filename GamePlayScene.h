@@ -9,6 +9,7 @@
 class GamePlayScene : public IScene
 {
 public:
+
 	void Initialize();
 	void Update();
 	void Draw();
