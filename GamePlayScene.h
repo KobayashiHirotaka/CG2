@@ -5,10 +5,13 @@
 #include "Sphere.h"
 #include "ModelData.h"
 #include "Input.h"
+#include "Audio.h"
 
 class GamePlayScene : public IScene
 {
 public:
+	GamePlayScene();
+	~GamePlayScene();
 
 	void Initialize();
 	void Update();
@@ -18,6 +21,7 @@ private:
 	MyEngine* engine_ = nullptr;
 	Camera* camera_ = nullptr;
 	Input* input_ = nullptr;
+	Audio* audio_ = nullptr;
 
 	Vector4 triangleData[3] = {};
 	Vector4 material[2] = { 1.0f,1.0f,1.0f,1.0f };

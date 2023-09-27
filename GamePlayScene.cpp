@@ -1,17 +1,31 @@
 #include "GamePlayScene.h"
 
+GamePlayScene::GamePlayScene()
+{
+
+}
+
+GamePlayScene::~GamePlayScene()
+{
+	audio_->xAudio2.Reset();
+	audio_->SoundUnload(&audio_->soundDatas[0]);
+}
+
 void GamePlayScene::Initialize()
 {
 	camera_ = new Camera();
 	camera_->Initialize(1280, 720);
 	
 	input_ = Input::GetInstance();
+	audio_ = Audio::GetInstance();
 
 	engine_ = MyEngine::GetInstance();
 
 	uvChecker = engine_->LoadTexture("resource/uvChecker.png");
 	monsterBall = engine_->LoadTexture("resource/monsterBall.png");
 	modelData_ = engine_->LoadObjFile("resource", "plane.obj");
+
+	audio_->soundDatas[0] = audio_->SoundLoadWave("resource/mokugyo.wav");
 
 	triangleData[0] = { -0.5f,-0.5f,0.0f,1.0f };
 	triangleData[1] = { 0.0f,0.5f,0.0f,1.0f };
@@ -25,6 +39,11 @@ void GamePlayScene::Update()
 	if (input_->PushKey(DIK_SPACE))
 	{
 		count_ += 1;
+	}
+
+	if (input_->PushKey(DIK_RETURN))
+	{
+		audio_->Play(audio_->xAudio2.Get(), audio_->soundDatas[0]);
 	}
 
 #ifdef _DEBUG
