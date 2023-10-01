@@ -20,7 +20,7 @@ class DirectXCommon
 {
 public:
 	static DirectXCommon* GetInstance();
-	void Initialize(WindowsApp* win, int32_t kClientWidth, int32_t kClientHeight);
+	void Initialize(WindowsApp* win);
 
 	void PreDraw();
 
@@ -78,9 +78,6 @@ private:
 
 private:
 	WindowsApp* win_;
-
-	int32_t kClientWidth_;
-	int32_t kClientHeight_;
 
 	HRESULT hr_;
 

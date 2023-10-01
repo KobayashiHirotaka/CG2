@@ -6,11 +6,9 @@ DirectXCommon* DirectXCommon::GetInstance()
 	return &instance;
 }
 
-void DirectXCommon::Initialize(WindowsApp* win, int32_t kClientWidth, int32_t kClientHeight)
+void DirectXCommon::Initialize(WindowsApp* win)
 {
 	win_ = win;
-	kClientWidth_ = kClientWidth;
-	kClientHeight_ = kClientHeight;
 
 #ifdef _DEBUG
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController_)))) 
@@ -231,8 +229,8 @@ void DirectXCommon::CreateCommand()
 void DirectXCommon::CreateSwapChain()
 {
 	//スワップチェーンを作成
-	swapChainDesc_.Width = kClientWidth_;
-	swapChainDesc_.Height = kClientHeight_;
+	swapChainDesc_.Width = WindowsApp::kClientWidth;
+	swapChainDesc_.Height = WindowsApp::kClientHeight;
 	swapChainDesc_.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	swapChainDesc_.SampleDesc.Count = 1;
 	swapChainDesc_.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
@@ -293,7 +291,7 @@ void DirectXCommon::CreateFinalRenderTargets()
 	device_->CreateRenderTargetView(swapChainResources_[1].Get(), &rtvDesc_, rtvHandles_[1]);
 
 	//DSVDescriptorHeap
-	depthStencilResource_ = CreateDepthStencilTextureResource(kClientWidth_, kClientHeight_);
+	depthStencilResource_ = CreateDepthStencilTextureResource(WindowsApp::kClientWidth, WindowsApp::kClientHeight);
 
 	//DSV用のヒープでディスクリプタの数は1　DSVはShader内で触るものではないのでShaderVisibleはfalse
 	dsvDescriptorHeap_ = CreateDescriptorHeap(device_.Get(), D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
@@ -476,8 +474,8 @@ void DirectXCommon::CreatePSO()
 void DirectXCommon::CreateViewport()
 {
 	//クライアント領域のサイズ
-	viewport_.Width = (float)kClientWidth_;
-	viewport_.Height = (float)kClientHeight_;
+	viewport_.Width = (float)WindowsApp::kClientWidth;
+	viewport_.Height = (float)WindowsApp::kClientHeight;
 	viewport_.TopLeftX = 0;
 	viewport_.TopLeftY = 0;
 	viewport_.MinDepth = 0.0f;
@@ -488,9 +486,9 @@ void DirectXCommon::CreateScissorRect()
 {
 	//シザー矩形
 	scissorRect_.left = 0;
-	scissorRect_.right = kClientWidth_;
+	scissorRect_.right = WindowsApp::kClientWidth;
 	scissorRect_.top = 0;
-	scissorRect_.bottom = kClientHeight_;
+	scissorRect_.bottom = WindowsApp::kClientHeight;
 }
 
 void DirectXCommon::Release()
