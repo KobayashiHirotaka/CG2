@@ -33,6 +33,8 @@
     <ClCompile Include="MyImGui.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="WindowsApp.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -88,7 +90,9 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="ResourceObject.h" />
     <ClInclude Include="Sphere.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TransformationMatrix.h" />
+    <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="VertexData.h" />

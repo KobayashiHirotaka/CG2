@@ -19,6 +19,7 @@
 class DirectXCommon
 {
 public:
+	static DirectXCommon* GetInstance();
 	void Initialize(WindowsApp* win, int32_t kClientWidth, int32_t kClientHeight);
 
 	void PreDraw();
@@ -26,6 +27,8 @@ public:
 	void PostDraw();
 
 	void Release();
+
+	Microsoft::WRL::ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
 
 	Microsoft::WRL::ComPtr<ID3D12Device>
 	GetDevice() { return device_.Get(); }

@@ -12,10 +12,6 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t
 	kClientHeight_ = kClientHeight;
 	dxCommon_ = dxCommon;
 
-	CreateVertexBufferView();
-	SettingColor();
-	SettingWVP();
-
 	CreateVertexBufferViewSprite();
 	CreateIndexBufferViewSprite();
 
@@ -31,83 +27,6 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t
 	directionalLightData_->direction = { 0.0f,-1.0f,0.0f };
 	directionalLightData_->intensity = 1.0f;
 
-	descriptorSizeSRV_ = dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	descriptorSizeRTV_ = dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-	descriptorSizeDSV_ = dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
-
-	for (int i = 0; i < kMaxTexture; i++)
-	{
-		CheckTextureIndex[i] = false;
-		textureResource_[i] = nullptr;
-		intermediateResource_[i] = nullptr;
-	}
-}
-
-void MyEngine::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& ViewMatrix, const int index)
-{
-	int triangleIndex = kMaxVertex_ + 1;
-
-	for (int i = 0; i < kMaxTriangle_; i++)
-	{
-		if (CheckTriangleIndex_[i] == false)
-		{
-			triangleIndex = i * 3;
-
-			CheckTriangleIndex_[i] = true;
-			break;
-		}
-	}
-
-	if (triangleIndex < 0)
-	{
-		assert(false);
-	}
-
-	if (kMaxVertex_ < triangleIndex)
-	{
-		assert(false);
-	}
-
-	//左下
-	vertexData_[triangleIndex].position = a;
-	vertexData_[triangleIndex].texcoord = { 0.0f,1.0f };
-	//上
-	vertexData_[triangleIndex + 1].position = b;
-	vertexData_[triangleIndex + 1].texcoord = { 0.5f,0.0f };
-	//右下
-	vertexData_[triangleIndex + 2].position = c;
-	vertexData_[triangleIndex + 2].texcoord = { 1.0f,1.0f };
-
-	/*vertexData_[triangleIndex].position = { -0.7f,-0.5f,0.5f,1.0f };
-	vertexData_[triangleIndex].texcoord = { 0.0f,1.0f };
-
-	vertexData_[triangleIndex].position = { 0.0f,0.0f,0.0f,1.0f };
-	vertexData_[triangleIndex].texcoord = { 0.5f,0.0f };
-
-	vertexData_[triangleIndex].position = { 0.7f,-0.5f,-0.5f,1.0f };
-	vertexData_[triangleIndex].texcoord = { 1.0f,1.0f };*/
-
-	materialData_->color = material;
-	materialData_->uvTransform = MakeIdentity4x4();
-	Matrix4x4 uvTransformMatrix = MakeScaleMatrix(uvTransformTriangle_.scale);
-	uvTransformMatrix = Multiply(uvTransformMatrix, MakeRotateZMatrix(uvTransformTriangle_.rotate.z));
-	uvTransformMatrix = Multiply(uvTransformMatrix, MakeTranslateMatrix(uvTransformTriangle_.translate));
-	materialData_->uvTransform = uvTransformMatrix;
-
-	Matrix4x4 worldMatrix = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
-	*wvpData_ = Multiply(worldMatrix, ViewMatrix);
-
-	//VBVを設定
-	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
-	//形状を設定。PSOに設定しているものとはまた別。同じものを設定する
-	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	//マテリアルCBufferの場所を特定
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
-	//SRVのDescriptorTableの先頭を設定。2はrootParameter[2]である。
-	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_[index]);
-	//描画
-	dxCommon_->GetcommandList()->DrawInstanced(triangleIndex + 3, 1, 0, 0);
 }
 
 void MyEngine::DrawSprite(const Vector4& LeftTop, const Vector4& LeftBottom, const Vector4& RightTop, const Vector4& RightBottom, const Vector4& material, const int index)
@@ -430,29 +349,6 @@ void MyEngine::ImGui()
 	ImGui::End();
 }
 
-void MyEngine::CreateVertexBufferView()
-{
-	vertexResource_ = CreateBufferResource(sizeof(VertexData) * kMaxVertex_);
-	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress();
-	vertexBufferView_.SizeInBytes = sizeof(VertexData) * kMaxVertex_;
-	vertexBufferView_.StrideInBytes = sizeof(VertexData);
-	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
-}
-
-void MyEngine::SettingColor()
-{
-	materialResource_ = CreateBufferResource(sizeof(Material) * kMaxTriangle_);
-	//書き込むアドレスを取得
-	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
-}
-
-void MyEngine::SettingWVP()
-{
-	wvpResource_ = CreateBufferResource(sizeof(TransformationMatrix));
-	//WVPを書き込むアドレスを取得
-	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&wvpData_));
-}
-
 void MyEngine::CreateVertexBufferViewSprite()
 {
 	vertexResourceSprite_ = CreateBufferResource(sizeof(VertexData) * 4);
@@ -507,11 +403,6 @@ void MyEngine::VertexReset()
 {
 	for (int i = 0; i < kMaxTriangle_; ++i)
 	{
-		if (CheckTriangleIndex_[i] == true)
-		{
-			CheckTriangleIndex_[i] = false;
-		}
-
 		if (CheckSpriteIndex_[i] == true)
 		{
 			CheckSpriteIndex_[i] = false;
@@ -537,134 +428,6 @@ Microsoft::WRL::ComPtr<ID3D12Resource> MyEngine::CreateBufferResource(size_t siz
 	assert(SUCCEEDED(hr_));
 
 	return Resource;
-}
-
-int MyEngine::LoadTexture(const std::string& filePath)
-{
-	int spriteIndex = 0;
-
-	for (int i = 0; i < kMaxTexture; ++i)
-	{
-		if (CheckTextureIndex[i] == false)
-		{
-			spriteIndex = i;
-			CheckTextureIndex[i] = true;
-			break;
-		}
-	}
-
-	if (spriteIndex < 0)
-	{
-		assert(false);
-	}
-
-	if (kMaxTexture < spriteIndex)
-	{
-		assert(false);
-	}
-
-	//Textureを読んで転送する
-	DirectX::ScratchImage mipImages = OpenImage(filePath);
-	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
-	textureResource_[spriteIndex] = CreateTextureResource(dxCommon_->GetDevice(), metadata);
-	intermediateResource_[spriteIndex] = UploadTextureData(textureResource_[spriteIndex], mipImages);
-
-	//metadataを基にSRVの設定
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
-	srvDesc.Format = metadata.format;
-	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-	srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
-	//SRVを作成するDescriptorHeapの場所を決める
-	textureSrvHandleCPU_[spriteIndex] = GetCPUDescriptorHandle(dxCommon_->GetSrvDescriptorHeap(), descriptorSizeSRV_, spriteIndex);
-	textureSrvHandleGPU_[spriteIndex] = GetGPUDescriptorHandle(dxCommon_->GetSrvDescriptorHeap(), descriptorSizeSRV_, spriteIndex);
-	//先頭はImGuiが使っているので次のを使う
-	textureSrvHandleCPU_[spriteIndex].ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	textureSrvHandleGPU_[spriteIndex].ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	//SRVの作成
-	dxCommon_->GetDevice()->CreateShaderResourceView(textureResource_[spriteIndex].Get(), &srvDesc, textureSrvHandleCPU_[spriteIndex]);
-
-	return spriteIndex;
-}
-
-DirectX::ScratchImage MyEngine::OpenImage(const std::string& filePath)
-{
-	//テクスチャファイルを読み込みプログラムで扱えるようにする
-	DirectX::ScratchImage image{};
-	std::wstring filePathW = ConvertString(filePath);
-	hr_ = DirectX::LoadFromWICFile(filePathW.c_str(), DirectX::WIC_FLAGS_FORCE_SRGB, nullptr, image);
-	assert(SUCCEEDED(hr_));
-	//ミップマップの作成
-	DirectX::ScratchImage mipImage{};
-	hr_ = DirectX::GenerateMipMaps(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::TEX_FILTER_SRGB, 0, mipImage);
-
-	return mipImage;
-}
-
-Microsoft::WRL::ComPtr<ID3D12Resource> MyEngine::CreateTextureResource(Microsoft::WRL::ComPtr<ID3D12Device> device, const DirectX::TexMetadata& metadata)
-{
-	//metadataを基にResourceの設定
-	D3D12_RESOURCE_DESC resourceDesc{};
-	resourceDesc.Width = UINT(metadata.width);
-	resourceDesc.Height = UINT(metadata.height);
-	resourceDesc.MipLevels = UINT16(metadata.mipLevels);
-	resourceDesc.DepthOrArraySize = UINT16(metadata.arraySize);
-	resourceDesc.Format = metadata.format;
-	resourceDesc.SampleDesc.Count = 1;
-	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION(metadata.dimension);
-	//利用するheapの設定
-	D3D12_HEAP_PROPERTIES heapProperties{};
-	heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;
-
-	//Resourceの生成
-	ID3D12Resource* resource = nullptr;
-	hr_ = device->CreateCommittedResource(
-		&heapProperties,
-		D3D12_HEAP_FLAG_NONE,
-		&resourceDesc,
-		D3D12_RESOURCE_STATE_COPY_DEST,
-		nullptr,
-		IID_PPV_ARGS(&resource)
-	);
-
-	assert(SUCCEEDED(hr_));
-
-	return resource;
-}
-
-Microsoft::WRL::ComPtr<ID3D12Resource> MyEngine::UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> texture, const DirectX::ScratchImage& mipImages)
-{
-	std::vector<D3D12_SUBRESOURCE_DATA>subresources;
-	DirectX::PrepareUpload(dxCommon_->GetDevice().Get(), mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresources);
-	uint64_t intermediateSize = GetRequiredIntermediateSize(texture.Get(), 0, UINT(subresources.size()));
-	Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource = CreateBufferResource(intermediateSize);
-	UpdateSubresources(dxCommon_->GetcommandList().Get(), texture.Get(), intermediateResource.Get(), 0, 0, UINT(subresources.size()), subresources.data());
-
-	//Tetureへの転送後は利用できるようにD3D12_RESOURCE_STATE_COPY_DESTからD3D12_RESOURCE_STATE_GENERIC_READへResourceStateを変更する
-	D3D12_RESOURCE_BARRIER barrier{};
-	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-	barrier.Transition.pResource = texture.Get();
-	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
-	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
-	dxCommon_->GetcommandList()->ResourceBarrier(1, &barrier);
-
-	return intermediateResource;
-}
-
-D3D12_CPU_DESCRIPTOR_HANDLE MyEngine::GetCPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index)
-{
-	D3D12_CPU_DESCRIPTOR_HANDLE handleCPU = descriptorHeap->GetCPUDescriptorHandleForHeapStart();
-	handleCPU.ptr += (descriptorSize * index);
-	return handleCPU;
-}
-
-D3D12_GPU_DESCRIPTOR_HANDLE MyEngine::GetGPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index)
-{
-	D3D12_GPU_DESCRIPTOR_HANDLE handleGPU = descriptorHeap->GetGPUDescriptorHandleForHeapStart();
-	handleGPU.ptr += (descriptorSize * index);
-	return handleGPU;
 }
 
 ModelData MyEngine::LoadObjFile(const std::string& directoryPath, const std::string& filename)

@@ -49,34 +49,10 @@ private:
 	void CreateIndexBufferViewSphere();
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
-	DirectX::ScratchImage OpenImage(const std::string& filePath);
-	Microsoft::WRL::ComPtr<ID3D12Resource> CreateTextureResource(Microsoft::WRL::ComPtr<ID3D12Device> device, const DirectX::TexMetadata& metadata);
-	Microsoft::WRL::ComPtr<ID3D12Resource> UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> texture, const DirectX::ScratchImage& mipImages);
-
-	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index);
-	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index);
 
 private:
 	int32_t kClientWidth_;
 	int32_t kClientHeight_;
-
-	static const int kMaxTexture = 3;
-
-	bool CheckTextureIndex[kMaxTexture];
-
-	Transform transform_
-	{
-		{1.0f,1.0f,1.0f},
-		{0.0f,0.0f,0.0f},
-		{0.0f,0.0f,0.0f},
-	};
-
-	Transform uvTransformTriangle_
-	{
-		{1.0f,1.0f,1.0f},
-		{0.0f,0.0f,0.0f},
-		{0.0f,0.0f,0.0f}
-	};
 
 	Transform transformSprite_
 	{
@@ -127,13 +103,6 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource_ = nullptr;
 
 	Matrix4x4* wvpData_ = nullptr;
-
-	Microsoft::WRL::ComPtr<ID3D12Resource> textureResource_[kMaxTexture];
-
-	Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource_[kMaxTexture];
-
-	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_[kMaxTexture];
-	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_[kMaxTexture];
 
 	//Sprite
 	static const int kMaxSprite_ = 3;
@@ -199,11 +168,6 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> transformationMatrixResourceObj_ = nullptr;
 
 	TransformationMatrix* transformationMatrixDataObj_ = nullptr;
-
-	//DescriptorSizeを取得しておく
-	uint32_t descriptorSizeSRV_;
-	uint32_t descriptorSizeRTV_;
-	uint32_t descriptorSizeDSV_;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource_ = nullptr;
 	DirectionalLight* directionalLightData_ = nullptr;
