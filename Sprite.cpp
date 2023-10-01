@@ -43,9 +43,13 @@ void Sprite::Initialize(const Vector4& LeftTop, const Vector4& LeftBottom, const
 	indexDataSprite_[3] = 1;
 	indexDataSprite_[4] = 3;
 	indexDataSprite_[5] = 2;
+
+	viewProjection_.Initialize();
+	viewProjection_.constMap->view = MakeIdentity4x4();
+	viewProjection_.constMap->projection = MakeOrthographicMatrix(0.0f, 0.0f, float(WindowsApp::kClientWidth), float(WindowsApp::kClientHeight), 0.0f, 100.0f);
 }
 
-void Sprite::DrawSprite(const uint32_t TextureHandle)
+void Sprite::DrawSprite(const WorldTransform& transform, const uint32_t textureHandle)
 {
 	//色の書き込み
 	materialResourceSprite_.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialDataSprite_));
@@ -65,12 +69,18 @@ void Sprite::DrawSprite(const uint32_t TextureHandle)
 	//頂点
 	directX_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewSprite_);
 	directX_->GetcommandList()->IASetIndexBuffer(&indexBufferViewSprite_);
+
+	//WorldTransform
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_.Get()->GetGPUVirtualAddress());
+
+	//ViewProjection
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection_.constBuff_->GetGPUVirtualAddress());
+
 	//色用のCBufferの場所を特定
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite_.Get()->GetGPUVirtualAddress());
-	//WVP用のCBufferの場所を特定
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transformationMatrixResourceSprite_.Get()->GetGPUVirtualAddress());
+
 	//テクスチャ
-	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(TextureHandle));
+	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(textureHandle));
 
 	directX_->GetcommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
 }

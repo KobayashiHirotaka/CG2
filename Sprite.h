@@ -1,6 +1,8 @@
 #pragma once
 #include "DirectXCommon.h"
 #include "TextureManager.h"
+#include "WorldTransform.h"
+#include "ViewProjection.h"
 #include "MyMath.h"
 #include "VertexData.h"
 #include "Material.h"
@@ -10,7 +12,7 @@ class Sprite
 {
 public:
 	void Initialize(const Vector4& LeftTop, const Vector4& LeftBottom, const Vector4& RightTop, const Vector4& RightBottom);
-	void DrawSprite(const uint32_t TextureHandle);
+	void DrawSprite(const WorldTransform& transform, const uint32_t textureHandle);
 	void ImGui(const char* Title);
 
 private:
@@ -41,6 +43,8 @@ private:
 	};
 
 	Vector4 color_ = { 1.0f,1.0f,1.0f,1.0f };
+
+	ViewProjection viewProjection_;
 
 	void CreateVertexBufferViewSprite();
 	void CreateIndexBufferViewSprite();

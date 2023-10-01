@@ -73,6 +73,12 @@
     <Filter Include="ヘッダー ファイル\base\2d">
       <UniqueIdentifier>{bae8b269-a5c1-4e19-bb8c-46318d60cbe0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\base\3d">
+      <UniqueIdentifier>{38037656-e7fa-45a1-9296-f41c75ac6d07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\base\3d">
+      <UniqueIdentifier>{604b1beb-1f94-4ca7-8d0c-888dcfb1a908}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -147,17 +153,17 @@
     <ClCompile Include="Input.cpp">
       <Filter>ソース ファイル\base\input</Filter>
     </ClCompile>
-    <ClCompile Include="WorldTransform.cpp">
-      <Filter>ソース ファイル\base</Filter>
-    </ClCompile>
     <ClCompile Include="Triangle.cpp">
       <Filter>ソース ファイル\base\2d</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>ソース ファイル\base\2d</Filter>
     </ClCompile>
+    <ClCompile Include="WorldTransform.cpp">
+      <Filter>ソース ファイル\base\3d</Filter>
+    </ClCompile>
     <ClCompile Include="ViewProjection.cpp">
-      <Filter>ソース ファイル\base</Filter>
+      <Filter>ソース ファイル\base\3d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -287,10 +293,10 @@
       <Filter>ヘッダー ファイル\base\2d</Filter>
     </ClInclude>
     <ClInclude Include="WorldTransform.h">
-      <Filter>ヘッダー ファイル\base</Filter>
+      <Filter>ヘッダー ファイル\base\3d</Filter>
     </ClInclude>
     <ClInclude Include="ViewProjection.h">
-      <Filter>ヘッダー ファイル\base</Filter>
+      <Filter>ヘッダー ファイル\base\3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -33,7 +33,7 @@ void Triangle::Initialize()
 	materialData_->uvTransform = MakeIdentity4x4();
 }
 
-void Triangle::Draw(const Matrix4x4& ViewMatrix, const  uint32_t textureHandle)
+void Triangle::Draw(const WorldTransform& transform, const ViewProjection& viewProjection, const uint32_t textureHandle)
 {
 	Matrix4x4 uvTransformMatrix = MakeScaleMatrix(uvTranformTriAngle_.scale);
 	uvTransformMatrix = Multiply(uvTransformMatrix, MakeRotateZMatrix(uvTranformTriAngle_.rotate.z));
@@ -42,6 +42,12 @@ void Triangle::Draw(const Matrix4x4& ViewMatrix, const  uint32_t textureHandle)
 
 	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
 	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	//matWorld
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_->GetGPUVirtualAddress());
+
+	//ViewProjection
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection.constBuff_->GetGPUVirtualAddress());
 
 	//色用のCBufferの場所を特定
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource_.Get()->GetGPUVirtualAddress());

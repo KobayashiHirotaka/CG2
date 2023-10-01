@@ -1,17 +1,18 @@
 #pragma once
 #include "DirectXCommon.h"
 #include "TextureManager.h"
+#include "WorldTransform.h"
+#include "ViewProjection.h"
 #include "MyMath.h"
 #include "VertexData.h"
 #include "Material.h"
-#include "TransformationMatrix.h"
 #include <wrl.h>
 
 class Triangle
 {
 public:
 	void Initialize();
-	void Draw(const Matrix4x4& ViewMatrix, const uint32_t textureHandle);
+	void Draw(const WorldTransform& transform, const ViewProjection& viewProjection, const uint32_t textureHandle);
 	void ImGui(const char* Title);
 
 private:

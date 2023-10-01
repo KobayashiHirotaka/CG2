@@ -13,13 +13,16 @@ class WindowsApp
 public:
 	static WindowsApp* GetInstance();
 
+	void Initialize();
+
 	static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
 	HWND GetHwnd() { return hwnd_; }
 
 	HINSTANCE GetHinstance()const { return wc_.hInstance; }
 
-	void Initialize(int32_t kClientWidth, int32_t kClientHeight);
+	static const int32_t kClientWidth = 1280;
+	static const int32_t kClientHeight = 720;
 
 private:
 	WNDCLASS wc_{};

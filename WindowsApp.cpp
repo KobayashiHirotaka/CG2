@@ -28,7 +28,7 @@ LRESULT WindowsApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
-void WindowsApp::Initialize(int32_t kClientWidth, int32_t kClientHeight)
+void WindowsApp::Initialize()
 {
 	//ウィンドウプロシージャ
 	wc_.lpfnWndProc = WindowProc;
