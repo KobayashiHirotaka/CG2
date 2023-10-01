@@ -55,6 +55,24 @@
     <Filter Include="ヘッダー ファイル\Utility">
       <UniqueIdentifier>{753fee5b-e7a1-48d0-ab9b-30468d2c506a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\base\audio">
+      <UniqueIdentifier>{a91d91c5-278d-4328-84a4-c7e2be478361}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\base\input">
+      <UniqueIdentifier>{09ec9e24-024f-4569-8f99-56397730dbd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\base\2d">
+      <UniqueIdentifier>{40b72785-8269-4844-8399-a6ba2b1f960b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\base\audio">
+      <UniqueIdentifier>{8629fe5c-8508-4851-864c-254adda392b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\base\input">
+      <UniqueIdentifier>{9d05a117-d756-4fa7-a4c5-9fb3f7862e3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\base\2d">
+      <UniqueIdentifier>{bae8b269-a5c1-4e19-bb8c-46318d60cbe0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -108,17 +126,11 @@
     <ClCompile Include="MyImGui.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>ソース ファイル\base</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>ソース ファイル\camera</Filter>
     </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
       <Filter>ソース ファイル\collision</Filter>
-    </ClCompile>
-    <ClCompile Include="Audio.cpp">
-      <Filter>ソース ファイル\base</Filter>
     </ClCompile>
     <ClCompile Include="ConvertString.cpp">
       <Filter>ソース ファイル\Utility</Filter>
@@ -129,10 +141,22 @@
     <ClCompile Include="TextureManager.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
-    <ClCompile Include="Triangle.cpp">
+    <ClCompile Include="Audio.cpp">
+      <Filter>ソース ファイル\base\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>ソース ファイル\base\input</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldTransform.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>ソース ファイル\base\2d</Filter>
+    </ClCompile>
     <ClCompile Include="Sprite.cpp">
+      <Filter>ソース ファイル\base\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewProjection.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
   </ItemGroup>
@@ -220,9 +244,6 @@
     <ClInclude Include="TransformationMatrix.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>ヘッダー ファイル\base</Filter>
-    </ClInclude>
     <ClInclude Include="Matrix4x4.h">
       <Filter>ヘッダー ファイル\math</Filter>
     </ClInclude>
@@ -244,9 +265,6 @@
     <ClInclude Include="CollisionManager.h">
       <Filter>ヘッダー ファイル\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Audio.h">
-      <Filter>ヘッダー ファイル\base</Filter>
-    </ClInclude>
     <ClInclude Include="ConvertString.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
     </ClInclude>
@@ -256,10 +274,22 @@
     <ClInclude Include="TextureManager.h">
       <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
-    <ClInclude Include="Triangle.h">
-      <Filter>ヘッダー ファイル\base</Filter>
+    <ClInclude Include="Audio.h">
+      <Filter>ヘッダー ファイル\base\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>ヘッダー ファイル\base\input</Filter>
     </ClInclude>
     <ClInclude Include="Sprite.h">
+      <Filter>ヘッダー ファイル\base\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>ヘッダー ファイル\base\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldTransform.h">
+      <Filter>ヘッダー ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewProjection.h">
       <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
   </ItemGroup>
