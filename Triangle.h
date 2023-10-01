@@ -15,21 +15,9 @@ public:
 	void ImGui(const char* Title);
 
 private:
-	static const int kMaxTexture_ = 3;
-	bool CheckTextureIndex_[kMaxTexture_];
-
-	Vector4 color_ = { 1.0f,1.0f,1.0f,1.0f };
-
 	DirectXCommon* dxCommon_ = nullptr;
 
 	TextureManager* textureManager_ = nullptr;
-
-	Transform transform_
-	{
-		{1.0f,1.0f,1.0f},
-		{0.0f,0.0f,0.0f},
-		{0.0f,0.0f,0.0f},
-	};
 
 	Transform uvTranformTriAngle_
 	{
@@ -37,6 +25,8 @@ private:
 	    {0.0f,0.0f,0.0f},
 	    {0.0f,0.0f,0.0f}
 	};
+
+	Vector4 color_ = { 1.0f,1.0f,1.0f,1.0f };
 
 	//バーテックスリソース
 	Microsoft::WRL::ComPtr<ID3D12Resource>vertexResource_ = nullptr;
@@ -53,13 +43,6 @@ private:
 	//色データ
 	Material* materialData_ = nullptr;
 
-	//WVPリソース
-	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource_ = nullptr;
-
-	//WVPデータ
-	Matrix4x4* wvpData_ = nullptr;
-
 	void CreateVertexBufferView();
-	Microsoft::WRL::ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
 };
 

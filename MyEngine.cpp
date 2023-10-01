@@ -12,9 +12,6 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t
 	kClientHeight_ = kClientHeight;
 	dxCommon_ = dxCommon;
 
-	CreateVertexBufferViewSprite();
-	CreateIndexBufferViewSprite();
-
 	CreateVertexBufferViewSphere();
 	CreateIndexBufferViewSphere();
 

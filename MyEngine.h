@@ -38,13 +38,6 @@ public:
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 private:
-	void CreateVertexBufferView();
-	void SettingColor();
-	void SettingWVP();
-
-	void CreateVertexBufferViewSprite();
-	void CreateIndexBufferViewSprite();
-
 	void CreateVertexBufferViewSphere();
 	void CreateIndexBufferViewSphere();
 
@@ -53,20 +46,6 @@ private:
 private:
 	int32_t kClientWidth_;
 	int32_t kClientHeight_;
-
-	Transform transformSprite_
-	{
-		{1.0f,1.0f,1.0f},
-		{0.0f,0.0f,0.0f},
-		{0.0f,0.0f,0.0f},
-	};
-
-	Transform uvTransformSprite_
-	{
-		{1.0f,1.0f,1.0f},
-		{0.0f,0.0f,0.0f},
-		{0.0f,0.0f,0.0f}
-	};
 
 	Transform transformSphere_
 	{
@@ -108,26 +87,6 @@ private:
 	static const int kMaxSprite_ = 3;
 	static const int kMaxSpriteVertex_ = kMaxSprite_ * 6;
 	bool CheckSpriteIndex_[kMaxSprite_];
-
-	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResourceSprite_ = nullptr;
-
-	VertexData* vertexDataSprite_;
-
-	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite_{};
-
-	Microsoft::WRL::ComPtr<ID3D12Resource> materialResourceSprite_ = nullptr;
-
-	Material* materialDataSprite_ = nullptr;
-
-	Microsoft::WRL::ComPtr<ID3D12Resource> transformationMatrixResourceSprite_ = nullptr;
-
-	TransformationMatrix* transformationMatrixDataSprite_ = nullptr;
-
-	Microsoft::WRL::ComPtr<ID3D12Resource> indexResourceSprite_ = nullptr;
-
-	uint32_t* indexDataSprite_;
-
-	D3D12_INDEX_BUFFER_VIEW indexBufferViewSprite_{};
 
 	//Sphere
 	const int kSubdivision_ = 16;
