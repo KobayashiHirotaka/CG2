@@ -1,6 +1,5 @@
 #include "Sprite.h"
 
-#include"Sprite.h"
 void Sprite::Initialize(const Vector4& LeftTop, const Vector4& LeftBottom, const Vector4& RightTop, const Vector4& RightBottom)
 {
 	directX_ = DirectXCommon::GetInstance();
