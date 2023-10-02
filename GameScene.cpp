@@ -47,8 +47,8 @@ void GameScene::UpDate()
 		else {
 			//ゲームの処理
 			imGui_->BeginFlame();
-			dxCommon_->PreDraw();
 			input_->Update();
+			dxCommon_->PreDraw();
 
 			state[GameStartScene::stateNum]->Update();
 			state[GameStartScene::stateNum]->Draw();
