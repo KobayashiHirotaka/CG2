@@ -48,6 +48,7 @@ void Camera::Update()
 	Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(ViewMatrix, ProjectionMatrix));
 	transformationMatrixData = worldViewProjectionMatrix;
 
+#ifdef _DEBUG
 	ImGui::Begin("DebugCamera");
 	ImGui::SliderFloat3("Rotate", &rotation_.x, -5, 5, "%.3f");
 	ImGui::SliderFloat3("Translate", &translation_.x, -10, 10, "%.3f");
@@ -55,6 +56,7 @@ void Camera::Update()
 	ImGui::Text("DebugCameraOn : 1\n");
 	ImGui::Text("DebugCameraOff : 2\n");
 	ImGui::End();
+#endif // DEBUG
 }
 
 Vector3 Camera::GetmatRot()

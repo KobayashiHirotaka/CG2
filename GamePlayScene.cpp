@@ -21,11 +21,11 @@ void GamePlayScene::Initialize()
 
 	engine_ = MyEngine::GetInstance();
 
-	uvChecker = engine_->LoadTexture("resource/uvChecker.png");
-	monsterBall = engine_->LoadTexture("resource/monsterBall.png");
-	modelData_ = engine_->LoadObjFile("resource", "plane.obj");
+	uvChecker = engine_->LoadTexture("resources/uvChecker.png");
+	monsterBall = engine_->LoadTexture("resources/monsterBall.png");
+	modelData_ = engine_->LoadObjFile("resources", "plane.obj");
 
-	audio_->soundDatas[0] = audio_->SoundLoadWave("resource/mokugyo.wav");
+	audio_->soundDatas[0] = audio_->SoundLoadWave("resources/mokugyo.wav");
 
 	triangleData[0] = { -0.5f,-0.5f,0.0f,1.0f };
 	triangleData[1] = { 0.0f,0.5f,0.0f,1.0f };

@@ -49,6 +49,9 @@
     <Filter Include="ソース ファイル\collision">
       <UniqueIdentifier>{439ca281-bb22-40be-b251-cbd26343f1be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\shaders">
+      <UniqueIdentifier>{309fe475-3b34-4580-a314-a1d9e0d209e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -123,11 +126,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
-    <None Include="Object3d.hlsli" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Object3d.VS.hlsl" />
-    <FxCompile Include="Object3d.PS.hlsl" />
+    <None Include="resources\shaders\Object3d.hlsli">
+      <Filter>ヘッダー ファイル\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowsApp.h">
@@ -241,5 +242,13 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="resources\shaders\Object3d.PS.hlsl">
+      <Filter>ヘッダー ファイル\shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\Object3d.VS.hlsl">
+      <Filter>ヘッダー ファイル\shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
