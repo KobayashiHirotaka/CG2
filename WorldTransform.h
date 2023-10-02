@@ -10,25 +10,25 @@ struct ConstBufferDataWorldTransform
 class WorldTransform
 {
 	// 定数バッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff;
 
 	// マッピング済みアドレス
 	ConstBufferDataWorldTransform* constMap = nullptr;
 
 	// ローカルスケール
-	Vector3 scale_ = { 1, 1, 1 };
+	Vector3 scale = { 1, 1, 1 };
 
 	// X,Y,Z軸回りのローカル回転角
-	Vector3 rotation_ = { 0, 0, 0 };
+	Vector3 rotation = { 0, 0, 0 };
 
 	// ローカル座標
-	Vector3 translation_ = { 0, 0, 0 };
+	Vector3 translation = { 0, 0, 0 };
 
 	// ローカル → ワールド変換行列
-	Matrix4x4 matWorld_;
+	Matrix4x4 matWorld;
 
 	// 親となるワールド変換へのポインタ
-	const WorldTransform* parent_ = nullptr;
+	const WorldTransform* parent = nullptr;
 
 	/// <summary>
 	/// 初期化

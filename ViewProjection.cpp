@@ -10,12 +10,12 @@ void ViewProjection::Initialize()
 
 void ViewProjection::CreateConstBuffer() 
 {
-	constBuff_ = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(ConstBufferDataViewProjection));
+	constBuff = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(ConstBufferDataViewProjection));
 }
 
 void ViewProjection::Map() 
 {
-	constBuff_.Get()->Map(0, nullptr, reinterpret_cast<void**>(&constMap));
+	constBuff.Get()->Map(0, nullptr, reinterpret_cast<void**>(&constMap));
 }
 
 void ViewProjection::UpdateMatrix() 
@@ -33,7 +33,7 @@ void ViewProjection::TransferMatrix()
 
 void ViewProjection::UpdateViewMatrix()
 {
-	Matrix4x4 cameraMatrix = MakeAffineMatrix({ 1.0f,1.0f,1.0f }, rotation_, translation_);
+	Matrix4x4 cameraMatrix = MakeAffineMatrix({ 1.0f,1.0f,1.0f }, rotation, translation);
 	matView = Inverse(cameraMatrix);
 }
 
