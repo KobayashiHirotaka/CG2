@@ -27,12 +27,14 @@
     <ClCompile Include="GamePlayScene.cpp" />
     <ClCompile Include="GameStartScene.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="LoadCSV.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyEngine.cpp" />
     <ClCompile Include="MyImGui.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Triangle.cpp" />
@@ -83,6 +85,7 @@
     <ClInclude Include="GameStartScene.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IScene.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="LoadCSV.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Matrix4x4.h" />
@@ -91,6 +94,7 @@
     <ClInclude Include="MyImGui.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceObject.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Sprite.h" />
@@ -111,6 +115,9 @@
     <ProjectReference Include="externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
       <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DirectXGame2.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

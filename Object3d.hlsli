@@ -1,3 +1,7 @@
+#define  NoLighting false
+#define  harfLambert 1
+#define  Lambert 2
+
 struct VertexShaderOutput
 {
 	float32_t4 position : SV_POSITION;

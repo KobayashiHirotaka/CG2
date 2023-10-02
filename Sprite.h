@@ -16,7 +16,7 @@ public:
 	void ImGui(const char* Title);
 
 private:
-	DirectXCommon* directX_ = nullptr;
+	DirectXCommon* dxCommon_ = nullptr;
 	TextureManager* textureManager_ = nullptr;
 	
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResourceSprite_ = nullptr;

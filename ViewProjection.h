@@ -14,16 +14,16 @@ struct ConstBufferDataViewProjection
 class ViewProjection
 {
 	// 定数バッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff;
 
 	// マッピング済みアドレス
 	ConstBufferDataViewProjection* constMap = nullptr;
 
 	// X,Y,Z軸回りのローカル回転角
-	Vector3 rotation_ = { 0, 0, 0 };
+	Vector3 rotation = { 0, 0, 0 };
 
 	// ローカル座標
-	Vector3 translation_ = { 0, 0, -25 };
+	Vector3 translation = { 0, 0, -25 };
 
 	// 垂直方向視野角
 	float fovAngleY = 45.0f;

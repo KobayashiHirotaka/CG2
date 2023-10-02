@@ -44,10 +44,10 @@ void Triangle::Draw(const WorldTransform& transform, const ViewProjection& viewP
 	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	//matWorld
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_->GetGPUVirtualAddress());
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff->GetGPUVirtualAddress());
 
 	//ViewProjection
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection.constBuff_->GetGPUVirtualAddress());
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection.constBuff->GetGPUVirtualAddress());
 
 	//色用のCBufferの場所を特定
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource_.Get()->GetGPUVirtualAddress());

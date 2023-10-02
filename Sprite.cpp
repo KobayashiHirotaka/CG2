@@ -2,12 +2,12 @@
 
 void Sprite::Initialize(const Vector4& LeftTop, const Vector4& LeftBottom, const Vector4& RightTop, const Vector4& RightBottom)
 {
-	directX_ = DirectXCommon::GetInstance();
+	dxCommon_ = DirectXCommon::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
 
-	vertexResourceSprite_ = directX_->CreateBufferResource(sizeof(VertexData) * 4);
-	materialResourceSprite_ = directX_->CreateBufferResource(sizeof(Material));
-	indexResourceSprite_ = directX_->CreateBufferResource(sizeof(uint32_t) * 6);
+	vertexResourceSprite_ = dxCommon_->CreateBufferResource(sizeof(VertexData) * 4);
+	materialResourceSprite_ = dxCommon_->CreateBufferResource(sizeof(Material));
+	indexResourceSprite_ = dxCommon_->CreateBufferResource(sizeof(uint32_t) * 6);
 
 	CreateVertexBufferViewSprite();
 	CreateIndexBufferViewSprite();
@@ -63,25 +63,25 @@ void Sprite::DrawSprite(const WorldTransform& transform, const uint32_t textureH
 	uvTransformMatrix = Multiply(uvTransformMatrix, MakeTranslateMatrix(uvTransformSprite_.translate));
 	materialDataSprite_->uvTransform = uvTransformMatrix;
 
-	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	//頂点
-	directX_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewSprite_);
-	directX_->GetcommandList()->IASetIndexBuffer(&indexBufferViewSprite_);
+	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewSprite_);
+	dxCommon_->GetcommandList()->IASetIndexBuffer(&indexBufferViewSprite_);
 
 	//WorldTransform
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_.Get()->GetGPUVirtualAddress());
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff.Get()->GetGPUVirtualAddress());
 
 	//ViewProjection
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection_.constBuff_->GetGPUVirtualAddress());
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection_.constBuff->GetGPUVirtualAddress());
 
 	//色用のCBufferの場所を特定
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite_.Get()->GetGPUVirtualAddress());
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite_.Get()->GetGPUVirtualAddress());
 
 	//テクスチャ
-	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(textureHandle));
+	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(textureHandle));
 
-	directX_->GetcommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
+	dxCommon_->GetcommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
 }
 
 //void Sprite::ImGui(const char* Title)
