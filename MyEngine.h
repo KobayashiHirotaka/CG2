@@ -6,7 +6,6 @@
 #include "Sphere.h"
 #include "Material.h"
 #include "TransformationMatrix.h"
-#include "DirectionalLight.h"
 #include "ModelData.h"
 #include <fstream>
 #include <sstream>
@@ -34,33 +33,6 @@ private:
 	int32_t kClientWidth_;
 	int32_t kClientHeight_;
 
-	Transform transformObj_
-	{
-		{1.0f,1.0f,1.0f},
-		{0.0f,0.0f,0.0f},
-		{0.0f,0.0f,0.0f},
-	};
-
 	HRESULT hr_;
 	DirectXCommon* dxCommon_ = nullptr;
-
-	//Obj
-	ModelData modelData_;
-
-	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResourceObj_;
-
-	VertexData* vertexDataObj_;
-
-	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewObj_{};
-
-	Microsoft::WRL::ComPtr<ID3D12Resource> materialResourceObj_ = nullptr;
-
-	Material* materialDataObj_ = nullptr;
-
-	Microsoft::WRL::ComPtr<ID3D12Resource> transformationMatrixResourceObj_ = nullptr;
-
-	TransformationMatrix* transformationMatrixDataObj_ = nullptr;
-
-	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource_ = nullptr;
-	DirectionalLight* directionalLightData_ = nullptr;
 };

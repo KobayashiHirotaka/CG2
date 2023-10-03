@@ -30,6 +30,7 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LoadCSV.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="MyEngine.cpp" />
     <ClCompile Include="MyImGui.cpp" />
     <ClCompile Include="MyMath.cpp" />
@@ -70,7 +71,6 @@
     <ClInclude Include="CollisionConfig.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="ConvertString.h" />
-    <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="DirectXCommon.h" />
     <ClInclude Include="externals\imgui\imconfig.h" />
     <ClInclude Include="externals\imgui\imgui.h" />
@@ -89,6 +89,7 @@
     <ClInclude Include="LoadCSV.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Matrix4x4.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="ModelData.h" />
     <ClInclude Include="MyEngine.h" />
     <ClInclude Include="MyImGui.h" />

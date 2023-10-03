@@ -11,50 +11,6 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t
 	kClientWidth_ = kClientWidth;
 	kClientHeight_ = kClientHeight;
 	dxCommon_ = dxCommon;
-
-	materialResourceObj_ = CreateBufferResource(sizeof(Material));
-	transformationMatrixResourceObj_ = CreateBufferResource(sizeof(TransformationMatrix));
-
-	directionalLightResource_ = CreateBufferResource(sizeof(DirectionalLight));
-	directionalLightResource_->Map(0, nullptr, reinterpret_cast<void**>(&directionalLightData_));
-	directionalLightData_->color = { 1.0f,1.0f,1.0f,1.0f };
-	directionalLightData_->direction = { 0.0f,-1.0f,0.0f };
-	directionalLightData_->intensity = 1.0f;
-
-}
-
-
-void MyEngine::DrawModel(const ModelData& modelData, const Vector3& position, const Matrix4x4& ViewMatrix, const Vector4& material)
-{
-	vertexResourceObj_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataObj_));
-	std::memcpy(vertexDataObj_, modelData.vertices.data(), sizeof(VertexData) * modelData.vertices.size());
-
-	materialResourceObj_->Map(0, nullptr, reinterpret_cast<void**>(&materialDataObj_));
-
-	materialDataObj_->enableLighting = false;
-	materialDataObj_->color = material;
-	materialDataObj_->uvTransform = MakeIdentity4x4();
-
-	//書き込むためのアドレス取得
-	transformationMatrixResourceObj_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixDataObj_));
-
-	Matrix4x4 worldMatrixObj = MakeAffineMatrix(transformObj_.scale, transformObj_.rotate, transformObj_.translate);
-	transformationMatrixDataObj_->WVP = Multiply(worldMatrixObj, ViewMatrix);
-	transformationMatrixDataObj_->World = MakeIdentity4x4();
-
-	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewObj_);
-
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceObj_->GetGPUVirtualAddress());
-
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transformationMatrixResourceObj_->GetGPUVirtualAddress());
-
-	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_[modelData.TextureIndex]);
-
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource_->GetGPUVirtualAddress());
-
-	dxCommon_->GetcommandList()->DrawInstanced(UINT(modelData.vertices.size()), 1, 0, 0);
 }
 
 void MyEngine::ImGui()
