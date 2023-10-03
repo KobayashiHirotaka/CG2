@@ -1,6 +1,6 @@
-#include"GameScene.h"
+#include "SceneManager.h"
 
-void GameScene::Initialize()
+void SceneManager::Initialize()
 {
 	//COMの初期化
 	CoInitializeEx(0, COINIT_MULTITHREADED);
@@ -9,10 +9,10 @@ void GameScene::Initialize()
 	kClientWidth_ = 1280;
 	kClientHeight_ = 720;
 
-	win_->Initialize(kClientWidth_, kClientHeight_);
+	win_->Initialize();
 
 	dxCommon_ = new DirectXCommon();
-	dxCommon_->Initialize(win_, kClientWidth_, kClientHeight_);
+	dxCommon_->Initialize(win_);
 
 	engine_ = MyEngine::GetInstance();
 	engine_->Initialize(dxCommon_, kClientWidth_, kClientHeight_);
@@ -33,7 +33,7 @@ void GameScene::Initialize()
 	IScene::stateNum = START;
 }
 
-void GameScene::UpDate()
+void SceneManager::UpDate()
 {
 	//ウィンドウのxが押されるまでループ
 	while (msg.message != WM_QUIT)
@@ -60,7 +60,7 @@ void GameScene::UpDate()
 	Release();
 }
 
-void GameScene::Release()
+void SceneManager::Release()
 {
 	ImGui_ImplDX12_Shutdown();
 	CoUninitialize();

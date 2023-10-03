@@ -13,6 +13,7 @@ struct ConstBufferDataViewProjection
 
 class ViewProjection
 {
+public:
 	// 定数バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff;
 

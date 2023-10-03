@@ -79,6 +79,12 @@
     <Filter Include="ソース ファイル\base\3d">
       <UniqueIdentifier>{604b1beb-1f94-4ca7-8d0c-888dcfb1a908}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\scenes\manager">
+      <UniqueIdentifier>{1476084c-c349-4eef-82e2-7b5720dd184b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scenes\manager">
+      <UniqueIdentifier>{08e03cdb-74e3-48bc-9a25-1a347e916623}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -118,9 +124,6 @@
       <Filter>ソース ファイル\scenes</Filter>
     </ClCompile>
     <ClCompile Include="GameEndScene.cpp">
-      <Filter>ソース ファイル\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="GameScene.cpp">
       <Filter>ソース ファイル\scenes</Filter>
     </ClCompile>
     <ClCompile Include="GameStartScene.cpp">
@@ -173,6 +176,9 @@
     </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>ソース ファイル\base\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>ソース ファイル\scenes\manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -227,9 +233,6 @@
       <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
     <ClInclude Include="IScene.h">
-      <Filter>ヘッダー ファイル\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene.h">
       <Filter>ヘッダー ファイル\scenes</Filter>
     </ClInclude>
     <ClInclude Include="GameStartScene.h">
@@ -312,6 +315,9 @@
     </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>ヘッダー ファイル\base\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>ヘッダー ファイル\scenes\manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -10,7 +10,7 @@
 #include "GamePlayScene.h"
 #include "GameEndScene.h"
 
-class GameScene
+class SceneManager
 {
 public:
 	void Initialize();

@@ -9,6 +9,7 @@ struct ConstBufferDataWorldTransform
 
 class WorldTransform
 {
+public:
 	// 定数バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff;
 

@@ -34,7 +34,7 @@
     <ClCompile Include="MyEngine.cpp" />
     <ClCompile Include="MyImGui.cpp" />
     <ClCompile Include="MyMath.cpp" />
-    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -94,7 +94,7 @@
     <ClInclude Include="MyEngine.h" />
     <ClInclude Include="MyImGui.h" />
     <ClInclude Include="MyMath.h" />
-    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceObject.h" />
     <ClInclude Include="Sphere.h" />
