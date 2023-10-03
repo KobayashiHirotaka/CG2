@@ -22,5 +22,6 @@ void Light::ImGui(const char* Title)
 	ImGui::Begin(Title);
 	ImGui::SliderFloat3("LightColor", &directionalLightData_->color.x, 0, 1, "%.3f");
 	ImGui::SliderFloat3("Lightpotision", &directionalLightData_->direction.x, -10, 10, "%.3f");
+	ImGui::SliderFloat3("Lightintensity", &directionalLightData_->intensity, 0, 1, "%.3f");
 	ImGui::End();
 }

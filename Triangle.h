@@ -20,6 +20,13 @@ private:
 
 	TextureManager* textureManager_ = nullptr;
 
+	Transform tranformTriAngle_
+	{
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f}
+	};
+
 	Transform uvTranformTriAngle_
 	{
 	    {1.0f,1.0f,1.0f},

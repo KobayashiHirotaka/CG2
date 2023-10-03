@@ -11,9 +11,8 @@ class Model
 {
 public:
 	void Initialize();
-
 	void Draw(const WorldTransform& transform, const ViewProjection& viewProjection, const uint32_t& textureHandle);
-
+	void ImGui(const char* Title);
 
 private:
 	DirectXCommon* dxCommon_ = nullptr;

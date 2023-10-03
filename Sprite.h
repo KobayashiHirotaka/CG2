@@ -35,6 +35,13 @@ private:
 
 	D3D12_INDEX_BUFFER_VIEW indexBufferViewSprite_{};
 
+	Transform transformSprite_
+	{
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f}
+	};
+
 	Transform uvTransformSprite_
 	{
 		{1.0f,1.0f,1.0f},

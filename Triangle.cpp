@@ -58,18 +58,18 @@ void Triangle::Draw(const WorldTransform& transform, const ViewProjection& viewP
 	dxCommon_->GetcommandList()->DrawInstanced(3, 1, 0, 0);
 }
 
-//void Triangle::ImGui(const char* Title)
-//{
-//	ImGui::Begin(Title);
-//	ImGui::SliderFloat3("Scale", &transform_.scale.x, 1, 30, "%.3f");
-//	ImGui::SliderFloat3("Rotate", &transform_.rotate.x, -7, 7, "%.3f");
-//	ImGui::SliderFloat3("Translate", &transform_.translate.x, -2, 2, "%.3f");
-//	ImGui::DragFloat2("UVTranslate", &uvTranformTriAngle_.translate.x, 0.01f, -10.0f, 10.0f);
-//	ImGui::DragFloat2("UVScale", &uvTranformTriAngle_.scale.x, 0.01f, -10.0f, 10.0f);
-//	ImGui::SliderAngle("UVRotate", &uvTranformTriAngle_.rotate.z);
-//	ImGui::ColorPicker4("Color", &color_.x);
-//	ImGui::End();
-//}
+void Triangle::ImGui(const char* Title)
+{
+	ImGui::Begin(Title);
+	ImGui::SliderFloat3("Scale", &tranformTriAngle_.scale.x, 1, 30, "%.3f");
+	ImGui::SliderFloat3("Rotate", &tranformTriAngle_.rotate.x, -7, 7, "%.3f");
+	ImGui::SliderFloat3("Translate", &tranformTriAngle_.translate.x, -2, 2, "%.3f");
+	ImGui::DragFloat2("UVScale", &uvTranformTriAngle_.scale.x, 0.01f, -10.0f, 10.0f);
+	ImGui::SliderAngle("UVRotate", &uvTranformTriAngle_.rotate.z);
+	ImGui::DragFloat2("UVTranslate", &uvTranformTriAngle_.translate.x, 0.01f, -10.0f, 10.0f);
+	ImGui::ColorPicker4("Color", &color_.x);
+	ImGui::End();
+}
 
 void Triangle::CreateVertexBufferView()
 {
