@@ -12,13 +12,15 @@ class Model
 public:
 	void Initialize();
 
-	void Draw(const WorldTransform& transform, const ViewProjection& viewProjection, const ModelData& modelData);
+	void Draw(const WorldTransform& transform, const ViewProjection& viewProjection, const uint32_t& textureHandle);
 
 
 private:
 	DirectXCommon* dxCommon_ = nullptr;
 	TextureManager* textureManager_ = nullptr;
 	Light* light_ = nullptr;
+
+	int32_t lightFlag = Lighting::NotDo;
 	
 	ModelData modelData_;
 
@@ -32,7 +34,7 @@ private:
 
 	Material* materialDataObj_ = nullptr;
 
-
+	Vector4 color_ = { 1.0f,1.0f,1.0f,1.0f };
 
 };
 

@@ -15,7 +15,7 @@ class Sphere
 public:
 
 	void Initialize();
-	void Draw(const WorldTransform& transform, const ViewProjection& viewProjection, const uint32_t& TextureHandle);
+	void Draw(const WorldTransform& transform, const ViewProjection& viewProjection, const uint32_t& textureHandle);
 
 private:
 	DirectXCommon* dxCommon_ = nullptr;

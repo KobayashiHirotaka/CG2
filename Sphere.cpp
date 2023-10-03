@@ -101,7 +101,7 @@ void Sphere::Initialize()
 	}
 }
 
-void Sphere::Draw(const WorldTransform& transform, const ViewProjection& viewProjection, const uint32_t& TextureHandle)
+void Sphere::Draw(const WorldTransform& transform, const ViewProjection& viewProjection, const uint32_t& textureHandle)
 {
 	materialResourceSphere_.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialDataSphere_));
 
@@ -117,7 +117,7 @@ void Sphere::Draw(const WorldTransform& transform, const ViewProjection& viewPro
 	dxCommon_->GetcommandList()->IASetIndexBuffer(&indexBufferViewSphere_);
 
 	//WorldTransform
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff.Get()->GetGPUVirtualAddress());
+	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff->GetGPUVirtualAddress());
 
 	//ViewProjection
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection.constBuff->GetGPUVirtualAddress());
@@ -126,7 +126,7 @@ void Sphere::Draw(const WorldTransform& transform, const ViewProjection& viewPro
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSphere_.Get()->GetGPUVirtualAddress());
 
 	//テクスチャ
-	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(TextureHandle));
+	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(textureHandle));
 
 	//Light
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
