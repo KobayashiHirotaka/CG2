@@ -18,16 +18,7 @@ public:
 
 	void Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t kClientHeight);
 
-	void DrawModel(const ModelData& modelData, const Vector3& position, const Matrix4x4& ViewMatrix, const Vector4& material);
-
 	void ImGui();
-
-	int LoadTexture(const std::string& filePath);
-
-	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
-
-	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
-
 
 private:
 	int32_t kClientWidth_;

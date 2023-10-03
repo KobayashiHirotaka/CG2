@@ -6,6 +6,9 @@
 #include "MyImGui.h"
 #include "Light.h"
 #include "ModelData.h"
+#include <fstream>
+#include <sstream>
+
 
 class Model
 {
@@ -13,6 +16,10 @@ public:
 	void Initialize();
 	void Draw(const WorldTransform& transform, const ViewProjection& viewProjection, const uint32_t& textureHandle);
 	void ImGui(const char* Title);
+
+	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
+
+	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 private:
 	DirectXCommon* dxCommon_ = nullptr;
@@ -34,6 +41,5 @@ private:
 	Material* materialDataObj_ = nullptr;
 
 	Vector4 color_ = { 1.0f,1.0f,1.0f,1.0f };
-
 };
 
