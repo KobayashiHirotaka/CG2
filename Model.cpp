@@ -55,6 +55,13 @@ void Model::ImGui(const char* Title)
 	ImGui::End();*/
 }
 
+Model* Model::CreateModelFromObj(const std::string& directoryPath, const std::string& filename)
+{
+	Model* model = new Model();
+	model->Initialize(directoryPath, filename);
+	return model;
+}
+
 ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string& filename)
 {
 	ModelData modelData;

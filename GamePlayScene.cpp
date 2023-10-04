@@ -31,15 +31,18 @@ void GamePlayScene::Initialize()
 
 	sphere_ = new Sphere();
 	sphere_->Initialize();
+	worldTransform_.Initialize();
 
 	texture_ = textureManager_->LoadTexture("resource/uvChecker.png");
 
 	audio_->soundDatas[0] = audio_->SoundLoadWave("resource/mokugyo.wav");
 
-	worldTransform_.translation.z = -3.0f;
+	/*model_ = model_->CreateModelFromObj("resource","plane.obj");*/
+
+	worldTransform_.translation.z = -10.0f;
 
 	viewProjection_.Initialize();
-	worldTransform_.Initialize();
+	worldTransform_Model_.Initialize();
 }
 
 void GamePlayScene::Update()
@@ -90,11 +93,14 @@ void GamePlayScene::Update()
 
 	viewProjection_.UpdateMatrix();
 	worldTransform_.UpdateMatrix();
+	worldTransform_Model_.UpdateMatrix();
 }
 
 void GamePlayScene::Draw()
 {
 	sphere_->Draw(worldTransform_, viewProjection_, texture_);
+
+	/*model_->Draw(worldTransform_Model_, viewProjection_);*/
 
 	/*ImGui::Begin("TriAngleColor");
 

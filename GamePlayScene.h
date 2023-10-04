@@ -48,6 +48,7 @@ private:
 
 	WorldTransform worldTransform_;
 	WorldTransform worldTransform_Sprite_;
+	WorldTransform worldTransform_Model_;
 	ViewProjection viewProjection_;
 
 	Sprite* sprite_;
