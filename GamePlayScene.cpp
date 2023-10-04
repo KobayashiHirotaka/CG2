@@ -91,6 +91,37 @@ void GamePlayScene::Update()
 		worldTransform_.translation.x += 0.05f;
 	}
 
+	if (input_->PressKey(DIK_Q))
+	{
+		worldTransform_.translation.z += 0.05f;
+	}
+
+	if (input_->PressKey(DIK_E))
+	{
+		worldTransform_.translation.z -= 0.05f;
+	}
+
+
+	if (input_->PressKey(DIK_UP))
+	{
+		worldTransform_.rotation.x += 0.05f;
+	}
+
+	if (input_->PressKey(DIK_DOWN))
+	{
+		worldTransform_.rotation.x -= 0.05f;
+	}
+
+	if (input_->PressKey(DIK_LEFT))
+	{
+		worldTransform_.rotation.y += 0.05f;
+	}
+
+	if (input_->PressKey(DIK_RIGHT))
+	{
+		worldTransform_.rotation.y -= 0.05f;
+	}
+
 	viewProjection_.UpdateMatrix();
 	worldTransform_.UpdateMatrix();
 	/*worldTransform_Model_.UpdateMatrix();*/
