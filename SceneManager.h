@@ -21,6 +21,17 @@ public:
 
 	//void Draw();
 
+	void Release();
+
+	void Run();
+
+	enum GameStateNo
+	{
+		START,
+		PLAY,
+		END
+	};
+
 private:
 	WindowsApp* win_ = nullptr;
 
@@ -40,14 +51,5 @@ private:
 
 	MSG msg{};
 
-	enum GameStateNo
-	{
-		START,
-		PLAY,
-		END
-	};
-
 	std::unique_ptr<IScene>state[END];
-
-	void Release();
 };

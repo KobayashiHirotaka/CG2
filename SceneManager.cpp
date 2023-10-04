@@ -1,5 +1,12 @@
 #include "SceneManager.h"
 
+void SceneManager::Run()
+{
+	Initialize();
+	UpDate();
+	Release();
+}
+
 void SceneManager::Initialize()
 {
 	//COMの初期化
@@ -57,11 +64,12 @@ void SceneManager::UpDate()
 			dxCommon_->PostDraw();
 		}
 	}
-	Release();
 }
 
 void SceneManager::Release()
 {
+	dxCommon_->Release();
+
 	ImGui_ImplDX12_Shutdown();
 	CoUninitialize();
 }

@@ -8,7 +8,7 @@ class TextureManager
 {
 public:
 
-	static const int kMaxTexture = 3;
+	static const size_t kMaxTexture = 256;
 
 	struct Texture
 	{

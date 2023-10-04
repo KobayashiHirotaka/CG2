@@ -21,7 +21,7 @@ int IScene::stateNum;
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	SceneManager* sceneManager = new SceneManager();
-	sceneManager->UpDate();
+	sceneManager->Run();
 
 	return 0;
 }

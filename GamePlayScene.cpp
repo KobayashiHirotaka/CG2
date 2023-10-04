@@ -13,10 +13,10 @@ GamePlayScene::~GamePlayScene()
 
 void GamePlayScene::Initialize()
 {
-	dxCommon_ = DirectXCommon::GetInstance();
-
 	camera_ = new Camera();
 	camera_->Initialize(1280, 720);
+
+	dxCommon_ = DirectXCommon::GetInstance();
 	
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
@@ -32,9 +32,11 @@ void GamePlayScene::Initialize()
 	sphere_ = new Sphere();
 	sphere_->Initialize();
 
-	texture_ = textureManager_->LoadTexture("resources/uvChecker.png");
+	texture_ = textureManager_->LoadTexture("resource/uvChecker.png");
 
 	audio_->soundDatas[0] = audio_->SoundLoadWave("resource/mokugyo.wav");
+
+	worldTransform_.translation.z = -3.0f;
 
 	viewProjection_.Initialize();
 	worldTransform_.Initialize();
@@ -65,6 +67,29 @@ void GamePlayScene::Update()
 	{
 		audio_->Play(audio_->xAudio2.Get(), audio_->soundDatas[0]);
 	}
+
+	if (input_->PressKey(DIK_W))
+	{
+		worldTransform_.translation.y += 0.05f;
+	}
+
+	if (input_->PressKey(DIK_S))
+	{
+		worldTransform_.translation.y -= 0.05f;
+	}
+
+	if (input_->PressKey(DIK_A))
+	{
+		worldTransform_.translation.x -= 0.05f;
+	}
+
+	if (input_->PressKey(DIK_D))
+	{
+		worldTransform_.translation.x += 0.05f;
+	}
+
+	viewProjection_.UpdateMatrix();
+	worldTransform_.UpdateMatrix();
 }
 
 void GamePlayScene::Draw()

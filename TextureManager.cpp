@@ -16,7 +16,7 @@ void TextureManager::Initialize(DirectXCommon* dxCommon)
 
 uint32_t TextureManager::LoadTexture(const std::string& filePath)
 {
-	int spriteIndex = 0;
+	uint32_t spriteIndex = kMaxTexture + 1;
 
 	for (int i = 0; i < kMaxTexture; ++i)
 	{
