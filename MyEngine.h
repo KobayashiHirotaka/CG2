@@ -1,29 +1,30 @@
 #pragma once
+#include "WindowsApp.h"
 #include"DirectXCommon.h"
-#include"MyMath.h"
-#include"Matrix4x4.h"
-#include"VertexData.h"
-#include "Sphere.h"
-#include "Material.h"
-#include "TransformationMatrix.h"
-#include "ModelData.h"
+#include "TextureManager.h"
+
 #include <fstream>
-#include <sstream>
-#include "externals/DirectXTex/DirectXTex.h"
+#include <numbers>
 
 class MyEngine
 {
 public:
 	static MyEngine* GetInstance();
 
-	void Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t kClientHeight);
+	void Initialize();
 
 	void ImGui();
 
 private:
-	int32_t kClientWidth_;
-	int32_t kClientHeight_;
+	//MyEngine() = default;
+	//~MyEngine() = default;
+
+	static const int kMaxTexture = 10;
+
+	bool CheckTextureIndex[kMaxTexture];
 
 	HRESULT hr_;
+	WindowsApp* win_ = nullptr;
 	DirectXCommon* dxCommon_ = nullptr;
+	TextureManager* textureManager_ = nullptr;
 };

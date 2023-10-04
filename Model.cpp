@@ -1,4 +1,5 @@
 #include "Model.h"
+#include <cassert>
 
 void Model::Initialize(const std::string& directoryPath, const std::string& filename)
 {

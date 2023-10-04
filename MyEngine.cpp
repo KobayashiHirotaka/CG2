@@ -1,4 +1,5 @@
 #include "MyEngine.h"
+#include "SceneManager.h"
 
 MyEngine* MyEngine::GetInstance()
 {
@@ -6,11 +7,16 @@ MyEngine* MyEngine::GetInstance()
 	return &instance;
 }
 
-void MyEngine::Initialize(DirectXCommon* dxCommon, int32_t kClientWidth, int32_t kClientHeight)
+void MyEngine::Initialize()
 {
-	kClientWidth_ = kClientWidth;
-	kClientHeight_ = kClientHeight;
-	dxCommon_ = dxCommon;
+	win_ = WindowsApp::GetInstance();
+	win_->Initialize();
+
+	dxCommon_ = DirectXCommon::GetInstance();
+	dxCommon_->Initialize(win_);
+
+	textureManager_ = TextureManager::GetInstance();
+	textureManager_->Initialize(dxCommon_);
 }
 
 void MyEngine::ImGui()
