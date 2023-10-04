@@ -25,11 +25,6 @@ public:
 	static const int32_t kClientHeight = 720;
 
 private:
-	WindowsApp() = default;
-	~WindowsApp() = default;
-	WindowsApp(const WindowsApp& obj) = delete;
-	WindowsApp& operator=(const WindowsApp& obj) = delete;
-
 	WNDCLASS wc_{};
 	HWND hwnd_ = nullptr;
 };
