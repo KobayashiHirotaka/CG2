@@ -42,7 +42,7 @@ void GamePlayScene::Initialize()
 	worldTransform_.translation.z = -10.0f;
 
 	viewProjection_.Initialize();
-	worldTransform_Model_.Initialize();
+	/*worldTransform_Model_.Initialize();*/
 }
 
 void GamePlayScene::Update()
@@ -93,7 +93,7 @@ void GamePlayScene::Update()
 
 	viewProjection_.UpdateMatrix();
 	worldTransform_.UpdateMatrix();
-	worldTransform_Model_.UpdateMatrix();
+	/*worldTransform_Model_.UpdateMatrix();*/
 }
 
 void GamePlayScene::Draw()
