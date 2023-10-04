@@ -5,17 +5,14 @@ void SceneManager::Initialize()
 	//COMの初期化
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 
-	win_ = new WindowsApp();
-	kClientWidth_ = 1280;
-	kClientHeight_ = 720;
+	win_ = WindowsApp::GetInstance();
 
-	win_->Initialize();
-
-	dxCommon_ = new DirectXCommon();
-	dxCommon_->Initialize(win_);
+	dxCommon_ = DirectXCommon::GetInstance();
 
 	engine_ = MyEngine::GetInstance();
-	engine_->Initialize(dxCommon_, kClientWidth_, kClientHeight_);
+	engine_->Initialize();
+
+	textureManager_ = TextureManager::GetInstance();
 
 	imGui_ = new MyImGui();
 	imGui_->Initialize(win_, dxCommon_);
@@ -25,6 +22,9 @@ void SceneManager::Initialize()
 
 	audio_ = Audio::GetInstance();
 	audio_->Initialize();
+
+	light_ = Light::GetInstance();
+	light_->Initialize();
 
 	state[START] = std::make_unique<GameStartScene>();
 	state[PLAY] = std::make_unique<GamePlayScene>();

@@ -1,4 +1,4 @@
-#include "GameScene.h"
+#include "SceneManager.h"
 
 struct D3DResourceLeakCheker
 {
@@ -20,9 +20,8 @@ int IScene::stateNum;
 //Windowsアプリでのエントリーポイント
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-	GameScene* gameScene = new GameScene();
-	gameScene->Initialize();
-	gameScene->UpDate();
+	SceneManager* sceneManager = new SceneManager();
+	sceneManager->UpDate();
 
 	return 0;
 }
