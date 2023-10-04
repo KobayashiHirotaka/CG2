@@ -1,23 +1,27 @@
 #include "Model.h"
 
-void Model::Initialize()
+void Model::Initialize(const std::string& directoryPath, const std::string& filename)
 {
-	dxCommon_->GetInstance();
-	textureManager_->GetInstance();
-	light_->GetInstance();
-}
+	dxCommon_->DirectXCommon::GetInstance();
+	textureManager_->TextureManager::GetInstance();
+	light_->Light::GetInstance();
 
-void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProjection, const uint32_t& textureHandle)
-{
+	materialResourceObj_ = dxCommon_->CreateBufferResource(sizeof(Material));
+
+	modelData_ = LoadObjFile(directoryPath, filename);
+
 	vertexResourceObj_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataObj_));
-	std::memcpy(vertexDataObj_, modelData.vertices.data(), sizeof(VertexData) * modelData.vertices.size());
+	std::memcpy(vertexDataObj_, modelData_.vertices.data(), sizeof(VertexData) * modelData_.vertices.size());
 
-	materialResourceObj_->Map(0, nullptr, reinterpret_cast<void**>(&materialDataObj_));
+	materialResourceObj_.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialDataObj_));
 
 	materialDataObj_->enableLighting = lightFlag;
 	materialDataObj_->color = color_;
 	materialDataObj_->uvTransform = MakeIdentity4x4();
+}
 
+void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProjection)
+{
 	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewObj_);
@@ -28,16 +32,16 @@ void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProj
 
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceObj_->GetGPUVirtualAddress());
 
-	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(textureHandle));
+	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(modelData_.TextureIndex));
 
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
 
-	dxCommon_->GetcommandList()->DrawInstanced(UINT(modelData.vertices.size()), 1, 0, 0);
+	dxCommon_->GetcommandList()->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
 }
 
-void Model::ImGui(const char)
+void Model::ImGui(const char* Title)
 {
-	ImGui::Begin("Obj");
+	/*ImGui::Begin("Obj");
 	float ImGuiScaleObj[3] = { transformObj_.scale.x,transformObj_.scale.y ,transformObj_.scale.z };
 	ImGui::SliderFloat3("ScaleObj", ImGuiScaleObj, 1, 30, "%.3f");
 	transformObj_.scale = { ImGuiScaleObj[0],ImGuiScaleObj[1],ImGuiScaleObj[2] };
@@ -47,7 +51,7 @@ void Model::ImGui(const char)
 	float ImGuiTranslateObj[3] = { transformObj_.translate.x,transformObj_.translate.y ,transformObj_.translate.z };
 	ImGui::SliderFloat3("TranslateObj", ImGuiTranslateObj, -10, 10, "%.3f");
 	transformObj_.translate = { ImGuiTranslateObj[0],ImGuiTranslateObj[1],ImGuiTranslateObj[2] };
-	ImGui::End();
+	ImGui::End();*/
 }
 
 ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string& filename)
