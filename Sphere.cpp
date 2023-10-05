@@ -105,7 +105,6 @@ void Sphere::Draw(const WorldTransform& transform, const ViewProjection& viewPro
 {
 	materialResourceSphere_.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialDataSphere_));
 
-	//ライティング
 	materialDataSphere_->color = color_;
 	materialDataSphere_->enableLighting = lightFlag;
 	materialDataSphere_->uvTransform = MakeIdentity4x4();
@@ -136,19 +135,18 @@ void Sphere::Draw(const WorldTransform& transform, const ViewProjection& viewPro
 
 void Sphere::CreateVertexBufferViewSphere()
 {
-	//リソースの先頭のアドレス
 	vertexBufferViewSphere_.BufferLocation = vertexResourceSphere_.Get()->GetGPUVirtualAddress();
-	//使用する頂点サイズ
+
 	vertexBufferViewSphere_.SizeInBytes = sizeof(VertexData) * 4 * kSubdivision_ * kSubdivision_;
-	//1頂点あたりのアドレス
+
 	vertexBufferViewSphere_.StrideInBytes = sizeof(VertexData);
 }
+
 void Sphere::CreateIndexBufferViewSphere()
 {
-	//リソース先頭アドレス
 	indexBufferViewSphere_.BufferLocation = indexResourceSphere_.Get()->GetGPUVirtualAddress();
-	//使用するインデックスサイズ
+
 	indexBufferViewSphere_.SizeInBytes = sizeof(uint32_t) * 6 * kSubdivision_ * kSubdivision_;
-	//インデックスはuint32_t
+
 	indexBufferViewSphere_.Format = DXGI_FORMAT_R32_UINT;
 }

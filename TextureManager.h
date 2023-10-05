@@ -8,8 +8,6 @@ class TextureManager
 {
 public:
 
-	static const size_t kMaxTexture = 256;
-
 	struct Texture
 	{
 		Microsoft::WRL::ComPtr<ID3D12Resource> textureResource;
@@ -29,6 +27,8 @@ public:
 	const CD3DX12_GPU_DESCRIPTOR_HANDLE GetGPUHandle(uint32_t textureHandle);
 
 private:
+	static const size_t kMaxTexture = 256;
+
 	HRESULT hr_;
 
 	DirectXCommon* dxCommon_ = nullptr;

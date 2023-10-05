@@ -11,23 +11,30 @@ class Input
 {
 public:
 	static Input* GetInstance();
+
+	//Input();
+	//~Input();
+
 	void Initialize(WindowsApp* win);
+
 	void Update();
 
-	/// 押した時
+	//押した時
 	bool PushKey(uint8_t keyNumber)const;
-	/// 押している間
+
+	//押している間
 	bool PressKey(uint8_t keyNumber)const;
-	/// 離した時
+
+	//離した時
 	bool IsReleseKey(uint8_t keyNumber)const;
 
 private:
-	/*Input() = default;
-	~Input() = default;*/
 	static Input* input_;
-	Microsoft::WRL::ComPtr<IDirectInput8>directInput = nullptr;
-	Microsoft::WRL::ComPtr<IDirectInputDevice8> keyboard = nullptr;
-	std::array<BYTE, 256> keys;
-	std::array<BYTE, 256> preKeys;
+
+	Microsoft::WRL::ComPtr<IDirectInput8>directInput_ = nullptr;
+	Microsoft::WRL::ComPtr<IDirectInputDevice8> keyboard_ = nullptr;
+
+	std::array<BYTE, 256> keys_;
+	std::array<BYTE, 256> preKeys_;
 };
 

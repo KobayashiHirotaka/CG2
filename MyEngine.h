@@ -11,20 +11,19 @@ class MyEngine
 public:
 	static MyEngine* GetInstance();
 
+	//MyEngine();
+	//~MyEngine();
+
 	void Initialize();
 
 	void ImGui();
 
 private:
-	//MyEngine() = default;
-	//~MyEngine() = default;
+	WindowsApp* win_ = nullptr;
 
-	static const int kMaxTexture = 10;
+	DirectXCommon* dxCommon_ = nullptr;
 
-	bool CheckTextureIndex[kMaxTexture];
+	TextureManager* textureManager_ = nullptr;
 
 	HRESULT hr_;
-	WindowsApp* win_ = nullptr;
-	DirectXCommon* dxCommon_ = nullptr;
-	TextureManager* textureManager_ = nullptr;
 };

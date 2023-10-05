@@ -16,6 +16,9 @@ public:
 	void ImGui(const char* Title);
 
 private:
+	void CreateVertexBufferView();
+
+private:
 	DirectXCommon* dxCommon_ = nullptr;
 
 	TextureManager* textureManager_ = nullptr;
@@ -34,8 +37,6 @@ private:
 	    {0.0f,0.0f,0.0f}
 	};
 
-	Vector4 color_ = { 1.0f,1.0f,1.0f,1.0f };
-
 	//バーテックスリソース
 	Microsoft::WRL::ComPtr<ID3D12Resource>vertexResource_ = nullptr;
 
@@ -51,6 +52,6 @@ private:
 	//色データ
 	Material* materialData_ = nullptr;
 
-	void CreateVertexBufferView();
+	Vector4 color_ = { 1.0f,1.0f,1.0f,1.0f };
 };
 

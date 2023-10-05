@@ -1,5 +1,6 @@
 #pragma once
 #include "Matrix4x4.h"
+#include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
 #include <assert.h>
@@ -38,7 +39,7 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Ve
 Matrix4x4 Add(const Matrix4x4& m1, const Matrix4x4& m2);
 
 //行列の減法
-Matrix4x4 Sub(const Matrix4x4& m1, const Matrix4x4& m2);
+Matrix4x4 Subtract(const Matrix4x4& m1, const Matrix4x4& m2);
 
 //行列の積
 Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2);
@@ -62,4 +63,4 @@ Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float botto
 
 Vector3 Add(const Vector3& v1, const Vector3& v2);
 
-Vector3 Sub(const Vector3& v1, const Vector3& v2);
+Vector3 Subtract(const Vector3& v1, const Vector3& v2);

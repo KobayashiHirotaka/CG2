@@ -5,8 +5,7 @@
 #include <dxgi1_6.h>
 #include <dxcapi.h>
 #include "dxgidebug.h"
-#include "Vector3.h"
-#include "Vector4.h"
+#include "MyMath.h"
 #include <wrl.h>
 #include <cassert>
 #include "externals/DirectXTex/d3dx12.h"
@@ -20,6 +19,7 @@ class DirectXCommon
 {
 public:
 	static DirectXCommon* GetInstance();
+
 	void Initialize(WindowsApp* win);
 
 	void PreDraw();

@@ -4,7 +4,8 @@
 
 struct ConstBufferDataWorldTransform 
 {
-	Matrix4x4 matWorld; // ローカル → ワールド変換行列
+	// ローカル → ワールド変換行列
+	Matrix4x4 matWorld;
 };
 
 class WorldTransform

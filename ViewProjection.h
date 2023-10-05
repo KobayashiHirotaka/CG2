@@ -6,9 +6,14 @@
 
 struct ConstBufferDataViewProjection 
 {
-	Matrix4x4 view;       // ワールド → ビュー変換行列
-	Matrix4x4 projection; // ビュー → プロジェクション変換行列
-	Vector3 cameraPos;    // カメラ座標（ワールド座標）
+	// ワールド → ビュー変換行列
+	Matrix4x4 view;      
+
+	// ビュー → プロジェクション変換行列
+	Matrix4x4 projection;
+
+	// カメラ座標（ワールド座標）
+	Vector3 cameraPos;    
 };
 
 class ViewProjection

@@ -15,7 +15,7 @@ struct D3DResourceLeakCheker
 	}
 };
 
-int IScene::stateNum;
+int IScene::sceneNum;
 
 //Windowsアプリでのエントリーポイント
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)

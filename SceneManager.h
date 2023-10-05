@@ -17,7 +17,7 @@ class SceneManager
 public:
 	void Initialize();
 
-	void UpDate();
+	void Update();
 
 	//void Draw();
 
@@ -25,7 +25,7 @@ public:
 
 	void Run();
 
-	enum GameStateNo
+	enum GameSceneNum
 	{
 		START,
 		PLAY,

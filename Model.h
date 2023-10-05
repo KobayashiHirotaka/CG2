@@ -29,10 +29,12 @@ public:
 
 private:
 	DirectXCommon* dxCommon_ = nullptr;
+
 	TextureManager* textureManager_ = nullptr;
+
 	Light* light_ = nullptr;
 
-	int32_t lightFlag = Lighting::NotDo;
+	int32_t lightFlag = Lighting::checkLighting;
 	
 	ModelData modelData_;
 

@@ -169,7 +169,7 @@ Matrix4x4 Add(const Matrix4x4& m1, const Matrix4x4& m2) {
 }
 
 //行列の減法
-Matrix4x4 Sub(const Matrix4x4& m1, const Matrix4x4& m2) {
+Matrix4x4 Subtract(const Matrix4x4& m1, const Matrix4x4& m2) {
 	Matrix4x4 result;
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
@@ -436,7 +436,7 @@ Vector3 Add(const Vector3& v1, const Vector3& v2)
 	return Vector3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
 }
 
-Vector3 Sub(const Vector3& v1, const Vector3& v2)
+Vector3 Subtract(const Vector3& v1, const Vector3& v2)
 {
 	return Vector3(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
 }

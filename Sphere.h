@@ -18,15 +18,19 @@ public:
 	void ImGui(const char* Title);
 
 private:
+	void CreateVertexBufferViewSphere();
+	void CreateIndexBufferViewSphere();
+
+private:
 	DirectXCommon* dxCommon_ = nullptr;
+
 	TextureManager* textureManager_ = nullptr;
+
 	Light* light_ = nullptr;
 
-	//分割数
 	const int kSubdivision_ = 16;
 
-	//どのライトを使うか
-	int32_t lightFlag = Lighting::NotDo;
+	int32_t lightFlag = Lighting::checkLighting;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResourceSphere_ = nullptr;
 
@@ -45,8 +49,4 @@ private:
 	D3D12_INDEX_BUFFER_VIEW indexBufferViewSphere_{};
 
 	Vector4 color_ = { 1.0f,1.0f,1.0f,1.0f };
-
-	void CreateVertexBufferViewSphere();
-	void CreateIndexBufferViewSphere();
-
 };

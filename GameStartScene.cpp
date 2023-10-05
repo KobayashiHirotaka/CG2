@@ -7,9 +7,9 @@ void GameStartScene::Initialize()
 
 void GameStartScene::Update()
 {
-	ImGui::Begin("StateNum");
-	ImGui::Text("StateNum %d", stateNum);
-	ImGui::InputInt("SceneNum", &stateNum);
+	ImGui::Begin("SceneNum");
+	ImGui::Text("SceneNum %d", sceneNum);
+	ImGui::InputInt("SceneNum", &sceneNum);
 	ImGui::End();
 }
 

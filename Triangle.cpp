@@ -41,9 +41,10 @@ void Triangle::Draw(const WorldTransform& transform, const ViewProjection& viewP
 	materialData_->uvTransform = uvTransformMatrix;
 
 	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
+
 	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	//matWorld
+	//WorldTransform
 	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff->GetGPUVirtualAddress());
 
 	//ViewProjection
@@ -74,7 +75,9 @@ void Triangle::ImGui(const char* Title)
 void Triangle::CreateVertexBufferView()
 {
 	vertexBufferView_.BufferLocation = vertexResource_.Get()->GetGPUVirtualAddress();
+
 	vertexBufferView_.SizeInBytes = sizeof(VertexData) * 3;
+
 	vertexBufferView_.StrideInBytes = sizeof(VertexData);
 }
 

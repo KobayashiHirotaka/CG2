@@ -6,9 +6,9 @@
 
 enum Lighting 
 {
-	NotDo = false,
+	checkLighting = false,
 	harfLambert = 1,
-	Lambert = 2,
+	lambert = 2,
 };
 
 class Light
@@ -23,6 +23,9 @@ class Light
 public:
 	static Light* GetInstance();
 
+	//Light();
+	//~Light();
+
 	void Initialize();
 
 	void ImGui(const char* Title);
@@ -30,9 +33,6 @@ public:
 	ID3D12Resource* GetDirectionalLight()const { return directionalLightResource_.Get(); }
 
 private:
-	/*Light() = default;
-	~Light() = default;*/
-
 	DirectXCommon* dxCommon_ = nullptr;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource>directionalLightResource_ = nullptr;

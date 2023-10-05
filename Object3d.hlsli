@@ -1,6 +1,6 @@
-#define  NoLighting false
+#define  checkLighting false
 #define  harfLambert 1
-#define  Lambert 2
+#define  lambert 2
 
 struct VertexShaderOutput
 {

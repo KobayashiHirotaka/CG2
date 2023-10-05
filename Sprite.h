@@ -16,7 +16,12 @@ public:
 	void ImGui(const char* Title);
 
 private:
+	void CreateVertexBufferViewSprite();
+	void CreateIndexBufferViewSprite();
+
+private:
 	DirectXCommon* dxCommon_ = nullptr;
+
 	TextureManager* textureManager_ = nullptr;
 	
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResourceSprite_ = nullptr;
@@ -49,11 +54,8 @@ private:
 		{0.0f,0.0f,0.0f}
 	};
 
-	Vector4 color_ = { 1.0f,1.0f,1.0f,1.0f };
-
 	ViewProjection viewProjection_;
 
-	void CreateVertexBufferViewSprite();
-	void CreateIndexBufferViewSprite();
+	Vector4 color_ = { 1.0f,1.0f,1.0f,1.0f };
 };
 

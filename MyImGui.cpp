@@ -1,5 +1,11 @@
 #include "MyImGui.h"
 
+MyImGui* MyImGui::GetInstance()
+{
+	static MyImGui instance;
+	return &instance;
+}
+
 void MyImGui::Initialize(WindowsApp* win, DirectXCommon* dxCommon)
 {
 	IMGUI_CHECKVERSION();

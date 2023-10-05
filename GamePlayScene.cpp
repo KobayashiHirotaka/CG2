@@ -26,23 +26,30 @@ void GamePlayScene::Initialize()
 	light_ = Light::GetInstance();
 
 	/*sprite_ = new Sprite();
-	sprite_->Initialize(LeftTop[0], LeftBottom[0], RightTop[1], RightBottom[1]);
-	worldTransform_Sprite_.Initialize();*/
+	sprite_->Initialize(LeftTop_[0], LeftBottom_[0], RightTop_[1], RightBottom_[1]);
+	worldTransformSprite_.Initialize();*/
 
-	sphere_ = new Sphere();
-	sphere_->Initialize();
-	worldTransform_.Initialize();
+	for (int i = 0; i < 2; i++ )
+	{
+		sphere_[i] = new Sphere();
+		sphere_[i]->Initialize();
+		worldTransform_[i].Initialize();
+	}
 
-	texture_ = textureManager_->LoadTexture("resource/uvChecker.png");
+	uvChecker_ = textureManager_->LoadTexture("resource/uvChecker.png");
+	monsterBall_ = textureManager_->LoadTexture("resource/monsterBall.png");
+
+	texture_ = monsterBall_;
 
 	audio_->soundDatas[0] = audio_->SoundLoadWave("resource/mokugyo.wav");
 
 	/*model_ = model_->CreateModelFromObj("resource","plane.obj");*/
 
-	worldTransform_.translation.z = -10.0f;
+	worldTransform_[0].translation.x = 5.0f;
+	worldTransform_[1].translation.z = -10.0f;
 
 	viewProjection_.Initialize();
-	/*worldTransform_Model_.Initialize();*/
+	/*worldTransformModel_.Initialize();*/
 }
 
 void GamePlayScene::Update()
@@ -73,78 +80,70 @@ void GamePlayScene::Update()
 
 	if (input_->PressKey(DIK_W))
 	{
-		worldTransform_.translation.y += 0.05f;
+		worldTransform_[0].translation.y += 0.05f;
 	}
 
 	if (input_->PressKey(DIK_S))
 	{
-		worldTransform_.translation.y -= 0.05f;
+		worldTransform_[0].translation.y -= 0.05f;
 	}
 
 	if (input_->PressKey(DIK_A))
 	{
-		worldTransform_.translation.x -= 0.05f;
+		worldTransform_[0].translation.x -= 0.05f;
 	}
 
 	if (input_->PressKey(DIK_D))
 	{
-		worldTransform_.translation.x += 0.05f;
+		worldTransform_[0].translation.x += 0.05f;
 	}
 
 	if (input_->PressKey(DIK_Q))
 	{
-		worldTransform_.translation.z += 0.05f;
+		worldTransform_[0].translation.z += 0.05f;
 	}
 
 	if (input_->PressKey(DIK_E))
 	{
-		worldTransform_.translation.z -= 0.05f;
+		worldTransform_[0].translation.z -= 0.05f;
 	}
 
 
 	if (input_->PressKey(DIK_UP))
 	{
-		worldTransform_.rotation.x += 0.05f;
+		worldTransform_[0].rotation.x += 0.05f;
 	}
 
 	if (input_->PressKey(DIK_DOWN))
 	{
-		worldTransform_.rotation.x -= 0.05f;
+		worldTransform_[0].rotation.x -= 0.05f;
 	}
 
 	if (input_->PressKey(DIK_LEFT))
 	{
-		worldTransform_.rotation.y += 0.05f;
+		worldTransform_[0].rotation.y += 0.05f;
 	}
 
 	if (input_->PressKey(DIK_RIGHT))
 	{
-		worldTransform_.rotation.y -= 0.05f;
+		worldTransform_[0].rotation.y -= 0.05f;
 	}
 
 	viewProjection_.UpdateMatrix();
-	worldTransform_.UpdateMatrix();
-	/*worldTransform_Model_.UpdateMatrix();*/
+	worldTransform_[0].UpdateMatrix();
+	/*worldTransformModel_.UpdateMatrix();*/
 }
 
 void GamePlayScene::Draw()
 {
-	sphere_->Draw(worldTransform_, viewProjection_, texture_);
+	sphere_[0]->Draw(worldTransform_[0], viewProjection_, texture_);
+	sphere_[1]->Draw(worldTransform_[1], viewProjection_, texture_);
 
-	/*model_->Draw(worldTransform_Model_, viewProjection_);*/
+	/*model_->Draw(worldTransformModel_, viewProjection_);*/
 
-	/*ImGui::Begin("TriAngleColor");
-
-	float color[3] = { material[0].x,material[0].y ,material[0].w };
-	ImGui::SliderFloat3("RGB", color, 0, 1, "%.3f");
-	ImGui::ColorEdit3("MaterialColor", color);
-	material[0] = { color[0],color[1],color[2] };
-
-	ImGui::End();*/
-
-	/*ImGui::Begin("sphereTexture");
-	ImGui::Checkbox("texture", &changeTexture);
-	ImGui::End();*/
+	ImGui::Begin("sphereTexture");
+	ImGui::Checkbox("texture", &changeTexture_);
+	ImGui::End();
 
 	ImGui::Begin("count");
 	ImGui::Text("count %d", count_);
@@ -152,14 +151,11 @@ void GamePlayScene::Draw()
 
 	engine_->ImGui();
 
-	/*if (changeTexture == true)
+	if (changeTexture_ == true)
 	{
-		sphereTexture = monsterBall;
+		texture_ = monsterBall_;
 
+	}else {
+		texture_ = uvChecker_;
 	}
-	else {
-		sphereTexture = uvChecker;
-	}
-
-	engine_->VertexReset();*/
 }

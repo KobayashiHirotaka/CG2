@@ -3,7 +3,7 @@
 void SceneManager::Run()
 {
 	Initialize();
-	UpDate();
+	Update();
 	Release();
 }
 
@@ -21,7 +21,7 @@ void SceneManager::Initialize()
 
 	textureManager_ = TextureManager::GetInstance();
 
-	imGui_ = new MyImGui();
+	imGui_ = MyImGui::GetInstance();
 	imGui_->Initialize(win_, dxCommon_);
 
 	input_ = Input::GetInstance();
@@ -37,10 +37,10 @@ void SceneManager::Initialize()
 	state[PLAY] = std::make_unique<GamePlayScene>();
 	state[PLAY]->Initialize();
 
-	IScene::stateNum = START;
+	IScene::sceneNum = START;
 }
 
-void SceneManager::UpDate()
+void SceneManager::Update()
 {
 	//ウィンドウのxが押されるまでループ
 	while (msg.message != WM_QUIT)
@@ -50,15 +50,15 @@ void SceneManager::UpDate()
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
-		}
-		else {
+
+		}else {
 			//ゲームの処理
 			imGui_->BeginFlame();
 			dxCommon_->PreDraw();
 			input_->Update();
 
-			state[GameStartScene::stateNum]->Update();
-			state[GameStartScene::stateNum]->Draw();
+			state[GameStartScene::sceneNum]->Update();
+			state[GameStartScene::sceneNum]->Draw();
 
 			imGui_->EndFlame();
 			dxCommon_->PostDraw();

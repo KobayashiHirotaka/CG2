@@ -33,9 +33,13 @@ struct SoundData
     unsigned int bufferSize;
 };
 
-class Audio {
+class Audio
+{
 public:
     static Audio* GetInstance();
+
+    //Audio();
+    //~Audio();
 
     void Initialize();
 
@@ -50,8 +54,4 @@ public:
     IXAudio2MasteringVoice* pMasteringVoice = nullptr;
 
     SoundData soundDatas[10];
-
-private:
-    /*Audio() = default;
-    ~Audio() = default;*/
 };

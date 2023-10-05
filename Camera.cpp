@@ -101,7 +101,7 @@ void Camera::DebugCameraMove()
 	if (input->PressKey(DIK_A))
 	{
 		Vector3 translate{ speed,0,0 };
-		translation_ = Sub(translation_, translate);
+		translation_ = Subtract(translation_, translate);
 	}
 
 	if (input->PressKey(DIK_D)) 
@@ -119,7 +119,7 @@ void Camera::DebugCameraMove()
 	if (input->PressKey(DIK_S))
 	{
 		Vector3 translate{ 0,speed,0 };
-		translation_ = Sub(translation_, translate);
+		translation_ = Subtract(translation_, translate);
 	}
 
 	if (input->PressKey(DIK_E)) 
@@ -131,7 +131,7 @@ void Camera::DebugCameraMove()
 	if (input->PressKey(DIK_Q))
 	{
 		Vector3 translate{ 0,0,speed };
-		translation_ = Sub(translation_, translate);
+		translation_ = Subtract(translation_, translate);
 	}
 }
 #endif // DEBUG

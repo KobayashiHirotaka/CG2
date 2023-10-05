@@ -28,7 +28,6 @@ void WorldTransform::UpdateMatrix()
 	Matrix4x4 AffineMatrix = MakeAffineMatrix(scale, rotation, translation);
 	matWorld = AffineMatrix;
 
-	//親があれば親のワールド行列を掛ける
 	if (parent) 
 	{
 		matWorld = Multiply(matWorld, parent->matWorld);
