@@ -48,7 +48,7 @@ void Sprite::Initialize(const Vector4& LeftTop, const Vector4& LeftBottom, const
 	viewProjection_.constMap->projection = MakeOrthographicMatrix(0.0f, 0.0f, float(WindowsApp::kClientWidth), float(WindowsApp::kClientHeight), 0.0f, 100.0f);
 }
 
-void Sprite::DrawSprite(const WorldTransform& transform, const uint32_t textureHandle)
+void Sprite::Draw(const WorldTransform& transform, const uint32_t textureHandle)
 {
 	//色の書き込み
 	materialResourceSprite_.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialDataSprite_));

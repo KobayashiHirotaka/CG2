@@ -25,9 +25,9 @@ void GamePlayScene::Initialize()
 
 	light_ = Light::GetInstance();
 
-	/*sprite_ = new Sprite();
+	sprite_ = new Sprite();
 	sprite_->Initialize(LeftTop_[0], LeftBottom_[0], RightTop_[1], RightBottom_[1]);
-	worldTransformSprite_.Initialize();*/
+	worldTransformSprite_.Initialize();
 
 	for (int i = 0; i < 2; i++ )
 	{
@@ -43,13 +43,15 @@ void GamePlayScene::Initialize()
 
 	audio_->soundDatas[0] = audio_->SoundLoadWave("resource/mokugyo.wav");
 
-	/*model_ = model_->CreateModelFromObj("resource","plane.obj");*/
+	model_ = model_->CreateModelFromObj("resource","plane.obj");
 
 	worldTransform_[0].translation.x = 5.0f;
 	worldTransform_[1].translation.z = -10.0f;
 
+	worldTransformModel_.translation.x = -5.0f;
+
 	viewProjection_.Initialize();
-	/*worldTransformModel_.Initialize();*/
+	worldTransformModel_.Initialize();
 }
 
 void GamePlayScene::Update()
@@ -80,32 +82,32 @@ void GamePlayScene::Update()
 
 	if (input_->PressKey(DIK_W))
 	{
-		worldTransform_[0].translation.y += 0.05f;
+		worldTransformModel_.translation.y += 0.05f;
 	}
 
 	if (input_->PressKey(DIK_S))
 	{
-		worldTransform_[0].translation.y -= 0.05f;
+		worldTransformModel_.translation.y -= 0.05f;
 	}
 
 	if (input_->PressKey(DIK_A))
 	{
-		worldTransform_[0].translation.x -= 0.05f;
+		worldTransformModel_.translation.x -= 0.05f;
 	}
 
 	if (input_->PressKey(DIK_D))
 	{
-		worldTransform_[0].translation.x += 0.05f;
+		worldTransformModel_.translation.x += 0.05f;
 	}
 
 	if (input_->PressKey(DIK_Q))
 	{
-		worldTransform_[0].translation.z += 0.05f;
+		worldTransformModel_.translation.z += 0.05f;
 	}
 
 	if (input_->PressKey(DIK_E))
 	{
-		worldTransform_[0].translation.z -= 0.05f;
+		worldTransformModel_.translation.z -= 0.05f;
 	}
 
 
@@ -131,7 +133,7 @@ void GamePlayScene::Update()
 
 	viewProjection_.UpdateMatrix();
 	worldTransform_[0].UpdateMatrix();
-	/*worldTransformModel_.UpdateMatrix();*/
+	worldTransformModel_.UpdateMatrix();
 }
 
 void GamePlayScene::Draw()
@@ -139,7 +141,9 @@ void GamePlayScene::Draw()
 	sphere_[0]->Draw(worldTransform_[0], viewProjection_, texture_);
 	sphere_[1]->Draw(worldTransform_[1], viewProjection_, texture_);
 
-	/*model_->Draw(worldTransformModel_, viewProjection_);*/
+	sprite_->Draw(worldTransformSprite_, texture_);
+
+	model_->Draw(worldTransformModel_, viewProjection_);
 
 	ImGui::Begin("sphereTexture");
 	ImGui::Checkbox("texture", &changeTexture_);

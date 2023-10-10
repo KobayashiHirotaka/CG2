@@ -68,7 +68,7 @@ private:
 
 	uint32_t sound_;
 	
-	/*Vector4 LeftTop_[2] = {
+	Vector4 LeftTop_[2] = {
 		{ 0.0f,0.0f,0.0f,1.0f },
 		{ 360.0f,0.0f,0.0f,1.0f }
 	};
@@ -83,7 +83,7 @@ private:
 	Vector4 RightBottom_[2] = {
 		{ 360.0f,180.0f,0.0f,1.0f },
 		{ 640.0f,360.0f,0.0f,1.0f }
-	};*/
+	};
 
 	int count_ = 0;
 };

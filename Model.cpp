@@ -3,15 +3,15 @@
 
 void Model::Initialize(const std::string& directoryPath, const std::string& filename)
 {
-	dxCommon_->DirectXCommon::GetInstance();
-	textureManager_->TextureManager::GetInstance();
-	light_->Light::GetInstance();
+	dxCommon_ = DirectXCommon::GetInstance();
+	textureManager_ =TextureManager::GetInstance();
+	light_ = Light::GetInstance();
 
 	materialResourceObj_ = dxCommon_->CreateBufferResource(sizeof(Material));
 
 	modelData_ = LoadObjFile(directoryPath, filename);
 
-	vertexResourceObj_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataObj_));
+	vertexResourceObj_.Get()->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataObj_));
 	std::memcpy(vertexDataObj_, modelData_.vertices.data(), sizeof(VertexData) * modelData_.vertices.size());
 
 	materialResourceObj_.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialDataObj_));

@@ -12,7 +12,7 @@ class Sprite
 {
 public:
 	void Initialize(const Vector4& LeftTop, const Vector4& LeftBottom, const Vector4& RightTop, const Vector4& RightBottom);
-	void DrawSprite(const WorldTransform& transform, const uint32_t textureHandle);
+	void Draw(const WorldTransform& transform, const uint32_t textureHandle);
 	void ImGui(const char* Title);
 
 private:
