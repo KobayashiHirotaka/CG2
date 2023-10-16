@@ -64,3 +64,5 @@ Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float botto
 Vector3 Add(const Vector3& v1, const Vector3& v2);
 
 Vector3 Subtract(const Vector3& v1, const Vector3& v2);
+
+Vector3 TransformNormal(const Vector3& vector, const Matrix4x4& matrix);

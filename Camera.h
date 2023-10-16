@@ -3,19 +3,23 @@
 #include "MyMath.h"
 #include "Vector3.h"
 #include "Input.h"
+#include "WorldTransform.h"
+#include "ViewProjection.h"
 
 class Camera
 {
 public:
+	Camera();
+
+	~Camera();
+
 	void Initialize(int32_t kClientWidth, int32_t kClientHeight);
 
 	void Update();
 
-	const Matrix4x4& GetTransformationMatrix() const { return transformationMatrixData; }
+	const ViewProjection& GetViewProjection() { return viewProjection_; };
 
-	Vector3 GetmatRot();
-
-	Matrix4x4 transformationMatrixData;
+	void SetTarget(const WorldTransform* target) { target_ = target; };
 
 #ifdef _DEBUG
 	void DebugCameraMove();
@@ -30,26 +34,22 @@ private:
 	int32_t kClientWidth_;
 	int32_t kClientHeight_;
 
-	// X,Y,Z軸回りのローカル回転角
-	Vector3 rotation_ = { 0,0,0 };
+	Input* input_ = nullptr;
 
-	// 累積回転行列
-	Matrix4x4 matRot_;
+	//ワールドトランスフォーム
+	WorldTransform worldTransform_{};
 
-	// ローカル座標
-	Vector3 translation_ = { 0,0,-5 };
+	//ビュープロジェクション
+	ViewProjection viewProjection_{};
 
-	//　ビュー行列
-	Matrix4x4 ViewMatrix;
+	//オフセット
+	Vector3 offset_ = { 0.0f,0.0f,-50.0f };
 
-	// 射影行列
-	Matrix4x4 ProjectionMatrix;
-	Matrix4x4 worldMatrix;
+	//累積回転行列
+	Matrix4x4 matRot_ = MakeIdentity4x4();
 
-	Input* input = nullptr;
-
-	//FOV
-	float FOV = 45.0f;
+	//追従対象
+	const WorldTransform* target_ = nullptr;
 
 #ifdef _DEBUG
 	bool DebucCameraFlag = false;

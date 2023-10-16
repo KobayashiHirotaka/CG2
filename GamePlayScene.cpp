@@ -80,7 +80,7 @@ void GamePlayScene::Update()
 		audio_->Play(audio_->xAudio2.Get(), audio_->soundDatas[0]);
 	}
 
-	if (input_->PressKey(DIK_W))
+	/*if (input_->PressKey(DIK_W))
 	{
 		worldTransformModel_.translation.y += 0.05f;
 	}
@@ -129,7 +129,7 @@ void GamePlayScene::Update()
 	if (input_->PressKey(DIK_RIGHT))
 	{
 		worldTransform_[0].rotation.y -= 0.05f;
-	}
+	}*/
 
 	viewProjection_.UpdateMatrix();
 	worldTransform_[0].UpdateMatrix();
@@ -151,6 +151,11 @@ void GamePlayScene::Draw()
 
 	ImGui::Begin("count");
 	ImGui::Text("count %d", count_);
+	ImGui::End();
+
+	ImGui::Begin("Camera");
+	ImGui::SliderFloat3("rotation", &viewProjection_.rotation.x, 1.0f, -1.0f);
+	ImGui::SliderFloat3("transform", &viewProjection_.translation.x, 10.0f, -10.0f);
 	ImGui::End();
 
 	engine_->ImGui();

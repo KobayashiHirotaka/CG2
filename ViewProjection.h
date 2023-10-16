@@ -29,13 +29,13 @@ public:
 	Vector3 rotation = { 0, 0, 0 };
 
 	// ローカル座標
-	Vector3 translation = { 0, 0, -25 };
+	Vector3 translation = { 0, 0, -50 };
 
 	// 垂直方向視野角
-	float fovAngleY = 45.0f;
+	float fovAngleY = 0.45f;
 
 	// ビューポートのアスペクト比
-	float aspectRatio = (float)16 / 9;
+	float aspectRatio = 1280.0f / 720.0f;
 
 	// 深度限界（手前側）
 	float nearZ = 0.1f;
