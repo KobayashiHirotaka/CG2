@@ -35,6 +35,7 @@
     <ClCompile Include="MyImGui.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Skydome.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -83,6 +84,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceObject.h" />
+    <ClInclude Include="Skydome.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TextureManager.h" />

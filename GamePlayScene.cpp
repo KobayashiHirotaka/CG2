@@ -25,28 +25,15 @@ void GamePlayScene::Initialize()
 
 	light_ = Light::GetInstance();
 
-	sprite_ = new Sprite();
-	sprite_->Initialize(LeftTop_[0], LeftBottom_[0], RightTop_[1], RightBottom_[1]);
-	worldTransformSprite_.Initialize();
-
-	for (int i = 0; i < 2; i++ )
-	{
-		sphere_[i] = new Sphere();
-		sphere_[i]->Initialize();
-		worldTransform_[i].Initialize();
-	}
-
-	uvChecker_ = textureManager_->LoadTexture("resource/uvChecker.png");
-	monsterBall_ = textureManager_->LoadTexture("resource/monsterBall.png");
-
-	texture_ = monsterBall_;
-
 	audio_->soundDatas[0] = audio_->SoundLoadWave("resource/mokugyo.wav");
 
 	model_ = model_->CreateModelFromObj("resource","plane.obj");
 
-	worldTransform_[0].translation.x = 5.0f;
-	worldTransform_[1].translation.z = -10.0f;
+	//天球
+	skydomeModel_.reset(Model::CreateModelFromObj("resource/skydome", "skydome.obj"));
+
+	skydome_ = std::make_unique<Skydome>();
+	skydome_->Initialize(skydomeModel_.get());
 
 	worldTransformModel_.translation.x = -5.0f;
 
@@ -57,6 +44,8 @@ void GamePlayScene::Initialize()
 void GamePlayScene::Update()
 {
 	camera_->Update();
+
+	skydome_->Updata();
 
 #ifdef _DEBUG
 	if (input_->PushKey(DIK_1))
@@ -80,7 +69,7 @@ void GamePlayScene::Update()
 		audio_->Play(audio_->xAudio2.Get(), audio_->soundDatas[0]);
 	}
 
-	/*if (input_->PressKey(DIK_W))
+	if (input_->PressKey(DIK_W))
 	{
 		worldTransformModel_.translation.y += 0.05f;
 	}
@@ -111,43 +100,15 @@ void GamePlayScene::Update()
 	}
 
 
-	if (input_->PressKey(DIK_UP))
-	{
-		worldTransform_[0].rotation.x += 0.05f;
-	}
-
-	if (input_->PressKey(DIK_DOWN))
-	{
-		worldTransform_[0].rotation.x -= 0.05f;
-	}
-
-	if (input_->PressKey(DIK_LEFT))
-	{
-		worldTransform_[0].rotation.y += 0.05f;
-	}
-
-	if (input_->PressKey(DIK_RIGHT))
-	{
-		worldTransform_[0].rotation.y -= 0.05f;
-	}*/
-
 	viewProjection_.UpdateMatrix();
-	worldTransform_[0].UpdateMatrix();
 	worldTransformModel_.UpdateMatrix();
 }
 
 void GamePlayScene::Draw()
 {
-	sphere_[0]->Draw(worldTransform_[0], viewProjection_, texture_);
-	sphere_[1]->Draw(worldTransform_[1], viewProjection_, texture_);
-
-	sprite_->Draw(worldTransformSprite_, texture_);
-
 	model_->Draw(worldTransformModel_, viewProjection_);
 
-	ImGui::Begin("sphereTexture");
-	ImGui::Checkbox("texture", &changeTexture_);
-	ImGui::End();
+	skydome_->Draw(viewProjection_);
 
 	ImGui::Begin("count");
 	ImGui::Text("count %d", count_);
@@ -159,12 +120,4 @@ void GamePlayScene::Draw()
 	ImGui::End();
 
 	engine_->ImGui();
-
-	if (changeTexture_ == true)
-	{
-		texture_ = monsterBall_;
-
-	}else {
-		texture_ = uvChecker_;
-	}
 }

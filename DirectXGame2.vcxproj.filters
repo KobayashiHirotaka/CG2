@@ -85,6 +85,18 @@
     <Filter Include="ソース ファイル\scenes\manager">
       <UniqueIdentifier>{08e03cdb-74e3-48bc-9a25-1a347e916623}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\game">
+      <UniqueIdentifier>{c519fd8a-de35-4c30-af7d-68217e2edc72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\game\skydome">
+      <UniqueIdentifier>{577a332e-57d7-44d4-bcf6-28cb6c3d38c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\game">
+      <UniqueIdentifier>{d52040fb-0351-447a-a3bd-f5e86ecb4ab9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\game\skydome">
+      <UniqueIdentifier>{b1b9e5ba-b43b-4b2c-acf7-2f8328b6d224}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -179,6 +191,9 @@
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>ソース ファイル\scenes\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Skydome.cpp">
+      <Filter>ソース ファイル\game\skydome</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -316,6 +331,9 @@
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>ヘッダー ファイル\scenes\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Skydome.h">
+      <Filter>ヘッダー ファイル\game\skydome</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
