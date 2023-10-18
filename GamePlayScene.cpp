@@ -29,16 +29,19 @@ void GamePlayScene::Initialize()
 
 	model_ = model_->CreateModelFromObj("resource","plane.obj");
 
+	model2_= model2_->CreateModelFromObj("resource", "plane.obj");
+
 	//天球
 	skydomeModel_.reset(Model::CreateModelFromObj("resource/skydome", "skydome.obj"));
 
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(skydomeModel_.get());
 
-	worldTransformModel_.translation.x = -5.0f;
+	/*worldTransform_[0].rotation.x =*/
 
 	viewProjection_.Initialize();
 	worldTransformModel_.Initialize();
+	worldTransform_[0].Initialize();
 }
 
 void GamePlayScene::Update()
@@ -102,11 +105,14 @@ void GamePlayScene::Update()
 
 	viewProjection_.UpdateMatrix();
 	worldTransformModel_.UpdateMatrix();
+	worldTransform_[0].UpdateMatrix();
 }
 
 void GamePlayScene::Draw()
 {
 	model_->Draw(worldTransformModel_, viewProjection_);
+
+	model2_->Draw(worldTransform_[0], viewProjection_);
 
 	skydome_->Draw(viewProjection_);
 
@@ -116,7 +122,11 @@ void GamePlayScene::Draw()
 
 	ImGui::Begin("Camera");
 	ImGui::SliderFloat3("rotation", &viewProjection_.rotation.x, 1.0f, -1.0f);
-	ImGui::SliderFloat3("transform", &viewProjection_.translation.x, 10.0f, -10.0f);
+	ImGui::SliderFloat3("transform", &viewProjection_.translation.x, 50.0f, -50.0f);
+	ImGui::End();
+
+	ImGui::Begin("Ground");
+	ImGui::SliderFloat3("transform", &worldTransform_[0].rotation.x, 10.0f, -10.0f);
 	ImGui::End();
 
 	engine_->ImGui();

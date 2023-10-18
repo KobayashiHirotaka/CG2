@@ -48,6 +48,8 @@ private:
 
 	Model* model_ = nullptr;
 
+	Model* model2_ = nullptr;
+
 	WorldTransform worldTransform_[2];
 
 	WorldTransform worldTransformSprite_;
