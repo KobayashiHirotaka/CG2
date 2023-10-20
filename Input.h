@@ -1,6 +1,7 @@
 #pragma once
 #define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定
 #include <dinput.h>
+#include <Xinput.h>
 #pragma comment(lib,"dinput8.lib")
 #pragma comment(lib,"dxguid.lib")
 #include <array>
@@ -28,6 +29,8 @@ public:
 	//離した時
 	bool IsReleseKey(uint8_t keyNumber)const;
 
+	bool GetJoystickState(XINPUT_STATE& state);
+
 private:
 	static Input* input_;
 
@@ -36,5 +39,7 @@ private:
 
 	std::array<BYTE, 256> keys_;
 	std::array<BYTE, 256> preKeys_;
+
+	XINPUT_STATE state_{};
 };
 
