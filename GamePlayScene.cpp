@@ -67,11 +67,6 @@ void GamePlayScene::Update()
 		count_ += 1;
 	}
 
-	if (input_->PushKey(DIK_RETURN))
-	{
-		audio_->Play(audio_->xAudio2.Get(), audio_->soundDatas[0]);
-	}
-
 	if (input_->PressKey(DIK_W))
 	{
 		worldTransformModel_.translation.y += 0.05f;
@@ -82,26 +77,21 @@ void GamePlayScene::Update()
 		worldTransformModel_.translation.y -= 0.05f;
 	}
 
-	if (input_->PressKey(DIK_A))
+	Vector3 move = { 0, 0, 0 };
+
+	if (Input::GetInstance()->GetJoystickState(joyState_))
 	{
-		worldTransformModel_.translation.x -= 0.05f;
+		const float playerMoveSpeed = 0.05f;
+
+		move.x = (float)joyState_.Gamepad.sThumbLX / SHRT_MAX * playerMoveSpeed;
+
+		worldTransform_[0].translation = Add(worldTransform_[0].translation, move);
 	}
 
 	if (input_->PressKey(DIK_D))
 	{
 		worldTransformModel_.translation.x += 0.05f;
 	}
-
-	if (input_->PressKey(DIK_Q))
-	{
-		worldTransformModel_.translation.z += 0.05f;
-	}
-
-	if (input_->PressKey(DIK_E))
-	{
-		worldTransformModel_.translation.z -= 0.05f;
-	}
-
 
 	viewProjection_.UpdateMatrix();
 	worldTransformModel_.UpdateMatrix();

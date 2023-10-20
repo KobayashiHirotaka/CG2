@@ -93,4 +93,6 @@ private:
 	std::unique_ptr<Model> skydomeModel_;
 
 	int count_ = 0;
+
+	XINPUT_STATE joyState_;
 };
