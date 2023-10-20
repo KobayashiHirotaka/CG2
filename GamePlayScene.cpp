@@ -77,15 +77,27 @@ void GamePlayScene::Update()
 		worldTransformModel_.translation.y -= 0.05f;
 	}
 
-	Vector3 move = { 0, 0, 0 };
-
 	if (Input::GetInstance()->GetJoystickState(joyState_))
 	{
-		const float playerMoveSpeed = 0.05f;
+		const float deadZone = 0.7f;
 
-		move.x = (float)joyState_.Gamepad.sThumbLX / SHRT_MAX * playerMoveSpeed;
+		bool isMoving = false;
 
-		worldTransform_[0].translation = Add(worldTransform_[0].translation, move);
+		Vector3 move = { (float)joyState_.Gamepad.sThumbLX / SHRT_MAX, 0.0f, (float)joyState_.Gamepad.sThumbLY / SHRT_MAX };
+
+		if (Length(move) > deadZone)
+		{
+			isMoving = true;
+		}
+
+		if (isMoving)
+		{
+			const float kPlayerSpeed = 0.2f;
+
+			move = Multiply(kPlayerSpeed, Normalize(move));
+
+			worldTransform_[0].translation = Add(worldTransform_[0].translation, move);
+		}
 	}
 
 	if (input_->PressKey(DIK_D))
