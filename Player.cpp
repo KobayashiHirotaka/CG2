@@ -7,6 +7,8 @@ void Player::Initialize(Model* model)
 	model_ = model;
 	worldTransform_.Initialize();
 
+	worldTransform_.translation.y = 1.0f;
+
 	input_ = Input::GetInstance();
 }
 

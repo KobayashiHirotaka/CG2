@@ -31,14 +31,18 @@ void GamePlayScene::Initialize()
 
 	playerModel_.reset(Model::CreateModelFromObj("resource/player", "player.obj"));
 
-	//天球
 	skydomeModel_.reset(Model::CreateModelFromObj("resource/skydome", "skydome.obj"));
+
+	groundModel_.reset(Model::CreateModelFromObj("resource/ground", "ground.obj"));
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize(playerModel_.get());
 
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(skydomeModel_.get());
+
+	ground_ = std::make_unique<Ground>();
+	ground_->Initialize(groundModel_.get());
 
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
@@ -54,6 +58,8 @@ void GamePlayScene::Update()
 
 	skydome_->Updata();
 
+	ground_->Update();
+
 	viewProjection_.UpdateMatrix();
 	
 	followCamera_->Update();
@@ -64,21 +70,15 @@ void GamePlayScene::Update()
 
 void GamePlayScene::Draw()
 {
-	skydome_->Draw(viewProjection_);
-
 	player_->Draw(viewProjection_);
 
-	ImGui::Begin("count");
-	ImGui::Text("count %d", count_);
-	ImGui::End();
+	skydome_->Draw(viewProjection_);
 
+	ground_->Draw(viewProjection_);
+	
 	ImGui::Begin("Camera");
 	ImGui::SliderFloat3("rotation", &viewProjection_.rotation.x, 1.0f, -1.0f);
 	ImGui::SliderFloat3("transform", &viewProjection_.translation.x, 50.0f, -50.0f);
-	ImGui::End();
-
-	ImGui::Begin("Ground");
-	ImGui::SliderFloat3("transform", &worldTransform_[0].rotation.x, 10.0f, -10.0f);
 	ImGui::End();
 
 	engine_->ImGui();
