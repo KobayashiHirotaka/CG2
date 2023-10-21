@@ -27,6 +27,7 @@
     <ClCompile Include="GameEndScene.cpp" />
     <ClCompile Include="GamePlayScene.cpp" />
     <ClCompile Include="GameStartScene.cpp" />
+    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LoadCSV.cpp" />
@@ -73,6 +74,7 @@
     <ClInclude Include="GameEndScene.h" />
     <ClInclude Include="GamePlayScene.h" />
     <ClInclude Include="GameStartScene.h" />
+    <ClInclude Include="Ground.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="Light.h" />

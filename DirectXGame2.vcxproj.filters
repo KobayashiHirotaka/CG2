@@ -109,6 +109,12 @@
     <Filter Include="ヘッダー ファイル\game\player">
       <UniqueIdentifier>{9ecb81f0-00ff-496e-a31b-f13a15ed1e3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\game\ground">
+      <UniqueIdentifier>{c7d64b90-74ae-4d97-a396-87c0eff2dd1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\game\ground">
+      <UniqueIdentifier>{0c4e9d06-0aba-4f0a-9cc6-8023daebab4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -212,6 +218,9 @@
     </ClCompile>
     <ClCompile Include="FollowCamera.cpp">
       <Filter>ソース ファイル\game\followCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>ソース ファイル\game\ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -358,6 +367,9 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ヘッダー ファイル\game\player</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>ヘッダー ファイル\game\ground</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
