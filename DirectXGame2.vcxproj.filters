@@ -97,6 +97,18 @@
     <Filter Include="ヘッダー ファイル\game\skydome">
       <UniqueIdentifier>{b1b9e5ba-b43b-4b2c-acf7-2f8328b6d224}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\game\player">
+      <UniqueIdentifier>{f23e5ba2-05d3-45ef-868a-545eb471b3a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\game\followCamera">
+      <UniqueIdentifier>{e26f7d5b-2255-4491-a978-49319039f0ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\game\followCamera">
+      <UniqueIdentifier>{fd18484b-b91a-4a26-a907-0c5f1016f788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\game\player">
+      <UniqueIdentifier>{9ecb81f0-00ff-496e-a31b-f13a15ed1e3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -196,7 +208,10 @@
       <Filter>ソース ファイル\game\skydome</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\game\player</Filter>
+    </ClCompile>
+    <ClCompile Include="FollowCamera.cpp">
+      <Filter>ソース ファイル\game\followCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -338,8 +353,11 @@
     <ClInclude Include="Skydome.h">
       <Filter>ヘッダー ファイル\game\skydome</Filter>
     </ClInclude>
+    <ClInclude Include="FollowCamera.h">
+      <Filter>ヘッダー ファイル\game\followCamera</Filter>
+    </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\game\player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
