@@ -13,7 +13,7 @@ void FollowCamera::Update()
 	if (target_)
 	{
 		//追従対象からカメラまでのオフセット
-		Vector3 offset = { 0.0f, 2.0f, -10.0f };
+		Vector3 offset = { 0.0f, 2.0f, -25.0f };
 
 		Matrix4x4 cameraRotateMatrix = MakeRotateMatrix(viewProjection_.rotation);
 
@@ -24,11 +24,30 @@ void FollowCamera::Update()
 
 	if (Input::GetInstance()->GetJoystickState(joyState_))
 	{
-		const float kRotateSpeed = 0.02f;
+		const float deadZone = 0.7f;
 
-		viewProjection_.rotation.y += (float)joyState_.Gamepad.sThumbRX / SHRT_MAX * kRotateSpeed;
+		bool isMoving = false;
+
+		Vector3 move = { 0.0f, (float)joyState_.Gamepad.sThumbRX / SHRT_MAX, 0.0f };
+
+		if (Length(move) > deadZone)
+		{
+			isMoving = true;
+		}
+
+		if (isMoving)
+		{
+			const float kRotateSpeed = 0.02f;
+
+			viewProjection_.rotation.y += move.y * kRotateSpeed;
+		}
 	}
 
 	viewProjection_.UpdateViewMatrix();
 	viewProjection_.TransferMatrix();
+
+	ImGui::Begin("camera");
+	ImGui::DragFloat3("trans", &viewProjection_.translation.x, 0.1f);
+	ImGui::DragFloat3("rotate", &viewProjection_.rotation.x, 0.1f);
+	ImGui::End();
 }

@@ -15,6 +15,7 @@
 #include "MyMath.h"
 
 #include "Player.h"
+#include "FollowCamera.h"
 #include "Skydome.h"
 
 #define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定
@@ -46,10 +47,6 @@ private:
 	Audio* audio_ = nullptr;
 
 	DirectXCommon* dxCommon_ = nullptr;
-
-	Model* model_ = nullptr;
-
-	Model* model2_ = nullptr;
 
 	WorldTransform worldTransform_[2];
 
@@ -93,10 +90,14 @@ private:
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Model> playerModel_;
 
+	std::unique_ptr<FollowCamera> followCamera_;
+
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<Model> skydomeModel_;
 
 	int count_ = 0;
 
 	XINPUT_STATE joyState_;
+
+	bool isDebugCameraActive_ = false;
 };

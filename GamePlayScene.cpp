@@ -27,6 +27,8 @@ void GamePlayScene::Initialize()
 
 	audio_->soundDatas[0] = audio_->SoundLoadWave("resource/mokugyo.wav");
 
+	viewProjection_.Initialize();
+
 	playerModel_.reset(Model::CreateModelFromObj("resource/player", "player.obj"));
 
 	//天球
@@ -38,37 +40,33 @@ void GamePlayScene::Initialize()
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(skydomeModel_.get());
 
-	viewProjection_.Initialize();
+	followCamera_ = std::make_unique<FollowCamera>();
+	followCamera_->Initialize();
+
+	followCamera_->SetTarget(&player_->GetWorldTransform());
+
+	player_->SetViewProjection(&followCamera_->GetViewProjection());
 }
 
 void GamePlayScene::Update()
 {
-	camera_->Update();
-
 	player_->Update();
 
 	skydome_->Updata();
 
-#ifdef _DEBUG
-	if (input_->PushKey(DIK_1))
-	{
-		camera_->DebugCamera(true);
-	}
-
-	if (input_->PushKey(DIK_2))
-	{
-		camera_->DebugCamera(false);
-	}
-#endif // _DEBUG
-
 	viewProjection_.UpdateMatrix();
+	
+	followCamera_->Update();
+	viewProjection_.matView = followCamera_->GetViewProjection().matView;
+	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
+	viewProjection_.TransferMatrix();
 }
 
 void GamePlayScene::Draw()
 {
-	player_->Draw(viewProjection_);
-
 	skydome_->Draw(viewProjection_);
+
+	player_->Draw(viewProjection_);
 
 	ImGui::Begin("count");
 	ImGui::Text("count %d", count_);

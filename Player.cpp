@@ -8,7 +8,6 @@ void Player::Initialize(Model* model)
 	worldTransform_.Initialize();
 
 	input_ = Input::GetInstance();
-	worldTransform_.Initialize();
 }
 
 void Player::Update()
@@ -34,15 +33,16 @@ void Player::Update()
 
 			move = Multiply(kPlayerSpeed, Normalize(move));
 
+			Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation);
+
+			move = TransformNormal(move, rotateMatrix);
+
 			worldTransform_.translation = Add(worldTransform_.translation, move);
+			worldTransform_.rotation.y = std::atan2(move.x, move.z);
 		}
 	}
 
 	worldTransform_.UpdateMatrix();
-
-	ImGui::Begin("Player");
-	ImGui::Text("DebugCamera ENTER");
-	ImGui::End();
 }
 
 void Player::Draw(ViewProjection& viewProjection)

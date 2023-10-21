@@ -35,7 +35,7 @@ public:
 	float fovAngleY = 0.45f;
 
 	// ビューポートのアスペクト比
-	float aspectRatio = 1280.0f / 720.0f;
+	float aspectRatio = (float)16 / 9;
 
 	// 深度限界（手前側）
 	float nearZ = 0.1f;
