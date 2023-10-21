@@ -14,6 +14,7 @@
 #include "ViewProjection.h"
 #include "MyMath.h"
 
+#include "Player.h"
 #include "Skydome.h"
 
 #define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定
@@ -88,6 +89,9 @@ private:
 		{ 360.0f,180.0f,0.0f,1.0f },
 		{ 640.0f,360.0f,0.0f,1.0f }
 	};
+
+	std::unique_ptr<Player> player_;
+	std::unique_ptr<Model> playerModel_;
 
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<Model> skydomeModel_;

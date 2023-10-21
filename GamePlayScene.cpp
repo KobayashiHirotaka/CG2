@@ -27,26 +27,25 @@ void GamePlayScene::Initialize()
 
 	audio_->soundDatas[0] = audio_->SoundLoadWave("resource/mokugyo.wav");
 
-	model_ = model_->CreateModelFromObj("resource","plane.obj");
-
-	model2_= model2_->CreateModelFromObj("resource", "plane.obj");
+	playerModel_.reset(Model::CreateModelFromObj("resource/player", "player.obj"));
 
 	//天球
 	skydomeModel_.reset(Model::CreateModelFromObj("resource/skydome", "skydome.obj"));
 
+	player_ = std::make_unique<Player>();
+	player_->Initialize(playerModel_.get());
+
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(skydomeModel_.get());
 
-	/*worldTransform_[0].rotation.x =*/
-
 	viewProjection_.Initialize();
-	worldTransformModel_.Initialize();
-	worldTransform_[0].Initialize();
 }
 
 void GamePlayScene::Update()
 {
 	camera_->Update();
+
+	player_->Update();
 
 	skydome_->Updata();
 
@@ -62,59 +61,12 @@ void GamePlayScene::Update()
 	}
 #endif // _DEBUG
 
-	if (input_->PushKey(DIK_SPACE))
-	{
-		count_ += 1;
-	}
-
-	if (input_->PressKey(DIK_W))
-	{
-		worldTransformModel_.translation.y += 0.05f;
-	}
-
-	if (input_->PressKey(DIK_S))
-	{
-		worldTransformModel_.translation.y -= 0.05f;
-	}
-
-	if (Input::GetInstance()->GetJoystickState(joyState_))
-	{
-		const float deadZone = 0.7f;
-
-		bool isMoving = false;
-
-		Vector3 move = { (float)joyState_.Gamepad.sThumbLX / SHRT_MAX, 0.0f, (float)joyState_.Gamepad.sThumbLY / SHRT_MAX };
-
-		if (Length(move) > deadZone)
-		{
-			isMoving = true;
-		}
-
-		if (isMoving)
-		{
-			const float kPlayerSpeed = 0.2f;
-
-			move = Multiply(kPlayerSpeed, Normalize(move));
-
-			worldTransform_[0].translation = Add(worldTransform_[0].translation, move);
-		}
-	}
-
-	if (input_->PressKey(DIK_D))
-	{
-		worldTransformModel_.translation.x += 0.05f;
-	}
-
 	viewProjection_.UpdateMatrix();
-	worldTransformModel_.UpdateMatrix();
-	worldTransform_[0].UpdateMatrix();
 }
 
 void GamePlayScene::Draw()
 {
-	model_->Draw(worldTransformModel_, viewProjection_);
-
-	model2_->Draw(worldTransform_[0], viewProjection_);
+	player_->Draw(viewProjection_);
 
 	skydome_->Draw(viewProjection_);
 
