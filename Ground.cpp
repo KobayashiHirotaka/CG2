@@ -4,8 +4,8 @@
 void Ground::Initialize(Model* model, Vector3 position)
 {
 	assert(model);
-	worldTransform_.Initialize();
 	model_ = model;
+	worldTransform_.Initialize();
 	worldTransform_.translation = position;
 }
 

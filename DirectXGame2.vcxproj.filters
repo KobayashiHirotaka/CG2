@@ -127,6 +127,12 @@
     <Filter Include="ソース ファイル\game\ground\manager">
       <UniqueIdentifier>{6aca8375-59b4-434d-b5ad-0ee8700f8116}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\game\goal">
+      <UniqueIdentifier>{92c25b4f-7584-48da-9dd9-5feb18653d79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\game\goal">
+      <UniqueIdentifier>{9434a3c2-44c1-43d8-ba02-2d0f2c3c309a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -239,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="MoveGround.cpp">
       <Filter>ソース ファイル\game\ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Goal.cpp">
+      <Filter>ソース ファイル\game\goal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -394,6 +403,9 @@
     </ClInclude>
     <ClInclude Include="MoveGround.h">
       <Filter>ヘッダー ファイル\game\ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Goal.h">
+      <Filter>ヘッダー ファイル\game\goal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

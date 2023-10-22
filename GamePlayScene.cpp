@@ -31,10 +31,17 @@ void GamePlayScene::Initialize()
 
 	playerModel_.reset(Model::CreateModelFromObj("resource/player", "player.obj"));
 
+	goalModel_.reset(Model::CreateModelFromObj("resource/player", "player.obj"));
+
 	skydomeModel_.reset(Model::CreateModelFromObj("resource/skydome", "skydome.obj"));
+
+	collisionManager_ = std::make_unique<CollisionManager>();
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize(playerModel_.get());
+
+	goal_ = std::make_unique<Goal>();
+	goal_->Initialize(goalModel_.get());
 
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(skydomeModel_.get());
@@ -45,7 +52,7 @@ void GamePlayScene::Initialize()
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
 
-	followCamera_->SetTarget(&player_->GetWorldTransform());
+	followCamera_->SetTarget(&player_->GetPlayerWorldTransform());
 
 	player_->SetViewProjection(&followCamera_->GetViewProjection());
 }
@@ -53,6 +60,8 @@ void GamePlayScene::Initialize()
 void GamePlayScene::Update()
 {
 	player_->Update();
+
+	goal_->Update();
 
 	skydome_->Updata();
 
@@ -64,11 +73,19 @@ void GamePlayScene::Update()
 	viewProjection_.matView = followCamera_->GetViewProjection().matView;
 	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
 	viewProjection_.TransferMatrix();
+
+	collisionManager_->ClearColliders();
+	collisionManager_->AddCollider(player_.get());
+	collisionManager_->AddCollider(goal_.get());
+
+	collisionManager_->CheckAllCollision();
 }
 
 void GamePlayScene::Draw()
 {
 	player_->Draw(viewProjection_);
+
+	goal_->Draw(viewProjection_);
 
 	skydome_->Draw(viewProjection_);
 

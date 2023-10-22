@@ -2,8 +2,6 @@
 
 void CollisionManager::CheckAllCollision() 
 {
-
-
 	std::list<Collider*>::iterator itrA = colliders_.begin();
 	for (; itrA != colliders_.end(); ++itrA)
 	{
@@ -26,8 +24,8 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 		return;
 	}
 
-	Vector3 posA = colliderA->GetWorldPos();
-	Vector3 posB = colliderB->GetWorldPos();
+	Vector3 posA = colliderA->GetWorldTransform().GetWorldPos();
+	Vector3 posB = colliderB->GetWorldTransform().GetWorldPos();
 
 	float radA = colliderA->Getradius();
 	float radB = colliderB->Getradius();

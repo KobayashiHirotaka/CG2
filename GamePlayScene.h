@@ -13,8 +13,10 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "MyMath.h"
+#include "CollisionManager.h"
 
 #include "Player.h"
+#include "Goal.h"
 #include "FollowCamera.h"
 #include "GroundManager.h"
 #include "Skydome.h"
@@ -53,13 +55,15 @@ private:
 
 	uint32_t sound_;
 
+	std::unique_ptr<CollisionManager> collisionManager_;
+
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Model> playerModel_;
 
 	std::unique_ptr<FollowCamera> followCamera_;
 
-	/*std::unique_ptr<Ground> ground_;
-	std::unique_ptr<Model> groundModel_;*/
+	std::unique_ptr<Goal> goal_;
+	std::unique_ptr<Model> goalModel_;
 
 	std::unique_ptr<GroundManager> groundManager_;
 

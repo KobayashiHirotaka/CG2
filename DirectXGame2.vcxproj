@@ -27,6 +27,7 @@
     <ClCompile Include="GameEndScene.cpp" />
     <ClCompile Include="GamePlayScene.cpp" />
     <ClCompile Include="GameStartScene.cpp" />
+    <ClCompile Include="Goal.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="GroundManager.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -76,6 +77,7 @@
     <ClInclude Include="GameEndScene.h" />
     <ClInclude Include="GamePlayScene.h" />
     <ClInclude Include="GameStartScene.h" />
+    <ClInclude Include="Goal.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="GroundManager.h" />
     <ClInclude Include="Input.h" />
