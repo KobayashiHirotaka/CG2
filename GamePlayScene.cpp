@@ -77,7 +77,6 @@ void GamePlayScene::Update()
 	collisionManager_->ClearColliders();
 	collisionManager_->AddCollider(player_.get());
 	collisionManager_->AddCollider(goal_.get());
-
 	collisionManager_->CheckAllCollision();
 }
 
