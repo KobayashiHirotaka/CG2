@@ -37,7 +37,7 @@ void SceneManager::Initialize()
 	state[PLAY] = std::make_unique<GamePlayScene>();
 	state[PLAY]->Initialize();
 
-	IScene::sceneNum = START;
+	IScene::sceneNum = PLAY;
 }
 
 void SceneManager::Update()

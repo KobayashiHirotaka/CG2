@@ -1,12 +1,12 @@
 #include "Ground.h"
 #include <cassert>
 
-void Ground::Initialize(Model* model)
+void Ground::Initialize(Model* model, Vector3 position)
 {
 	assert(model);
-	model_ = model;
 	worldTransform_.Initialize();
-	worldTransform_.scale = { 5.0f, 5.0f, 5.0f };
+	model_ = model;
+	worldTransform_.translation = position;
 }
 
 void Ground::Update()

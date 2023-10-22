@@ -33,16 +33,14 @@ void GamePlayScene::Initialize()
 
 	skydomeModel_.reset(Model::CreateModelFromObj("resource/skydome", "skydome.obj"));
 
-	groundModel_.reset(Model::CreateModelFromObj("resource/ground", "ground.obj"));
-
 	player_ = std::make_unique<Player>();
 	player_->Initialize(playerModel_.get());
 
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(skydomeModel_.get());
 
-	ground_ = std::make_unique<Ground>();
-	ground_->Initialize(groundModel_.get());
+	groundManager_ = std::make_unique<GroundManager>();
+	groundManager_->Initialize();
 
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
@@ -58,7 +56,7 @@ void GamePlayScene::Update()
 
 	skydome_->Updata();
 
-	ground_->Update();
+	groundManager_->Update();
 
 	viewProjection_.UpdateMatrix();
 	
@@ -74,7 +72,7 @@ void GamePlayScene::Draw()
 
 	skydome_->Draw(viewProjection_);
 
-	ground_->Draw(viewProjection_);
+	groundManager_->Draw(viewProjection_);
 	
 	ImGui::Begin("Camera");
 	ImGui::SliderFloat3("rotation", &viewProjection_.rotation.x, 1.0f, -1.0f);

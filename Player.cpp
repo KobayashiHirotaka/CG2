@@ -7,7 +7,8 @@ void Player::Initialize(Model* model)
 	model_ = model;
 	worldTransform_.Initialize();
 
-	worldTransform_.translation.y = 1.0f;
+
+	worldTransform_.translation = { -12.0f,1.0f,-50.0f };
 
 	input_ = Input::GetInstance();
 }
@@ -45,6 +46,10 @@ void Player::Update()
 	}
 
 	worldTransform_.UpdateMatrix();
+
+	ImGui::Begin("Player");
+	ImGui::SliderFloat3("translation", &worldTransform_.translation.x, -3.0f, 10.0f, "%.3f");
+	ImGui::End();
 }
 
 void Player::Draw(ViewProjection& viewProjection)

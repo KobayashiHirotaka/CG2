@@ -3,7 +3,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 
-class Ground
+class MoveGround
 {
 public:
 	void Initialize(Model* model, Vector3 position);
@@ -18,5 +18,7 @@ private:
 	WorldTransform worldTransform_;
 
 	Model* model_ = nullptr;
+
+	Vector3 move_;
 };
 

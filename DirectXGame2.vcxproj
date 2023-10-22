@@ -28,11 +28,13 @@
     <ClCompile Include="GamePlayScene.cpp" />
     <ClCompile Include="GameStartScene.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="GroundManager.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LoadCSV.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="MoveGround.cpp" />
     <ClCompile Include="MyEngine.cpp" />
     <ClCompile Include="MyImGui.cpp" />
     <ClCompile Include="MyMath.cpp" />
@@ -75,6 +77,7 @@
     <ClInclude Include="GamePlayScene.h" />
     <ClInclude Include="GameStartScene.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="GroundManager.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="Light.h" />
@@ -83,6 +86,7 @@
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelData.h" />
+    <ClInclude Include="MoveGround.h" />
     <ClInclude Include="MyEngine.h" />
     <ClInclude Include="MyImGui.h" />
     <ClInclude Include="MyMath.h" />

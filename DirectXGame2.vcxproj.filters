@@ -121,6 +121,12 @@
     <Filter Include="ヘッダー ファイル\Engine\Utility">
       <UniqueIdentifier>{753fee5b-e7a1-48d0-ab9b-30468d2c506a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\game\ground\manager">
+      <UniqueIdentifier>{71de38a4-274e-4921-bb64-570dd927dc9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\game\ground\manager">
+      <UniqueIdentifier>{6aca8375-59b4-434d-b5ad-0ee8700f8116}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -227,6 +233,12 @@
     </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>ソース ファイル\Engine\base\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundManager.cpp">
+      <Filter>ソース ファイル\game\ground\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveGround.cpp">
+      <Filter>ソース ファイル\game\ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -376,6 +388,12 @@
     </ClInclude>
     <ClInclude Include="VertexData.h">
       <Filter>ヘッダー ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundManager.h">
+      <Filter>ヘッダー ファイル\game\ground\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveGround.h">
+      <Filter>ヘッダー ファイル\game\ground</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

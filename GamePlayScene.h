@@ -16,7 +16,7 @@
 
 #include "Player.h"
 #include "FollowCamera.h"
-#include "Ground.h"
+#include "GroundManager.h"
 #include "Skydome.h"
 
 #define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定
@@ -58,8 +58,10 @@ private:
 
 	std::unique_ptr<FollowCamera> followCamera_;
 
-	std::unique_ptr<Ground> ground_;
-	std::unique_ptr<Model> groundModel_;
+	/*std::unique_ptr<Ground> ground_;
+	std::unique_ptr<Model> groundModel_;*/
+
+	std::unique_ptr<GroundManager> groundManager_;
 
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<Model> skydomeModel_;

@@ -1,6 +1,6 @@
 # Blender v3.5.0 OBJ File: 'ground.blend'
 # www.blender.org
-mtllib ground.mtl
+mtllib moveGround.mtl
 o 平面
 v -29.878277 0.000000 49.765305
 v -0.175888 0.000000 49.765305
