@@ -18,7 +18,8 @@
 #include "Player.h"
 #include "Goal.h"
 #include "FollowCamera.h"
-#include "GroundManager.h"
+#include "Ground.h"
+#include "MoveGround.h"
 #include "Skydome.h"
 
 #define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定
@@ -65,7 +66,9 @@ private:
 	std::unique_ptr<Goal> goal_;
 	std::unique_ptr<Model> goalModel_;
 
-	std::unique_ptr<GroundManager> groundManager_;
+	std::unique_ptr<Ground> ground_[2];
+	std::unique_ptr<MoveGround> moveGround_;
+	std::unique_ptr<Model> groundModel_;
 
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<Model> skydomeModel_;

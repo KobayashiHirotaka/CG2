@@ -6,7 +6,7 @@ void Player::Initialize(Model* model)
 	assert(model);
 	model_ = model;
 	worldTransform_.Initialize();
-	worldTransform_.translation = { -13.0f,1.0f,-50.0f };
+	worldTransform_.translation = { -13.0f,1.0f,-60.0f };
 
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributePlayer);
 	SetCollisionMask(~CollisionConfig::kCollisionAttributePlayer);

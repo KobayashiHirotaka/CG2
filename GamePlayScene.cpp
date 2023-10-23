@@ -33,6 +33,8 @@ void GamePlayScene::Initialize()
 
 	goalModel_.reset(Model::CreateModelFromObj("resource/player", "player.obj"));
 
+	groundModel_.reset(Model::CreateModelFromObj("resource/ground", "ground.obj"));
+
 	skydomeModel_.reset(Model::CreateModelFromObj("resource/skydome", "skydome.obj"));
 
 	collisionManager_ = std::make_unique<CollisionManager>();
@@ -46,8 +48,18 @@ void GamePlayScene::Initialize()
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(skydomeModel_.get());
 
-	groundManager_ = std::make_unique<GroundManager>();
-	groundManager_->Initialize();
+
+	for (int i = 0; i < 2; i++)
+	{
+		ground_[i] = std::make_unique<Ground>();
+	}
+
+	ground_[0]->Initialize(groundModel_.get(), { 0.0f,0.0f,-28.0f });
+	ground_[1]->Initialize(groundModel_.get(), { 0.0f,0.0f,48.0f });
+
+	moveGround_ = std::make_unique<MoveGround>();
+
+	moveGround_->Initialize(groundModel_.get(), { 0.0f,0.0f,10.0f });
 
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
@@ -65,7 +77,12 @@ void GamePlayScene::Update()
 
 	skydome_->Updata();
 
-	groundManager_->Update();
+	for (int i = 0; i < 2; i++)
+	{
+		ground_[i]->Update();
+	}
+
+	moveGround_->Update();
 
 	viewProjection_.UpdateMatrix();
 	
@@ -76,6 +93,14 @@ void GamePlayScene::Update()
 
 	collisionManager_->ClearColliders();
 	collisionManager_->AddCollider(player_.get());
+
+	for (int i = 0; i < 2; i++)
+	{
+		collisionManager_->AddCollider(ground_[i].get());
+	}
+
+	collisionManager_->AddCollider(moveGround_.get());
+
 	collisionManager_->AddCollider(goal_.get());
 	collisionManager_->CheckAllCollision();
 }
@@ -88,8 +113,13 @@ void GamePlayScene::Draw()
 
 	skydome_->Draw(viewProjection_);
 
-	groundManager_->Draw(viewProjection_);
-	
+	for (int i = 0; i < 2; i++)
+	{
+		ground_[i]->Draw(viewProjection_);
+	}
+
+	moveGround_->Draw(viewProjection_);
+
 	ImGui::Begin("Camera");
 	ImGui::SliderFloat3("rotation", &viewProjection_.rotation.x, 1.0f, -1.0f);
 	ImGui::SliderFloat3("transform", &viewProjection_.translation.x, 50.0f, -50.0f);
