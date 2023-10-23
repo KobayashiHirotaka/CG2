@@ -14,9 +14,11 @@ public:
 
 	void Draw(ViewProjection& viewProjection);
 
-	WorldTransform GetWorldTransform()override { return worldTransform_; }
+	WorldTransform& GetWorldTransform()override { return worldTransform_; }
 
-	void OnCollision()override;
+	Vector3 GetWorldPosition() override;
+
+	void OnCollision(Collider* collider)override;
 
 private:
 	WorldTransform worldTransform_;

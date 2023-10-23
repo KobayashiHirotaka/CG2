@@ -58,8 +58,17 @@ void Player::Draw(ViewProjection& viewProjection)
 	model_->Draw(worldTransform_, viewProjection);
 }
 
-void Player::OnCollision()
+void Player::OnCollision(Collider* collider)
 {
 
+}
+
+Vector3 Player::GetWorldPosition()
+{
+	Vector3 pos{};
+	pos.x = worldTransform_.matWorld.m[3][0];
+	pos.y = worldTransform_.matWorld.m[3][1];
+	pos.z = worldTransform_.matWorld.m[3][2];
+	return pos;
 }
 

@@ -17,13 +17,13 @@ public:
 
 	void Draw(ViewProjection& viewProjection);
 
-	WorldTransform GetWorldTransform()override { return worldTransform_; }
+	WorldTransform& GetWorldTransform()override { return worldTransform_; }
 
-	const WorldTransform& GetPlayerWorldTransform() { return worldTransform_; }
+	Vector3 GetWorldPosition() override;
 
 	void SetViewProjection(const ViewProjection* viewProjection) { viewProjection_ = viewProjection; }
 
-	void OnCollision()override;
+	void OnCollision(Collider* collider)override;
 
 private:
 

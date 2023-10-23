@@ -12,10 +12,11 @@ private:
 
 public:
 	float Getradius() const { return radius_; }
-	void SetRadius(float rad) { radius_ = rad; }
+	void SetRadius(float radius) { radius_ = radius; }
 	virtual ~Collider() {}
-	virtual void OnCollision() = 0;
-	virtual WorldTransform GetWorldTransform() = 0;
+	virtual void OnCollision(Collider* collider) = 0;
+	virtual Vector3 GetWorldPosition() = 0;
+	virtual WorldTransform& GetWorldTransform() = 0;
 	uint32_t GetCollisionAttribute() const { return collisionAttribute_; }
 	void SetCollisionAttribute(uint32_t attribute) { collisionAttribute_ = attribute; }
 	uint32_t GetCollisionMask() const { return CollisionMask_; }

@@ -6,8 +6,8 @@ void Goal::Initialize(Model* model)
 	model_ = model;
 	worldTransform_.Initialize();
 	worldTransform_.translation = { -13.0f,1.0f,18.0f };
-	SetCollisionAttribute(CollisionConfig::kCollisionAttributeEnemy);
-	SetCollisionMask(~CollisionConfig::kCollisionAttributeEnemy);
+	SetCollisionAttribute(CollisionConfig::kCollisionAttributeGoal);
+	SetCollisionMask(~CollisionConfig::kCollisionAttributeGoal);
 }
 
 void Goal::Update()
@@ -20,9 +20,18 @@ void Goal::Draw(ViewProjection& viewProjection)
 	model_->Draw(worldTransform_, viewProjection);
 }
 
-void Goal::OnCollision()
+void Goal::OnCollision(Collider* collider)
 {
 	ImGui::Begin("Goal");
 	ImGui::Text("Clear!");
 	ImGui::End();
+}
+
+Vector3 Goal::GetWorldPosition()
+{
+	Vector3 pos{};
+	pos.x = worldTransform_.matWorld.m[3][0];
+	pos.y = worldTransform_.matWorld.m[3][1];
+	pos.z = worldTransform_.matWorld.m[3][2];
+	return pos;
 }
