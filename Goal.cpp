@@ -6,8 +6,9 @@ void Goal::Initialize(Model* model)
 	model_ = model;
 	worldTransform_.Initialize();
 	worldTransform_.translation = { -13.0f,1.0f,18.0f };
-	SetCollisionAttribute(CollisionConfig::kCollisionAttributeGoal);
-	SetCollisionMask(~CollisionConfig::kCollisionAttributeGoal);
+	SetCollisionAttribute(kCollisionAttributeGoal);
+	SetCollisionMask(kCollisionMaskGoal);
+	SetCollisionPrimitive(kCollisionPrimitiveAABB);
 }
 
 void Goal::Update()

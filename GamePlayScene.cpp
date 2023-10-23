@@ -41,6 +41,7 @@ void GamePlayScene::Initialize()
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize(playerModel_.get());
+	player_->SetViewProjection(&viewProjection_);
 
 	goal_ = std::make_unique<Goal>();
 	goal_->Initialize(goalModel_.get());
@@ -65,8 +66,6 @@ void GamePlayScene::Initialize()
 	followCamera_->Initialize();
 
 	followCamera_->SetTarget(&player_->GetWorldTransform());
-
-	player_->SetViewProjection(&followCamera_->GetViewProjection());
 }
 
 void GamePlayScene::Update()
@@ -87,9 +86,7 @@ void GamePlayScene::Update()
 	viewProjection_.UpdateMatrix();
 	
 	followCamera_->Update();
-	viewProjection_.matView = followCamera_->GetViewProjection().matView;
-	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
-	viewProjection_.TransferMatrix();
+	viewProjection_ = followCamera_->GetViewProjection();
 
 	collisionManager_->ClearColliders();
 	collisionManager_->AddCollider(player_.get());

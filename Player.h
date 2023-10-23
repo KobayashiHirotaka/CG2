@@ -25,6 +25,8 @@ public:
 
 	void OnCollision(Collider* collider)override;
 
+	void SetParent(const WorldTransform* parent) { parent_ = parent; };
+
 private:
 
 	WorldTransform worldTransform_;
@@ -35,5 +37,10 @@ private:
 	Input* input_ = nullptr;
 
 	XINPUT_STATE joyState_;
+
+	const WorldTransform* parent_ = nullptr;
+
+	bool isHit_ = false;
+	bool preIsHit_ = false;
 };
 

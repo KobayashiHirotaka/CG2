@@ -6,17 +6,24 @@ void Player::Initialize(Model* model)
 	assert(model);
 	model_ = model;
 	worldTransform_.Initialize();
-	worldTransform_.translation = { -13.0f,1.0f,-60.0f };
+	worldTransform_.translation = { -13.0f,0.0f,-60.0f };
 
-	SetCollisionAttribute(CollisionConfig::kCollisionAttributePlayer);
-	SetCollisionMask(~CollisionConfig::kCollisionAttributePlayer);
+	SetCollisionAttribute(kCollisionAttributePlayer);
+	SetCollisionMask(kCollisionMaskPlayer);
+	SetCollisionPrimitive(kCollisionPrimitiveAABB);
 
 	input_ = Input::GetInstance();
 }
 
 void Player::Update()
 {
-	worldTransform_.TransferMatrix();
+	if (preIsHit_ == false && isHit_ == true) {
+		worldTransform_.SetParent(parent_);
+	}
+
+	if (preIsHit_ == true && isHit_ == false) {
+		worldTransform_.UnsetParent();
+	}
 
 	if (Input::GetInstance()->GetJoystickState(joyState_))
 	{
@@ -46,7 +53,21 @@ void Player::Update()
 		}
 	}
 
+	if (isHit_ == false) {
+		/*worldTransform_.translation.y -= 0.1f;*/
+	}
+	else {
+		worldTransform_.translation.y = 0.0f;
+	}
+
+	if (worldTransform_.translation.y <= -4.0f) {
+		worldTransform_.translation = { -13.0f,5.0f,-60.0f };
+	}
+
 	worldTransform_.UpdateMatrix();
+
+	preIsHit_ = isHit_;
+	isHit_ = false;
 
 	ImGui::Begin("Player");
 	ImGui::SliderFloat3("translation", &worldTransform_.translation.x, -3.0f, 10.0f, "%.3f");
@@ -60,7 +81,9 @@ void Player::Draw(ViewProjection& viewProjection)
 
 void Player::OnCollision(Collider* collider)
 {
+	isHit_ = true;
 
+	parent_ = &collider->GetWorldTransform();
 }
 
 Vector3 Player::GetWorldPosition()

@@ -10,13 +10,20 @@ void MoveGround::Initialize(Model* model, const Vector3& position)
 
 	move_ = { 0.0f,0.0f,0.05f };
 
-	SetCollisionAttribute(CollisionConfig::kCollisionAttributeGround);
-	SetCollisionMask(~CollisionConfig::kCollisionAttributeGround);
+	SetCollisionAttribute(kCollisionAttributeGround);
+	SetCollisionMask(kCollisionMaskGround);
+	SetCollisionPrimitive(kCollisionPrimitiveAABB);
+
+	AABB aabbSize = {
+		{-10.0f,-10.0f,-10.0f},
+		{10.0f,10.0f,10.0f},
+	};
+	SetAABB(aabbSize);
 }
 
 void MoveGround::Update()
 {
-	worldTransform_.translation = Add(worldTransform_.translation, move_);
+	/*worldTransform_.translation = Add(worldTransform_.translation, move_);
 
 	if (worldTransform_.translation.z >= 20.0f)
 	{
@@ -26,7 +33,7 @@ void MoveGround::Update()
 	if (worldTransform_.translation.z <= 0.0f)
 	{
 		move_ = { 0.0f,0.0f,0.05f };
-	}
+	}*/
 
 	worldTransform_.UpdateMatrix();
 }
@@ -38,7 +45,8 @@ void MoveGround::Draw(ViewProjection& viewProjection)
 
 void MoveGround::OnCollision(Collider* collider)
 {
-
+	ImGui::Begin("MoveGround");
+	ImGui::End();
 }
 
 Vector3 MoveGround::GetWorldPosition()

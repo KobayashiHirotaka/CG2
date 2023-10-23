@@ -9,8 +9,15 @@ void Ground::Initialize(Model* model, const Vector3& position)
 
 	worldTransform_.Initialize();
 
-	SetCollisionAttribute(CollisionConfig::kCollisionAttributeGround);
-	SetCollisionMask(~CollisionConfig::kCollisionAttributeGround);
+	SetCollisionAttribute(kCollisionAttributeGround);
+	SetCollisionMask(kCollisionMaskGround);
+	SetCollisionPrimitive(kCollisionPrimitiveAABB);
+
+	AABB aabbSize = {
+		{-10.0f,-10.0f,-10.0f},
+		{10.0f,10.0f,10.0f},
+	};
+	SetAABB(aabbSize);
 }
 
 void Ground::Update()
@@ -25,7 +32,8 @@ void Ground::Draw(ViewProjection& viewProjection)
 
 void Ground::OnCollision(Collider* collider) 
 {
-
+	ImGui::Begin("Ground");
+	ImGui::End();
 }
 
 Vector3 Ground::GetWorldPosition()
