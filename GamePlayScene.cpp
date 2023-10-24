@@ -31,7 +31,7 @@ void GamePlayScene::Initialize()
 
 	playerModel_.reset(Model::CreateModelFromObj("resource/player", "player.obj"));
 
-	goalModel_.reset(Model::CreateModelFromObj("resource/player", "player.obj"));
+	goalModel_.reset(Model::CreateModelFromObj("resource/goal", "goal.obj"));
 
 	groundModel_.reset(Model::CreateModelFromObj("resource/ground", "ground.obj"));
 

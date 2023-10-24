@@ -26,5 +26,7 @@ private:
 	Model* model_ = nullptr;
 
 	Vector3 move_;
+
+	int stopTimer_;
 };
 
