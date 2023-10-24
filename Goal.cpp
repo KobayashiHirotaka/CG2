@@ -5,7 +5,8 @@ void Goal::Initialize(Model* model)
 	assert(model);
 	model_ = model;
 	worldTransform_.Initialize();
-	worldTransform_.translation = { 0.0f,1.0f,45.0f };
+	worldTransform_.translation = { 0.0f,1.2f,55.0f };
+
 	SetCollisionAttribute(kCollisionAttributeGoal);
 	SetCollisionMask(kCollisionMaskGoal);
 	SetCollisionPrimitive(kCollisionPrimitiveSphere);
@@ -23,8 +24,9 @@ void Goal::Draw(ViewProjection& viewProjection)
 
 void Goal::OnCollision(Collider* collider)
 {
+	isHit_ = true;
 	ImGui::Begin("Goal");
-	/*ImGui::Text("Clear!");*/
+	ImGui::Text("Clear");
 	ImGui::End();
 }
 

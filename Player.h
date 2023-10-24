@@ -10,7 +10,6 @@
 class Player : public Collider
 {
 public:
-
 	void Initialize(Model* model);
 
 	void Update();
@@ -30,6 +29,8 @@ public:
 private:
 
 	WorldTransform worldTransform_;
+	const WorldTransform* parent_ = nullptr;
+
 	const ViewProjection* viewProjection_ = nullptr;
 
 	Model* model_ = nullptr;
@@ -37,8 +38,6 @@ private:
 	Input* input_ = nullptr;
 
 	XINPUT_STATE joyState_;
-
-	const WorldTransform* parent_ = nullptr;
 
 	bool isHit_ = false;
 	bool preIsHit_ = false;

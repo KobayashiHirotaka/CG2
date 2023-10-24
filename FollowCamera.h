@@ -19,11 +19,12 @@ public:
 
 private:
 	WorldTransform worldTransform_;
-	ViewProjection viewProjection_;
-
 	const WorldTransform* target_ = nullptr;
 
+	ViewProjection viewProjection_;
+
 	Input* input_ = nullptr;
+
 	XINPUT_STATE joyState_;
 };
 

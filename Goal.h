@@ -20,9 +20,13 @@ public:
 
 	void OnCollision(Collider* collider)override;
 
+	bool GetIsHit() { return isHit_; }
+
 private:
 	WorldTransform worldTransform_;
 
 	Model* model_ = nullptr;
+
+	bool isHit_ = false;
 };
 

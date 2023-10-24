@@ -7,8 +7,7 @@ GamePlayScene::GamePlayScene()
 
 GamePlayScene::~GamePlayScene()
 {
-	audio_->xAudio2.Reset();
-	audio_->SoundUnload(&audio_->soundDatas[0]);
+
 }
 
 void GamePlayScene::Initialize()
@@ -24,8 +23,6 @@ void GamePlayScene::Initialize()
 	textureManager_ = TextureManager::GetInstance();
 
 	light_ = Light::GetInstance();
-
-	audio_->soundDatas[0] = audio_->SoundLoadWave("resource/mokugyo.wav");
 
 	viewProjection_.Initialize();
 
@@ -70,6 +67,11 @@ void GamePlayScene::Initialize()
 
 void GamePlayScene::Update()
 {
+	if (goal_->GetIsHit() == true)
+	{
+		Initialize();
+	}
+
 	player_->Update();
 
 	goal_->Update();

@@ -6,7 +6,7 @@ void Player::Initialize(Model* model)
 	assert(model);
 	model_ = model;
 	worldTransform_.Initialize();
-	worldTransform_.translation = { 0.0f,1.0f,-30.0f };
+	worldTransform_.translation = { 0.0f,1.5f,-30.0f };
 
 	SetCollisionAttribute(kCollisionAttributePlayer);
 	SetCollisionMask(kCollisionMaskPlayer);
@@ -17,11 +17,13 @@ void Player::Initialize(Model* model)
 
 void Player::Update()
 {
-	if (preIsHit_ == false && isHit_ == true) {
+	if (preIsHit_ == false && isHit_ == true) 
+	{
 		worldTransform_.SetParent(parent_);
 	}
 
-	if (preIsHit_ == true && isHit_ == false) {
+	if (preIsHit_ == true && isHit_ == false) 
+	{
 		worldTransform_.DeleteParent();
 	}
 
@@ -53,15 +55,17 @@ void Player::Update()
 		}
 	}
 
-	if (isHit_ == false) {
+	if (isHit_ == false)
+	{
 		worldTransform_.translation.y -= 0.1f;
-	}
-	else {
+
+	} else {
 		worldTransform_.translation.y = 1.0f;
 	}
 
-	if (worldTransform_.translation.y <= -4.0f) {
-		worldTransform_.translation = { 0.0f,5.0f,-30.0f };
+	if (worldTransform_.translation.y <= -4.0f)
+	{
+		worldTransform_.translation = { 0.0f,1.5f,-30.0f };
 	}
 
 	worldTransform_.UpdateMatrix();
@@ -82,7 +86,6 @@ void Player::Draw(ViewProjection& viewProjection)
 void Player::OnCollision(Collider* collider)
 {
 	isHit_ = true;
-
 	parent_ = &collider->GetWorldTransform();
 }
 

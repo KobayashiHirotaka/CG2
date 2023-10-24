@@ -2,9 +2,9 @@
 
 void FollowCamera::Initialize()
 {
-	viewProjection_.Initialize();
-
 	input_ = Input::GetInstance();
+
+	viewProjection_.Initialize();
 }
 
 void FollowCamera::Update()
