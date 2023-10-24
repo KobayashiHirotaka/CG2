@@ -5,7 +5,7 @@ void Goal::Initialize(Model* model)
 	assert(model);
 	model_ = model;
 	worldTransform_.Initialize();
-	worldTransform_.translation = { 0.0f,1.2f,55.0f };
+	worldTransform_.translation = { 0.0f,1.1f,55.0f };
 
 	SetCollisionAttribute(kCollisionAttributeGoal);
 	SetCollisionMask(kCollisionMaskGoal);

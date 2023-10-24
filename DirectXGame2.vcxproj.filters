@@ -127,6 +127,12 @@
     <Filter Include="ソース ファイル\game\goal">
       <UniqueIdentifier>{9434a3c2-44c1-43d8-ba02-2d0f2c3c309a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\game\enemy">
+      <UniqueIdentifier>{bf739d31-74b0-4ee1-b8ee-102dc6365a7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\game\enemy">
+      <UniqueIdentifier>{839f5254-9ce2-45bf-b184-c26a3317d67f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -239,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="Goal.cpp">
       <Filter>ソース ファイル\game\goal</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>ソース ファイル\game\enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -394,6 +403,9 @@
     </ClInclude>
     <ClInclude Include="Goal.h">
       <Filter>ヘッダー ファイル\game\goal</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>ヘッダー ファイル\game\enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

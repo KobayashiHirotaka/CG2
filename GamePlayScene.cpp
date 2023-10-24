@@ -28,6 +28,8 @@ void GamePlayScene::Initialize()
 
 	playerModel_.reset(Model::CreateModelFromObj("resource/player", "player.obj"));
 
+	enemyModel_.reset(Model::CreateModelFromObj("resource/goal", "goal.obj"));
+
 	goalModel_.reset(Model::CreateModelFromObj("resource/goal", "goal.obj"));
 
 	groundModel_.reset(Model::CreateModelFromObj("resource/ground", "ground.obj"));
@@ -39,6 +41,9 @@ void GamePlayScene::Initialize()
 	player_ = std::make_unique<Player>();
 	player_->Initialize(playerModel_.get());
 	player_->SetViewProjection(&viewProjection_);
+
+	enemy_ = std::make_unique<Enemy>();
+	enemy_->Initialize(goalModel_.get());
 
 	goal_ = std::make_unique<Goal>();
 	goal_->Initialize(goalModel_.get());
@@ -67,12 +72,14 @@ void GamePlayScene::Initialize()
 
 void GamePlayScene::Update()
 {
-	if (goal_->GetIsHit() == true)
+	if (goal_->GetIsHit() == true || enemy_->GetIsHit() == true)
 	{
 		Initialize();
 	}
 
 	player_->Update();
+
+	enemy_->Update();
 
 	goal_->Update();
 
@@ -92,6 +99,7 @@ void GamePlayScene::Update()
 
 	collisionManager_->ClearColliders();
 	collisionManager_->AddCollider(player_.get());
+	collisionManager_->AddCollider(enemy_.get());
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -99,7 +107,6 @@ void GamePlayScene::Update()
 	}
 
 	collisionManager_->AddCollider(moveGround_.get());
-
 	collisionManager_->AddCollider(goal_.get());
 	collisionManager_->CheckAllCollision();
 }
@@ -107,6 +114,8 @@ void GamePlayScene::Update()
 void GamePlayScene::Draw()
 {
 	player_->Draw(viewProjection_);
+
+	enemy_->Draw(viewProjection_);
 
 	goal_->Draw(viewProjection_);
 
