@@ -56,6 +56,8 @@ public:
 
 	void SetParent(const WorldTransform* parent);
 
-	void UnsetParent();
+	void DeleteParent();
+
+	Vector3 GetWorldPosition();
 };
 

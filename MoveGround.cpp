@@ -8,7 +8,7 @@ void MoveGround::Initialize(Model* model, const Vector3& position)
 	worldTransform_.translation = position;
 	worldTransform_.Initialize();
 
-	move_ = { 0.0f,0.0f,0.05f };
+	move_ = { 0.0f,0.0f,-0.05f };
 
 	SetCollisionAttribute(kCollisionAttributeGround);
 	SetCollisionMask(kCollisionMaskGround);
@@ -23,9 +23,9 @@ void MoveGround::Initialize(Model* model, const Vector3& position)
 
 void MoveGround::Update()
 {
-	/*worldTransform_.translation = Add(worldTransform_.translation, move_);
+	worldTransform_.translation = Add(worldTransform_.translation, move_);
 
-	if (worldTransform_.translation.z >= 20.0f)
+	/*if (worldTransform_.translation.z >= 20.0f)
 	{
 		move_ = { 0.0f,0.0f,-0.05f };
 	}

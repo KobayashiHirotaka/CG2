@@ -42,7 +42,7 @@ void WorldTransform::SetParent(const WorldTransform* parent)
 	translation = Subtract(translation, parent->translation);
 }
 
-void WorldTransform::UnsetParent()
+void WorldTransform::DeleteParent()
 {
 	translation = { Vector3{matWorld.m[3][0],matWorld.m[3][1],matWorld.m[3][2]} };
 
@@ -56,3 +56,13 @@ void WorldTransform::UnsetParent()
 	
 	parent_ = nullptr;
 }
+
+Vector3 WorldTransform::GetWorldPosition()
+{
+	Vector3 pos{};
+	pos.x = matWorld.m[3][0];
+	pos.y = matWorld.m[3][1];
+	pos.z = matWorld.m[3][2];
+	return pos;
+}
+

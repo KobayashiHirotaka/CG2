@@ -15,7 +15,10 @@ public:
 
 	void SetTarget(const WorldTransform* target) { target_ = target; }
 
+	Vector3 GetWorldPosition();
+
 private:
+	WorldTransform worldTransform_;
 	ViewProjection viewProjection_;
 
 	const WorldTransform* target_ = nullptr;

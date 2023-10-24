@@ -19,7 +19,7 @@ void FollowCamera::Update()
 
 		offset = TransformNormal(offset, cameraRotateMatrix);
 
-		viewProjection_.translation = Add(target_->translation, offset);
+		viewProjection_.translation = Add(GetWorldPosition(), offset);
 	}
 
 	if (Input::GetInstance()->GetJoystickState(joyState_))
@@ -50,4 +50,13 @@ void FollowCamera::Update()
 	ImGui::DragFloat3("trans", &viewProjection_.translation.x, 0.1f);
 	ImGui::DragFloat3("rotate", &viewProjection_.rotation.x, 0.1f);
 	ImGui::End();
+}
+
+Vector3 FollowCamera::GetWorldPosition()
+{
+	Vector3 pos{};
+	pos.x = target_->matWorld.m[3][0];
+	pos.y = target_->matWorld.m[3][1];
+	pos.z = target_->matWorld.m[3][2];
+	return pos;
 }

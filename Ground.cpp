@@ -14,8 +14,8 @@ void Ground::Initialize(Model* model, const Vector3& position)
 	SetCollisionPrimitive(kCollisionPrimitiveAABB);
 
 	AABB aabbSize = {
-		{-10.0f,-10.0f,-10.0f},
-		{10.0f,10.0f,10.0f},
+		{-10.0f,0.0f,-10.0f},
+		{10.0f,0.0f,10.0f},
 	};
 	SetAABB(aabbSize);
 }

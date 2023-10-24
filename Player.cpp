@@ -6,7 +6,7 @@ void Player::Initialize(Model* model)
 	assert(model);
 	model_ = model;
 	worldTransform_.Initialize();
-	worldTransform_.translation = { -13.0f,0.0f,-60.0f };
+	worldTransform_.translation = { 0.0f,1.0f,-30.0f };
 
 	SetCollisionAttribute(kCollisionAttributePlayer);
 	SetCollisionMask(kCollisionMaskPlayer);
@@ -22,7 +22,7 @@ void Player::Update()
 	}
 
 	if (preIsHit_ == true && isHit_ == false) {
-		worldTransform_.UnsetParent();
+		worldTransform_.DeleteParent();
 	}
 
 	if (Input::GetInstance()->GetJoystickState(joyState_))
@@ -54,14 +54,14 @@ void Player::Update()
 	}
 
 	if (isHit_ == false) {
-		/*worldTransform_.translation.y -= 0.1f;*/
+		worldTransform_.translation.y -= 0.1f;
 	}
 	else {
-		worldTransform_.translation.y = 0.0f;
+		worldTransform_.translation.y = 1.0f;
 	}
 
 	if (worldTransform_.translation.y <= -4.0f) {
-		worldTransform_.translation = { -13.0f,5.0f,-60.0f };
+		worldTransform_.translation = { 0.0f,5.0f,-30.0f };
 	}
 
 	worldTransform_.UpdateMatrix();
