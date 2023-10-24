@@ -10,7 +10,7 @@ void Player::Initialize(Model* model)
 
 	SetCollisionAttribute(kCollisionAttributePlayer);
 	SetCollisionMask(kCollisionMaskPlayer);
-	SetCollisionPrimitive(kCollisionPrimitiveAABB);
+	SetCollisionPrimitive(kCollisionPrimitiveSphere);
 
 	input_ = Input::GetInstance();
 }
@@ -40,7 +40,7 @@ void Player::Update()
 
 		if (isMoving)
 		{
-			const float kPlayerSpeed = 0.2f;
+			const float kPlayerSpeed = 0.3f;
 
 			move = Multiply(kPlayerSpeed, Normalize(move));
 

@@ -5,10 +5,10 @@ void Goal::Initialize(Model* model)
 	assert(model);
 	model_ = model;
 	worldTransform_.Initialize();
-	worldTransform_.translation = { 0.0f,1.0f,18.0f };
+	worldTransform_.translation = { 0.0f,1.0f,45.0f };
 	SetCollisionAttribute(kCollisionAttributeGoal);
 	SetCollisionMask(kCollisionMaskGoal);
-	SetCollisionPrimitive(kCollisionPrimitiveAABB);
+	SetCollisionPrimitive(kCollisionPrimitiveSphere);
 }
 
 void Goal::Update()
@@ -24,7 +24,7 @@ void Goal::Draw(ViewProjection& viewProjection)
 void Goal::OnCollision(Collider* collider)
 {
 	ImGui::Begin("Goal");
-	ImGui::Text("Clear!");
+	/*ImGui::Text("Clear!");*/
 	ImGui::End();
 }
 
