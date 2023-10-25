@@ -57,7 +57,7 @@ void Player::Update()
 
 	if (isHit_ == false)
 	{
-		worldTransform_.translation.y -= 0.01f;
+		worldTransform_.translation.y -= 0.1f;
 
 	} 
 	
@@ -68,7 +68,7 @@ void Player::Update()
 
 	if (worldTransform_.translation.y <= -4.0f)
 	{
-		worldTransform_.translation = { 0.0f,1.5f,-35.0f };
+		worldTransform_.translation = { 0.0f,1.5f,-7.0f };
 	}
 
 	worldTransform_.UpdateMatrix();
