@@ -54,7 +54,7 @@ void GamePlayScene::Initialize()
 	enemy_->Initialize(enemyModels);
 
 	goal_ = std::make_unique<Goal>();
-	goal_->Initialize(goalModel_.get(),{0.0f,1.0f,70.0f});
+	goal_->Initialize(goalModel_.get(),{0.0f,1.0f,75.0f});
 
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(skydomeModel_.get());

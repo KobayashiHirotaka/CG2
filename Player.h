@@ -8,7 +8,7 @@
 #include "Input.h"
 #include "MyMath.h"
 
-class Player : public Collider,ICharacter
+class Player : public Collider, public ICharacter
 {
 public:
 	void Initialize(const std::vector<Model*>& models)override;
@@ -40,5 +40,7 @@ private:
 
 	bool isHit_ = false;
 	bool preIsHit_ = false;
+
+	bool reStart_ = false;
 };
 

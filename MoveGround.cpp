@@ -29,7 +29,7 @@ void MoveGround::Update()
 {
 	worldTransform_.translation = Add(worldTransform_.translation, move_);
 
-	if (worldTransform_.translation.z >= 60.0f)
+	if (worldTransform_.translation.z >= 50.0f)
 	{
 		stopTimer_++;
 		move_ = { 0.0f,0.0f,0.0f };

@@ -7,7 +7,7 @@
 #include "MyMath.h"
 #include <numbers>
 
-class Enemy : public Collider, ICharacter
+class Enemy : public Collider, public ICharacter
 {
 public:
 	void Initialize(const std::vector<Model*>& models)override;
