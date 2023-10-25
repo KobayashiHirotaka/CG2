@@ -39,30 +39,20 @@ void WorldTransform::UpdateMatrix()
 void WorldTransform::SetParent(const WorldTransform* parent)
 {
 	parent_ = parent;
-	translation = Subtract(translation, parent->translation);
+
+	if (parent_)
+	{
+		translation = Subtract(translation, parent->translation);
+	}
 }
 
 void WorldTransform::DeleteParent()
 {
-	translation = { Vector3{matWorld.m[3][0],matWorld.m[3][1],matWorld.m[3][2]} };
+	if (parent_)
+	{
+		translation = { Vector3(matWorld.m[3][0], matWorld.m[3][1], matWorld.m[3][2]) };
+	}
 
-	rotation.x = std::atan2(matWorld.m[2][1], matWorld.m[2][2]);
-	rotation.y = -std::asin(matWorld.m[2][0]);
-	rotation.z = std::atan2(matWorld.m[1][0], matWorld.m[0][0]);
-
-	scale.x = Length(Vector3{ matWorld.m[0][0], matWorld.m[0][1], matWorld.m[0][2] });
-	scale.y = Length(Vector3{ matWorld.m[1][0], matWorld.m[1][1], matWorld.m[1][2] });
-	scale.z = Length(Vector3{ matWorld.m[2][0], matWorld.m[2][1], matWorld.m[2][2] });
-	
 	parent_ = nullptr;
-}
-
-Vector3 WorldTransform::GetWorldPosition()
-{
-	Vector3 pos{};
-	pos.x = matWorld.m[3][0];
-	pos.y = matWorld.m[3][1];
-	pos.z = matWorld.m[3][2];
-	return pos;
 }
 

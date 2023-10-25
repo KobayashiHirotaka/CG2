@@ -18,8 +18,8 @@ void MoveGround::Initialize(Model* model, const Vector3& position)
 
 	AABB aabbSize = 
 	{
-		{-10.0f,-10.0f,-10.0f},
-		{10.0f,10.0f,10.0f},
+		{-10.0f,0.0f,-10.0f},
+		{10.0f,0.0f,10.0f},
 	};
 
 	SetAABB(aabbSize);
@@ -29,7 +29,7 @@ void MoveGround::Update()
 {
 	worldTransform_.translation = Add(worldTransform_.translation, move_);
 
-	if (worldTransform_.translation.z >= 28.0f)
+	if (worldTransform_.translation.z >= 60.0f)
 	{
 		stopTimer_++;
 		move_ = { 0.0f,0.0f,0.0f };
@@ -41,7 +41,7 @@ void MoveGround::Update()
 		}
 	}
 
-	if (worldTransform_.translation.z <= -8.0f)
+	if (worldTransform_.translation.z < 20.0f)
 	{
 		stopTimer_++;
 		move_ = { 0.0f,0.0f,0.0f };

@@ -57,12 +57,12 @@ void GamePlayScene::Initialize()
 		ground_[i] = std::make_unique<Ground>();
 	}
 
-	ground_[0]->Initialize(groundModel_.get(), { 0.0f,0.0f,-28.0f });
-	ground_[1]->Initialize(groundModel_.get(), { 0.0f,0.0f,48.0f });
+	ground_[0]->Initialize(groundModel_.get(), { 0.0f,0.0f,0.0f });
+	ground_[1]->Initialize(groundModel_.get(), { 0.0f,0.0f,68.0f });
 
 	moveGround_ = std::make_unique<MoveGround>();
 
-	moveGround_->Initialize(groundModel_.get(), { 0.0f,0.0f,10.0f });
+	moveGround_->Initialize(groundModel_.get(), { 0.0f,0.0f,30.0f });
 
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();

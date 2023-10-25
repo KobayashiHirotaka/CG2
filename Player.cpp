@@ -6,7 +6,7 @@ void Player::Initialize(Model* model)
 	assert(model);
 	model_ = model;
 	worldTransform_.Initialize();
-	worldTransform_.translation = { 0.0f,1.5f,-30.0f };
+	worldTransform_.translation = { 0.0f,1.5f,-7.0f };
 
 	SetCollisionAttribute(kCollisionAttributePlayer);
 	SetCollisionMask(kCollisionMaskPlayer);
@@ -57,15 +57,18 @@ void Player::Update()
 
 	if (isHit_ == false)
 	{
-		worldTransform_.translation.y -= 0.1f;
+		worldTransform_.translation.y -= 0.01f;
 
-	} else {
+	} 
+	
+	if (isHit_ == true)
+	{
 		worldTransform_.translation.y = 1.0f;
 	}
 
 	if (worldTransform_.translation.y <= -4.0f)
 	{
-		worldTransform_.translation = { 0.0f,1.5f,-30.0f };
+		worldTransform_.translation = { 0.0f,1.5f,-35.0f };
 	}
 
 	worldTransform_.UpdateMatrix();
@@ -87,6 +90,12 @@ void Player::OnCollision(Collider* collider)
 {
 	isHit_ = true;
 	parent_ = &collider->GetWorldTransform();
+
+	if (worldTransform_.parent_ != parent_)
+	{
+		worldTransform_.DeleteParent();
+		worldTransform_.SetParent(parent_);
+	}
 }
 
 Vector3 Player::GetWorldPosition()
