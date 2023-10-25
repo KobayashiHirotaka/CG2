@@ -22,13 +22,9 @@ public:
 
 	void SetParent(const WorldTransform* parent);
 
-	bool GetIsHit() { return IsHit_; }
-
 private:
 	WorldTransform worldTransform_;
 
 	Model* model_ = nullptr;
-
-	bool IsHit_ = false;
 };
 

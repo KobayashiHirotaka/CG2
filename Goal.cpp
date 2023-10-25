@@ -31,11 +31,7 @@ void Goal::SetParent(const WorldTransform* parent)
 
 void Goal::OnCollision(Collider* collider)
 {
-	IsHit_ = true;
 
-	ImGui::Begin("Goal");
-	ImGui::Text("IsHit_", IsHit_);
-	ImGui::End();
 }
 
 Vector3 Goal::GetWorldPosition()

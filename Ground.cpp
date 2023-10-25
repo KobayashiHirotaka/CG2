@@ -34,8 +34,7 @@ void Ground::Draw(ViewProjection& viewProjection)
 
 void Ground::OnCollision(Collider* collider) 
 {
-	ImGui::Begin("Ground");
-	ImGui::End();
+	
 }
 
 Vector3 Ground::GetWorldPosition()

@@ -84,11 +84,6 @@ void GamePlayScene::Initialize()
 
 void GamePlayScene::Update()
 {
-	if (goal_->GetIsHit() == true)
-	{
-		GamePlayScene::Initialize();
-	}
-
 	player_->Update();
 
 	enemy_->Update();
@@ -139,11 +134,4 @@ void GamePlayScene::Draw()
 	}
 
 	moveGround_->Draw(viewProjection_);
-
-	ImGui::Begin("Camera");
-	ImGui::SliderFloat3("rotation", &viewProjection_.rotation.x, 1.0f, -1.0f);
-	ImGui::SliderFloat3("transform", &viewProjection_.translation.x, 50.0f, -50.0f);
-	ImGui::End();
-
-	engine_->ImGui();
 }

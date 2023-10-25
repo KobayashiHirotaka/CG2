@@ -73,10 +73,6 @@ void Player::Update()
 	preIsHit_ = isHit_;
 	isHit_ = false;
 	reStart_ = false;
-
-	ImGui::Begin("Player");
-	ImGui::SliderFloat3("translation", &worldTransform_.translation.x, -3.0f, 10.0f, "%.3f");
-	ImGui::End();
 }
 
 void Player::Draw(const ViewProjection& viewProjection)
@@ -88,7 +84,7 @@ void Player::Restart()
 {
 	reStart_ = true;
 	worldTransform_.translation = { 0.0f,0.0f,0.0f };
-	parent_ = nullptr;
+	worldTransform_.parent_ = nullptr;
 }
 
 void Player::OnCollision(Collider* collider)
@@ -110,10 +106,10 @@ void Player::OnCollision(Collider* collider)
 		Restart();
 	}
 
-	/*if (collider->GetCollisionAttribute() & kCollisionAttributeGoal && reStart_ == false)
+	if (collider->GetCollisionAttribute() & kCollisionAttributeGoal && reStart_ == false)
 	{
 		Restart();
-	}*/
+	}
 }
 
 Vector3 Player::GetWorldPosition()

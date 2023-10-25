@@ -63,8 +63,7 @@ void MoveGround::Draw(ViewProjection& viewProjection)
 
 void MoveGround::OnCollision(Collider* collider)
 {
-	ImGui::Begin("MoveGround");
-	ImGui::End();
+	
 }
 
 Vector3 MoveGround::GetWorldPosition()

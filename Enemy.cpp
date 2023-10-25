@@ -69,8 +69,7 @@ void Enemy::SetParent(const WorldTransform* parent)
 
 void Enemy::OnCollision(Collider* collider)
 {
-	ImGui::Begin("Enemy");
-	ImGui::End();
+	
 }
 
 Vector3 Enemy::GetWorldPosition()
