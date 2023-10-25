@@ -24,6 +24,7 @@ void GamePlayScene::Initialize()
 
 	light_ = Light::GetInstance();
 
+	worldTransform_.Initialize();
 	viewProjection_.Initialize();
 
 	playerModel_.reset(Model::CreateModelFromObj("resource/player", "player.obj"));
@@ -38,9 +39,10 @@ void GamePlayScene::Initialize()
 
 	collisionManager_ = std::make_unique<CollisionManager>();
 
+	std::vector<Model*> playerModels = { playerModel_.get()};
+
 	player_ = std::make_unique<Player>();
-	player_->Initialize(playerModel_.get());
-	player_->SetViewProjection(&viewProjection_);
+	player_->Initialize(playerModels);
 
 	enemy_ = std::make_unique<Enemy>();
 	enemy_->Initialize(goalModel_.get());
@@ -68,6 +70,8 @@ void GamePlayScene::Initialize()
 	followCamera_->Initialize();
 
 	followCamera_->SetTarget(&player_->GetWorldTransform());
+
+	player_->SetViewProjection(&viewProjection_);
 }
 
 void GamePlayScene::Update()

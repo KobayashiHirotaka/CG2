@@ -1,10 +1,10 @@
 #include "Player.h"
 #include <cassert>
 
-void Player::Initialize(Model* model)
+void Player::Initialize(const std::vector<Model*>& models)
 {
-	assert(model);
-	model_ = model;
+	ICharacter::Initialize(models);
+
 	worldTransform_.Initialize();
 	worldTransform_.translation = { 0.0f,1.5f,-7.0f };
 
@@ -17,6 +17,8 @@ void Player::Initialize(Model* model)
 
 void Player::Update()
 {
+	ICharacter::Update();
+
 	if (preIsHit_ == false && isHit_ == true) 
 	{
 		worldTransform_.SetParent(parent_);
@@ -81,9 +83,9 @@ void Player::Update()
 	ImGui::End();
 }
 
-void Player::Draw(ViewProjection& viewProjection)
+void Player::Draw(const ViewProjection& viewProjection)
 {
-	model_->Draw(worldTransform_, viewProjection);
+	ICharacter::Draw(viewProjection);
 }
 
 void Player::OnCollision(Collider* collider)

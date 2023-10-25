@@ -53,6 +53,7 @@ private:
 
 	DirectXCommon* dxCommon_ = nullptr;
 
+	WorldTransform worldTransform_;
 	ViewProjection viewProjection_;
 
 	uint32_t sound_;

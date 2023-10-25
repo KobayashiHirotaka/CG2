@@ -1,20 +1,21 @@
 #pragma once
 #include "Collider.h"
 #include "CollisionConfig.h"
+#include "ICharacter.h"
 #include "Model.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "Input.h"
 #include "MyMath.h"
 
-class Player : public Collider
+class Player : public Collider,ICharacter
 {
 public:
-	void Initialize(Model* model);
+	void Initialize(const std::vector<Model*>& models)override;
 
-	void Update();
+	void Update()override;
 
-	void Draw(ViewProjection& viewProjection);
+	void Draw(const ViewProjection& viewProjection)override;
 
 	WorldTransform& GetWorldTransform()override { return worldTransform_; }
 
@@ -27,13 +28,9 @@ public:
 	void SetParent(const WorldTransform* parent) { parent_ = parent; };
 
 private:
-
-	WorldTransform worldTransform_;
 	const WorldTransform* parent_ = nullptr;
 
 	const ViewProjection* viewProjection_ = nullptr;
-
-	Model* model_ = nullptr;
 
 	Input* input_ = nullptr;
 

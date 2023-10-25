@@ -30,6 +30,7 @@
     <ClCompile Include="GameStartScene.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="ICharacter.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LoadCSV.cpp" />
@@ -80,6 +81,7 @@
     <ClInclude Include="GameStartScene.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="ICharacter.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="Light.h" />
