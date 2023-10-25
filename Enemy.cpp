@@ -1,11 +1,11 @@
 #include "Enemy.h"
 
-void Enemy::Initialize(Model* model)
+void Enemy::Initialize(const std::vector<Model*>& models)
 {
-	assert(model);
-	model_ = model;
+	ICharacter::Initialize(models);
+
 	worldTransform_.Initialize();
-	worldTransform_.translation = { 0.0f,1.1f,48.0f };
+	worldTransform_.translation = { 0.0f,1.1f,65.0f };
 
 	move_ = { 0.05f,0.0f,0.0f };
 
@@ -16,6 +16,8 @@ void Enemy::Initialize(Model* model)
 
 void Enemy::Update()
 {
+	ICharacter::Update();
+
 	worldTransform_.translation = Add(worldTransform_.translation, move_);
 
 	if (worldTransform_.translation.x >= 5.0f)
@@ -31,9 +33,9 @@ void Enemy::Update()
 	worldTransform_.UpdateMatrix();
 }
 
-void Enemy::Draw(ViewProjection& viewProjection)
+void Enemy::Draw(const ViewProjection& viewProjection)
 {
-	model_->Draw(worldTransform_, viewProjection);
+	ICharacter::Draw(viewProjection);
 }
 
 void Enemy::OnCollision(Collider* collider)

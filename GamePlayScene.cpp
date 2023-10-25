@@ -41,11 +41,13 @@ void GamePlayScene::Initialize()
 
 	std::vector<Model*> playerModels = { playerModel_.get()};
 
+	std::vector<Model*> enemyModels = { enemyModel_.get() };
+
 	player_ = std::make_unique<Player>();
 	player_->Initialize(playerModels);
 
 	enemy_ = std::make_unique<Enemy>();
-	enemy_->Initialize(goalModel_.get());
+	enemy_->Initialize(enemyModels);
 
 	goal_ = std::make_unique<Goal>();
 	goal_->Initialize(goalModel_.get());

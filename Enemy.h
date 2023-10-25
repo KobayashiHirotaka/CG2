@@ -1,17 +1,18 @@
 #include "Collider.h"
 #include "CollisionConfig.h"
+#include "ICharacter.h"
 #include "Model.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 
-class Enemy : public Collider
+class Enemy : public Collider, ICharacter
 {
 public:
-	void Initialize(Model* model);
+	void Initialize(const std::vector<Model*>& models)override;
 
-	void Update();
+	void Update()override;
 
-	void Draw(ViewProjection& viewProjection);
+	void Draw(const ViewProjection& viewProjection)override;
 
 	WorldTransform& GetWorldTransform()override { return worldTransform_; }
 
@@ -22,10 +23,6 @@ public:
 	bool GetIsHit() { return isHit_; }
 
 private:
-	WorldTransform worldTransform_;
-
-	Model* model_ = nullptr;
-
 	Vector3 move_;
 
 	bool isHit_ = false;
