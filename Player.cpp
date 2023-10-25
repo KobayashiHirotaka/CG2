@@ -5,20 +5,15 @@ void Player::Initialize(const std::vector<Model*>& models)
 {
 	ICharacter::Initialize(models);
 
-	worldTransform_.Initialize();
-	worldTransform_.translation = { 0.0f,1.5f,-7.0f };
-
 	SetCollisionAttribute(kCollisionAttributePlayer);
 	SetCollisionMask(kCollisionMaskPlayer);
-	SetCollisionPrimitive(kCollisionPrimitiveSphere);
+	SetCollisionPrimitive(kCollisionPrimitiveAABB);
 
 	input_ = Input::GetInstance();
 }
 
 void Player::Update()
 {
-	ICharacter::Update();
-
 	if (preIsHit_ == false && isHit_ == true) 
 	{
 		worldTransform_.SetParent(parent_);
@@ -70,10 +65,10 @@ void Player::Update()
 
 	if (worldTransform_.translation.y <= -4.0f)
 	{
-		worldTransform_.translation = { 0.0f,1.5f,-7.0f };
+		worldTransform_.translation = { 0.0f,0.0f,0.0f };
 	}
 
-	worldTransform_.UpdateMatrix();
+	ICharacter::Update();
 
 	preIsHit_ = isHit_;
 	isHit_ = false;
@@ -88,15 +83,29 @@ void Player::Draw(const ViewProjection& viewProjection)
 	ICharacter::Draw(viewProjection);
 }
 
+void Player::Restart()
+{
+	Player::Initialize(models_);
+	parent_ = nullptr;
+}
+
 void Player::OnCollision(Collider* collider)
 {
-	isHit_ = true;
-	parent_ = &collider->GetWorldTransform();
-
-	if (worldTransform_.parent_ != parent_)
+	if (collider->GetCollisionAttribute() & kCollisionAttributeGround)
 	{
-		worldTransform_.DeleteParent();
-		worldTransform_.SetParent(parent_);
+		isHit_ = true;
+		parent_ = &collider->GetWorldTransform();
+
+		if (worldTransform_.parent_ != parent_)
+		{
+			worldTransform_.DeleteParent();
+			worldTransform_.SetParent(parent_);
+		}
+	}
+
+	if (collider->GetCollisionAttribute() & kCollisionAttributeEnemy)
+	{
+		Restart();
 	}
 }
 

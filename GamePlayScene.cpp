@@ -29,9 +29,12 @@ void GamePlayScene::Initialize()
 
 	playerModel_.reset(Model::CreateModelFromObj("resource/player", "player.obj"));
 
-	enemyModel_.reset(Model::CreateModelFromObj("resource/goal", "goal.obj"));
+	modelFighterBody_.reset(Model::CreateModelFromObj("resource/float_Body", "float_Body.obj"));
+	modelFighterHead_.reset(Model::CreateModelFromObj("resource/float_Head", "float_Head.obj"));
+	modelFighterL_arm_.reset(Model::CreateModelFromObj("resource/float_L_arm", "float_L_arm.obj"));
+	modelFighterR_arm_.reset(Model::CreateModelFromObj("resource/float_R_arm", "float_R_arm.obj"));
 
-	goalModel_.reset(Model::CreateModelFromObj("resource/goal", "goal.obj"));
+	goalModel_.reset(Model::CreateModelFromObj("resource/player", "player.obj"));
 
 	groundModel_.reset(Model::CreateModelFromObj("resource/ground", "ground.obj"));
 
@@ -41,7 +44,8 @@ void GamePlayScene::Initialize()
 
 	std::vector<Model*> playerModels = { playerModel_.get()};
 
-	std::vector<Model*> enemyModels = { enemyModel_.get() };
+	std::vector<Model*> enemyModels = { modelFighterBody_.get(), modelFighterHead_.get(), modelFighterL_arm_.get(),
+		modelFighterR_arm_.get() };
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize(playerModels);
@@ -50,7 +54,7 @@ void GamePlayScene::Initialize()
 	enemy_->Initialize(enemyModels);
 
 	goal_ = std::make_unique<Goal>();
-	goal_->Initialize(goalModel_.get());
+	goal_->Initialize(goalModel_.get(),{0.0f,1.0f,70.0f});
 
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(skydomeModel_.get());
@@ -62,11 +66,13 @@ void GamePlayScene::Initialize()
 	}
 
 	ground_[0]->Initialize(groundModel_.get(), { 0.0f,0.0f,0.0f });
-	ground_[1]->Initialize(groundModel_.get(), { 0.0f,0.0f,68.0f });
+	ground_[1]->Initialize(groundModel_.get(), { 0.0f,0.0f,65.0f });
 
 	moveGround_ = std::make_unique<MoveGround>();
 
 	moveGround_->Initialize(groundModel_.get(), { 0.0f,0.0f,30.0f });
+
+	enemy_->SetParent(&ground_[1]->GetWorldTransform());
 
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
@@ -78,9 +84,9 @@ void GamePlayScene::Initialize()
 
 void GamePlayScene::Update()
 {
-	if (goal_->GetIsHit() == true || enemy_->GetIsHit() == true)
+	if (goal_->GetIsHit() == true)
 	{
-		Initialize();
+		GamePlayScene::Initialize();
 	}
 
 	player_->Update();

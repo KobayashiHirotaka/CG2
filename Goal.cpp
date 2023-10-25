@@ -1,15 +1,17 @@
 #include "Goal.h"
 
-void Goal::Initialize(Model* model)
+void Goal::Initialize(Model* model, const Vector3& position)
 {
 	assert(model);
 	model_ = model;
+
 	worldTransform_.Initialize();
-	worldTransform_.translation = { 0.0f,1.1f,75.0f };
+
+	worldTransform_.translation = position;
 
 	SetCollisionAttribute(kCollisionAttributeGoal);
 	SetCollisionMask(kCollisionMaskGoal);
-	SetCollisionPrimitive(kCollisionPrimitiveSphere);
+	SetCollisionPrimitive(kCollisionPrimitiveAABB);
 }
 
 void Goal::Update()
@@ -17,16 +19,22 @@ void Goal::Update()
 	worldTransform_.UpdateMatrix();
 }
 
-void Goal::Draw(ViewProjection& viewProjection)
+void Goal::Draw(const ViewProjection& viewProjection)
 {
 	model_->Draw(worldTransform_, viewProjection);
 }
 
+void Goal::SetParent(const WorldTransform* parent)
+{
+	worldTransform_.parent_ = parent;
+}
+
 void Goal::OnCollision(Collider* collider)
 {
-	isHit_ = true;
+	IsHit_ = true;
+
 	ImGui::Begin("Goal");
-	ImGui::Text("Clear");
+	ImGui::Text("IsHit_", IsHit_);
 	ImGui::End();
 }
 

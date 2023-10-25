@@ -66,6 +66,11 @@ private:
 	std::unique_ptr<Enemy> enemy_;
 	std::unique_ptr<Model> enemyModel_;
 
+	std::unique_ptr<Model> modelFighterBody_;
+	std::unique_ptr<Model> modelFighterHead_;
+	std::unique_ptr<Model> modelFighterL_arm_;
+	std::unique_ptr<Model> modelFighterR_arm_;
+
 	std::unique_ptr<FollowCamera> followCamera_;
 
 	std::unique_ptr<Goal> goal_;

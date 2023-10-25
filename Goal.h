@@ -8,11 +8,11 @@
 class Goal : public Collider
 {
 public:
-	void Initialize(Model* model);
+	void Initialize(Model* model, const Vector3& position);
 
 	void Update();
 
-	void Draw(ViewProjection& viewProjection);
+	void Draw(const ViewProjection& viewProjection);
 
 	WorldTransform& GetWorldTransform()override { return worldTransform_; }
 
@@ -20,13 +20,15 @@ public:
 
 	void OnCollision(Collider* collider)override;
 
-	bool GetIsHit() { return isHit_; }
+	void SetParent(const WorldTransform* parent);
+
+	bool GetIsHit() { return IsHit_; }
 
 private:
 	WorldTransform worldTransform_;
 
 	Model* model_ = nullptr;
 
-	bool isHit_ = false;
+	bool IsHit_ = false;
 };
 

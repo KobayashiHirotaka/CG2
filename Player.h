@@ -27,6 +27,8 @@ public:
 
 	void SetParent(const WorldTransform* parent) { parent_ = parent; };
 
+	void Restart();
+
 private:
 	const WorldTransform* parent_ = nullptr;
 

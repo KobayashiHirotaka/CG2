@@ -9,7 +9,7 @@ class Collider
 {
 private:
 	float radius_ = 1.0f;
-	AABB aabb_{ {-1.0f,-1.0f,-1.0f},{1.0f,1.0f,1.0f} };
+	AABB aabb_ = { {-1.0f,-1.0f,-1.0f},{1.0f,1.0f,1.0f} };
 	uint32_t collisionAttribute_ = 0xffffffff;
 	uint32_t CollisionMask_ = 0xffffffff;
 	uint32_t collisionPrimitive_ = kCollisionPrimitiveSphere;
