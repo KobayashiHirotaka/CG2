@@ -63,7 +63,6 @@ void Player::Update()
 	if (isHit_ == false)
 	{
 		worldTransform_.translation.y -= 0.1f;
-
 	} 
 	
 	if (isHit_ == true)
