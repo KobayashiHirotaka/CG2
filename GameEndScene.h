@@ -4,7 +4,7 @@
 class GameEndScene : public IScene
 {
 public:
-	void Initialize();
-	void Update();
-	void Draw();
+	void Initialize()override;
+	void Update()override;
+	void Draw()override;
 };
