@@ -85,6 +85,12 @@
     <Filter Include="ソース ファイル\scenes\manager">
       <UniqueIdentifier>{08e03cdb-74e3-48bc-9a25-1a347e916623}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\GlobalVariables">
+      <UniqueIdentifier>{e10d76ff-5c27-45df-9446-5f8d7fd62f75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\GlobalVariables">
+      <UniqueIdentifier>{d187794f-2788-48b7-be67-64e4157b9c69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -180,11 +186,11 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>ソース ファイル\scenes\manager</Filter>
     </ClCompile>
-    <ClCompile Include="GlobalVariables.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalVariables.cpp">
+      <Filter>ソース ファイル\GlobalVariables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -323,11 +329,11 @@
     <ClInclude Include="SceneManager.h">
       <Filter>ヘッダー ファイル\scenes\manager</Filter>
     </ClInclude>
-    <ClInclude Include="GlobalVariables.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalVariables.h">
+      <Filter>ヘッダー ファイル\GlobalVariables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
