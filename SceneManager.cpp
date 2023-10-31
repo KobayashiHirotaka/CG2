@@ -34,6 +34,8 @@ void SceneManager::Initialize()
 	light_ = Light::GetInstance();
 	light_->Initialize();
 
+	GlobalVariables::GetInstance()->LoadFiles();
+
 	state[START] = std::make_unique<GameStartScene>();
 	state[PLAY] = std::make_unique<GamePlayScene>();
 	state[PLAY]->Initialize();

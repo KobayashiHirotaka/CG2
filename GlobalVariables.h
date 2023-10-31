@@ -4,6 +4,10 @@
 #include <variant>
 #include <map>
 #include <string>
+#include "externals/nlohmann/json.hpp"
+#include <fstream>
+
+using json = nlohmann::json;
 
 class GlobalVariables
 {
@@ -12,6 +16,12 @@ public:
 
 	void Update();
 
+	int32_t GetIntValue(const std::string& groupName, const std::string& key);
+
+	float GetFloatValue(const std::string& groupName, const std::string& key);
+
+	Vector3 GetVector3Value(const std::string& groupName, const std::string& key);
+
 	void SetValue(const std::string& groupName, const std::string& key, int32_t value);
 
 	void SetValue(const std::string& groupName, const std::string& key, float value);
@@ -19,6 +29,18 @@ public:
 	void SetValue(const std::string& groupName, const std::string& key, Vector3& value);
 
 	void CreateGroup(const std::string& groupName);
+
+	void SaveFile(const std::string& groupName);
+
+	void LoadFiles();
+
+	void LoadFile(const std::string& groupName);
+
+	void AddItem(const std::string& groupName, const std::string& key, int32_t value);
+
+	void AddItem(const std::string& groupName, const std::string& key, float value);
+
+	void AddItem(const std::string& groupName, const std::string& key, Vector3& value);
 
 public:
 	struct Item
@@ -41,4 +63,6 @@ private:
 	GlobalVariables(const GlobalVariables& obj) = default;
 
 	GlobalVariables& operator=(const GlobalVariables& obj) = default;
+
+	const std::string kDirectoryPath = "resource/GlobalVariables/";
 };

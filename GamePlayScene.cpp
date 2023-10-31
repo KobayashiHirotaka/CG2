@@ -1,4 +1,5 @@
 #include "GamePlayScene.h"
+#include "GlobalVariables.h"
 
 GamePlayScene::GamePlayScene()
 {
@@ -52,6 +53,15 @@ void GamePlayScene::Initialize()
 
 	viewProjection_.Initialize();
 	worldTransformModel_.Initialize();
+
+	float s = 10;
+	GlobalVariables* globalVariables{};
+	globalVariables = GlobalVariables::GetInstance();
+
+	const char* groupName = "Player";
+
+	GlobalVariables::GetInstance()->CreateGroup(groupName);
+	globalVariables->AddItem(groupName, "Test", s);
 }
 
 void GamePlayScene::Update()
