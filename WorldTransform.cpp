@@ -28,10 +28,31 @@ void WorldTransform::UpdateMatrix()
 	Matrix4x4 AffineMatrix = MakeAffineMatrix(scale, rotation, translation);
 	matWorld = AffineMatrix;
 
-	if (parent) 
+	if (parent_) 
 	{
-		matWorld = Multiply(matWorld, parent->matWorld);
+		matWorld = Multiply(matWorld, parent_->matWorld);
 	}
 
 	TransferMatrix();
 }
+
+void WorldTransform::SetParent(const WorldTransform* parent)
+{
+	parent_ = parent;
+
+	if (parent_)
+	{
+		translation = Subtract(translation, parent->translation);
+	}
+}
+
+void WorldTransform::DeleteParent()
+{
+	if (parent_)
+	{
+		translation = { Vector3(matWorld.m[3][0], matWorld.m[3][1], matWorld.m[3][2]) };
+	}
+
+	parent_ = nullptr;
+}
+

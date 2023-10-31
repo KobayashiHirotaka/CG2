@@ -30,7 +30,7 @@ public:
 	Matrix4x4 matWorld;
 
 	// 親となるワールド変換へのポインタ
-	const WorldTransform* parent = nullptr;
+	const WorldTransform* parent_ = nullptr;
 
 	/// <summary>
 	/// 初期化
@@ -53,5 +53,9 @@ public:
 	void TransferMatrix();
 
 	void UpdateMatrix();
+
+	void SetParent(const WorldTransform* parent);
+
+	void DeleteParent();
 };
 

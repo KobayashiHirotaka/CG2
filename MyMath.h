@@ -65,4 +65,17 @@ Vector3 Add(const Vector3& v1, const Vector3& v2);
 
 Vector3 Subtract(const Vector3& v1, const Vector3& v2);
 
+Vector3 Multiply(const float& v1, const Vector3& v2);
+
+Vector3 Normalize(const Vector3& v);
+
 Vector3 TransformNormal(const Vector3& vector, const Matrix4x4& matrix);
+
+float Length(const Vector3& v);
+
+struct AABB 
+{
+	Vector3 min;
+	Vector3 max;
+};
+	

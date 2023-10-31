@@ -2,8 +2,6 @@
 
 void CollisionManager::CheckAllCollision() 
 {
-
-
 	std::list<Collider*>::iterator itrA = colliders_.begin();
 	for (; itrA != colliders_.end(); ++itrA)
 	{
@@ -20,25 +18,91 @@ void CollisionManager::CheckAllCollision()
 
 void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* colliderB) 
 {
-	if (!(colliderA->GetCollisionAttribute() & colliderB->GetCollisionMask()) ||
-		!(colliderB->GetCollisionAttribute() & colliderA->GetCollisionMask())) 
+	if ((colliderA->GetCollisionAttribute() & colliderB->GetCollisionMask()) == 0 ||
+		(colliderB->GetCollisionAttribute() & colliderA->GetCollisionMask()) == 0)
 	{
 		return;
 	}
 
-	Vector3 posA = colliderA->GetWorldPos();
-	Vector3 posB = colliderB->GetWorldPos();
-
-	float radA = colliderA->Getradius();
-	float radB = colliderB->Getradius();
-
-	Vector3 Distance = {
-		(posB.x - posA.x) * (posB.x - posA.x), (posB.y - posA.y) * (posB.y - posA.y),
-		(posB.z - posA.z) * (posB.z - posA.z) };
-
-	if (Distance.x + Distance.y + Distance.z <= (radA + radB) * (radA + radB)) 
+	//球と球の判定
+	if (((colliderA->GetCollisionPrimitive() & kCollisionPrimitiveSphere) != 0 && (colliderB->GetCollisionPrimitive() & kCollisionPrimitiveSphere) != 0) ||
+		((colliderB->GetCollisionPrimitive() & kCollisionPrimitiveSphere) != 0 && (colliderA->GetCollisionPrimitive() & kCollisionPrimitiveSphere) != 0)) 
 	{
-		colliderA->OnCollision();
-		colliderB->OnCollision();
+		Vector3 posA = colliderA->GetWorldPosition();
+		Vector3 posB = colliderB->GetWorldPosition();
+		
+		float distance = Length(Subtract(posA, posB));
+		
+		if (distance <= colliderA->GetRadius() + colliderB->GetRadius())
+		{
+			colliderA->OnCollision(colliderB);
+			colliderB->OnCollision(colliderA);
+		}
+	}
+
+	//AABBとAABBの判定
+	if (((colliderA->GetCollisionPrimitive() & kCollisionPrimitiveAABB) != 0 && (colliderB->GetCollisionPrimitive() & kCollisionPrimitiveAABB) != 0) ||
+		((colliderB->GetCollisionPrimitive() & kCollisionPrimitiveAABB) != 0 && (colliderA->GetCollisionPrimitive() & kCollisionPrimitiveAABB) != 0)) 
+	{
+		
+		Vector3 posA = colliderA->GetWorldPosition();
+		Vector3 posB = colliderB->GetWorldPosition();
+		
+		AABB aabbA = colliderA->GetAABB();
+		AABB aabbB = colliderB->GetAABB();
+
+		if (posA.x + aabbA.min.x <= posB.x + aabbB.max.x && posA.x + aabbA.max.x >= posB.x + aabbB.min.x &&
+			posA.y + aabbA.min.y <= posB.y + aabbB.max.y && posA.y + aabbA.max.y >= posB.y + aabbB.min.y &&
+			posA.z + aabbA.min.z <= posB.z + aabbB.max.z && posA.z + aabbA.max.z >= posB.z + aabbB.min.z) 
+		{
+			colliderA->OnCollision(colliderB);
+			colliderB->OnCollision(colliderA);
+		}
+	}
+
+	//球とAABBの判定
+	if (((colliderA->GetCollisionPrimitive() & kCollisionPrimitiveSphere) != 0 && (colliderB->GetCollisionPrimitive() & kCollisionPrimitiveAABB) != 0) ||
+		((colliderA->GetCollisionPrimitive() & kCollisionPrimitiveAABB) != 0 && (colliderB->GetCollisionPrimitive() & kCollisionPrimitiveSphere) != 0))
+	{
+		Vector3 posA = colliderA->GetWorldPosition();
+		Vector3 posB = colliderB->GetWorldPosition();
+
+		AABB aabbA = colliderA->GetAABB();
+		AABB aabbB = colliderB->GetAABB();
+
+		if (colliderA->GetCollisionPrimitive() & kCollisionPrimitiveSphere)
+		{
+			Vector3 closestPoint
+			{
+				std::clamp(posA.x,posB.x + aabbB.min.x,posB.x + aabbB.max.x),
+				std::clamp(posA.y,posB.y + aabbB.min.y,posB.y + aabbB.max.y),
+				std::clamp(posA.z,posB.z + aabbB.min.z,posB.z + aabbB.max.z) 
+			};
+			
+			float distance = Length(Subtract(closestPoint, posA));
+			
+			if (distance <= colliderA->GetRadius()) 
+			{
+				colliderA->OnCollision(colliderB);
+				colliderB->OnCollision(colliderA);
+			}
+
+		} else if (colliderB->GetCollisionPrimitive() & kCollisionPrimitiveSphere) {
+			
+			Vector3 closestPoint
+			{
+				std::clamp(posB.x,posA.x + aabbA.min.x,posA.x + aabbA.max.x),
+				std::clamp(posB.y,posA.y + aabbA.min.y,posA.y + aabbA.max.y),
+				std::clamp(posB.z,posA.z + aabbA.min.z,posA.z + aabbA.max.z) 
+			};
+
+			float distance = Length(Subtract(closestPoint, posB));
+			
+			if (distance <= colliderB->GetRadius()) 
+			{
+				colliderA->OnCollision(colliderB);
+				colliderB->OnCollision(colliderA);
+			}
+		}
 	}
 }
