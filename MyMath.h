@@ -73,7 +73,7 @@ Vector3 TransformNormal(const Vector3& vector, const Matrix4x4& matrix);
 
 float Length(const Vector3& v);
 
-struct AABB
+struct AABB 
 {
 	Vector3 min;
 	Vector3 max;

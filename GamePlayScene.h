@@ -13,6 +13,15 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "MyMath.h"
+#include "CollisionManager.h"
+
+#include "Player.h"
+#include "Enemy.h"
+#include "Goal.h"
+#include "FollowCamera.h"
+#include "Ground.h"
+#include "MoveGround.h"
+#include "Skydome.h"
 
 #define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定
 #include <dinput.h>
@@ -44,46 +53,35 @@ private:
 
 	DirectXCommon* dxCommon_ = nullptr;
 
-	Model* model_ = nullptr;
-
-	WorldTransform worldTransform_[2];
-
-	WorldTransform worldTransformSprite_;
-
-	WorldTransform worldTransformModel_;
-
+	WorldTransform worldTransform_;
 	ViewProjection viewProjection_;
 
-	Sprite* sprite_;
-
-	Sphere* sphere_[2];
-	
-	int texture_;
-
-	bool changeTexture_;
-
-	int monsterBall_;
-
-	int uvChecker_;
-
 	uint32_t sound_;
-	
-	Vector4 LeftTop_[2] = {
-		{ 0.0f,0.0f,0.0f,1.0f },
-		{ 360.0f,0.0f,0.0f,1.0f }
-	};
-	Vector4 LeftBottom_[2] = {
-		{ 0.0f,360.0f,0.0f,1.0f },
-		{ 360.0f,360.0f,0.0f,1.0f }
-	};
-	Vector4 RightTop_[2] = {
-		{ 360.0f,0.0f,0.0f,1.0f },
-		{ 640.0f,0.0f,0.0f,1.0f }
-	};
-	Vector4 RightBottom_[2] = {
-		{ 360.0f,180.0f,0.0f,1.0f },
-		{ 640.0f,360.0f,0.0f,1.0f }
-	};
 
-	int count_ = 0;
+	std::unique_ptr<CollisionManager> collisionManager_;
+
+	std::unique_ptr<Player> player_;
+	std::unique_ptr<Model> playerModel_;
+
+	std::unique_ptr<Enemy> enemy_;
+	std::unique_ptr<Model> enemyModel_;
+
+	std::unique_ptr<Model> modelFighterBody_;
+	std::unique_ptr<Model> modelFighterHead_;
+	std::unique_ptr<Model> modelFighterL_arm_;
+	std::unique_ptr<Model> modelFighterR_arm_;
+
+	std::unique_ptr<FollowCamera> followCamera_;
+
+	std::unique_ptr<Goal> goal_;
+	std::unique_ptr<Model> goalModel_;
+
+	std::unique_ptr<Ground> ground_[2];
+	std::unique_ptr<MoveGround> moveGround_;
+	std::unique_ptr<Model> groundModel_;
+
+	std::unique_ptr<Skydome> skydome_;
+	std::unique_ptr<Model> skydomeModel_;
+
+	bool isDebugCameraActive_ = false;
 };
