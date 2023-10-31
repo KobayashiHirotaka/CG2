@@ -28,6 +28,7 @@
     <ClCompile Include="GameEndScene.cpp" />
     <ClCompile Include="GamePlayScene.cpp" />
     <ClCompile Include="GameStartScene.cpp" />
+    <ClCompile Include="GlobalVariables.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="ICharacter.cpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="GameEndScene.h" />
     <ClInclude Include="GamePlayScene.h" />
     <ClInclude Include="GameStartScene.h" />
+    <ClInclude Include="GlobalVariables.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="ICharacter.h" />

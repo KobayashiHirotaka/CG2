@@ -1,4 +1,5 @@
 #include "SceneManager.h"
+#include "GlobalVariables.h"
 
 void SceneManager::Run()
 {
@@ -33,6 +34,8 @@ void SceneManager::Initialize()
 	light_ = Light::GetInstance();
 	light_->Initialize();
 
+	GlobalVariables::GetInstance()->LoadFiles();
+
 	state[START] = std::make_unique<GameStartScene>();
 	state[PLAY] = std::make_unique<GamePlayScene>();
 	state[PLAY]->Initialize();
@@ -56,6 +59,7 @@ void SceneManager::Update()
 			imGui_->BeginFlame();
 			dxCommon_->PreDraw();
 			input_->Update();
+			GlobalVariables::GetInstance()->Update();
 
 			state[GameStartScene::sceneNum]->Update();
 			state[GameStartScene::sceneNum]->Draw();
