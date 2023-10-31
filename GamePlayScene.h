@@ -25,9 +25,9 @@ public:
 	GamePlayScene();
 	~GamePlayScene();
 
-	void Initialize();
-	void Update();
-	void Draw();
+	void Initialize()override;
+	void Update()override;
+	void Draw()override;
 
 private:
 	MyEngine* engine_ = nullptr;

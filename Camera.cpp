@@ -5,7 +5,7 @@ Camera::Camera()
 
 }
 
-Camera::~Camera() 
+Camera::~Camera()
 {
 
 };
@@ -17,14 +17,14 @@ void Camera::Initialize(int32_t kClientWidth, int32_t kClientHeight)
 
 
 	input_ = Input::GetInstance();
-	
+
 	worldTransform_.translation = { 0.0f,0.0f,-50.0f };
 }
 
 void Camera::Update()
 {
 #ifdef _DEBUG
-	if (DebucCameraFlag) 
+	if (DebucCameraFlag)
 	{
 		DebugCameraMove();
 	}

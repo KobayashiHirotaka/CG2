@@ -4,16 +4,16 @@
 #include <d3d12.h>
 #include <wrl.h>
 
-struct ConstBufferDataViewProjection 
+struct ConstBufferDataViewProjection
 {
 	// ワールド → ビュー変換行列
-	Matrix4x4 view;      
+	Matrix4x4 view;
 
 	// ビュー → プロジェクション変換行列
 	Matrix4x4 projection;
 
 	// カメラ座標（ワールド座標）
-	Vector3 cameraPos;    
+	Vector3 cameraPos;
 };
 
 class ViewProjection
@@ -35,7 +35,7 @@ public:
 	float fovAngleY = 0.45f;
 
 	// ビューポートのアスペクト比
-	float aspectRatio = 1280.0f / 720.0f;
+	float aspectRatio = (float)16 / 9;
 
 	// 深度限界（手前側）
 	float nearZ = 0.1f;
@@ -84,4 +84,3 @@ public:
 	/// </summary>
 	void UpdateProjectionMatrix();
 };
-

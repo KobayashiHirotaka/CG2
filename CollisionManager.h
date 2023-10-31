@@ -12,4 +12,3 @@ public:
 private:
 	std::list<Collider*> colliders_;
 };
-

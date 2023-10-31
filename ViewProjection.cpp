@@ -1,6 +1,6 @@
 #include "ViewProjection.h"
 
-void ViewProjection::Initialize() 
+void ViewProjection::Initialize()
 {
 	CreateConstBuffer();
 	Map();
@@ -8,17 +8,17 @@ void ViewProjection::Initialize()
 	TransferMatrix();
 }
 
-void ViewProjection::CreateConstBuffer() 
+void ViewProjection::CreateConstBuffer()
 {
 	constBuff = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(ConstBufferDataViewProjection));
 }
 
-void ViewProjection::Map() 
+void ViewProjection::Map()
 {
 	constBuff.Get()->Map(0, nullptr, reinterpret_cast<void**>(&constMap));
 }
 
-void ViewProjection::UpdateMatrix() 
+void ViewProjection::UpdateMatrix()
 {
 	UpdateViewMatrix();
 	UpdateProjectionMatrix();

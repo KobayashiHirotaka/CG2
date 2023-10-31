@@ -35,21 +35,23 @@ void Input::Update()
 
 bool Input::PushKey(uint8_t keyNumber)const
 {
-	if (!keys_[keyNumber] && preKeys_[keyNumber]) 
+	if (!keys_[keyNumber] && preKeys_[keyNumber])
 	{
 		return true;
 
-	}else {
+	}
+	else {
 		return false;
 	}
 }
 bool Input::PressKey(uint8_t keyNumber)const
 {
-	if (keys_[keyNumber]) 
+	if (keys_[keyNumber])
 	{
 		return true;
 
-	}else {
+	}
+	else {
 		return false;
 	}
 }
@@ -57,11 +59,20 @@ bool Input::PressKey(uint8_t keyNumber)const
 
 bool Input::IsReleseKey(uint8_t keyNumber)const
 {
-	if (keys_[keyNumber] && !preKeys_[keyNumber]) 
+	if (keys_[keyNumber] && !preKeys_[keyNumber])
 	{
 		return true;
 
-	}else {
+	}
+	else {
 		return false;
 	}
+}
+
+bool Input::GetJoystickState(XINPUT_STATE& state) {
+	DWORD dwResult = XInputGetState(0, &state);
+	if (dwResult == ERROR_SUCCESS) {
+		return true;
+	}
+	return false;
 }

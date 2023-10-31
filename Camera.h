@@ -24,7 +24,7 @@ public:
 #ifdef _DEBUG
 	void DebugCameraMove();
 
-	void DebugCamera(bool Flag) 
+	void DebugCamera(bool Flag)
 	{
 		DebucCameraFlag = Flag;
 	}
@@ -57,4 +57,3 @@ private:
 	const float speed = 0.03f;
 #endif // DEBUG
 };
-
