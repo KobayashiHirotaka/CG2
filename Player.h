@@ -42,6 +42,8 @@ private:
 
 	float playerSpeed_ = 0.3f;
 
+	float angle_ = 0.0f;
+
 	bool isHit_ = false;
 	bool preIsHit_ = false;
 

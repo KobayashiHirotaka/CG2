@@ -481,4 +481,60 @@ float Length(const Vector3& v)
 	return result;
 }
 
+float Lerp(const float& v1, const float& v2, float t) 
+{
+	float result{};
+	result = v1 + t * (v2 - v1);
+	return result;
+}
+
+float Dot(const Vector3& v1, const Vector3& v2) {
+	float result{};
+	result = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+	return result;
+}
+
+Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t) 
+{
+	Vector3 result{};
+	result.x = v1.x + t * (v2.x - v1.x);
+	result.y = v1.y + t * (v2.y - v1.y);
+	result.z = v1.z + t * (v2.z - v1.z);
+	return result;
+}
+
+Vector3 Slerp(const Vector3& v1, const Vector3& v2, float t)
+{
+	float theta = std::acos(Dot(v1, v2));
+	float sinTheta = std::sin(theta);
+	Vector3 result{};
+	if (theta != 0.0f) 
+	{
+		result.x = (std::sin(theta * (1 - t)) * v1.x + std::sin(theta * t) * v2.x) / sinTheta;
+		result.y = (std::sin(theta * (1 - t)) * v1.y + std::sin(theta * t) * v2.y) / sinTheta;
+		result.z = (std::sin(theta * (1 - t)) * v1.z + std::sin(theta * t) * v2.z) / sinTheta;
+	}
+	return Normalize(result);
+}
+
+float LerpShortAngle(const float& a, const float& b, float t)
+{
+	float diff = b - a;
+	float PI = 3.14159265359f;
+	float PI2 = 2.0f * 3.14159265359f;
+	float theta = std::fmod(diff, PI2);
+
+	if (theta >= PI) 
+	{
+		theta -= PI2;
+	}
+
+	if (theta <= -PI) 
+	{
+		theta += PI2;
+	}
+
+	return a + theta * t;
+}
+
 

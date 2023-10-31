@@ -56,7 +56,7 @@ void Player::Update()
 			move = TransformNormal(move, rotateMatrix);
 
 			worldTransform_.translation = Add(worldTransform_.translation, move);
-			worldTransform_.rotation.y = std::atan2(move.x, move.z);
+			angle_ = std::atan2(move.x, move.z);
 		}
 	}
 
@@ -75,6 +75,8 @@ void Player::Update()
 	{
 		worldTransform_.translation = { 0.0f,0.0f,0.0f };
 	}
+
+	worldTransform_.rotation.y = LerpShortAngle(worldTransform_.rotation.y, angle_, 0.01f);
 
 	ICharacter::Update();
 

@@ -73,6 +73,16 @@ Vector3 TransformNormal(const Vector3& vector, const Matrix4x4& matrix);
 
 float Length(const Vector3& v);
 
+float Dot(const Vector3& v1, const Vector3& v2);
+
+float Lerp(const float& v1, const float& v2, float t);
+
+Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t);
+
+Vector3 Slerp(const Vector3& v1, const Vector3& v2, float t);
+
+float LerpShortAngle(const float& a, const float& b, float t);
+
 struct AABB 
 {
 	Vector3 min;
