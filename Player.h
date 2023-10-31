@@ -29,6 +29,8 @@ public:
 
 	void Restart();
 
+	void ApplyGlobalVariables();
+
 private:
 	const WorldTransform* parent_ = nullptr;
 
@@ -37,6 +39,8 @@ private:
 	Input* input_ = nullptr;
 
 	XINPUT_STATE joyState_;
+
+	float playerSpeed_ = 0.3f;
 
 	bool isHit_ = false;
 	bool preIsHit_ = false;

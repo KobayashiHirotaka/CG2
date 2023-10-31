@@ -1,15 +1,25 @@
 #include "Player.h"
+#include "GlobalVariables.h"
 #include <cassert>
 
 void Player::Initialize(const std::vector<Model*>& models)
 {
 	ICharacter::Initialize(models);
 
+	input_ = Input::GetInstance();
+
 	SetCollisionAttribute(kCollisionAttributePlayer);
 	SetCollisionMask(kCollisionMaskPlayer);
 	SetCollisionPrimitive(kCollisionPrimitiveAABB);
 
-	input_ = Input::GetInstance();
+	float s = 10;
+	GlobalVariables* globalVariables{};
+	globalVariables = GlobalVariables::GetInstance();
+
+	const char* groupName = "Player";
+
+	GlobalVariables::GetInstance()->CreateGroup(groupName);
+	globalVariables->AddItem(groupName, "Speed", playerSpeed_);
 }
 
 void Player::Update()
@@ -39,9 +49,7 @@ void Player::Update()
 
 		if (isMoving)
 		{
-			const float kPlayerSpeed = 0.3f;
-
-			move = Multiply(kPlayerSpeed, Normalize(move));
+			move = Multiply(playerSpeed_, Normalize(move));
 
 			Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation);
 
@@ -73,6 +81,8 @@ void Player::Update()
 	preIsHit_ = isHit_;
 	isHit_ = false;
 	reStart_ = false;
+
+	Player::ApplyGlobalVariables();
 }
 
 void Player::Draw(const ViewProjection& viewProjection)
@@ -121,3 +131,11 @@ Vector3 Player::GetWorldPosition()
 	return pos;
 }
 
+void Player::ApplyGlobalVariables()
+{
+	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
+
+	const char* groupName = "Player";
+
+	playerSpeed_ = globalVariables->GetFloatValue(groupName, "Speed");
+}
