@@ -75,7 +75,7 @@ void Player::Update()
 		worldTransform_.translation = { 0.0f,0.0f,0.0f };
 	}
 
-	worldTransform_.rotation.y = LerpShortAngle(worldTransform_.rotation.y, angle_, 0.01f);
+	worldTransform_.rotation.y = LerpShortAngle(worldTransform_.rotation.y, angle_, 0.1f);
 
 	ICharacter::Update();
 
