@@ -28,17 +28,11 @@
     <Filter Include="ヘッダー ファイル\game\skydome">
       <UniqueIdentifier>{b1b9e5ba-b43b-4b2c-acf7-2f8328b6d224}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\game\player">
-      <UniqueIdentifier>{f23e5ba2-05d3-45ef-868a-545eb471b3a9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\game\followCamera">
       <UniqueIdentifier>{e26f7d5b-2255-4491-a978-49319039f0ef}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\game\followCamera">
       <UniqueIdentifier>{fd18484b-b91a-4a26-a907-0c5f1016f788}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\game\player">
-      <UniqueIdentifier>{9ecb81f0-00ff-496e-a31b-f13a15ed1e3f}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\game\ground">
       <UniqueIdentifier>{c7d64b90-74ae-4d97-a396-87c0eff2dd1e}</UniqueIdentifier>
@@ -127,11 +121,29 @@
     <Filter Include="ソース ファイル\game\goal">
       <UniqueIdentifier>{9434a3c2-44c1-43d8-ba02-2d0f2c3c309a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\game\enemy">
+    <Filter Include="ソース ファイル\game\GlobalVariables">
+      <UniqueIdentifier>{83b87e77-f815-4126-b454-2a8463fa38f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\game\character">
+      <UniqueIdentifier>{c3bf00ae-0859-4a43-bf1b-b7f34e34afce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\game\character\player">
+      <UniqueIdentifier>{f23e5ba2-05d3-45ef-868a-545eb471b3a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\game\character\enemy">
+      <UniqueIdentifier>{839f5254-9ce2-45bf-b184-c26a3317d67f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\game\character">
+      <UniqueIdentifier>{9c61e14f-09ce-47aa-af82-3109ee6aa93a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\game\character\player">
+      <UniqueIdentifier>{9ecb81f0-00ff-496e-a31b-f13a15ed1e3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\game\character\enemy">
       <UniqueIdentifier>{bf739d31-74b0-4ee1-b8ee-102dc6365a7e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\game\enemy">
-      <UniqueIdentifier>{839f5254-9ce2-45bf-b184-c26a3317d67f}</UniqueIdentifier>
+    <Filter Include="ヘッダー ファイル\game\GlobalVariables">
+      <UniqueIdentifier>{aade509f-1c3e-4645-a991-2c8c14dfe259}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -229,7 +241,7 @@
       <Filter>ソース ファイル\game\skydome</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル\game\player</Filter>
+      <Filter>ソース ファイル\game\character\player</Filter>
     </ClCompile>
     <ClCompile Include="FollowCamera.cpp">
       <Filter>ソース ファイル\game\followCamera</Filter>
@@ -247,13 +259,13 @@
       <Filter>ソース ファイル\game\goal</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>ソース ファイル\game\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="ICharacter.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\game\character\enemy</Filter>
     </ClCompile>
     <ClCompile Include="GlobalVariables.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\game\GlobalVariables</Filter>
+    </ClCompile>
+    <ClCompile Include="ICharacter.cpp">
+      <Filter>ソース ファイル\game\character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -378,7 +390,7 @@
       <Filter>ヘッダー ファイル\game\followCamera</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>ヘッダー ファイル\game\player</Filter>
+      <Filter>ヘッダー ファイル\game\character\player</Filter>
     </ClInclude>
     <ClInclude Include="Ground.h">
       <Filter>ヘッダー ファイル\game\ground</Filter>
@@ -411,13 +423,13 @@
       <Filter>ヘッダー ファイル\game\goal</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>ヘッダー ファイル\game\enemy</Filter>
+      <Filter>ヘッダー ファイル\game\character\enemy</Filter>
     </ClInclude>
     <ClInclude Include="ICharacter.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\game\character</Filter>
     </ClInclude>
     <ClInclude Include="GlobalVariables.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\game\GlobalVariables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
