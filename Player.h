@@ -41,11 +41,21 @@ public:
 
 	void BehaviorAttackUpdate();
 
+	void BehaviorDashInitialize();
+
+	void BehaviorDashUpdate();
+
 private:
 	enum class Behavior
 	{
 		kRoot,
-		kAttack
+		kAttack,
+		kDash
+	};
+
+	struct WorkDash
+	{
+		uint32_t dashParameter_= 0;
 	};
 
 	const WorldTransform* parent_ = nullptr;
@@ -67,6 +77,8 @@ private:
 	WorldTransform worldTransformHammer_;
 
 	int attackAnimationFrame;
+
+	WorkDash workDash_;
 
 	bool isHit_ = false;
 	bool preIsHit_ = false;

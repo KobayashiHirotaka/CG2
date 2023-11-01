@@ -63,6 +63,10 @@ void Player::Update()
 		case Behavior::kAttack:
 			BehaviorAttackInitialize();
 			break;
+
+		case Behavior::kDash:
+			BehaviorDashInitialize();
+			break;
 		}
 
 		behaviorRequest_ = std::nullopt;
@@ -77,6 +81,10 @@ void Player::Update()
 
 	case Behavior::kAttack:
 		BehaviorAttackUpdate();
+		break;
+
+	case Behavior::kDash:
+		BehaviorDashUpdate();
 		break;
 	}
 
@@ -164,6 +172,11 @@ void Player::BehaviorRootInitialize()
 
 void Player::BehaviorRootUpdate()
 {
+	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+	{
+		behaviorRequest_ = Behavior::kDash;
+	}
+
 	if (Input::GetInstance()->GetJoystickState(joyState_))
 	{
 		const float deadZone = 0.7f;
@@ -216,6 +229,22 @@ void Player::BehaviorAttackUpdate()
 		behaviorRequest_ = Behavior::kRoot;
 	}
 	attackAnimationFrame++;
+}
+
+void Player::BehaviorDashInitialize()
+{
+	workDash_.dashParameter_ = 0;
+	worldTransform_.rotation.y = targetAngle_;
+}
+
+void Player::BehaviorDashUpdate()
+{
+	const uint32_t behaviorDashTime = 20;
+
+	if (++workDash_.dashParameter_ >= behaviorDashTime)
+	{
+		behaviorRequest_ = Behavior::kRoot;
+	}
 }
 
 void Player::ApplyGlobalVariables()
