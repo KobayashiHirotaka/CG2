@@ -28,6 +28,7 @@ void GamePlayScene::Initialize()
 	viewProjection_.Initialize();
 
 	playerModel_.reset(Model::CreateModelFromObj("resource/player", "player.obj"));
+	hammerModel_.reset(Model::CreateModelFromObj("resource/hammer", "hammer.obj"));
 
 	modelFighterBody_.reset(Model::CreateModelFromObj("resource/float_Body", "float_Body.obj"));
 	modelFighterHead_.reset(Model::CreateModelFromObj("resource/float_Head", "float_Head.obj"));
@@ -42,7 +43,7 @@ void GamePlayScene::Initialize()
 
 	collisionManager_ = std::make_unique<CollisionManager>();
 
-	std::vector<Model*> playerModels = { playerModel_.get()};
+	std::vector<Model*> playerModels = { playerModel_.get(),hammerModel_.get()};
 
 	std::vector<Model*> enemyModels = { modelFighterBody_.get(), modelFighterHead_.get(), modelFighterL_arm_.get(),
 		modelFighterR_arm_.get() };

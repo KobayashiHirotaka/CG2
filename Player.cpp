@@ -8,6 +8,11 @@ void Player::Initialize(const std::vector<Model*>& models)
 
 	input_ = Input::GetInstance();
 
+	SetParent(&GetWorldTransform());
+	worldTransform_.parent_ = worldTransformHammer_.parent_;
+
+	worldTransformHammer_.Initialize();
+
 	SetCollisionAttribute(kCollisionAttributePlayer);
 	SetCollisionMask(kCollisionMaskPlayer);
 	SetCollisionPrimitive(kCollisionPrimitiveAABB);
@@ -34,30 +39,45 @@ void Player::Update()
 		worldTransform_.DeleteParent();
 	}
 
-	if (Input::GetInstance()->GetJoystickState(joyState_))
+	if (!Input::GetInstance()->GetJoystickState(joyState_))
 	{
-		const float deadZone = 0.7f;
+		return;
+	}
 
-		bool isMoving = false;
+	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+	{
+		behaviorRequest_ = Behavior::kAttack;
+	}
 
-		Vector3 move = { (float)joyState_.Gamepad.sThumbLX / SHRT_MAX, 0.0f, (float)joyState_.Gamepad.sThumbLY / SHRT_MAX };
+	if (behaviorRequest_)
+	{
+		behavior_ = behaviorRequest_.value();
 
-		if (Length(move) > deadZone)
+		switch (behavior_)
 		{
-			isMoving = true;
+		case Behavior::kRoot:
+		default:
+			BehaviorRootInitialize();
+			break;
+
+		case Behavior::kAttack:
+			BehaviorAttackInitialize();
+			break;
 		}
 
-		if (isMoving)
-		{
-			move = Multiply(playerSpeed_, Normalize(move));
+		behaviorRequest_ = std::nullopt;
+	}
 
-			Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation);
+	switch (behavior_)
+	{
+	case Behavior::kRoot:
+	default:
+		BehaviorRootUpdate();
+		break;
 
-			move = TransformNormal(move, rotateMatrix);
-
-			worldTransform_.translation = Add(worldTransform_.translation, move);
-			angle_ = std::atan2(move.x, move.z);
-		}
+	case Behavior::kAttack:
+		BehaviorAttackUpdate();
+		break;
 	}
 
 	if (isHit_ == false)
@@ -75,9 +95,9 @@ void Player::Update()
 		worldTransform_.translation = { 0.0f,0.0f,0.0f };
 	}
 
-	worldTransform_.rotation.y = LerpShortAngle(worldTransform_.rotation.y, angle_, 0.1f);
-
 	ICharacter::Update();
+
+	worldTransformHammer_.UpdateMatrix();
 
 	preIsHit_ = isHit_;
 	isHit_ = false;
@@ -88,7 +108,12 @@ void Player::Update()
 
 void Player::Draw(const ViewProjection& viewProjection)
 {
-	ICharacter::Draw(viewProjection);
+	models_[0]->Draw(worldTransform_, viewProjection);
+
+	if (behavior_ == Behavior::kAttack)
+	{
+		models_[1]->Draw(worldTransformHammer_, viewProjection);
+	}
 }
 
 void Player::Restart()
@@ -130,6 +155,67 @@ Vector3 Player::GetWorldPosition()
 	pos.y = worldTransform_.matWorld.m[3][1];
 	pos.z = worldTransform_.matWorld.m[3][2];
 	return pos;
+}
+
+void Player::BehaviorRootInitialize()
+{
+	worldTransform_.Initialize();
+}
+
+void Player::BehaviorRootUpdate()
+{
+	if (Input::GetInstance()->GetJoystickState(joyState_))
+	{
+		const float deadZone = 0.7f;
+
+		bool isMoving = false;
+
+		Vector3 move = { (float)joyState_.Gamepad.sThumbLX / SHRT_MAX, 0.0f, (float)joyState_.Gamepad.sThumbLY / SHRT_MAX };
+
+		if (Length(move) > deadZone)
+		{
+			isMoving = true;
+		}
+
+		if (isMoving)
+		{
+			move = Multiply(playerSpeed_, Normalize(move));
+
+			Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation);
+
+			move = TransformNormal(move, rotateMatrix);
+
+			worldTransform_.translation = Add(worldTransform_.translation, move);
+			targetAngle_ = std::atan2(move.x, move.z);
+		}
+	}
+
+	worldTransform_.rotation.y = LerpShortAngle(worldTransform_.rotation.y, targetAngle_, 0.1f);
+}
+
+void Player::BehaviorAttackInitialize()
+{
+	worldTransformHammer_.rotation.x = 0.0f;
+
+	attackAnimationFrame = 0;
+}
+
+void Player::BehaviorAttackUpdate()
+{
+	if (attackAnimationFrame < 10)
+	{
+		worldTransformHammer_.rotation.x -= 0.05f;
+
+	}
+	else if (worldTransformHammer_.rotation.x <= 2.0f * std::numbers::pi / 4) {
+		
+		worldTransformHammer_.rotation.x += 0.1f;
+
+	}
+	else {
+		behaviorRequest_ = Behavior::kRoot;
+	}
+	attackAnimationFrame++;
 }
 
 void Player::ApplyGlobalVariables()

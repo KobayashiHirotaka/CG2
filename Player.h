@@ -7,6 +7,8 @@
 #include "WorldTransform.h"
 #include "Input.h"
 #include "MyMath.h"
+#include <optional>
+#include <numbers>
 
 class Player : public Collider, public ICharacter
 {
@@ -25,13 +27,27 @@ public:
 
 	void OnCollision(Collider* collider)override;
 
-	void SetParent(const WorldTransform* parent) { parent_ = parent; };
+	void SetParent(const WorldTransform* parent) { worldTransformHammer_.parent_ = parent; };
 
 	void Restart();
 
 	void ApplyGlobalVariables();
 
+	void BehaviorRootInitialize();
+
+	void BehaviorRootUpdate();
+
+	void BehaviorAttackInitialize();
+
+	void BehaviorAttackUpdate();
+
 private:
+	enum class Behavior
+	{
+		kRoot,
+		kAttack
+	};
+
 	const WorldTransform* parent_ = nullptr;
 
 	const ViewProjection* viewProjection_ = nullptr;
@@ -42,7 +58,15 @@ private:
 
 	float playerSpeed_ = 0.3f;
 
-	float angle_ = 0.0f;
+	float targetAngle_ = 0.0f;
+
+	Behavior behavior_ = Behavior::kRoot;
+
+	std::optional<Behavior> behaviorRequest_ = std::nullopt;
+
+	WorldTransform worldTransformHammer_;
+
+	int attackAnimationFrame;
 
 	bool isHit_ = false;
 	bool preIsHit_ = false;
