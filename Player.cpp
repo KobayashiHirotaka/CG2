@@ -179,7 +179,6 @@ void Player::BehaviorRootUpdate()
 {
 	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_A)
 	{
-		isHit_ = false;
 		behaviorRequest_ = Behavior::kJump;
 	}
 
@@ -205,7 +204,24 @@ void Player::BehaviorRootUpdate()
 			velocity_ = TransformNormal(velocity_, rotateMatrix);
 
 			worldTransform_.translation = Add(worldTransform_.translation, velocity_);
-			targetAngle_ = std::atan2(velocity_.x, velocity_.z);
+
+			if (velocity_.z == 0.0 && velocity_.x == 0.0)
+			{
+				targetAngle_ = 0.0;
+
+			} else {
+				float dotProduct = velocity_.x;
+
+				float magnitude = std::sqrt(velocity_.x * velocity_.x + velocity_.z * velocity_.z);
+
+				targetAngle_ = std::acos(dotProduct / magnitude);
+
+				if (velocity_.z < 0) 
+				{
+					targetAngle_ = -targetAngle_;
+				}
+			}
+
 		}
 	}
 
