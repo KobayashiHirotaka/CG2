@@ -67,6 +67,10 @@ void Player::Update()
 		case Behavior::kDash:
 			BehaviorDashInitialize();
 			break;
+
+		case Behavior::kJump:
+			BehaviorJumpInitialize();
+			break;
 		}
 
 		behaviorRequest_ = std::nullopt;
@@ -86,17 +90,16 @@ void Player::Update()
 	case Behavior::kDash:
 		BehaviorDashUpdate();
 		break;
+
+	case Behavior::kJump:
+		BehaviorJumpUpdate();
+		break;
 	}
 
 	if (isHit_ == false)
 	{
 		worldTransform_.translation.y -= 0.1f;
 	} 
-	
-	if (isHit_ == true)
-	{
-		worldTransform_.translation.y = 1.0f;
-	}
 
 	if (worldTransform_.translation.y <= -4.0f)
 	{
@@ -136,6 +139,7 @@ void Player::OnCollision(Collider* collider)
 	if (collider->GetCollisionAttribute() & kCollisionAttributeGround && reStart_== false)
 	{
 		isHit_ = true;
+		worldTransform_.translation.y = 1.0f;
 		parent_ = &collider->GetWorldTransform();
 
 		if (worldTransform_.parent_ != parent_)
@@ -168,13 +172,15 @@ Vector3 Player::GetWorldPosition()
 void Player::BehaviorRootInitialize()
 {
 	worldTransform_.Initialize();
+	worldTransform_.translation.y = 1.0f;
 }
 
 void Player::BehaviorRootUpdate()
 {
 	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_A)
 	{
-		behaviorRequest_ = Behavior::kDash;
+		isHit_ = false;
+		behaviorRequest_ = Behavior::kJump;
 	}
 
 	if (Input::GetInstance()->GetJoystickState(joyState_))
@@ -183,23 +189,23 @@ void Player::BehaviorRootUpdate()
 
 		bool isMoving = false;
 
-		Vector3 move = { (float)joyState_.Gamepad.sThumbLX / SHRT_MAX, 0.0f, (float)joyState_.Gamepad.sThumbLY / SHRT_MAX };
+		velocity_ = { (float)joyState_.Gamepad.sThumbLX / SHRT_MAX, 0.0f, (float)joyState_.Gamepad.sThumbLY / SHRT_MAX };
 
-		if (Length(move) > deadZone)
+		if (Length(velocity_) > deadZone)
 		{
 			isMoving = true;
 		}
 
 		if (isMoving)
 		{
-			move = Multiply(playerSpeed_, Normalize(move));
+			velocity_ = Multiply(playerSpeed_, Normalize(velocity_));
 
 			Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation);
 
-			move = TransformNormal(move, rotateMatrix);
+			velocity_ = TransformNormal(velocity_, rotateMatrix);
 
-			worldTransform_.translation = Add(worldTransform_.translation, move);
-			targetAngle_ = std::atan2(move.x, move.z);
+			worldTransform_.translation = Add(worldTransform_.translation, velocity_);
+			targetAngle_ = std::atan2(velocity_.x, velocity_.z);
 		}
 	}
 
@@ -243,6 +249,33 @@ void Player::BehaviorDashUpdate()
 
 	if (++workDash_.dashParameter_ >= behaviorDashTime)
 	{
+		behaviorRequest_ = Behavior::kRoot;
+	}
+}
+
+void Player::BehaviorJumpInitialize()
+{
+	worldTransform_.translation.y = 1.0f;
+
+	const float kJumpFirstSpeed_ = 1.0f;
+
+	velocity_.y = kJumpFirstSpeed_;
+}
+
+void Player::BehaviorJumpUpdate()
+{
+	worldTransform_.translation = Add(worldTransform_.translation, velocity_);
+
+	const float kGravityAcceleration_ = 0.05f;
+
+	Vector3 accelerationVector_ = { 0.0f,-kGravityAcceleration_,0.0f };
+
+	velocity_ = Add(velocity_, accelerationVector_);
+
+	if (worldTransform_.translation.y <= 1.0f)
+	{
+		worldTransform_.translation.y = 1.0f;
+		
 		behaviorRequest_ = Behavior::kRoot;
 	}
 }

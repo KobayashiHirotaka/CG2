@@ -45,12 +45,17 @@ public:
 
 	void BehaviorDashUpdate();
 
+	void BehaviorJumpInitialize();
+
+	void BehaviorJumpUpdate();
+
 private:
 	enum class Behavior
 	{
 		kRoot,
 		kAttack,
-		kDash
+		kDash,
+		kJump
 	};
 
 	struct WorkDash
@@ -79,6 +84,8 @@ private:
 	int attackAnimationFrame;
 
 	WorkDash workDash_;
+
+	Vector3 velocity_ = {};
 
 	bool isHit_ = false;
 	bool preIsHit_ = false;
