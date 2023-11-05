@@ -44,11 +44,6 @@ void Player::Update()
 		return;
 	}
 
-	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
-	{
-		behaviorRequest_ = Behavior::kAttack;
-	}
-
 	if (behaviorRequest_)
 	{
 		behavior_ = behaviorRequest_.value();
@@ -174,8 +169,25 @@ void Player::BehaviorRootUpdate()
 {
 	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_A)
 	{
-		behaviorRequest_ = Behavior::kDash;
+		if (workDash_.coolTime == 60)
+		{
+			behaviorRequest_ = Behavior::kDash;
+		}
 	}
+
+	if (workDash_.coolTime != 60) 
+{
+		workDash_.coolTime++;
+	}
+
+	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+	{
+		if (workDash_.coolTime == 60)
+		{
+			behaviorRequest_ = Behavior::kAttack;
+		}
+	}
+
 
 	if (Input::GetInstance()->GetJoystickState(joyState_))
 	{
@@ -209,7 +221,7 @@ void Player::BehaviorRootUpdate()
 void Player::BehaviorAttackInitialize()
 {
 	worldTransformHammer_.rotation.x = 0.0f;
-
+	workDash_.coolTime = 0;
 	attackAnimationFrame = 0;
 }
 
@@ -234,13 +246,29 @@ void Player::BehaviorAttackUpdate()
 void Player::BehaviorDashInitialize()
 {
 	workDash_.dashParameter_ = 0;
+	workDash_.coolTime = 0;
 	worldTransform_.rotation.y = targetAngle_;
 }
 
 void Player::BehaviorDashUpdate()
 {
-	const uint32_t behaviorDashTime = 20;
+	if (input_->GetJoystickState(joyState_))
+	{
+		
+		float kDashSpeed = 1.0f;
+	
+		Vector3 move = { (float)joyState_.Gamepad.sThumbLX / SHRT_MAX, 0.0f, (float)joyState_.Gamepad.sThumbLY / SHRT_MAX };
 
+		move = Multiply(kDashSpeed, Normalize(move));
+
+		Matrix4x4 rotateMatrix = MakeRotateYMatrix(viewProjection_->rotation.y);
+		move = TransformNormal(move, rotateMatrix);
+
+		worldTransform_.translation = Add(worldTransform_.translation, move);
+	}
+
+	const uint32_t behaviorDashTime = 10;
+	
 	if (++workDash_.dashParameter_ >= behaviorDashTime)
 	{
 		behaviorRequest_ = Behavior::kRoot;

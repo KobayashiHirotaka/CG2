@@ -13,9 +13,13 @@ public:
 
 	const ViewProjection& GetViewProjection() { return viewProjection_; }
 
-	void SetTarget(const WorldTransform* target) { target_ = target; }
+	void SetTarget(const WorldTransform* target);
 
 	Vector3 GetWorldPosition();
+
+	Vector3 Offset();
+
+	void Reset();
 
 private:
 	WorldTransform worldTransform_;
@@ -26,5 +30,9 @@ private:
 	Input* input_ = nullptr;
 
 	XINPUT_STATE joyState_;
+
+	Vector3 interTarget_{};
+
+	float destinationAngleY_ = 0.0f;
 };
 

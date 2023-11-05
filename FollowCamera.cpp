@@ -9,18 +9,15 @@ void FollowCamera::Initialize()
 
 void FollowCamera::Update()
 {
-	//追従対象がいれば
-	if (target_)
+	if (target_) 
 	{
-		//追従対象からカメラまでのオフセット
-		Vector3 offset = { 0.0f, 2.0f, -25.0f };
-
-		Matrix4x4 cameraRotateMatrix = MakeRotateMatrix(viewProjection_.rotation);
-
-		offset = TransformNormal(offset, cameraRotateMatrix);
-
-		viewProjection_.translation = Add(GetWorldPosition(), offset);
+		interTarget_ = Lerp(interTarget_, GetWorldPosition(), 0.1f);
 	}
+
+	Vector3 offset = FollowCamera::Offset();
+	
+	viewProjection_.translation = Add(interTarget_, offset);
+
 
 	if (Input::GetInstance()->GetJoystickState(joyState_))
 	{
@@ -37,11 +34,13 @@ void FollowCamera::Update()
 
 		if (isMoving)
 		{
-			const float kRotateSpeed = 0.02f;
+			const float kRotSpeedY = 0.04f;
 
-			viewProjection_.rotation.y += move.y * kRotateSpeed;
+			destinationAngleY_ += move.y * kRotSpeedY;
 		}
 	}
+
+	viewProjection_.rotation.y = LerpShortAngle(viewProjection_.rotation.y, destinationAngleY_, 0.1f);
 
 	viewProjection_.UpdateViewMatrix();
 	viewProjection_.TransferMatrix();
@@ -54,4 +53,39 @@ Vector3 FollowCamera::GetWorldPosition()
 	pos.y = target_->matWorld.m[3][1];
 	pos.z = target_->matWorld.m[3][2];
 	return pos;
+}
+
+void FollowCamera::SetTarget(const WorldTransform* target)
+{ 
+	target_ = target; 
+	FollowCamera::Reset();
+}
+
+Vector3 FollowCamera::Offset()
+{
+	Vector3 offset = { 0.0f, 2.0f, -25.0f };
+	
+	Matrix4x4 rotateXMatrix = MakeRotateXMatrix(viewProjection_.rotation.x);
+	Matrix4x4 rotateYMatrix = MakeRotateYMatrix(viewProjection_.rotation.y);
+	Matrix4x4 rotateZMatrix = MakeRotateZMatrix(viewProjection_.rotation.z);
+	Matrix4x4 rotateMatrix = Multiply(rotateXMatrix, Multiply(rotateYMatrix, rotateZMatrix));
+
+	offset = TransformNormal(offset, rotateMatrix);
+
+	return offset;
+}
+
+void FollowCamera::Reset() 
+{
+	if (target_)
+	{
+		interTarget_ = target_->translation;
+		viewProjection_.rotation.x = target_->rotation.x;
+		viewProjection_.rotation.y = target_->rotation.y;
+	}
+
+	destinationAngleY_ = viewProjection_.rotation.y;
+
+	Vector3 offset = FollowCamera::Offset();
+	viewProjection_.translation = Add(interTarget_, offset);
 }

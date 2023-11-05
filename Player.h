@@ -56,6 +56,7 @@ private:
 	struct WorkDash
 	{
 		uint32_t dashParameter_= 0;
+		uint32_t coolTime = 0;
 	};
 
 	const WorldTransform* parent_ = nullptr;
