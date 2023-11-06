@@ -8,10 +8,9 @@ void Player::Initialize(const std::vector<Model*>& models)
 
 	input_ = Input::GetInstance();
 
-	SetParent(&GetWorldTransform());
-	worldTransform_.parent_ = worldTransformHammer_.parent_;
-
-	worldTransformHammer_.Initialize();
+	weapon_ = std::make_unique<Weapon>();
+	weapon_->Initialize(models_[1]);
+	weapon_->SetParent(&worldTransform_);
 
 	SetCollisionAttribute(kCollisionAttributePlayer);
 	SetCollisionMask(kCollisionMaskPlayer);
@@ -100,8 +99,6 @@ void Player::Update()
 
 	ICharacter::Update();
 
-	worldTransformHammer_.UpdateMatrix();
-
 	preIsHit_ = isHit_;
 	isHit_ = false;
 	reStart_ = false;
@@ -115,7 +112,7 @@ void Player::Draw(const ViewProjection& viewProjection)
 
 	if (behavior_ == Behavior::kAttack)
 	{
-		models_[1]->Draw(worldTransformHammer_, viewProjection);
+		weapon_->Draw(viewProjection);
 	}
 }
 
@@ -167,17 +164,17 @@ void Player::BehaviorRootInitialize()
 
 void Player::BehaviorRootUpdate()
 {
+	if (workDash_.coolTime != 60)
+	{
+		workDash_.coolTime++;
+	}
+
 	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_A)
 	{
 		if (workDash_.coolTime == 60)
 		{
 			behaviorRequest_ = Behavior::kDash;
 		}
-	}
-
-	if (workDash_.coolTime != 60) 
-{
-		workDash_.coolTime++;
 	}
 
 	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
@@ -187,7 +184,6 @@ void Player::BehaviorRootUpdate()
 			behaviorRequest_ = Behavior::kAttack;
 		}
 	}
-
 
 	if (Input::GetInstance()->GetJoystickState(joyState_))
 	{
@@ -254,7 +250,6 @@ void Player::BehaviorDashUpdate()
 {
 	if (input_->GetJoystickState(joyState_))
 	{
-		
 		float kDashSpeed = 1.0f;
 	
 		Vector3 move = { (float)joyState_.Gamepad.sThumbLX / SHRT_MAX, 0.0f, (float)joyState_.Gamepad.sThumbLY / SHRT_MAX };

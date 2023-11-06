@@ -7,6 +7,7 @@
 #include "WorldTransform.h"
 #include "Input.h"
 #include "MyMath.h"
+#include "Weapon.h"
 #include <optional>
 #include <numbers>
 
@@ -45,6 +46,8 @@ public:
 
 	void BehaviorDashUpdate();
 
+	Weapon* GetWeapon() { return weapon_.get(); };
+
 private:
 	enum class Behavior
 	{
@@ -75,11 +78,11 @@ private:
 
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 
-	WorldTransform worldTransformHammer_;
-
 	int attackAnimationFrame;
 
 	WorkDash workDash_;
+
+	std::unique_ptr<Weapon> weapon_ = nullptr;
 
 	bool isHit_ = false;
 	bool preIsHit_ = false;
