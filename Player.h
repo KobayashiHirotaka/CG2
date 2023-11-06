@@ -41,9 +41,9 @@ public:
 
 	void BehaviorAttackUpdate();
 
-	void BehaviorDashInitialize();
+	void BehaviorDriftInitialize();
 
-	void BehaviorDashUpdate();
+	void BehaviorDriftUpdate();
 
 	Weapon* GetWeapon() { return weapon_.get(); };
 
@@ -52,7 +52,7 @@ private:
 	{
 		kRoot,
 		kAttack,
-		kDash
+		kDrift
 	};
 
 	struct WorkDash
@@ -77,7 +77,7 @@ private:
 
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 
-	WorkDash workDash_;
+	WorkDash workDrift_;
 
 	std::unique_ptr<Weapon> weapon_ = nullptr;
 
@@ -85,5 +85,7 @@ private:
 	bool preIsHit_ = false;
 
 	bool reStart_ = false;
+
+	bool isDrifting = false;
 };
 

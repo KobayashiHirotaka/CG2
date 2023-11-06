@@ -58,8 +58,8 @@ void Player::Update()
 			BehaviorAttackInitialize();
 			break;
 
-		case Behavior::kDash:
-			BehaviorDashInitialize();
+		case Behavior::kDrift:
+			BehaviorDriftInitialize();
 			break;
 		}
 
@@ -77,15 +77,15 @@ void Player::Update()
 		BehaviorAttackUpdate();
 		break;
 
-	case Behavior::kDash:
-		BehaviorDashUpdate();
+	case Behavior::kDrift:
+		BehaviorDriftUpdate();
 		break;
 	}
 
-	if (isHit_ == false)
+	/*if (isHit_ == false)
 	{
 		worldTransform_.translation.y -= 0.1f;
-	} 
+	} */
 	
 	if (isHit_ == true)
 	{
@@ -166,22 +166,23 @@ void Player::BehaviorRootInitialize()
 
 void Player::BehaviorRootUpdate()
 {
-	if (workDash_.coolTime != 60)
+	if (workDrift_.coolTime != 60)
 	{
-		workDash_.coolTime++;
+		workDrift_.coolTime++;
 	}
 
 	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_A)
 	{
-		if (workDash_.coolTime == 60)
+		if (workDrift_.coolTime == 60)
 		{
-			behaviorRequest_ = Behavior::kDash;
+			isDrifting = true;
+			behaviorRequest_ = Behavior::kDrift;
 		}
 	}
 
 	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
 	{
-		if (workDash_.coolTime == 60)
+		if (workDrift_.coolTime == 60)
 		{
 			behaviorRequest_ = Behavior::kAttack;
 		}
@@ -229,33 +230,47 @@ void Player::BehaviorAttackUpdate()
 	}
 }
 
-void Player::BehaviorDashInitialize()
+void Player::BehaviorDriftInitialize()
 {
-	workDash_.dashParameter_ = 0;
-	workDash_.coolTime = 0;
+	workDrift_.dashParameter_ = 0;
+	workDrift_.coolTime = 0;
 	worldTransform_.rotation.y = targetAngle_;
 }
 
-void Player::BehaviorDashUpdate()
+void Player::BehaviorDriftUpdate()
 {
 	if (input_->GetJoystickState(joyState_))
 	{
-		float kDashSpeed = 1.0f;
-	
-		Vector3 move = { (float)joyState_.Gamepad.sThumbLX / SHRT_MAX, 0.0f, (float)joyState_.Gamepad.sThumbLY / SHRT_MAX };
+		float rotationSpeed = 0.1f;
 
-		move = Multiply(kDashSpeed, Normalize(move));
+		if (isDrifting)
+		{
+			// ドリフトモード中
+			Vector3 move = { 0.0f, 0.0f, 0.0f }; // ドリフト中は移動しない
 
-		Matrix4x4 rotateMatrix = MakeRotateYMatrix(viewProjection_->rotation.y);
-		move = TransformNormal(move, rotateMatrix);
+			/*float rotationAmount = (float)joyState_.Gamepad.sThumbLX / SHRT_MAX * rotationSpeed;
+			worldTransform_.rotation.y += rotationAmount;*/
 
-		worldTransform_.translation = Add(worldTransform_.translation, move);
+			// Aボタンが離されたらドリフトモードを解除
+			if (!(joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_A))
+			{
+				float runSpeed = 1.5f; // 速い走行速度（調整可能）
+				Vector3 move = { (float)joyState_.Gamepad.sThumbLX / SHRT_MAX, 0.0f, (float)joyState_.Gamepad.sThumbLY / SHRT_MAX };
+				move = Multiply(runSpeed, Normalize(move));
+
+				Matrix4x4 rotateMatrix = MakeRotateYMatrix(viewProjection_->rotation.y);
+				move = TransformNormal(move, rotateMatrix);
+
+				worldTransform_.translation = Add(worldTransform_.translation, move);
+			}
+		}
 	}
 
-	const uint32_t behaviorDashTime = 10;
+	const uint32_t behaviorDashTime = 60;
 	
-	if (++workDash_.dashParameter_ >= behaviorDashTime)
+	if (++workDrift_.dashParameter_ >= behaviorDashTime)
 	{
+		isDrifting = false;
 		behaviorRequest_ = Behavior::kRoot;
 	}
 }
