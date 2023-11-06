@@ -7,28 +7,24 @@ void Weapon::Initialize(Model* model)
 	model_ = model;
 	
 	worldTransform_.Initialize();
-	worldTransform_.translation.y = 0.8f;
 	
 	SetCollisionAttribute(kCollisionAttributeWeapon);
 	SetCollisionMask(kCollisionMaskWeapon);
 	SetCollisionPrimitive(kCollisionPrimitiveAABB);
-
-	AABB aabbSize = { {-10.0f,-10.0f,-10.0f},{10.0f,10.0f,10.0f} };
-	SetAABB(aabbSize);
 }
 
 void Weapon::Update()
 {
-	if (isAttack_)
+	if (isAttack_ == true)
 	{
 		attackAnimationTimer_++;
 	}
 
-	if (attackAnimationCount_ == 0) 
+	if (attackAnimationCount_ == 0)
 	{
-		if (attackAnimationTimer_ == 30) 
+		if (attackAnimationTimer_ == 30)
 		{
-			attackAnimationCount_++;
+			attackAnimationCount_ = 1;
 			attackAnimationTimer_ = 0;
 		}
 
@@ -39,7 +35,7 @@ void Weapon::Update()
 	{
 		if (attackAnimationTimer_ == 15)
 		{
-			attackAnimationCount_++;
+			attackAnimationCount_ = 2;
 			attackAnimationTimer_ = 0;
 		}
 
@@ -48,9 +44,8 @@ void Weapon::Update()
 
 	if (attackAnimationCount_ == 2)
 	{
-		if (attackAnimationTimer_ == 30) 
+		if (attackAnimationTimer_ == 10)
 		{
-			attackAnimationCount_++;
 			attackAnimationTimer_ = 0;
 			isAttack_ = false;
 		}
@@ -66,9 +61,21 @@ void Weapon::Draw(const ViewProjection& viewProjection)
 
 void Weapon::OnCollision(Collider* collider) 
 {
-	ImGui::Begin("Weapon");
-	ImGui::Text("Hit");
-	ImGui::End();
+	if (worldTransform_.rotation.x >= 1.3f && attackAnimationCount_ == 1)
+	{
+		isHit_ = true;
+	}
+	else
+	{
+		isHit_ = false;
+	}
+
+	if (isHit_ == true && collider->GetCollisionAttribute() & kCollisionAttributeEnemy)
+	{
+		ImGui::Begin("Weapon");
+		ImGui::Text("Hit");
+		ImGui::End();
+	}
 }
 
 Vector3 Weapon::GetWorldPosition()

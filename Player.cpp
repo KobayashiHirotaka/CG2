@@ -99,6 +99,8 @@ void Player::Update()
 
 	ICharacter::Update();
 
+	weapon_->Update();
+
 	preIsHit_ = isHit_;
 	isHit_ = false;
 	reStart_ = false;
@@ -216,27 +218,15 @@ void Player::BehaviorRootUpdate()
 
 void Player::BehaviorAttackInitialize()
 {
-	worldTransformHammer_.rotation.x = 0.0f;
-	workDash_.coolTime = 0;
-	attackAnimationFrame = 0;
+	weapon_->Attack();
 }
 
 void Player::BehaviorAttackUpdate()
 {
-	if (attackAnimationFrame < 10)
+	if (weapon_->GetIsAttack() == false)
 	{
-		worldTransformHammer_.rotation.x -= 0.05f;
-
-	}
-	else if (worldTransformHammer_.rotation.x <= 2.0f * std::numbers::pi / 4) {
-		
-		worldTransformHammer_.rotation.x += 0.1f;
-
-	}
-	else {
 		behaviorRequest_ = Behavior::kRoot;
 	}
-	attackAnimationFrame++;
 }
 
 void Player::BehaviorDashInitialize()

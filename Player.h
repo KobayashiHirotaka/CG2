@@ -9,7 +9,6 @@
 #include "MyMath.h"
 #include "Weapon.h"
 #include <optional>
-#include <numbers>
 
 class Player : public Collider, public ICharacter
 {
@@ -28,7 +27,7 @@ public:
 
 	void OnCollision(Collider* collider)override;
 
-	void SetParent(const WorldTransform* parent) { worldTransformHammer_.parent_ = parent; };
+	void SetParent(const WorldTransform* parent) { parent_ = parent; };
 
 	void Restart();
 
@@ -77,8 +76,6 @@ private:
 	Behavior behavior_ = Behavior::kRoot;
 
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
-
-	int attackAnimationFrame;
 
 	WorkDash workDash_;
 

@@ -9,7 +9,7 @@ const uint32_t kCollisionAttributeWeapon = 0b10000;
 
 const uint32_t kCollisionMaskPlayer = 0b11110;
 const uint32_t kCollisionMaskEnemy = 0b11101;
-const uint32_t kCollisionMaskFloor = 0b11011;
+const uint32_t kCollisionMaskGround = 0b11011;
 const uint32_t kCollisionMaskGoal = 0b00001;
 const uint32_t kCollisionMaskWeapon = 0b00010;
 
