@@ -90,7 +90,7 @@ void GamePlayScene::Update()
 		audio_->Play(audio_->xAudio2.Get(), audio_->soundDatas[0]);
 	}
 
-	/*if (input_->PressKey(DIK_W))
+	if (input_->PressKey(DIK_W))
 	{
 		worldTransformModel_.translation.y += 0.05f;
 	}
@@ -139,7 +139,7 @@ void GamePlayScene::Update()
 	if (input_->PressKey(DIK_RIGHT))
 	{
 		worldTransform_[0].rotation.y -= 0.05f;
-	}*/
+	}
 
 	viewProjection_.UpdateMatrix();
 	worldTransform_[0].UpdateMatrix();

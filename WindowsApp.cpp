@@ -1,4 +1,5 @@
 #include "WindowsApp.h"
+#pragma comment(lib,"winmm.lib")
 
 WindowsApp* WindowsApp::GetInstance()
 {
@@ -30,6 +31,9 @@ LRESULT WindowsApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam
 
 void WindowsApp::Initialize()
 {
+	//システムタイマーの分解能をあげる
+	timeBeginPeriod(1);
+
 	//ウィンドウプロシージャ
 	wc_.lpfnWndProc = WindowProc;
 	//クラス名

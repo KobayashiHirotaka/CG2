@@ -8,6 +8,7 @@
 #include "MyMath.h"
 #include <wrl.h>
 #include <cassert>
+#include <chrono>
 #include "externals/DirectXTex/d3dx12.h"
 
 #pragma comment(lib,"d3d12.lib")
@@ -75,6 +76,11 @@ private:
 	IDxcBlob* CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler);
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> CreateDepthStencilTextureResource(int32_t width, int32_t height);
+
+private:
+	void InitializeFixFPS();
+
+	void UpdateFixFPS();
 
 private:
 	WindowsApp* win_;
@@ -159,6 +165,9 @@ private:
 
 	//scissor
 	D3D12_RECT scissorRect_{};
+
+	//記録時間(FPS固定用)
+	std::chrono::steady_clock::time_point reference_{};
 	
 #ifdef _DEBUG
 	Microsoft::WRL::ComPtr<ID3D12Debug1> debugController_ = nullptr;
