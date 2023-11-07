@@ -11,6 +11,14 @@ void Weapon::Initialize(Model* model)
 	SetCollisionAttribute(kCollisionAttributeWeapon);
 	SetCollisionMask(kCollisionMaskWeapon);
 	SetCollisionPrimitive(kCollisionPrimitiveAABB);
+
+	AABB aabbSize =
+	{
+		{-30.0f,-10.0f,-30.0f},
+		{30.0f,10.0f,30.0f},
+	};
+
+	SetAABB(aabbSize);
 }
 
 void Weapon::Update()
