@@ -45,12 +45,11 @@ void GamePlayScene::Initialize()
 
 	audio_->soundDatas[0] = audio_->SoundLoadWave("resource/mokugyo.wav");
 
-	model_ = model_->CreateModelFromObj("resource","plane.obj");
+	model_ = model_->CreateModelFromObj("resource","fence.obj");
 
 	worldTransform_[0].translation.x = 5.0f;
 	worldTransform_[1].translation.z = -10.0f;
 
-	worldTransformModel_.translation.z = -45.0f;
 
 	viewProjection_.Initialize();
 	worldTransformModel_.Initialize();

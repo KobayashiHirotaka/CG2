@@ -30,6 +30,21 @@ PixelShaderOutput main(VertexShaderOutput input)
 	float4 transformedUV=mul(float32_t4(input.texcoord,0.0f,1.0f),gMaterial.uvTransform);
 	float32_t4 textureColor = gTexture.Sample(gSampler,transformedUV.xy);
 
+	if (textureColor.a <= 0.5)
+    {
+        discard;
+    }
+    
+    if (textureColor.a == 0)
+    {
+        discard;
+    }
+    
+    if (output.color.a == 0)
+    {
+        discard;
+    }
+
 	if (gMaterial.enableLighting !=0)
 	{
 	 if (gMaterial.enableLighting == harfLambert)
