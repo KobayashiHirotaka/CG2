@@ -26,10 +26,10 @@ public:
 	ConstBufferDataViewProjection* constMap = nullptr;
 
 	// X,Y,Z軸回りのローカル回転角
-	Vector3 rotation = { 0, 0, 0 };
+	Vector3 rotation = { 0.0f, 0.0f, 0.0f };
 
 	// ローカル座標
-	Vector3 translation = { 0, 0, -50 };
+	Vector3 translation = { 0.0f, 0.0f, -15.0f };
 
 	// 垂直方向視野角
 	float fovAngleY = 0.45f;
