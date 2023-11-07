@@ -249,8 +249,8 @@ void Player::BehaviorDriftUpdate()
 			// ドリフトモード中
 			Vector3 move = { 0.0f, 0.0f, 0.0f }; // ドリフト中は移動しない
 
-			/*float rotationAmount = (float)joyState_.Gamepad.sThumbLX / SHRT_MAX * rotationSpeed;
-			worldTransform_.rotation.y += rotationAmount;*/
+			float rotationAmount = (float)joyState_.Gamepad.sThumbLX / SHRT_MAX * rotationSpeed;
+			worldTransform_.rotation.y += rotationAmount;
 
 			// Aボタンが離されたらドリフトモードを解除
 			if (!(joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_A))
