@@ -241,6 +241,7 @@ void Player::BehaviorDriftUpdate()
 {
 	if (input_->GetJoystickState(joyState_))
 	{
+		const uint32_t behaviorDashTime = 30;
 		float rotationSpeed = 0.1f;
 
 		if (isDrifting)
@@ -254,24 +255,36 @@ void Player::BehaviorDriftUpdate()
 			// Aボタンが離されたらドリフトモードを解除
 			if (!(joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_A))
 			{
+				workDrift_.dashParameter_++;
+				const float deadZone = 0.3f;
+
+				bool isMoving = false;
+
 				float runSpeed = 1.5f; // 速い走行速度（調整可能）
 				Vector3 move = { (float)joyState_.Gamepad.sThumbLX / SHRT_MAX, 0.0f, (float)joyState_.Gamepad.sThumbLY / SHRT_MAX };
-				move = Multiply(runSpeed, Normalize(move));
 
-				Matrix4x4 rotateMatrix = MakeRotateYMatrix(viewProjection_->rotation.y);
-				move = TransformNormal(move, rotateMatrix);
+				if (Length(move) > deadZone)
+				{
+					isMoving = true;
+				}
 
-				worldTransform_.translation = Add(worldTransform_.translation, move);
+				if (isMoving)
+				{
+					move = Multiply(runSpeed, Normalize(move));
+
+					Matrix4x4 rotateMatrix = MakeRotateYMatrix(viewProjection_->rotation.y);
+					move = TransformNormal(move, rotateMatrix);
+
+					worldTransform_.translation = Add(worldTransform_.translation, move);
+				}
+			}
+
+			if (workDrift_.dashParameter_ >= behaviorDashTime)
+			{
+				isDrifting = false;
+				behaviorRequest_ = Behavior::kRoot;
 			}
 		}
-	}
-
-	const uint32_t behaviorDashTime = 60;
-	
-	if (++workDrift_.dashParameter_ >= behaviorDashTime)
-	{
-		isDrifting = false;
-		behaviorRequest_ = Behavior::kRoot;
 	}
 }
 
