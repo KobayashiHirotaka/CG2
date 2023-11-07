@@ -83,6 +83,17 @@ private:
 	void UpdateFixFPS();
 
 private:
+	enum BlendMode
+	{
+		kBlendModeNone,
+		kBlendModeNormal,
+		kBlendModeAdd,
+		kBlendModeSubtract,
+		kBlendModeMultiply,
+		kBlendModeScreen,
+		kCountOfBlendMode
+	};
+
 	WindowsApp* win_;
 
 	HRESULT hr_;

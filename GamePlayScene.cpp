@@ -25,6 +25,7 @@ void GamePlayScene::Initialize()
 	textureManager_ = TextureManager::GetInstance();
 
 	light_ = Light::GetInstance();
+	light_->Initialize();
 
 	sprite_ = new Sprite();
 	sprite_->Initialize(LeftTop_[0], LeftBottom_[0], RightTop_[1], RightBottom_[1]);
@@ -49,7 +50,7 @@ void GamePlayScene::Initialize()
 	worldTransform_[0].translation.x = 5.0f;
 	worldTransform_[1].translation.z = -10.0f;
 
-	worldTransformModel_.translation.x = -5.0f;
+	worldTransformModel_.translation.z = -45.0f;
 
 	viewProjection_.Initialize();
 	worldTransformModel_.Initialize();
@@ -148,10 +149,10 @@ void GamePlayScene::Update()
 
 void GamePlayScene::Draw()
 {
-	sphere_[0]->Draw(worldTransform_[0], viewProjection_, texture_);
+	/*sphere_[0]->Draw(worldTransform_[0], viewProjection_, texture_);
 	sphere_[1]->Draw(worldTransform_[1], viewProjection_, texture_);
 
-	sprite_->Draw(worldTransformSprite_, texture_);
+	sprite_->Draw(worldTransformSprite_, texture_);*/
 
 	model_->Draw(worldTransformModel_, viewProjection_);
 
@@ -169,6 +170,8 @@ void GamePlayScene::Draw()
 	ImGui::End();
 
 	engine_->ImGui();
+
+	light_->ImGui("LIGHT");
 
 	if (changeTexture_ == true)
 	{
