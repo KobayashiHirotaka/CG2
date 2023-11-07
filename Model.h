@@ -34,7 +34,7 @@ private:
 
 	Light* light_ = nullptr;
 
-	int32_t lightFlag = Lighting::checkLighting;
+	int32_t lightFlag = Lighting::harfLambert;
 	
 	ModelData modelData_;
 

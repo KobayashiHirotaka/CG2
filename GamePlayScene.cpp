@@ -171,7 +171,9 @@ void GamePlayScene::Draw()
 
 	engine_->ImGui();
 
-	light_->ImGui("LIGHT");
+	model_->ImGui("Model");
+
+	light_->ImGui("Light");
 
 	if (changeTexture_ == true)
 	{

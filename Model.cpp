@@ -42,17 +42,9 @@ void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProj
 
 void Model::ImGui(const char* Title)
 {
-	/*ImGui::Begin("Obj");
-	float ImGuiScaleObj[3] = { transformObj_.scale.x,transformObj_.scale.y ,transformObj_.scale.z };
-	ImGui::SliderFloat3("ScaleObj", ImGuiScaleObj, 1, 30, "%.3f");
-	transformObj_.scale = { ImGuiScaleObj[0],ImGuiScaleObj[1],ImGuiScaleObj[2] };
-	float ImGuiRotateObj[3] = { transformObj_.rotate.x,transformObj_.rotate.y ,transformObj_.rotate.z };
-	ImGui::SliderFloat3("RotateObj", ImGuiRotateObj, -7, 7, "%.3f");
-	transformObj_.rotate = { ImGuiRotateObj[0],ImGuiRotateObj[1],ImGuiRotateObj[2] };
-	float ImGuiTranslateObj[3] = { transformObj_.translate.x,transformObj_.translate.y ,transformObj_.translate.z };
-	ImGui::SliderFloat3("TranslateObj", ImGuiTranslateObj, -10, 10, "%.3f");
-	transformObj_.translate = { ImGuiTranslateObj[0],ImGuiTranslateObj[1],ImGuiTranslateObj[2] };
-	ImGui::End();*/
+	ImGui::Begin("Obj");
+	ImGui::ColorEdit4("Color", &materialDataObj_->color.x);
+	ImGui::End();
 }
 
 Model* Model::CreateModelFromObj(const std::string& directoryPath, const std::string& filename)
