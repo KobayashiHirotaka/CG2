@@ -16,14 +16,13 @@ void Player::Initialize(const std::vector<Model*>& models)
 	SetCollisionMask(kCollisionMaskPlayer);
 	SetCollisionPrimitive(kCollisionPrimitiveAABB);
 
-	float s = 10;
 	GlobalVariables* globalVariables{};
 	globalVariables = GlobalVariables::GetInstance();
 
 	const char* groupName = "Player";
 
 	GlobalVariables::GetInstance()->CreateGroup(groupName);
-	globalVariables->AddItem(groupName, "Speed", playerSpeed_);
+	globalVariables->AddItem(groupName, "behaviorDashTime", behaviorDashTime_);
 }
 
 void Player::Update()
@@ -121,7 +120,7 @@ void Player::Draw(const ViewProjection& viewProjection)
 void Player::Restart()
 {
 	reStart_ = true;
-	worldTransform_.translation = { 0.0f,0.0f,0.0f };
+	worldTransform_.translation = { 0.0f,1.0f,0.0f };
 	worldTransform_.parent_ = nullptr;
 }
 
@@ -251,10 +250,8 @@ void Player::BehaviorDashUpdate()
 
 		worldTransform_.translation = Add(worldTransform_.translation, move);
 	}
-
-	const uint32_t behaviorDashTime = 10;
 	
-	if (++workDash_.dashParameter_ >= behaviorDashTime)
+	if (++workDash_.dashParameter_ >= behaviorDashTime_)
 	{
 		behaviorRequest_ = Behavior::kRoot;
 	}
@@ -266,5 +263,5 @@ void Player::ApplyGlobalVariables()
 
 	const char* groupName = "Player";
 
-	playerSpeed_ = globalVariables->GetFloatValue(groupName, "Speed");
+	behaviorDashTime_ = globalVariables->GetIntValue(groupName, "behaviorDashTime");
 }

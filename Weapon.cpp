@@ -7,6 +7,7 @@ void Weapon::Initialize(Model* model)
 	model_ = model;
 	
 	worldTransform_.Initialize();
+	collisionWorldTransform_.Initialize();
 	
 	SetCollisionAttribute(kCollisionAttributeWeapon);
 	SetCollisionMask(kCollisionMaskWeapon);
@@ -14,8 +15,8 @@ void Weapon::Initialize(Model* model)
 
 	AABB aabbSize =
 	{
-		{-30.0f,-10.0f,-30.0f},
-		{30.0f,10.0f,30.0f},
+		{-1.0f,-1.0f,-1.0f},
+		{1.0f,1.0f,1.0f},
 	};
 
 	SetAABB(aabbSize);
@@ -69,20 +70,14 @@ void Weapon::Draw(const ViewProjection& viewProjection)
 
 void Weapon::OnCollision(Collider* collider) 
 {
-	if (worldTransform_.rotation.x >= 1.3f && attackAnimationCount_ == 1)
+	if (isAttack_ = true)
 	{
-		isHit_ = true;
-	}
-	else
-	{
-		isHit_ = false;
-	}
-
-	if (isHit_ == true && collider->GetCollisionAttribute() & kCollisionAttributeEnemy)
-	{
-		ImGui::Begin("Weapon");
-		ImGui::Text("Hit");
-		ImGui::End();
+		if (collider->GetCollisionAttribute() & kCollisionAttributeEnemy)
+		{
+			ImGui::Begin("Weapon");
+			ImGui::Text("Hit");
+			ImGui::End();
+		}
 	}
 }
 

@@ -21,6 +21,8 @@ public:
 
 	void Reset();
 
+	void ApplyGlobalVariables();
+
 private:
 	WorldTransform worldTransform_;
 	const WorldTransform* target_ = nullptr;
@@ -34,5 +36,7 @@ private:
 	Vector3 interTarget_{};
 
 	float destinationAngleY_ = 0.0f;
+
+	float cameraDelay_ = 0.1f;
 };
 

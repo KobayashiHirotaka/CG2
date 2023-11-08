@@ -57,8 +57,8 @@ private:
 
 	struct WorkDash
 	{
-		uint32_t dashParameter_= 0;
-		uint32_t coolTime = 0;
+		int dashParameter_= 0;
+		int coolTime = 0;
 	};
 
 	const WorldTransform* parent_ = nullptr;
@@ -80,6 +80,8 @@ private:
 	WorkDash workDash_;
 
 	std::unique_ptr<Weapon> weapon_ = nullptr;
+
+	int behaviorDashTime_ = 10;
 
 	bool isHit_ = false;
 	bool preIsHit_ = false;

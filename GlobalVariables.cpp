@@ -113,7 +113,7 @@ void GlobalVariables::Update()
 			}
 			else if (std::holds_alternative<float>(item.value)) {
 				float* ptr = std::get_if<float>(&item.value);
-				ImGui::SliderFloat(itemName.c_str(), ptr, 0, 100);
+				ImGui::SliderFloat(itemName.c_str(), ptr, 0.01f, 1.0f);
 
 			}
 			else if (std::holds_alternative<Vector3>(item.value)) {

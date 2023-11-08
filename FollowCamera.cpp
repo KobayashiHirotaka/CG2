@@ -1,17 +1,26 @@
 #include "FollowCamera.h"
+#include "GlobalVariables.h"
 
 void FollowCamera::Initialize()
 {
 	input_ = Input::GetInstance();
 
 	viewProjection_.Initialize();
+
+	GlobalVariables* globalVariables{};
+	globalVariables = GlobalVariables::GetInstance();
+
+	const char* groupName = "FollowCamera";
+
+	GlobalVariables::GetInstance()->CreateGroup(groupName);
+	globalVariables->AddItem(groupName, "cameraDelay", cameraDelay_);
 }
 
 void FollowCamera::Update()
 {
 	if (target_) 
 	{
-		interTarget_ = Lerp(interTarget_, GetWorldPosition(), 0.1f);
+		interTarget_ = Lerp(interTarget_, GetWorldPosition(), cameraDelay_);
 	}
 
 	Vector3 offset = FollowCamera::Offset();
@@ -44,6 +53,8 @@ void FollowCamera::Update()
 
 	viewProjection_.UpdateViewMatrix();
 	viewProjection_.TransferMatrix();
+
+	FollowCamera::ApplyGlobalVariables();
 }
 
 Vector3 FollowCamera::GetWorldPosition()
@@ -88,4 +99,13 @@ void FollowCamera::Reset()
 
 	Vector3 offset = FollowCamera::Offset();
 	viewProjection_.translation = Add(interTarget_, offset);
+}
+
+void FollowCamera::ApplyGlobalVariables()
+{
+	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
+
+	const char* groupName = "FollowCamera";
+
+	cameraDelay_ = globalVariables->GetFloatValue(groupName, "cameraDelay");
 }

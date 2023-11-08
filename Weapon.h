@@ -33,6 +33,7 @@ private:
 	Model* model_ = nullptr;
 
 	WorldTransform worldTransform_;
+	WorldTransform collisionWorldTransform_;
 
 	uint16_t attackAnimationCount_ = 0;
 	uint16_t attackAnimationTimer_ = 0;
