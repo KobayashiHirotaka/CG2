@@ -537,4 +537,55 @@ float LerpShortAngle(const float& a, const float& b, float t)
 	return a + theta * t;
 }
 
+Vector3 Cross(const Vector3& v1, const Vector3& v2)
+{
+	Vector3 result{};
+
+	result.x = v1.y * v2.z - v1.z * v2.y;
+	result.y = v1.z * v2.x - v1.x * v2.z;
+	result.z = v1.x * v2.y - v1.y * v2.x;
+
+	return result;
+}
+
+Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to)
+{
+	Vector3 source = Normalize(from);
+	Vector3 target = Normalize(to);
+
+	// 軸と角度を計算
+	Vector3 axis = Cross(source, target); // 回転軸
+	float cosTheta = Dot(source, target); // cos(θ)：内積から求める
+	float sinTheta = Length(axis); // sin(θ)：回転軸ベクトルの長さ
+
+	// 回転行列の要素を計算
+	float oneMinusCos = 1.0f - cosTheta;
+	float x = axis.x;
+	float y = axis.y;
+	float z = axis.z;
+
+	Matrix4x4 rotationMatrix;
+	rotationMatrix.m[0][0] = (x * x * oneMinusCos) + cosTheta;
+	rotationMatrix.m[0][1] = (x * y * oneMinusCos) - (z * sinTheta);
+	rotationMatrix.m[0][2] = (x * z * oneMinusCos) + (y * sinTheta);
+	rotationMatrix.m[0][3] = 0.0f;
+
+	rotationMatrix.m[1][0] = (y * x * oneMinusCos) + (z * sinTheta);
+	rotationMatrix.m[1][1] = (y * y * oneMinusCos) + cosTheta;
+	rotationMatrix.m[1][2] = (y * z * oneMinusCos) - (x * sinTheta);
+	rotationMatrix.m[1][3] = 0.0f;
+
+	rotationMatrix.m[2][0] = (z * x * oneMinusCos) - (y * sinTheta);
+	rotationMatrix.m[2][1] = (z * y * oneMinusCos) + (x * sinTheta);
+	rotationMatrix.m[2][2] = (z * z * oneMinusCos) + cosTheta;
+	rotationMatrix.m[2][3] = 0.0f;
+
+	rotationMatrix.m[3][0] = 0.0f;
+	rotationMatrix.m[3][1] = 0.0f;
+	rotationMatrix.m[3][2] = 0.0f;
+	rotationMatrix.m[3][3] = 1.0f;
+
+	return rotationMatrix;
+}
+
 

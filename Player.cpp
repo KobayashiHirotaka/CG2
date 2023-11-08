@@ -208,11 +208,16 @@ void Player::BehaviorRootUpdate()
 			move = TransformNormal(move, rotateMatrix);
 
 			worldTransform_.translation = Add(worldTransform_.translation, move);
-			targetAngle_ = std::atan2(move.x, move.z);
+
+			Vector3 playerForward = { 0.0f, 0.0f, 1.0f }; 
+			float dotProduct = Dot(Normalize(move), playerForward);
+			float moveAngle = acos(dotProduct);
+
+			targetAngle_ = moveAngle;
 		}
 	}
 
-	worldTransform_.rotation.y = LerpShortAngle(worldTransform_.rotation.y, targetAngle_, 0.1f);
+	worldTransform_.rotation.y = LerpShortAngle(worldTransform_.rotation.y, targetAngle_, 1.0f);
 }
 
 void Player::BehaviorAttackInitialize()

@@ -83,6 +83,10 @@ Vector3 Slerp(const Vector3& v1, const Vector3& v2, float t);
 
 float LerpShortAngle(const float& a, const float& b, float t);
 
+Vector3 Cross(const Vector3& v1, const Vector3& v2);
+
+Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to);
+
 struct AABB 
 {
 	Vector3 min;
