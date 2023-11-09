@@ -221,7 +221,6 @@ void Player::BehaviorRootUpdate()
 					targetAngle_ = -targetAngle_;
 				}
 			}
-
 		}
 	}
 
