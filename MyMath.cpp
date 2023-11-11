@@ -533,7 +533,7 @@ Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to)
 {
 	Matrix4x4 result{};
 
-	Vector3 n{};
+	Vector3 n = Normalize(Cross(from, to));
 
 	if (from.x == -to.x && from.y == -to.y && from.z == -to.z)
 	{
@@ -545,9 +545,6 @@ Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to)
 		{
 			n = { from.z,0.0f,-from.x };
 		}
-	}
-	else {
-		n = Normalize(Cross(from, to));
 	}
 
 	float cosTheta = Dot(from, to);
