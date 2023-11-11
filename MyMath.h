@@ -73,6 +73,8 @@ Vector3 TransformNormal(const Vector3& vector, const Matrix4x4& matrix);
 
 float Length(const Vector3& v);
 
+Matrix4x4 MakeRotateAxisAngle(const Vector3& axis, float angle);
+
 struct AABB
 {
 	Vector3 min;
