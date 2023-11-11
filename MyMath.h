@@ -75,6 +75,12 @@ float Length(const Vector3& v);
 
 Matrix4x4 MakeRotateAxisAngle(const Vector3& axis, float angle);
 
+float Dot(const Vector3& v1, const Vector3& v2);
+
+Vector3 Cross(const Vector3& v1, const Vector3& v2);
+
+Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to);
+
 struct AABB
 {
 	Vector3 min;
