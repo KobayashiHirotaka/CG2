@@ -14,6 +14,21 @@ struct Transform
 	Vector3 translate;
 };
 
+struct AABB
+{
+	Vector3 min;
+	Vector3 max;
+};
+
+struct Quaternion
+{
+	float x;
+	float y;
+	float z;
+	float w;
+};
+
+
 //X軸回転行列
 Matrix4x4 MakeRotateXMatrix(float radian);
 
@@ -81,8 +96,15 @@ Vector3 Cross(const Vector3& v1, const Vector3& v2);
 
 Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to);
 
-struct AABB
-{
-	Vector3 min;
-	Vector3 max;
-};
+Quaternion Multiply(const Quaternion& lhs, const Quaternion& rhs);
+
+Quaternion IdentityQuaternion();
+
+Quaternion Conjugate(const Quaternion& quaternion);
+
+float Norm(const Quaternion& quaternion);
+
+Quaternion Normalize(const Quaternion& quaternion);
+
+Quaternion Inverse(const Quaternion& quaternion);
+
