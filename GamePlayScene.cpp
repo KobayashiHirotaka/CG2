@@ -148,12 +148,12 @@ void GamePlayScene::Update()
 
 void GamePlayScene::Draw()
 {
-	/*sphere_[0]->Draw(worldTransform_[0], viewProjection_, texture_);
+	sphere_[0]->Draw(worldTransform_[0], viewProjection_, texture_);
 	sphere_[1]->Draw(worldTransform_[1], viewProjection_, texture_);
 
-	sprite_->Draw(worldTransformSprite_, texture_);*/
+	sprite_->Draw(worldTransformSprite_, texture_);
 
-	/*model_->Draw(worldTransformModel_, viewProjection_);*/
+	model_->Draw(worldTransformModel_, viewProjection_);
 
 	if (changeTexture_ == true)
 	{

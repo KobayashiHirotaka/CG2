@@ -31,10 +31,10 @@ void GameStartScene::Update()
 
 	ImGui::End();
 
-	/*ImGui::Begin("SceneNum");
+	ImGui::Begin("SceneNum");
 	ImGui::Text("SceneNum %d", sceneNum);
 	ImGui::InputInt("SceneNum", &sceneNum);
-	ImGui::End();*/
+	ImGui::End();
 }
 
 void GameStartScene::Draw()
