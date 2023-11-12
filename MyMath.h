@@ -14,6 +14,21 @@ struct Transform
 	Vector3 translate;
 };
 
+struct AABB
+{
+	Vector3 min;
+	Vector3 max;
+};
+
+struct Quaternion
+{
+	float x;
+	float y;
+	float z;
+	float w;
+};
+
+
 //X軸回転行列
 Matrix4x4 MakeRotateXMatrix(float radian);
 
@@ -73,8 +88,33 @@ Vector3 TransformNormal(const Vector3& vector, const Matrix4x4& matrix);
 
 float Length(const Vector3& v);
 
-struct AABB
-{
-	Vector3 min;
-	Vector3 max;
-};
+Matrix4x4 MakeRotateAxisAngle(const Vector3& axis, float angle);
+
+float Dot(const Vector3& v1, const Vector3& v2);
+
+Vector3 Cross(const Vector3& v1, const Vector3& v2);
+
+Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to);
+
+Quaternion Multiply(const Quaternion& lhs, const Quaternion& rhs);
+
+Quaternion IdentityQuaternion();
+
+Quaternion Conjugate(const Quaternion& quaternion);
+
+float Norm(const Quaternion& quaternion);
+
+Quaternion Normalize(const Quaternion& quaternion);
+
+Quaternion Inverse(const Quaternion& quaternion);
+
+Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle);
+
+Vector3 RotateVector(const Vector3& vector, const Quaternion& quaternion);
+
+Matrix4x4 MakeRotateMatrix(const Quaternion& quaternion);
+
+Vector3 TransformVectorByMatrix(const Vector3& vector, const Matrix4x4& matrix);
+
+Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
+
