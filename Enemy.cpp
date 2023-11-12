@@ -30,8 +30,6 @@ void Enemy::Initialize(const std::vector<Model*>& models)
 
 void Enemy::Update()
 {
-	ICharacter::Update();
-
 	worldTransform_.translation = Add(worldTransform_.translation, move_);
 
 	if (worldTransform_.translation.x >= 5.0f)
@@ -45,6 +43,7 @@ void Enemy::Update()
 	}
 
 	FloatingGimmickUpdate();
+	ICharacter::Update();
 
 	worldTransform_.UpdateMatrix();
 
@@ -52,6 +51,14 @@ void Enemy::Update()
 	worldTransformHead_.UpdateMatrix();
 	worldTransformL_arm_.UpdateMatrix();
 	worldTransformR_arm_.UpdateMatrix();
+
+	if (isDead_)
+	{
+		ImGui::Begin("Enemy");
+		ImGui::Text("Dead");
+		ImGui::Checkbox("Reset", &isDead_);
+		ImGui::End();
+	}
 }
 
 void Enemy::Draw(const ViewProjection& viewProjection)
@@ -69,7 +76,10 @@ void Enemy::SetParent(const WorldTransform* parent)
 
 void Enemy::OnCollision(Collider* collider)
 {
-	
+	if (collider->GetCollisionAttribute() & kCollisionAttributeWeapon)
+	{
+		isDead_ = true;
+	}
 }
 
 Vector3 Enemy::GetWorldPosition()

@@ -15,8 +15,8 @@ void Weapon::Initialize(Model* model)
 
 	AABB aabbSize =
 	{
-		{-1.0f,-1.0f,-1.0f},
-		{1.0f,1.0f,1.0f},
+		{-collisionWorldTransform_.scale.x,-collisionWorldTransform_.scale.y,-collisionWorldTransform_.scale.z},
+		{collisionWorldTransform_.scale.x,collisionWorldTransform_.scale.y,collisionWorldTransform_.scale.z},
 	};
 
 	SetAABB(aabbSize);
@@ -49,6 +49,11 @@ void Weapon::Update()
 		}
 
 		worldTransform_.rotation.x += 0.2f;
+
+		Vector3 direction{ 0.0f,0.0f,4.0f };
+		direction = TransformNormal(direction, worldTransform_.matWorld);
+		collisionWorldTransform_.translation = { worldTransform_.matWorld.m[3][0],worldTransform_.matWorld.m[3][1],worldTransform_.matWorld.m[3][2] };
+		collisionWorldTransform_.translation = Add(collisionWorldTransform_.translation, direction);
 	}
 
 	if (attackAnimationCount_ == 2)
@@ -61,6 +66,7 @@ void Weapon::Update()
 	}
 
 	worldTransform_.UpdateMatrix();
+	collisionWorldTransform_.UpdateMatrix();
 }
 
 void Weapon::Draw(const ViewProjection& viewProjection)
@@ -70,23 +76,15 @@ void Weapon::Draw(const ViewProjection& viewProjection)
 
 void Weapon::OnCollision(Collider* collider) 
 {
-	if (isAttack_ = true)
-	{
-		if (collider->GetCollisionAttribute() & kCollisionAttributeEnemy)
-		{
-			ImGui::Begin("Weapon");
-			ImGui::Text("Hit");
-			ImGui::End();
-		}
-	}
+	
 }
 
 Vector3 Weapon::GetWorldPosition()
 {
 	Vector3 pos{};
-	pos.x = worldTransform_.matWorld.m[3][0];
-	pos.y = worldTransform_.matWorld.m[3][1];
-	pos.z = worldTransform_.matWorld.m[3][2];
+	pos.x = collisionWorldTransform_.matWorld.m[3][0];
+	pos.y = collisionWorldTransform_.matWorld.m[3][1];
+	pos.z = collisionWorldTransform_.matWorld.m[3][2];
 	return pos;
 }
 

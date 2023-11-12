@@ -83,6 +83,8 @@ private:
 
 	int behaviorDashTime_ = 10;
 
+	Matrix4x4 matRot_{};
+
 	bool isHit_ = false;
 	bool preIsHit_ = false;
 

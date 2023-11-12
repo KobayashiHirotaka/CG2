@@ -96,6 +96,30 @@ void Player::Update()
 		worldTransform_.translation = { 0.0f,0.0f,0.0f };
 	}
 
+	Matrix4x4 worldMatrix{};
+	worldMatrix.m[0][0] = worldTransform_.scale.x * matRot_.m[0][0];
+	worldMatrix.m[0][1] = worldTransform_.scale.x * matRot_.m[0][1];
+	worldMatrix.m[0][2] = worldTransform_.scale.x * matRot_.m[0][2];
+	worldMatrix.m[0][3] = 0.0f;
+	worldMatrix.m[1][0] = worldTransform_.scale.y * matRot_.m[1][0];
+	worldMatrix.m[1][1] = worldTransform_.scale.y * matRot_.m[1][1];
+	worldMatrix.m[1][2] = worldTransform_.scale.y * matRot_.m[1][2];
+	worldMatrix.m[1][3] = 0.0f;
+	worldMatrix.m[2][0] = worldTransform_.scale.z * matRot_.m[2][0];
+	worldMatrix.m[2][1] = worldTransform_.scale.z * matRot_.m[2][1];
+	worldMatrix.m[2][2] = worldTransform_.scale.z * matRot_.m[2][2];
+	worldMatrix.m[2][3] = 0.0f;
+	worldMatrix.m[3][0] = worldTransform_.translation.x;
+	worldMatrix.m[3][1] = worldTransform_.translation.y;
+	worldMatrix.m[3][2] = worldTransform_.translation.z;
+	worldMatrix.m[3][3] = 1.0f;
+	worldTransform_.matWorld = worldMatrix;
+	//親がいれば行列を掛ける
+	if (worldTransform_.parent_) {
+		worldTransform_.matWorld = Multiply(worldTransform_.matWorld, worldTransform_.parent_->matWorld);
+	}
+	worldTransform_.TransferMatrix();
+
 	ICharacter::Update();
 
 	weapon_->Update();
@@ -160,7 +184,7 @@ Vector3 Player::GetWorldPosition()
 
 void Player::BehaviorRootInitialize()
 {
-	worldTransform_.Initialize();
+	
 }
 
 void Player::BehaviorRootUpdate()
@@ -201,19 +225,17 @@ void Player::BehaviorRootUpdate()
 
 		if (isMoving)
 		{
-			move = Multiply(playerSpeed_, Normalize(move));
+			const float playerSpeed = 0.3f;
 
-			Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation);
+			move = Multiply(playerSpeed, Normalize(move));
 
+			Matrix4x4 rotateMatrix = MakeRotateYMatrix(viewProjection_->rotation.y);
 			move = TransformNormal(move, rotateMatrix);
 
+			targetAngle_ = std::atan2(move.x, move.z);
+			matRot_ = DirectionToDirection(Normalize(worldTransform_.translation), Normalize(move));
+
 			worldTransform_.translation = Add(worldTransform_.translation, move);
-
-			Vector3 playerForward = { 0.0f, 0.0f, 1.0f }; 
-			float dotProduct = Dot(Normalize(move), playerForward);
-			float moveAngle = acos(dotProduct);
-
-			targetAngle_ = moveAngle;
 		}
 	}
 
@@ -244,15 +266,22 @@ void Player::BehaviorDashUpdate()
 {
 	if (input_->GetJoystickState(joyState_))
 	{
-		float kDashSpeed = 1.0f;
-	
-		Vector3 move = { (float)joyState_.Gamepad.sThumbLX / SHRT_MAX, 0.0f, (float)joyState_.Gamepad.sThumbLY / SHRT_MAX };
+		float kSpeed = 1.0f;
+		//移動量
+		Vector3 move = {
+			(float)joyState_.Gamepad.sThumbLX / SHRT_MAX,
+			0.0f,
+			(float)joyState_.Gamepad.sThumbLY / SHRT_MAX,
+		};
 
-		move = Multiply(kDashSpeed, Normalize(move));
+		//移動量に速さを反映
+		move = Multiply(kSpeed, Normalize(move));
 
+		//移動ベクトルをカメラの角度だけ回転する
 		Matrix4x4 rotateMatrix = MakeRotateYMatrix(viewProjection_->rotation.y);
 		move = TransformNormal(move, rotateMatrix);
 
+		//移動
 		worldTransform_.translation = Add(worldTransform_.translation, move);
 	}
 	

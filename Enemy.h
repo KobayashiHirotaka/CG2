@@ -44,4 +44,6 @@ private:
 	int floatingCycle_[2];
 
 	float floatingAmplitude_;
+
+	bool isDead_ = false;
 };
