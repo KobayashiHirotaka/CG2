@@ -148,12 +148,31 @@ void GamePlayScene::Update()
 
 void GamePlayScene::Draw()
 {
-	sphere_[0]->Draw(worldTransform_[0], viewProjection_, texture_);
+	/*sphere_[0]->Draw(worldTransform_[0], viewProjection_, texture_);
 	sphere_[1]->Draw(worldTransform_[1], viewProjection_, texture_);
 
-	sprite_->Draw(worldTransformSprite_, texture_);
+	sprite_->Draw(worldTransformSprite_, texture_);*/
 
 	model_->Draw(worldTransformModel_, viewProjection_);
+
+	ImGui::Begin("sphereTexture");
+	ImGui::Checkbox("texture", &changeTexture_);
+	ImGui::End();
+
+	ImGui::Begin("count");
+	ImGui::Text("count %d", count_);
+	ImGui::End();
+
+	ImGui::Begin("Camera");
+	ImGui::SliderFloat3("rotation", &viewProjection_.rotation.x, 1.0f, -1.0f);
+	ImGui::SliderFloat3("transform", &viewProjection_.translation.x, 10.0f, -10.0f);
+	ImGui::End();
+
+	engine_->ImGui();
+
+	model_->ImGui("Model");
+
+	light_->ImGui("Light");
 
 	if (changeTexture_ == true)
 	{
