@@ -45,28 +45,23 @@ void Enemy::Update()
 	FloatingGimmickUpdate();
 	ICharacter::Update();
 
-	worldTransform_.UpdateMatrix();
+	worldTransform_.UpdateMatrix(RotationType::Euler);
 
-	worldTransformBody_.UpdateMatrix();
-	worldTransformHead_.UpdateMatrix();
-	worldTransformL_arm_.UpdateMatrix();
-	worldTransformR_arm_.UpdateMatrix();
-
-	if (isDead_)
-	{
-		ImGui::Begin("Enemy");
-		ImGui::Text("Dead");
-		ImGui::Checkbox("Reset", &isDead_);
-		ImGui::End();
-	}
+	worldTransformBody_.UpdateMatrix(RotationType::Euler);
+	worldTransformHead_.UpdateMatrix(RotationType::Euler);
+	worldTransformL_arm_.UpdateMatrix(RotationType::Euler);
+	worldTransformR_arm_.UpdateMatrix(RotationType::Euler);
 }
 
 void Enemy::Draw(const ViewProjection& viewProjection)
 {
-	models_[kModelIndexBody]->Draw(worldTransformBody_, viewProjection);
-	models_[kModelIndexHead]->Draw(worldTransformHead_, viewProjection);
-	models_[kModelIndexL_arm]->Draw(worldTransformL_arm_, viewProjection);
-	models_[kModelIndexR_arm]->Draw(worldTransformR_arm_, viewProjection);
+	if (isDead_ == false)
+	{
+		models_[kModelIndexBody]->Draw(worldTransformBody_, viewProjection);
+		models_[kModelIndexHead]->Draw(worldTransformHead_, viewProjection);
+		models_[kModelIndexL_arm]->Draw(worldTransformL_arm_, viewProjection);
+		models_[kModelIndexR_arm]->Draw(worldTransformR_arm_, viewProjection);
+	}
 }
 
 void Enemy::SetParent(const WorldTransform* parent)

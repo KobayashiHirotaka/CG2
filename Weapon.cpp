@@ -65,8 +65,8 @@ void Weapon::Update()
 		}
 	}
 
-	worldTransform_.UpdateMatrix();
-	collisionWorldTransform_.UpdateMatrix();
+	worldTransform_.UpdateMatrix(RotationType::Euler);
+	collisionWorldTransform_.UpdateMatrix(RotationType::Euler);
 }
 
 void Weapon::Draw(const ViewProjection& viewProjection)

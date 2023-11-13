@@ -800,6 +800,15 @@ Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t)
 		dot = -dot;
 	}
 
+	if (dot >= 1.0f - std::numeric_limits<float>::epsilon()) 
+	{
+		result.x = (1.0f - t) * localQ0.x + t * localQ1.x;
+		result.y = (1.0f - t) * localQ0.y + t * localQ1.y;
+		result.z = (1.0f - t) * localQ0.z + t * localQ1.z;
+		result.w = (1.0f - t) * localQ0.w + t * localQ1.w;
+		return result;
+	}
+
 	float theta = std::acos(dot);
 
 	float scale0 = std::sin((1 - t) * theta) / std::sin(theta);
@@ -810,5 +819,18 @@ Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t)
 	result.z = scale0 * localQ0.z + scale1 * localQ1.z;
 	result.w = scale0 * localQ0.w + scale1 * localQ1.w;
 
+	return result;
+}
+
+Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Quaternion& quaternion, const Vector3& translate)
+{
+	Matrix4x4 result{};
+
+	Matrix4x4 scaleMatrix = MakeScaleMatrix(scale);
+	Matrix4x4 rotateMatrix = MakeRotateMatrix(quaternion);
+	Matrix4x4 translateMatrix = MakeTranslateMatrix(translate);
+
+	result = Multiply(scaleMatrix, Multiply(rotateMatrix, translateMatrix));
+	
 	return result;
 }

@@ -71,7 +71,7 @@ private:
 
 	float playerSpeed_ = 0.3f;
 
-	float targetAngle_ = 0.0f;
+	Quaternion moveQuaternion_ = { 0.0f,0.0f,0.0f,1.0f };
 
 	Behavior behavior_ = Behavior::kRoot;
 
@@ -82,8 +82,6 @@ private:
 	std::unique_ptr<Weapon> weapon_ = nullptr;
 
 	int behaviorDashTime_ = 10;
-
-	Matrix4x4 matRot_{};
 
 	bool isHit_ = false;
 	bool preIsHit_ = false;
