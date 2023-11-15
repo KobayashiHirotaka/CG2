@@ -2,6 +2,15 @@
 #include "GlobalVariables.h"
 #include <cassert>
 
+const std::array<Player::ConstAttack, Player::ComboNum>
+Player::kConstAttacks_ = {
+	{
+	{0,0,20,0,0.0f,0.0f,0.15f},
+	{15,10,15,0,0.2f,0.0f,0.0f},
+	{15,10,15,30,0.2f,0.0f,0.0f},
+	}
+};
+
 void Player::Initialize(const std::vector<Model*>& models)
 {
 	ICharacter::Initialize(models);

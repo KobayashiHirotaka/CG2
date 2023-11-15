@@ -66,9 +66,29 @@ private:
 		int coolTime = 0;
 	};
 
+	struct WorkAttack
+	{
+		int attackParameter_ = 0;
+		int comboIndex_ = 0;
+		int inComboPhase = 0;
+		bool comboNext_ = false;
+	};
+
 	struct ConstAttack
 	{
-		uint32_t anticipationTime;
+		uint32_t anticipationTime_;
+
+		uint32_t chargeTime_;
+
+		uint32_t swingTime;
+
+		uint32_t recoveryTime_;
+
+		float anticipationSpeed_;
+
+		float chargeSpeed_;
+
+		float swingSpeed_;
 	};
 
 	const WorldTransform* parent_ = nullptr;
@@ -94,6 +114,10 @@ private:
 	int behaviorDashTime_ = 10;
 
 	Vector3 velocity_ = {};
+
+	static const int ComboNum = 3;
+
+	static const std::array<ConstAttack, Player::ComboNum>kConstAttacks_;
 
 	bool isHit_ = false;
 	bool preIsHit_ = false;
