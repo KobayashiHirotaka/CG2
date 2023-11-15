@@ -235,10 +235,52 @@ void Player::BehaviorAttackInitialize()
 
 void Player::BehaviorAttackUpdate()
 {
-	if (weapon_->GetIsAttack() == false)
+	XINPUT_STATE joyStatePre;
+
+	if (workAttack_.comboIndex_ < ComboNum)
+	{
+		if (Input::GetInstance()->GetJoystickState(joyState_) && Input::GetInstance()->GetJoystickState(joyStatePre))
+		{
+			if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+			{
+				workAttack_.comboNext_ = true;
+			}
+		}
+	}
+
+	if (++workAttack_.attackParameter_ >= 120)
+	{
+		if (workAttack_.comboNext_)
+		{
+			workAttack_.comboNext_ = false;
+
+
+		}
+		else {
+			behaviorRequest_ = Behavior::kRoot;
+		}
+	}
+
+	switch (workAttack_.comboIndex_)
+	{
+	case 0:
+
+		break;
+
+	case 1:
+
+		break;
+
+	case 2:
+	default:
+
+		break;
+	}
+
+	/*if (weapon_->GetIsAttack() == false)
 	{
 		behaviorRequest_ = Behavior::kRoot;
-	}
+	}*/
 }
 
 void Player::BehaviorDashInitialize()

@@ -70,7 +70,7 @@ private:
 	{
 		int attackParameter_ = 0;
 		int comboIndex_ = 0;
-		int inComboPhase = 0;
+		int inComboPhase_ = 0;
 		bool comboNext_ = false;
 	};
 
@@ -116,6 +116,8 @@ private:
 	Vector3 velocity_ = {};
 
 	static const int ComboNum = 3;
+
+	WorkAttack workAttack_;
 
 	static const std::array<ConstAttack, Player::ComboNum>kConstAttacks_;
 
