@@ -8,7 +8,7 @@ void GameStartScene::Initialize()
 void GameStartScene::Update()
 {
 	Quaternion rotation0 = MakeRotateAxisAngleQuaternion({ 0.71f,0.71f,0.0f }, 0.3f);
-	Quaternion rotation1 = MakeRotateAxisAngleQuaternion({ 0.71f,0.0f,0.71f }, 3.141592f);
+	Quaternion rotation1 = { -rotation0.x,-rotation0.y,-rotation0.z,-rotation0.w };
 
 	Quaternion interpolate0 = Slerp(rotation0, rotation1, 0.0f);
 	Quaternion interpolate1 = Slerp(rotation0, rotation1, 0.3f);
@@ -26,7 +26,7 @@ void GameStartScene::Update()
 		interpolate2.x, interpolate2.y, interpolate2.z, interpolate2.w);
 	ImGui::Text("%1.2f,%1.2f,%1.2f,%1.2f      : interpolate3, Slerp(q0, q1, 0.7f)",
 		interpolate3.x, interpolate3.y, interpolate3.z, interpolate3.w);
-	ImGui::Text("%1.2f,%1.2f,%1.2f,%1.2f      : interpolate4, Slerp(q0, q1, 1.0f)", 
+	ImGui::Text("%1.2f,%1.2f,%1.2f,%1.2f      : interpolate4, Slerp(q0, q1, 1.0f)",
 		interpolate4.x, interpolate4.y, interpolate4.z, interpolate4.w);
 
 	ImGui::End();
