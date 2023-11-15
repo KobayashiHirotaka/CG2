@@ -27,16 +27,6 @@ void Player::Initialize(const std::vector<Model*>& models)
 
 void Player::Update()
 {
-	if (preIsHit_ == false && isHit_ == true) 
-	{
-		worldTransform_.SetParent(parent_);
-	}
-
-	if (preIsHit_ == true && isHit_ == false) 
-	{
-		worldTransform_.DeleteParent();
-	}
-
 	if (!Input::GetInstance()->GetJoystickState(joyState_))
 	{
 		return;
@@ -60,6 +50,10 @@ void Player::Update()
 		case Behavior::kDash:
 			BehaviorDashInitialize();
 			break;
+
+		case Behavior::kJump:
+			BehaviorJumpInitialize();
+			break;
 		}
 
 		behaviorRequest_ = std::nullopt;
@@ -79,24 +73,23 @@ void Player::Update()
 	case Behavior::kDash:
 		BehaviorDashUpdate();
 		break;
+
+	case Behavior::kJump:
+		BehaviorJumpUpdate();
+		break;
 	}
 
 	if (isHit_ == false)
 	{
 		worldTransform_.translation.y -= 0.1f;
 	} 
-	
-	if (isHit_ == true)
-	{
-		worldTransform_.translation.y = 1.0f;
-	}
 
 	if (worldTransform_.translation.y <= -4.0f)
 	{
 		worldTransform_.translation = { 0.0f,0.0f,0.0f };
 	}
 
-	worldTransform_.quaternion = Slerp(worldTransform_.quaternion,moveQuaternion_,0.7f);
+	worldTransform_.quaternion = Slerp(worldTransform_.quaternion,moveQuaternion_,0.2f);
 	worldTransform_.quaternion = Normalize(worldTransform_.quaternion);
 	worldTransform_.UpdateMatrix(RotationType::Quaternion);
 
@@ -172,7 +165,7 @@ void Player::BehaviorRootUpdate()
 		workDash_.coolTime++;
 	}
 
-	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_B)
 	{
 		if (workDash_.coolTime == 60)
 		{
@@ -188,15 +181,20 @@ void Player::BehaviorRootUpdate()
 		}
 	}
 
+	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+	{
+		behaviorRequest_ = Behavior::kJump;
+	}
+
 	if (Input::GetInstance()->GetJoystickState(joyState_))
 	{
 		const float deadZone = 0.7f;
 
 		bool isMoving = false;
 
-		Vector3 move = { (float)joyState_.Gamepad.sThumbLX / SHRT_MAX, 0.0f, (float)joyState_.Gamepad.sThumbLY / SHRT_MAX };
+		velocity_ = { (float)joyState_.Gamepad.sThumbLX / SHRT_MAX, 0.0f, (float)joyState_.Gamepad.sThumbLY / SHRT_MAX };
 
-		if (Length(move) > deadZone)
+		if (Length(velocity_) > deadZone)
 		{
 			isMoving = true;
 		}
@@ -205,16 +203,16 @@ void Player::BehaviorRootUpdate()
 		{
 			const float playerSpeed = 0.3f;
 
-			move = Multiply(playerSpeed, Normalize(move));
+			velocity_ = Multiply(playerSpeed, Normalize(velocity_));
 
 			Matrix4x4 rotateMatrix = MakeRotateYMatrix(viewProjection_->rotation.y);
-			move = TransformNormal(move, rotateMatrix);
+			velocity_ = TransformNormal(velocity_, rotateMatrix);
 
-			worldTransform_.translation = Add(worldTransform_.translation, move);
+			worldTransform_.translation = Add(worldTransform_.translation, velocity_);
 
-			move = Normalize(move);
-			Vector3 cross = Normalize(Cross({0.0f,0.0f,1.0f}, move));
-			float dot = Dot({ 0.0f,0.0f,1.0f }, move);
+			velocity_ = Normalize(velocity_);
+			Vector3 cross = Normalize(Cross({0.0f,0.0f,1.0f}, velocity_));
+			float dot = Dot({ 0.0f,0.0f,1.0f }, velocity_);
 			moveQuaternion_ = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
 		}
 	}
@@ -245,25 +243,52 @@ void Player::BehaviorDashUpdate()
 	{
 		float kSpeed = 1.0f;
 		//移動量
-		Vector3 move = {
+		Vector3 move_ = {
 			(float)joyState_.Gamepad.sThumbLX / SHRT_MAX,
 			0.0f,
 			(float)joyState_.Gamepad.sThumbLY / SHRT_MAX,
 		};
 
 		//移動量に速さを反映
-		move = Multiply(kSpeed, Normalize(move));
+		move_ = Multiply(kSpeed, Normalize(move_));
 
 		//移動ベクトルをカメラの角度だけ回転する
 		Matrix4x4 rotateMatrix = MakeRotateYMatrix(viewProjection_->rotation.y);
-		move = TransformNormal(move, rotateMatrix);
+		move_ = TransformNormal(move_, rotateMatrix);
 
 		//移動
-		worldTransform_.translation = Add(worldTransform_.translation, move);
+		worldTransform_.translation = Add(worldTransform_.translation, move_);
 	}
 	
 	if (++workDash_.dashParameter_ >= behaviorDashTime_)
 	{
+		behaviorRequest_ = Behavior::kRoot;
+	}
+}
+
+void Player::BehaviorJumpInitialize()
+{
+	worldTransform_.translation.y = 1.0f;
+
+	const float kJumpFirstSpeed_ = 1.0f;
+
+	velocity_.y = kJumpFirstSpeed_;
+}
+
+void Player::BehaviorJumpUpdate()
+{
+	worldTransform_.translation = Add(worldTransform_.translation, velocity_);
+
+	const float kGravityAcceleration_ = 0.05f;
+
+	Vector3 accelerationVector_ = { 0.0f,-kGravityAcceleration_,0.0f };
+
+	velocity_ = Add(velocity_, accelerationVector_);
+
+	if (worldTransform_.translation.y <= 1.0f)
+	{
+		worldTransform_.translation.y = 1.0f;
+
 		behaviorRequest_ = Behavior::kRoot;
 	}
 }

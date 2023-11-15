@@ -792,7 +792,7 @@ Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t)
 	Quaternion localQ0 = q0;
 	Quaternion localQ1 = q1;
 
-	float dot = Dot({ localQ0.x,localQ0.y,localQ0.z }, { localQ1.x,localQ1.y,localQ1.z });
+	float dot = (localQ0.x * localQ1.x) + (localQ0.y * localQ1.y) + (localQ0.z * localQ1.z) + (localQ0.w * localQ1.w);
 
 	if (dot < 0.0f)
 	{

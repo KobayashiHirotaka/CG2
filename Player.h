@@ -45,6 +45,10 @@ public:
 
 	void BehaviorDashUpdate();
 
+	void BehaviorJumpInitialize();
+
+	void BehaviorJumpUpdate();
+
 	Weapon* GetWeapon() { return weapon_.get(); };
 
 private:
@@ -52,7 +56,8 @@ private:
 	{
 		kRoot,
 		kAttack,
-		kDash
+		kDash,
+		kJump
 	};
 
 	struct WorkDash
@@ -82,6 +87,8 @@ private:
 	std::unique_ptr<Weapon> weapon_ = nullptr;
 
 	int behaviorDashTime_ = 10;
+
+	Vector3 velocity_ = {};
 
 	bool isHit_ = false;
 	bool preIsHit_ = false;
