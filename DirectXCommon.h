@@ -31,18 +31,15 @@ public:
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
 
-	Microsoft::WRL::ComPtr<ID3D12Device>
-	GetDevice() { return device_.Get(); }
+	ID3D12Device* GetDevice() { return device_.Get(); }
 
-	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>
-	GetcommandList() { return commandList_.Get(); }
+	ID3D12GraphicsCommandList* GetcommandList() { return commandList_.Get(); }
 
 	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() { return swapChainDesc_; }
 
 	D3D12_RENDER_TARGET_VIEW_DESC GetRtvDesc() { return rtvDesc_; }
 
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>
-	GetSrvDescriptorHeap() { return srvDescriptorHeap_.Get(); }
+	ID3D12DescriptorHeap* GetSrvDescriptorHeap() { return srvDescriptorHeap_.Get(); }
 
 private:
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(Microsoft::WRL::ComPtr<ID3D12Device> device,
