@@ -66,6 +66,8 @@ private:
 
 	int uvChecker_;
 
+	int white_;
+
 	uint32_t sound_;
 	
 	Vector4 LeftTop_[2] = {

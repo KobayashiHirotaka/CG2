@@ -93,7 +93,7 @@ void Sprite::ImGui(const char* Title)
 	ImGui::DragFloat2("UVTranslate", &uvTransformSprite_.translate.x, 0.01f, -10.0f, 10.0f);
 	ImGui::DragFloat2("UVScale", &uvTransformSprite_.scale.x, 0.01f, -10.0f, 10.0f);
 	ImGui::SliderAngle("UVRotate", &uvTransformSprite_.rotate.z);
-	ImGui::ColorPicker4("Color", &color_.x);
+	ImGui::ColorEdit4("Color", &color_.x);
 	ImGui::End();
 }
 

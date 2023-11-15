@@ -38,6 +38,7 @@ void GamePlayScene::Initialize()
 		worldTransform_[i].Initialize();
 	}
 
+	white_= textureManager_->LoadTexture("resource/white.png");
 	uvChecker_ = textureManager_->LoadTexture("resource/uvChecker.png");
 	monsterBall_ = textureManager_->LoadTexture("resource/monsterBall.png");
 
@@ -149,11 +150,11 @@ void GamePlayScene::Update()
 void GamePlayScene::Draw()
 {
 	/*sphere_[0]->Draw(worldTransform_[0], viewProjection_, texture_);
-	sphere_[1]->Draw(worldTransform_[1], viewProjection_, texture_);
+	sphere_[1]->Draw(worldTransform_[1], viewProjection_, texture_);*/
 
-	sprite_->Draw(worldTransformSprite_, texture_);*/
+	sprite_->Draw(worldTransformSprite_, texture_);
 
-	model_->Draw(worldTransformModel_, viewProjection_);
+	//model_->Draw(worldTransformModel_, viewProjection_);
 
 	ImGui::Begin("sphereTexture");
 	ImGui::Checkbox("texture", &changeTexture_);
@@ -170,6 +171,8 @@ void GamePlayScene::Draw()
 
 	engine_->ImGui();
 
+	sprite_->ImGui("Sprite");
+
 	model_->ImGui("Model");
 
 	light_->ImGui("Light");
@@ -179,6 +182,6 @@ void GamePlayScene::Draw()
 		texture_ = monsterBall_;
 
 	}else {
-		texture_ = uvChecker_;
+		texture_ = white_;
 	}
 }
