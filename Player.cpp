@@ -124,6 +124,7 @@ void Player::OnCollision(Collider* collider)
 	if (collider->GetCollisionAttribute() & kCollisionAttributeGround && reStart_== false)
 	{
 		isHit_ = true;
+		worldTransform_.translation.y = 1.0f;
 		parent_ = &collider->GetWorldTransform();
 
 		if (worldTransform_.parent_ != parent_)
@@ -268,11 +269,13 @@ void Player::BehaviorDashUpdate()
 
 void Player::BehaviorJumpInitialize()
 {
+	isHit_ = false;
+
 	worldTransform_.translation.y = 1.0f;
 
 	const float kJumpFirstSpeed_ = 1.0f;
 
-	velocity_.y = kJumpFirstSpeed_;
+	velocity_ = { (float)joyState_.Gamepad.sThumbLX / (SHRT_MAX * 2), kJumpFirstSpeed_, (float)joyState_.Gamepad.sThumbLY / (SHRT_MAX * 2) };
 }
 
 void Player::BehaviorJumpUpdate()
@@ -285,7 +288,7 @@ void Player::BehaviorJumpUpdate()
 
 	velocity_ = Add(velocity_, accelerationVector_);
 
-	if (worldTransform_.translation.y <= 1.0f)
+	if (isHit_ == true)
 	{
 		worldTransform_.translation.y = 1.0f;
 
