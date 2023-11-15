@@ -66,6 +66,11 @@ private:
 		int coolTime = 0;
 	};
 
+	struct ConstAttack
+	{
+		uint32_t anticipationTime;
+	};
+
 	const WorldTransform* parent_ = nullptr;
 
 	const ViewProjection* viewProjection_ = nullptr;
