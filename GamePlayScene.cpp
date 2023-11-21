@@ -40,6 +40,7 @@ void GamePlayScene::Initialize()
 	groundModel_.reset(Model::CreateModelFromObj("resource/ground", "ground.obj"));
 
 	skydomeModel_.reset(Model::CreateModelFromObj("resource/skydome", "skydome.obj"));
+	skydomeModel_->SetLighting(Lighting::checkLighting);
 
 	collisionManager_ = std::make_unique<CollisionManager>();
 
