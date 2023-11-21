@@ -91,6 +91,9 @@
     <Filter Include="ヘッダー ファイル\GlobalVariables">
       <UniqueIdentifier>{d187794f-2788-48b7-be67-64e4157b9c69}</UniqueIdentifier>
     </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{7b7ea5e1-b748-4f74-8c27-3a7867154ff1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -193,7 +196,10 @@
   <ItemGroup>
     <None Include=".editorconfig" />
     <None Include="resource\shaders\Object3d.hlsli">
-      <Filter>リソース ファイル</Filter>
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="Particle.hlsli">
+      <Filter>shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -340,10 +346,16 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resource\shaders\Object3d.PS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>shaders</Filter>
     </FxCompile>
     <FxCompile Include="resource\shaders\Object3d.VS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ParticlePS.hlsl">
+      <Filter>shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ParticleVS.hlsl">
+      <Filter>shaders</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
