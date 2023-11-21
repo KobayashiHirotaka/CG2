@@ -27,6 +27,11 @@ public:
 
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
+	void SetLighting(int32_t lightFlag)
+	{
+		materialDataObj_->enableLighting = lightFlag;
+	}
+
 private:
 	DirectXCommon* dxCommon_ = nullptr;
 
@@ -34,7 +39,7 @@ private:
 
 	Light* light_ = nullptr;
 
-	int32_t lightFlag = Lighting::harfLambert;
+	int32_t lightFlag = Lighting::checkLighting;
 	
 	ModelData modelData_;
 

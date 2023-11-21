@@ -47,6 +47,7 @@ void GamePlayScene::Initialize()
 	audio_->soundDatas[0] = audio_->SoundLoadWave("resource/mokugyo.wav");
 
 	model_ = model_->CreateModelFromObj("resource","plane.obj");
+	model_->SetLighting(Lighting::harfLambert);
 
 	worldTransform_[0].translation.x = 5.0f;
 	worldTransform_[1].translation.z = -10.0f;
@@ -152,9 +153,9 @@ void GamePlayScene::Draw()
 	/*sphere_[0]->Draw(worldTransform_[0], viewProjection_, texture_);
 	sphere_[1]->Draw(worldTransform_[1], viewProjection_, texture_);*/
 
-	sprite_->Draw(worldTransformSprite_, texture_);
+	//sprite_->Draw(worldTransformSprite_, texture_);
 
-	//model_->Draw(worldTransformModel_, viewProjection_);
+	model_->Draw(worldTransformModel_, viewProjection_);
 
 	ImGui::Begin("sphereTexture");
 	ImGui::Checkbox("texture", &changeTexture_);
