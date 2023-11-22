@@ -15,6 +15,8 @@ public:
 
 	void Draw(const ViewProjection& viewProjection);
 
+	void Search(const std::list<std::unique_ptr<Enemy>>& enemies, const ViewProjection& viewProjection);
+
 private:
 	TextureManager* textureManager_ = nullptr;
 
@@ -33,14 +35,19 @@ private:
 
 	const float kDegreeToRadian_;
 
+	//最小距離
 	float minDistance_ = 10.0f;
 
+	//最大距離
 	float maxDistance_ = 30.0f;
 
+	//角度範囲
 	float angleRange_ = 20.0f * kDegreeToRadian_;
 
 	Input* input_ = nullptr;
 
 	XINPUT_STATE joyState_;
+
+	Quaternion moveQuaternion_ = { 0.0f,0.0f,0.0f,1.0f };
 };
 

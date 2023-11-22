@@ -113,4 +113,3 @@ void Enemy::FloatingGimmickUpdate()
 	worldTransformL_arm_.rotation.x = std::sin(floatingParameter_[1]) * 0.75f;
 	worldTransformR_arm_.rotation.x = -std::sin(floatingParameter_[1]) * 0.75f;
 }
-
