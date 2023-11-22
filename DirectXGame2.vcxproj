@@ -35,6 +35,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LoadCSV.cpp" />
+    <ClCompile Include="LockOn.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="MoveGround.cpp" />
@@ -89,6 +90,7 @@
     <ClInclude Include="IScene.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LoadCSV.h" />
+    <ClInclude Include="LockOn.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="Model.h" />

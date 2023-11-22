@@ -36,11 +36,6 @@ void Player::Initialize(const std::vector<Model*>& models)
 
 void Player::Update()
 {
-	if (!Input::GetInstance()->GetJoystickState(joyState_))
-	{
-		return;
-	}
-
 	if (behaviorRequest_)
 	{
 		behavior_ = behaviorRequest_.value();

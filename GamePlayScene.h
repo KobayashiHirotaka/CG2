@@ -23,6 +23,7 @@
 #include "Ground.h"
 #include "MoveGround.h"
 #include "Skydome.h"
+#include "LockOn.h"
 
 #define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定
 #include <dinput.h>
@@ -69,6 +70,8 @@ private:
 	std::unique_ptr<Enemy> enemy_;
 	std::unique_ptr<Model> enemyModel_;
 
+	std::list<Enemy*> enemys_;
+
 	std::unique_ptr<Model> modelFighterBody_;
 	std::unique_ptr<Model> modelFighterHead_;
 	std::unique_ptr<Model> modelFighterL_arm_;
@@ -85,6 +88,8 @@ private:
 
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<Model> skydomeModel_;
+
+	std::unique_ptr<LockOn> lockOn_;
 
 	bool isDebugCameraActive_ = false;
 };

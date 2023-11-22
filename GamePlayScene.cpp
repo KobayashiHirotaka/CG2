@@ -61,6 +61,8 @@ void GamePlayScene::Initialize()
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(skydomeModel_.get());
 
+	lockOn_ = std::make_unique<LockOn>();
+	lockOn_->Initialize();
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -93,6 +95,8 @@ void GamePlayScene::Update()
 	goal_->Update();
 
 	skydome_->Updata();
+
+	/*lockOn_->Update(enemys_, viewProjection_);*/
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -135,6 +139,8 @@ void GamePlayScene::Draw()
 	goal_->Draw(viewProjection_);
 
 	skydome_->Draw(viewProjection_);
+
+	lockOn_->Draw(viewProjection_);
 
 	for (int i = 0; i < 2; i++)
 	{
