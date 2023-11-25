@@ -15,8 +15,8 @@ void Weapon::Initialize(Model* model)
 
 	AABB aabbSize =
 	{
-		{-collisionWorldTransform_.scale.x,-collisionWorldTransform_.scale.y,-collisionWorldTransform_.scale.z},
-		{collisionWorldTransform_.scale.x,collisionWorldTransform_.scale.y,collisionWorldTransform_.scale.z},
+		{-collisionWorldTransform_.scale.x,-collisionWorldTransform_.scale.y,-collisionWorldTransform_.scale.z + 2.0f},
+		{collisionWorldTransform_.scale.x,collisionWorldTransform_.scale.y,collisionWorldTransform_.scale.z + 2.0f},
 	};
 
 	SetAABB(aabbSize);
@@ -24,46 +24,11 @@ void Weapon::Initialize(Model* model)
 
 void Weapon::Update()
 {
-	if (isAttack_ == true)
-	{
-		attackAnimationTimer_++;
-	}
+	Vector3 direction{ 0.0f,0.0f,4.0f };
+	direction = TransformNormal(direction, worldTransform_.parent_->matWorld);
+	collisionWorldTransform_.translation = { worldTransform_.matWorld.m[3][0],worldTransform_.matWorld.m[3][1],worldTransform_.matWorld.m[3][2] };
+	collisionWorldTransform_.translation = Add(collisionWorldTransform_.translation, direction);
 
-	if (attackAnimationCount_ == 0)
-	{
-		if (attackAnimationTimer_ == 30)
-		{
-			attackAnimationCount_ = 1;
-			attackAnimationTimer_ = 0;
-		}
-
-		worldTransform_.rotation.x -= 0.1f;
-	}
-
-	if (attackAnimationCount_ == 1)
-	{
-		if (attackAnimationTimer_ == 15)
-		{
-			attackAnimationCount_ = 2;
-			attackAnimationTimer_ = 0;
-		}
-
-		worldTransform_.rotation.x += 0.2f;
-
-		Vector3 direction{ 0.0f,0.0f,4.0f };
-		direction = TransformNormal(direction, worldTransform_.matWorld);
-		collisionWorldTransform_.translation = { worldTransform_.matWorld.m[3][0],worldTransform_.matWorld.m[3][1],worldTransform_.matWorld.m[3][2] };
-		collisionWorldTransform_.translation = Add(collisionWorldTransform_.translation, direction);
-	}
-
-	if (attackAnimationCount_ == 2)
-	{
-		if (attackAnimationTimer_ == 10)
-		{
-			attackAnimationTimer_ = 0;
-			isAttack_ = false;
-		}
-	}
 
 	worldTransform_.UpdateMatrix(RotationType::Euler);
 	collisionWorldTransform_.UpdateMatrix(RotationType::Euler);

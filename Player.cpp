@@ -5,9 +5,9 @@
 const std::array<Player::ConstAttack, Player::ComboNum>
 Player::kConstAttacks_ = {
 	{
-	{0,0,20,0,0.0f,0.0f,0.15f},
-	{15,10,15,0,0.2f,0.0f,0.0f},
-	{15,10,15,30,0.2f,0.0f,0.0f},
+		{ 0, 0, 20, 0, 0.0f, 0.0f, 0.14f},
+		{ 15, 10, 15, 0, -0.04f, 0.0f, 0.2f },
+		{ 15, 10, 15, 30, -0.04f, 0.0f, 0.2f },
 	}
 };
 
@@ -225,14 +225,19 @@ void Player::BehaviorRootUpdate()
 
 void Player::BehaviorAttackInitialize()
 {
-	weapon_->Attack();
+	workAttack_.attackParameter = 0;
+	workAttack_.comboIndex = 0;
+	workAttack_.inComboPhase = 0;
+	workAttack_.comboNext = false;
+	workAttack_.translation = { 0.0f,0.0f,0.0f };
+	workAttack_.rotation = { 0.0f,0.0f,0.0f };
 }
 
 void Player::BehaviorAttackUpdate()
 {
 	XINPUT_STATE joyStatePre;
 
-	if (workAttack_.comboIndex < ComboNum)
+	if (workAttack_.comboIndex < ComboNum - 1)
 	{
 		if (Input::GetInstance()->GetJoystickState(joyState_) && Input::GetInstance()->GetJoystickState(joyStatePre))
 		{
@@ -243,39 +248,97 @@ void Player::BehaviorAttackUpdate()
 		}
 	}
 
-	if (++workAttack_.attackParameter >= 120)
-	{
-		if (workAttack_.comboNext)
-		{
+	uint32_t totalTime = kConstAttacks_[workAttack_.comboIndex].anticipationTime + kConstAttacks_[workAttack_.comboIndex].chargeTime +
+		                 kConstAttacks_[workAttack_.comboIndex].swingTime + kConstAttacks_[workAttack_.comboIndex].recoveryTime;
+
+	if (++workAttack_.attackParameter >= totalTime) {
+		//コンボ継続なら次のコンボに進む
+		if (workAttack_.comboNext) {
+			//コンボ継続フラグをリセット
 			workAttack_.comboNext = false;
-
-
+			workAttack_.attackParameter = 0;
+			workAttack_.comboIndex++;
+			weapon_->SetIsAttack(false);
+			switch (workAttack_.comboIndex) {
+			case 0:
+				workAttack_.translation = { 0.0f,0.8f,0.0f };
+				workAttack_.rotation = { 0.0f,0.0f,0.0f };
+				break;
+			case 1:
+				workAttack_.translation = { 0.0f,0.8f,0.0f };
+				workAttack_.rotation = { 1.0f,0.0f,3.14f / 2.0f };
+				break;
+			case 2:
+				workAttack_.translation = { 0.0f,0.8f,0.0f };
+				workAttack_.rotation = { 0.0f,0.0f,0.0f };
+				break;
+			}
 		}
+		//コンボ継続でないなら攻撃を終了してルートビヘイビアに戻る
 		else {
 			behaviorRequest_ = Behavior::kRoot;
+			weapon_->SetIsAttack(false);
 		}
 	}
 
-	switch (workAttack_.comboIndex)
-	{
+	uint32_t anticipationTime = kConstAttacks_[workAttack_.comboIndex].anticipationTime;
+	uint32_t chargeTime = kConstAttacks_[workAttack_.comboIndex].anticipationTime + kConstAttacks_[workAttack_.comboIndex].chargeTime;
+	uint32_t swingTime = kConstAttacks_[workAttack_.comboIndex].anticipationTime + kConstAttacks_[workAttack_.comboIndex].chargeTime + kConstAttacks_[workAttack_.comboIndex].swingTime;
+
+	//コンボ攻撃によってモーションを分岐
+	switch (workAttack_.comboIndex) {
 	case 0:
+		if (workAttack_.attackParameter < anticipationTime) {
+			workAttack_.rotation.x += kConstAttacks_[workAttack_.comboIndex].anticipationSpeed;
+		}
 
+		if (workAttack_.attackParameter >= anticipationTime && workAttack_.attackParameter < chargeTime) {
+			workAttack_.rotation.x += kConstAttacks_[workAttack_.comboIndex].chargeSpeed;
+		}
+
+		if (workAttack_.attackParameter >= chargeTime && workAttack_.attackParameter < swingTime) {
+			workAttack_.rotation.x += kConstAttacks_[workAttack_.comboIndex].swingSpeed;
+			weapon_->SetIsAttack(true);
+		}
+
+		weapon_->SetTranslation(workAttack_.translation);
+		weapon_->SetRotation(workAttack_.rotation);
 		break;
-
 	case 1:
+		if (workAttack_.attackParameter < anticipationTime) {
+			workAttack_.rotation.x += kConstAttacks_[workAttack_.comboIndex].anticipationSpeed;
+		}
 
+		if (workAttack_.attackParameter >= anticipationTime && workAttack_.attackParameter < chargeTime) {
+			workAttack_.rotation.x += kConstAttacks_[workAttack_.comboIndex].chargeSpeed;
+		}
+
+		if (workAttack_.attackParameter >= chargeTime && workAttack_.attackParameter < swingTime) {
+			workAttack_.rotation.x += kConstAttacks_[workAttack_.comboIndex].swingSpeed;
+			weapon_->SetIsAttack(true);
+		}
+
+		weapon_->SetTranslation(workAttack_.translation);
+		weapon_->SetRotation(workAttack_.rotation);
 		break;
-
 	case 2:
-	default:
+		if (workAttack_.attackParameter < anticipationTime) {
+			workAttack_.rotation.x += kConstAttacks_[workAttack_.comboIndex].anticipationSpeed;
+		}
 
+		if (workAttack_.attackParameter >= anticipationTime && workAttack_.attackParameter < chargeTime) {
+			workAttack_.rotation.x += kConstAttacks_[workAttack_.comboIndex].chargeSpeed;
+		}
+
+		if (workAttack_.attackParameter >= chargeTime && workAttack_.attackParameter < swingTime) {
+			workAttack_.rotation.x += kConstAttacks_[workAttack_.comboIndex].swingSpeed;
+			weapon_->SetIsAttack(true);
+		}
+
+		weapon_->SetTranslation(workAttack_.translation);
+		weapon_->SetRotation(workAttack_.rotation);
 		break;
 	}
-
-	/*if (weapon_->GetIsAttack() == false)
-	{
-		behaviorRequest_ = Behavior::kRoot;
-	}*/
 }
 
 void Player::BehaviorDashInitialize()

@@ -9,10 +9,14 @@
 #include "MyMath.h"
 #include "Weapon.h"
 #include <optional>
+#include <numbers>
 
 class Player : public Collider, public ICharacter
 {
 public:
+
+	static const int ComboNum = 3;
+
 	enum class Behavior
 	{
 		kRoot,
@@ -27,15 +31,22 @@ public:
 		int coolTime = 0;
 	};
 
-	struct WorkAttack
+	struct WorkAttack 
 	{
-		int attackParameter = 0;
-		int comboIndex = 0;
-		int inComboPhase = 0;
+		Vector3 translation;
+
+		Vector3 rotation;
+
+		uint32_t attackParameter = 0;
+
+		int32_t comboIndex = 0;
+
+		int32_t inComboPhase = 0;
+
 		bool comboNext = false;
 	};
 
-	struct ConstAttack
+	struct ConstAttack 
 	{
 		uint32_t anticipationTime;
 
@@ -44,11 +55,11 @@ public:
 		uint32_t swingTime;
 
 		uint32_t recoveryTime;
-
+	
 		float anticipationSpeed;
 
 		float chargeSpeed;
-
+	
 		float swingSpeed;
 	};
 
@@ -114,8 +125,6 @@ private:
 	int behaviorDashTime_ = 10;
 
 	Vector3 velocity_ = {};
-
-	static const int ComboNum = 3;
 
 	WorkAttack workAttack_;
 

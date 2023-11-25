@@ -27,6 +27,12 @@ public:
 
 	bool GetIsAttack() { return isAttack_; };
 
+	void SetIsAttack(bool isAttack) { isAttack_ = isAttack; };
+
+	void SetTranslation(const Vector3& translation) { worldTransform_.translation = translation; };
+
+	void SetRotation(const Vector3& rotation) { worldTransform_.rotation = rotation; }
+
 private:
 	void AttackInitialize();
 
