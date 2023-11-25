@@ -13,6 +13,45 @@
 class Player : public Collider, public ICharacter
 {
 public:
+	enum class Behavior
+	{
+		kRoot,
+		kAttack,
+		kDash,
+		kJump
+	};
+
+	struct WorkDash
+	{
+		int dashParameter = 0;
+		int coolTime = 0;
+	};
+
+	struct WorkAttack
+	{
+		int attackParameter = 0;
+		int comboIndex = 0;
+		int inComboPhase = 0;
+		bool comboNext = false;
+	};
+
+	struct ConstAttack
+	{
+		uint32_t anticipationTime;
+
+		uint32_t chargeTime;
+
+		uint32_t swingTime;
+
+		uint32_t recoveryTime;
+
+		float anticipationSpeed;
+
+		float chargeSpeed;
+
+		float swingSpeed;
+	};
+
 	void Initialize(const std::vector<Model*>& models)override;
 
 	void Update()override;
@@ -52,45 +91,6 @@ public:
 	Weapon* GetWeapon() { return weapon_.get(); };
 
 private:
-	enum class Behavior
-	{
-		kRoot,
-		kAttack,
-		kDash,
-		kJump
-	};
-
-	struct WorkDash
-	{
-		int dashParameter_= 0;
-		int coolTime = 0;
-	};
-
-	struct WorkAttack
-	{
-		int attackParameter_ = 0;
-		int comboIndex_ = 0;
-		int inComboPhase_ = 0;
-		bool comboNext_ = false;
-	};
-
-	struct ConstAttack
-	{
-		uint32_t anticipationTime_;
-
-		uint32_t chargeTime_;
-
-		uint32_t swingTime;
-
-		uint32_t recoveryTime_;
-
-		float anticipationSpeed_;
-
-		float chargeSpeed_;
-
-		float swingSpeed_;
-	};
-
 	const WorldTransform* parent_ = nullptr;
 
 	const ViewProjection* viewProjection_ = nullptr;

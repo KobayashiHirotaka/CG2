@@ -232,22 +232,22 @@ void Player::BehaviorAttackUpdate()
 {
 	XINPUT_STATE joyStatePre;
 
-	if (workAttack_.comboIndex_ < ComboNum)
+	if (workAttack_.comboIndex < ComboNum)
 	{
 		if (Input::GetInstance()->GetJoystickState(joyState_) && Input::GetInstance()->GetJoystickState(joyStatePre))
 		{
 			if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
 			{
-				workAttack_.comboNext_ = true;
+				workAttack_.comboNext = true;
 			}
 		}
 	}
 
-	if (++workAttack_.attackParameter_ >= 120)
+	if (++workAttack_.attackParameter >= 120)
 	{
-		if (workAttack_.comboNext_)
+		if (workAttack_.comboNext)
 		{
-			workAttack_.comboNext_ = false;
+			workAttack_.comboNext = false;
 
 
 		}
@@ -256,7 +256,7 @@ void Player::BehaviorAttackUpdate()
 		}
 	}
 
-	switch (workAttack_.comboIndex_)
+	switch (workAttack_.comboIndex)
 	{
 	case 0:
 
@@ -280,7 +280,7 @@ void Player::BehaviorAttackUpdate()
 
 void Player::BehaviorDashInitialize()
 {
-	workDash_.dashParameter_ = 0;
+	workDash_.dashParameter = 0;
 	workDash_.coolTime = 0;
 }
 
@@ -307,7 +307,7 @@ void Player::BehaviorDashUpdate()
 		worldTransform_.translation = Add(worldTransform_.translation, move_);
 	}
 	
-	if (++workDash_.dashParameter_ >= behaviorDashTime_)
+	if (++workDash_.dashParameter >= behaviorDashTime_)
 	{
 		behaviorRequest_ = Behavior::kRoot;
 	}
