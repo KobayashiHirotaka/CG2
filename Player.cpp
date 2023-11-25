@@ -36,11 +36,6 @@ void Player::Initialize(const std::vector<Model*>& models)
 
 void Player::Update()
 {
-	if (!Input::GetInstance()->GetJoystickState(joyState_))
-	{
-		return;
-	}
-
 	if (behaviorRequest_)
 	{
 		behavior_ = behaviorRequest_.value();
@@ -326,11 +321,16 @@ void Player::BehaviorJumpInitialize()
 
 	const float kJumpFirstSpeed_ = 1.0f;
 
-	velocity_ = { (float)joyState_.Gamepad.sThumbLX / (SHRT_MAX * 2), kJumpFirstSpeed_, (float)joyState_.Gamepad.sThumbLY / (SHRT_MAX * 2) };
+	velocity_ = { (float)joyState_.Gamepad.sThumbLX / (SHRT_MAX * 3), kJumpFirstSpeed_, (float)joyState_.Gamepad.sThumbLY / (SHRT_MAX * 3) };
 }
 
 void Player::BehaviorJumpUpdate()
 {
+	if (!Input::GetInstance()->GetJoystickState(joyState_))
+	{
+		return;
+	}
+
 	worldTransform_.translation = Add(worldTransform_.translation, velocity_);
 
 	const float kGravityAcceleration_ = 0.05f;
