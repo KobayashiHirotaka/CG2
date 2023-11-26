@@ -44,6 +44,9 @@ void GamePlayScene::Initialize()
 
 	collisionManager_ = std::make_unique<CollisionManager>();
 
+	lockOn_ = std::make_unique<LockOn>();
+	lockOn_->Initialize();
+
 	std::vector<Model*> playerModels = { playerModel_.get(),weaponModel_.get()};
 
 	player_ = std::make_unique<Player>();
@@ -147,6 +150,8 @@ void GamePlayScene::Update()
 
 void GamePlayScene::Draw()
 {
+	lockOn_->Draw();
+
 	player_->Draw(viewProjection_);
 
 	for (const std::unique_ptr<Enemy>& enemy : enemies_) {

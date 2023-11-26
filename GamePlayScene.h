@@ -23,6 +23,7 @@
 #include "Ground.h"
 #include "MoveGround.h"
 #include "Skydome.h"
+#include "LockOn.h"
 
 #define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定
 #include <dinput.h>
@@ -87,6 +88,8 @@ private:
 
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<Model> skydomeModel_;
+
+	std::unique_ptr<LockOn> lockOn_ = nullptr;
 
 	bool isDebugCameraActive_ = false;
 };

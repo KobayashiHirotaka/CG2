@@ -13,6 +13,13 @@ public:
 	void Update(const std::list<std::unique_ptr<Enemy>>& enemies, const ViewProjection& viewProjection);
 
 	void Draw();
+
+private:
+	Input* input_ = nullptr;
+
+	TextureManager* textureManager_ = nullptr;
+
+	int texture_;
 };
 
 
