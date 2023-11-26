@@ -29,6 +29,8 @@ public:
 
 	void OnCollision(Collider* collider)override;
 
+	void SetPosition(const Vector3& position) { worldTransform_.translation = position; };
+
 private:
 	WorldTransform worldTransformBody_;
 	WorldTransform worldTransformHead_;

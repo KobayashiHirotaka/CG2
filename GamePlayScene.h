@@ -39,6 +39,8 @@ public:
 	void Update();
 	void Draw();
 
+	void AddEnemy(const Vector3& position);
+
 private:
 	MyEngine* engine_ = nullptr;
 
@@ -66,7 +68,7 @@ private:
 
 	std::unique_ptr<Model> weaponModel_;
 
-	std::unique_ptr<Enemy> enemy_;
+	std::list<std::unique_ptr<Enemy>> enemies_{};
 	std::unique_ptr<Model> enemyModel_;
 
 	std::unique_ptr<Model> modelFighterBody_;
@@ -79,7 +81,7 @@ private:
 	std::unique_ptr<Goal> goal_;
 	std::unique_ptr<Model> goalModel_;
 
-	std::unique_ptr<Ground> ground_[2];
+	std::unique_ptr<Ground> ground_[10];
 	std::unique_ptr<MoveGround> moveGround_;
 	std::unique_ptr<Model> groundModel_;
 

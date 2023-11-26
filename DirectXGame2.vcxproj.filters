@@ -151,6 +151,12 @@
     <Filter Include="ヘッダー ファイル\game\weapon">
       <UniqueIdentifier>{22b3aa78-1e9a-4ed3-afce-4de366145afa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\game\LockOn">
+      <UniqueIdentifier>{8d4e1b6e-4541-414e-a69d-4cfee76077ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\game\LockOn">
+      <UniqueIdentifier>{7d8cbfcc-9c13-4855-abcc-aa1f598a85db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -275,6 +281,9 @@
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>ソース ファイル\game\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="LockOn.cpp">
+      <Filter>ソース ファイル\game\LockOn</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -442,6 +451,9 @@
     </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>ヘッダー ファイル\game\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="LockOn.h">
+      <Filter>ヘッダー ファイル\game\LockOn</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
