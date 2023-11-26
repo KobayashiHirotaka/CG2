@@ -121,6 +121,8 @@ void GamePlayScene::Update()
 
 	moveGround_->Update();
 
+	/*lockOn_->Update(enemies_,viewProjection_);*/
+
 	viewProjection_.UpdateMatrix();
 	
 	followCamera_->Update();
@@ -150,8 +152,6 @@ void GamePlayScene::Update()
 
 void GamePlayScene::Draw()
 {
-	lockOn_->Draw();
-
 	player_->Draw(viewProjection_);
 
 	for (const std::unique_ptr<Enemy>& enemy : enemies_) {
@@ -168,6 +168,8 @@ void GamePlayScene::Draw()
 	}
 
 	moveGround_->Draw(viewProjection_);
+
+	lockOn_->Draw();
 }
 
 void GamePlayScene::AddEnemy(const Vector3& position) 

@@ -9,10 +9,10 @@ void LockOn::Initialize()
 	texture_ = textureManager_->LoadTexture("resource/reticle.png");
 }
 
-void LockOn::Update(const std::list<std::unique_ptr<Enemy>>& enemies, const ViewProjection& viewProjection)
-{
-
-}
+//void LockOn::Update(const std::list<std::unique_ptr<Enemy>>& enemies, const ViewProjection& viewProjection)
+//{
+//
+//}
 
 void LockOn::Draw()
 {
