@@ -5,9 +5,9 @@
 const std::array<Player::ConstAttack, Player::ComboNum>
 Player::kConstAttacks_ = {
 	{
-		{ 0, 0, 20, 0, 0.0f, 0.0f, 0.14f},
-		{ 15, 10, 15, 0, -0.04f, 0.0f, 0.2f },
-		{ 15, 10, 15, 30, -0.04f, 0.0f, 0.2f },
+		{0,0,20,0,0.0f,0.0f,0.15f},
+	    {15,10,15,0,0.2f,0.0f,0.0f},
+	    {15,10,15,30,0.2f,0.0f,0.0f}
 	}
 };
 
@@ -229,18 +229,13 @@ void Player::BehaviorAttackInitialize()
 	workAttack_.comboIndex = 0;
 	workAttack_.inComboPhase = 0;
 	workAttack_.comboNext = false;
-	workAttack_.translation = { 0.0f,0.0f,0.0f };
-	workAttack_.rotation = { 0.0f,0.0f,0.0f };
+	workAttack_.translation = { 0.0f,0.8f,0.0f };
+	workAttack_.rotation = { 1.0f,0.0f,3.14f / 2.0f };
 }
 
 void Player::BehaviorAttackUpdate()
 {
 	XINPUT_STATE joyStatePre;
-
-	if (!Input::GetInstance()->GetJoystickState(joyState_))
-	{
-		return;
-	}
 
 	if (workAttack_.comboIndex < ComboNum - 1)
 	{
@@ -267,17 +262,17 @@ void Player::BehaviorAttackUpdate()
 			{
 			case 0:
 				workAttack_.translation = { 0.0f,0.8f,0.0f };
-				workAttack_.rotation = { 0.0f,0.0f,0.0f };
+				workAttack_.rotation = { 1.0f,0.0f,3.14f / 2.0f };
 				break;
 
 			case 1:
 				workAttack_.translation = { 0.0f,0.8f,0.0f };
-				workAttack_.rotation = { 1.0f,0.0f,3.14f / 2.0f };
+				workAttack_.rotation = { 0.0f,0.0f,0.0f };
 				break;
 
 			case 2:
 				workAttack_.translation = { 0.0f,0.8f,0.0f };
-				workAttack_.rotation = { 0.0f,0.0f,0.0f };
+				workAttack_.rotation = { 1.0f,0.0f,3.14f / 2.0f };
 				break;
 			}
 		}
