@@ -237,6 +237,11 @@ void Player::BehaviorAttackUpdate()
 {
 	XINPUT_STATE joyStatePre;
 
+	if (!Input::GetInstance()->GetJoystickState(joyState_))
+	{
+		return;
+	}
+
 	if (workAttack_.comboIndex < ComboNum - 1)
 	{
 		if (Input::GetInstance()->GetJoystickState(joyState_) && Input::GetInstance()->GetJoystickState(joyStatePre))

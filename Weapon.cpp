@@ -55,8 +55,6 @@ Vector3 Weapon::GetWorldPosition()
 
 void Weapon::AttackInitialize()
 {
-	attackAnimationTimer_ = 0;
-	attackAnimationCount_ = 0;
 	worldTransform_.rotation.x = 1.5f;
 }
 
