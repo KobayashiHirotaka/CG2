@@ -101,6 +101,8 @@ public:
 
 	Weapon* GetWeapon() { return weapon_.get(); };
 
+	void Rotate(const Vector3& v);
+
 private:
 	const WorldTransform* parent_ = nullptr;
 

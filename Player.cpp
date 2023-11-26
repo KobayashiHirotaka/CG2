@@ -36,6 +36,11 @@ void Player::Initialize(const std::vector<Model*>& models)
 
 void Player::Update()
 {
+	if (!Input::GetInstance()->GetJoystickState(joyState_))
+	{
+		return;
+	}
+
 	if (behaviorRequest_)
 	{
 		behavior_ = behaviorRequest_.value();
@@ -90,7 +95,7 @@ void Player::Update()
 
 	if (worldTransform_.translation.y <= -4.0f)
 	{
-		worldTransform_.translation = { 0.0f,0.0f,0.0f };
+		Restart();
 	}
 
 	worldTransform_.quaternion = Slerp(worldTransform_.quaternion,moveQuaternion_,0.2f);
@@ -165,31 +170,7 @@ void Player::BehaviorRootInitialize()
 
 void Player::BehaviorRootUpdate()
 {
-	if (workDash_.coolTime != 60)
-	{
-		workDash_.coolTime++;
-	}
-
-	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_B)
-	{
-		if (workDash_.coolTime == 60)
-		{
-			behaviorRequest_ = Behavior::kDash;
-		}
-	}
-
-	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
-	{
-		if (workDash_.coolTime == 60)
-		{
-			behaviorRequest_ = Behavior::kAttack;
-		}
-	}
-
-	if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_A)
-	{
-		behaviorRequest_ = Behavior::kJump;
-	}
+	const uint32_t behaviorDashCoolTime = 60;
 
 	if (Input::GetInstance()->GetJoystickState(joyState_))
 	{
@@ -215,10 +196,42 @@ void Player::BehaviorRootUpdate()
 
 			worldTransform_.translation = Add(worldTransform_.translation, velocity_);
 
-			velocity_ = Normalize(velocity_);
-			Vector3 cross = Normalize(Cross({0.0f,0.0f,1.0f}, velocity_));
-			float dot = Dot({ 0.0f,0.0f,1.0f }, velocity_);
-			moveQuaternion_ = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
+			Rotate(velocity_);
+		}
+	}
+
+	if (workDash_.coolTime != 60)
+	{
+		workDash_.coolTime++;
+	}
+
+	if (Input::GetInstance()->GetJoystickState(joyState_)) 
+	{
+		if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_B)
+		{
+			if (workDash_.coolTime == 60)
+			{
+				behaviorRequest_ = Behavior::kDash;
+			}
+		}
+	}
+
+	if (Input::GetInstance()->GetJoystickState(joyState_))
+	{
+		if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+		{
+			if (workDash_.coolTime == 60)
+			{
+				behaviorRequest_ = Behavior::kAttack;
+			}
+		}
+	}
+
+	if (Input::GetInstance()->GetJoystickState(joyState_))
+	{
+		if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		{
+			behaviorRequest_ = Behavior::kJump;
 		}
 	}
 }
@@ -391,22 +404,17 @@ void Player::BehaviorDashUpdate()
 
 void Player::BehaviorJumpInitialize()
 {
-	isHit_ = false;
-
 	worldTransform_.translation.y = 1.0f;
 
 	const float kJumpFirstSpeed_ = 1.0f;
 
-	velocity_ = { (float)joyState_.Gamepad.sThumbLX / (SHRT_MAX * 3), kJumpFirstSpeed_, (float)joyState_.Gamepad.sThumbLY / (SHRT_MAX * 3) };
+	velocity_.y = kJumpFirstSpeed_;
+
+	worldTransform_.DeleteParent();
 }
 
 void Player::BehaviorJumpUpdate()
 {
-	if (!Input::GetInstance()->GetJoystickState(joyState_))
-	{
-		return;
-	}
-
 	worldTransform_.translation = Add(worldTransform_.translation, velocity_);
 
 	const float kGravityAcceleration_ = 0.05f;
@@ -415,11 +423,10 @@ void Player::BehaviorJumpUpdate()
 
 	velocity_ = Add(velocity_, accelerationVector_);
 
-	if (isHit_ == true)
+	if (worldTransform_.parent_)
 	{
-		worldTransform_.translation.y = 1.0f;
-
 		behaviorRequest_ = Behavior::kRoot;
+		worldTransform_.translation.y = 1.0f;
 	}
 }
 
@@ -431,3 +438,12 @@ void Player::ApplyGlobalVariables()
 
 	behaviorDashTime_ = globalVariables->GetIntValue(groupName, "behaviorDashTime");
 }
+
+void Player::Rotate(const Vector3& v)
+{
+	Vector3 vector = Normalize(v);
+	Vector3 cross = Normalize(Cross({ 0.0f,0.0f,1.0f }, vector));
+	float dot = Dot({ 0.0f,0.0f,1.0f }, vector);
+	moveQuaternion_ = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
+}
+
