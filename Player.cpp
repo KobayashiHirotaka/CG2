@@ -36,11 +36,6 @@ void Player::Initialize(const std::vector<Model*>& models)
 
 void Player::Update()
 {
-	if (!Input::GetInstance()->GetJoystickState(joyState_))
-	{
-		return;
-	}
-
 	if (behaviorRequest_)
 	{
 		behavior_ = behaviorRequest_.value();
@@ -172,13 +167,13 @@ void Player::BehaviorRootUpdate()
 {
 	const uint32_t behaviorDashCoolTime = 60;
 
-	if (Input::GetInstance()->GetJoystickState(joyState_))
+	if (input_->GetJoystickState())
 	{
 		const float deadZone = 0.7f;
 
 		bool isMoving = false;
 
-		velocity_ = { (float)joyState_.Gamepad.sThumbLX / SHRT_MAX, 0.0f, (float)joyState_.Gamepad.sThumbLY / SHRT_MAX };
+		velocity_ = { input_->GetLeftStickX(), 0.0f, input_->GetLeftStickY() };
 
 		if (Length(velocity_) > deadZone)
 		{
@@ -200,25 +195,9 @@ void Player::BehaviorRootUpdate()
 		}
 	}
 
-	if (workDash_.coolTime != 60)
+	if (input_->GetJoystickState())
 	{
-		workDash_.coolTime++;
-	}
-
-	if (Input::GetInstance()->GetJoystickState(joyState_)) 
-	{
-		if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_B)
-		{
-			if (workDash_.coolTime == 60)
-			{
-				behaviorRequest_ = Behavior::kDash;
-			}
-		}
-	}
-
-	if (Input::GetInstance()->GetJoystickState(joyState_))
-	{
-		if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+		if (input_->IsPressButtonEnter(XINPUT_GAMEPAD_RIGHT_SHOULDER))
 		{
 			if (workDash_.coolTime == 60)
 			{
@@ -227,9 +206,25 @@ void Player::BehaviorRootUpdate()
 		}
 	}
 
-	if (Input::GetInstance()->GetJoystickState(joyState_))
+	if (workDash_.coolTime != 60)
 	{
-		if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		workDash_.coolTime++;
+	}
+
+	if (input_->GetJoystickState())
+	{
+		if (input_->IsPressButtonEnter(XINPUT_GAMEPAD_B))
+		{
+			if (workDash_.coolTime == 60)
+			{
+				behaviorRequest_ = Behavior::kDash;
+			}
+		}
+	}
+
+	if (input_->GetJoystickState())
+	{
+		if (input_->IsPressButtonEnter(XINPUT_GAMEPAD_A))
 		{
 			behaviorRequest_ = Behavior::kJump;
 		}
@@ -242,19 +237,18 @@ void Player::BehaviorAttackInitialize()
 	workAttack_.comboIndex = 0;
 	workAttack_.inComboPhase = 0;
 	workAttack_.comboNext = false;
+	workAttack_.isAttack = true;
 	workAttack_.translation = { 0.0f,0.8f,0.0f };
 	workAttack_.rotation = { 1.0f,0.0f,3.14f / 2.0f };
 }
 
 void Player::BehaviorAttackUpdate()
 {
-	XINPUT_STATE joyStatePre;
-
 	if (workAttack_.comboIndex < ComboNum - 1)
 	{
-		if (Input::GetInstance()->GetJoystickState(joyState_) && Input::GetInstance()->GetJoystickState(joyStatePre))
+		if (input_->GetJoystickState())
 		{
-			if (joyState_.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+			if (input_->IsPressButtonEnter(XINPUT_GAMEPAD_RIGHT_SHOULDER))
 			{
 				workAttack_.comboNext = true;
 			}
@@ -291,6 +285,7 @@ void Player::BehaviorAttackUpdate()
 		}
 		else {
 			behaviorRequest_ = Behavior::kRoot;
+			workAttack_.isAttack = false;
 			weapon_->SetIsAttack(false);
 		}
 	}
@@ -318,6 +313,10 @@ void Player::BehaviorAttackUpdate()
 			weapon_->SetIsAttack(true);
 		}
 
+		if (workAttack_.attackParameter >= swingTime && workAttack_.attackParameter < 40) {
+			weapon_->SetIsAttack(false);
+		}
+
 		weapon_->SetTranslation(workAttack_.translation);
 		weapon_->SetRotation(workAttack_.rotation);
 		break;
@@ -337,6 +336,10 @@ void Player::BehaviorAttackUpdate()
 		{
 			workAttack_.rotation.x += kConstAttacks_[workAttack_.comboIndex].swingSpeed;
 			weapon_->SetIsAttack(true);
+		}
+
+		if (workAttack_.attackParameter >= swingTime && workAttack_.attackParameter < 40) {
+			weapon_->SetIsAttack(false);
 		}
 
 		weapon_->SetTranslation(workAttack_.translation);
@@ -360,6 +363,10 @@ void Player::BehaviorAttackUpdate()
 			weapon_->SetIsAttack(true);
 		}
 
+		if (workAttack_.attackParameter >= swingTime && workAttack_.attackParameter < 40) {
+			weapon_->SetIsAttack(false);
+		}
+
 		weapon_->SetTranslation(workAttack_.translation);
 		weapon_->SetRotation(workAttack_.rotation);
 
@@ -375,15 +382,11 @@ void Player::BehaviorDashInitialize()
 
 void Player::BehaviorDashUpdate()
 {
-	if (input_->GetJoystickState(joyState_))
+	if (input_->GetJoystickState())
 	{
 		float kSpeed = 1.0f;
 		//移動量
-		Vector3 move_ = {
-			(float)joyState_.Gamepad.sThumbLX / SHRT_MAX,
-			0.0f,
-			(float)joyState_.Gamepad.sThumbLY / SHRT_MAX,
-		};
+		Vector3 move_ = { input_->GetLeftStickX(), 0.0f, input_->GetLeftStickY() };
 
 		//移動量に速さを反映
 		move_ = Multiply(kSpeed, Normalize(move_));

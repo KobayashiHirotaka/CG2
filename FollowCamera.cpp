@@ -28,13 +28,13 @@ void FollowCamera::Update()
 	viewProjection_.translation = Add(interTarget_, offset);
 
 
-	if (Input::GetInstance()->GetJoystickState(joyState_))
+	if (input_->GetJoystickState())
 	{
 		const float deadZone = 0.7f;
 
 		bool isMoving = false;
 
-		Vector3 move = { 0.0f, (float)joyState_.Gamepad.sThumbRX / SHRT_MAX, 0.0f };
+		Vector3 move = { 0.0f, Input::GetInstance()->GetRightStickX(), 0.0f };
 
 		if (Length(move) > deadZone)
 		{

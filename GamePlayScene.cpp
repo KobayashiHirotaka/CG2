@@ -68,7 +68,7 @@ void GamePlayScene::Initialize()
 	}
 
 	ground_[0]->Initialize(groundModel_.get(), { 0.0f,0.0f,0.0f });
-	ground_[1]->Initialize(groundModel_.get(), { 0.0f,0.0f,65.0f });
+	ground_[1]->Initialize(groundModel_.get(), { 0.0f,0.0f,68.0f });
 
 	moveGround_ = std::make_unique<MoveGround>();
 

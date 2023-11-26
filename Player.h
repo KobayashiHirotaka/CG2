@@ -44,6 +44,7 @@ public:
 		int32_t inComboPhase = 0;
 
 		bool comboNext = false;
+		bool isAttack = false;
 	};
 
 	struct ConstAttack 
