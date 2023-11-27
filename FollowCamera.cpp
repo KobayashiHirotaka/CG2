@@ -1,4 +1,5 @@
 #include "FollowCamera.h"
+#include "LockOn.h"
 #include "GlobalVariables.h"
 
 void FollowCamera::Initialize()
@@ -27,25 +28,35 @@ void FollowCamera::Update()
 	
 	viewProjection_.translation = Add(interTarget_, offset);
 
+	if (lockOn_ && lockOn_->ExistTarget()) {
+		
+		Vector3 lockOnPosition = lockOn_->GetTargetPosition();
 
-	if (input_->GetJoystickState())
-	{
-		const float deadZone = 0.7f;
+		Vector3 sub = Subtract(lockOnPosition, GetWorldPosition());
 
-		bool isMoving = false;
+		destinationAngleY_ = std::atan2(sub.x, sub.z);
 
-		Vector3 move = { 0.0f, Input::GetInstance()->GetRightStickX(), 0.0f };
-
-		if (Length(move) > deadZone)
+	}
+	else {
+		if (input_->GetJoystickState())
 		{
-			isMoving = true;
-		}
+			const float deadZone = 0.7f;
 
-		if (isMoving)
-		{
-			const float kRotSpeedY = 0.04f;
+			bool isMoving = false;
 
-			destinationAngleY_ += move.y * kRotSpeedY;
+			Vector3 move = { 0.0f, Input::GetInstance()->GetRightStickX(), 0.0f };
+
+			if (Length(move) > deadZone)
+			{
+				isMoving = true;
+			}
+
+			if (isMoving)
+			{
+				const float kRotSpeedY = 0.04f;
+
+				destinationAngleY_ += move.y * kRotSpeedY;
+			}
 		}
 	}
 

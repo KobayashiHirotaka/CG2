@@ -4,6 +4,8 @@
 #include "Input.h"
 #include "MyMath.h"
 
+class LockOn;
+
 class FollowCamera
 {
 public:
@@ -18,6 +20,8 @@ public:
 	Vector3 GetWorldPosition();
 
 	Vector3 Offset();
+
+	void SetLockOn(const LockOn* lockOn) { lockOn_ = lockOn; };
 
 	void Reset();
 
@@ -38,5 +42,7 @@ private:
 	float destinationAngleY_ = 0.0f;
 
 	float cameraDelay_ = 0.1f;
+
+	const LockOn* lockOn_ = nullptr;
 };
 

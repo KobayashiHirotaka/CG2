@@ -89,22 +89,15 @@ void GamePlayScene::Initialize()
 	followCamera_->Initialize();
 
 	followCamera_->SetTarget(&player_->GetWorldTransform());
+	followCamera_->SetLockOn(lockOn_.get());
 
 	player_->SetViewProjection(&viewProjection_);
+	player_->SetLockOn(lockOn_.get());
 }
 
 void GamePlayScene::Update()
 {
 	player_->Update();
-
-	
-	/*enemies_.remove_if([](std::unique_ptr<Enemy>& enemy) {
-		if (enemy->GetIsDeathAnimationEnd()) {
-			enemy.reset();
-			return true;
-		}
-		return false;
-		});*/
 
 	for (const std::unique_ptr<Enemy>& enemy : enemies_) {
 		enemy->Update();
@@ -121,7 +114,7 @@ void GamePlayScene::Update()
 
 	moveGround_->Update();
 
-	/*lockOn_->Update(enemies_,viewProjection_);*/
+	lockOn_->Update(enemies_,viewProjection_);
 
 	viewProjection_.UpdateMatrix();
 	

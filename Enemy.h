@@ -31,6 +31,10 @@ public:
 
 	void SetPosition(const Vector3& position) { worldTransform_.translation = position; };
 
+	Vector3 GetCenterPosition() const;
+
+	bool GetIsDead() const { return isDead_; };
+
 private:
 	WorldTransform worldTransformBody_;
 	WorldTransform worldTransformHead_;

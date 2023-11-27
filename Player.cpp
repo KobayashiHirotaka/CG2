@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "LockOn.h"
 #include "GlobalVariables.h"
 #include <cassert>
 
@@ -192,6 +193,21 @@ void Player::BehaviorRootUpdate()
 			worldTransform_.translation = Add(worldTransform_.translation, velocity_);
 
 			Rotate(velocity_);
+
+		} else if (lockOn_ && lockOn_->ExistTarget()) {
+
+			Vector3 lockOnPosition = lockOn_->GetTargetPosition();
+
+			Vector3 sub = Subtract(lockOnPosition, GetWorldPosition());
+
+			float distance = Length(sub);
+
+			const float deadZone = 0.2f;
+
+			if (distance > deadZone)
+			{
+				Rotate(sub);
+			}
 		}
 	}
 
@@ -244,6 +260,22 @@ void Player::BehaviorAttackInitialize()
 
 void Player::BehaviorAttackUpdate()
 {
+	if (lockOn_ && lockOn_->ExistTarget())
+	{
+		Vector3 lockOnPosition = lockOn_->GetTargetPosition();
+	
+		Vector3 sub = Subtract(lockOnPosition, GetWorldPosition());
+
+		float distance = Length(sub);
+
+		const float threshold = 0.2f;
+
+		if (distance > threshold) 
+		{
+			Rotate(sub);
+		}
+	}
+
 	if (workAttack_.comboIndex < ComboNum - 1)
 	{
 		if (input_->GetJoystickState())

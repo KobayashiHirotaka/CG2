@@ -11,6 +11,8 @@
 #include <optional>
 #include <numbers>
 
+class LockOn;
+
 class Player : public Collider, public ICharacter
 {
 public:
@@ -104,6 +106,8 @@ public:
 
 	void Rotate(const Vector3& v);
 
+	void SetLockOn(const LockOn* lockOn) { lockOn_ = lockOn; };
+
 private:
 	const WorldTransform* parent_ = nullptr;
 
@@ -137,5 +141,7 @@ private:
 	bool preIsHit_ = false;
 
 	bool reStart_ = false;
+
+	const LockOn* lockOn_ = nullptr;
 };
 

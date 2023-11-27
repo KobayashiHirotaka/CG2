@@ -128,3 +128,4 @@ Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
 
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Quaternion& quaternion, const Vector3& translate);
 
+Vector3 PositionTransform(const Vector3& v, const Matrix4x4& m);

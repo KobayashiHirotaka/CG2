@@ -114,3 +114,10 @@ void Enemy::FloatingGimmickUpdate()
 	worldTransformR_arm_.rotation.x = -std::sin(floatingParameter_[1]) * 0.75f;
 }
 
+Vector3 Enemy::GetCenterPosition() const 
+{
+	const Vector3 offset = { 0.0f,1.0f,0.0f };
+
+	Vector3 worldPos = PositionTransform(offset, worldTransform_.matWorld);
+	return worldPos;
+}
