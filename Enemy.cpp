@@ -57,8 +57,11 @@ void Enemy::Update()
 	{
 		const float kRotSpeed = 0.2f;
 		const float kDisappearanceTime = 40.0f;
+
 		worldTransform_.translation = Add(worldTransform_.translation, deathAnimationVelocity);
+
 		worldTransform_.rotation.x += kRotSpeed;
+
 		worldTransform_.scale.x -= 1.0f / kDisappearanceTime;
 		worldTransform_.scale.y -= 1.0f / kDisappearanceTime;
 		worldTransform_.scale.z -= 1.0f / kDisappearanceTime;
@@ -113,6 +116,7 @@ void Enemy::OnCollision(Collider* collider)
 		{
 			isDead_ = true;
 			const float kSpeed = 0.5f;
+
 			deathAnimationVelocity = { 0.0f,0.2f,kSpeed };
 			deathAnimationVelocity = TransformNormal(deathAnimationVelocity, collider->GetWorldTransform().matWorld);
 		}
