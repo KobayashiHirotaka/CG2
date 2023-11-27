@@ -104,9 +104,15 @@ public:
 
 	Weapon* GetWeapon() { return weapon_.get(); };
 
+	bool GetIsAttack() { return workAttack_.isAttack; };
+
 	void Rotate(const Vector3& v);
 
 	void SetLockOn(const LockOn* lockOn) { lockOn_ = lockOn; };
+
+	bool GetReStart() { return reStart_; };
+
+	void SetReStart(bool reStart) { reStart_ = reStart; };
 
 private:
 	const WorldTransform* parent_ = nullptr;

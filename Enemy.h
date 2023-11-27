@@ -35,6 +35,12 @@ public:
 
 	bool GetIsDead() const { return isDead_; };
 
+	bool GetIsDeathAnimationEnd() const { return isDeathAnimationEnd_; };
+
+	void SetIsPlayerAttack(bool isPlayerAttack) { isPlayerAttack_ = isPlayerAttack; };
+
+	void ReStart();
+
 private:
 	WorldTransform worldTransformBody_;
 	WorldTransform worldTransformHead_;
@@ -42,6 +48,8 @@ private:
 	WorldTransform worldTransformR_arm_;
 
 	const uint16_t kMaxModelParts = 2;
+
+	Vector3 startPosition_;
 
 	Vector3 move_;
 
@@ -51,5 +59,14 @@ private:
 
 	float floatingAmplitude_;
 
+	uint32_t hitCount_ = 0;
+	bool isPlayerAttack_ = false;
+
+	bool isHit_ = false;
+	bool preIsHit_ = false;
+
 	bool isDead_ = false;
+	bool isDeathAnimationEnd_ = false;
+
+	Vector3 deathAnimationVelocity{ 0.0f,0.0f,0.0f };
 };

@@ -6,9 +6,9 @@
 const std::array<Player::ConstAttack, Player::ComboNum>
 Player::kConstAttacks_ = {
 	{
-		{0,0,20,0,0.0f,0.0f,0.15f},
-	    {15,10,15,0,0.2f,0.0f,0.0f},
-	    {15,10,15,30,0.2f,0.0f,0.0f}
+		{0,0,20,1,0.0f,0.0f,0.14f},
+		{15,10,15,0,0.2f,0.0f,0.0f},
+		{15,10,15,30,-0.04f,0.0f,0.2f}
 	}
 };
 
@@ -102,7 +102,7 @@ void Player::Update()
 
 	preIsHit_ = isHit_;
 	isHit_ = false;
-	reStart_ = false;
+	/*reStart_ = false;*/
 
 	Player::ApplyGlobalVariables();
 }
@@ -255,7 +255,7 @@ void Player::BehaviorAttackInitialize()
 	workAttack_.comboNext = false;
 	workAttack_.isAttack = true;
 	workAttack_.translation = { 0.0f,0.8f,0.0f };
-	workAttack_.rotation = { 1.0f,0.0f,3.14f / 2.0f };
+	workAttack_.rotation = { 0.0f,0.0f,0.0f };
 }
 
 void Player::BehaviorAttackUpdate()
@@ -301,17 +301,17 @@ void Player::BehaviorAttackUpdate()
 			{
 			case 0:
 				workAttack_.translation = { 0.0f,0.8f,0.0f };
-				workAttack_.rotation = { 1.0f,0.0f,3.14f / 2.0f };
+				workAttack_.rotation = { 0.0f,0.0f,0.0f };
 				break;
 
 			case 1:
 				workAttack_.translation = { 0.0f,0.8f,0.0f };
-				workAttack_.rotation = { 0.0f,0.0f,0.0f };
+				workAttack_.rotation = { 1.0f,0.0f,3.14f / 2.0f };
 				break;
 
 			case 2:
 				workAttack_.translation = { 0.0f,0.8f,0.0f };
-				workAttack_.rotation = { 1.0f,0.0f,3.14f / 2.0f };
+				workAttack_.rotation = { 0.0f,0.0f,0.0f };
 				break;
 			}
 		}

@@ -99,7 +99,9 @@ void GamePlayScene::Update()
 {
 	player_->Update();
 
-	for (const std::unique_ptr<Enemy>& enemy : enemies_) {
+	for (const std::unique_ptr<Enemy>& enemy : enemies_) 
+	{
+		enemy->SetIsPlayerAttack(player_->GetIsAttack());
 		enemy->Update();
 	}
 
@@ -129,8 +131,12 @@ void GamePlayScene::Update()
 		collisionManager_->AddCollider(player_->GetWeapon());
 	}
 
-	for (const std::unique_ptr<Enemy>& enemy : enemies_) {
-		collisionManager_->AddCollider(enemy.get());
+	for (const std::unique_ptr<Enemy>& enemy : enemies_) 
+	{
+		if (enemy->GetIsDead() == false)
+		{
+			collisionManager_->AddCollider(enemy.get());
+		}
 	}
 
 	for (int i = 0; i < 10; i++)
@@ -141,14 +147,23 @@ void GamePlayScene::Update()
 	collisionManager_->AddCollider(moveGround_.get());
 	collisionManager_->AddCollider(goal_.get());
 	collisionManager_->CheckAllCollision();
+
+	if (player_->GetReStart())
+	{
+		ReStart();
+	}
 }
 
 void GamePlayScene::Draw()
 {
 	player_->Draw(viewProjection_);
 
-	for (const std::unique_ptr<Enemy>& enemy : enemies_) {
-		enemy->Draw(viewProjection_);
+	for (const std::unique_ptr<Enemy>& enemy : enemies_)
+	{
+		if (enemy->GetIsDeathAnimationEnd() == false)
+		{
+			enemy->Draw(viewProjection_);
+		}
 	}
 
 	goal_->Draw(viewProjection_);
@@ -172,8 +187,18 @@ void GamePlayScene::AddEnemy(const Vector3& position)
 
 	Enemy* enemy = new Enemy();
 
-	enemy->Initialize(enemyModels);
 	enemy->SetPosition(position);
+	enemy->Initialize(enemyModels);
 
 	enemies_.push_back(std::unique_ptr<Enemy>(enemy));
+}
+
+void GamePlayScene::ReStart()
+{
+	player_->SetReStart(false);
+
+	for (std::unique_ptr<Enemy>& enemy : enemies_)
+	{
+		enemy->ReStart();
+	}
 }

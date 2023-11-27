@@ -1,8 +1,11 @@
 #include "Enemy.h"
+#include "Player.h"
 
 void Enemy::Initialize(const std::vector<Model*>& models)
 {
 	ICharacter::Initialize(models);
+
+	startPosition_ = worldTransform_.translation;
 
 	worldTransformHead_.Initialize();
 	worldTransformBody_.Initialize();
@@ -30,6 +33,14 @@ void Enemy::Initialize(const std::vector<Model*>& models)
 
 void Enemy::Update()
 {
+	preIsHit_ = isHit_;
+	isHit_ = false;
+
+	if (isPlayerAttack_ == false)
+	{
+		hitCount_ = 0;
+	}
+
 	worldTransform_.translation = Add(worldTransform_.translation, move_);
 
 	if (worldTransform_.translation.x >= 5.0f)
@@ -42,6 +53,22 @@ void Enemy::Update()
 		move_ = { 0.05f,0.0f,0.0f };
 	}
 
+	if (isDead_) 
+	{
+		const float kRotSpeed = 0.2f;
+		const float kDisappearanceTime = 60.0f;
+		worldTransform_.translation = Add(worldTransform_.translation, deathAnimationVelocity);
+		worldTransform_.rotation.x += kRotSpeed;
+		worldTransform_.scale.x -= 1.0f / kDisappearanceTime;
+		worldTransform_.scale.y -= 1.0f / kDisappearanceTime;
+		worldTransform_.scale.z -= 1.0f / kDisappearanceTime;
+
+		if (worldTransform_.scale.x <= 0.0f || worldTransform_.scale.y <= 0.0f || worldTransform_.scale.z <= 0.0f) 
+		{
+			isDeathAnimationEnd_ = true;
+		}
+	}
+
 	FloatingGimmickUpdate();
 	ICharacter::Update();
 
@@ -51,17 +78,20 @@ void Enemy::Update()
 	worldTransformHead_.UpdateMatrix(RotationType::Euler);
 	worldTransformL_arm_.UpdateMatrix(RotationType::Euler);
 	worldTransformR_arm_.UpdateMatrix(RotationType::Euler);
+
+	ImGui::Begin("Hit");
+	ImGui::Text("HitCount %d", hitCount_);
+	ImGui::End();
 }
 
 void Enemy::Draw(const ViewProjection& viewProjection)
 {
-	if (isDead_ == false)
-	{
-		models_[kModelIndexBody]->Draw(worldTransformBody_, viewProjection);
-		models_[kModelIndexHead]->Draw(worldTransformHead_, viewProjection);
-		models_[kModelIndexL_arm]->Draw(worldTransformL_arm_, viewProjection);
-		models_[kModelIndexR_arm]->Draw(worldTransformR_arm_, viewProjection);
-	}
+	
+	models_[kModelIndexBody]->Draw(worldTransformBody_, viewProjection);
+	models_[kModelIndexHead]->Draw(worldTransformHead_, viewProjection);
+	models_[kModelIndexL_arm]->Draw(worldTransformL_arm_, viewProjection);
+	models_[kModelIndexR_arm]->Draw(worldTransformR_arm_, viewProjection);
+	
 }
 
 void Enemy::SetParent(const WorldTransform* parent)
@@ -73,7 +103,19 @@ void Enemy::OnCollision(Collider* collider)
 {
 	if (collider->GetCollisionAttribute() & kCollisionAttributeWeapon)
 	{
-		isDead_ = true;
+		isHit_ = true;
+		if (isHit_ != preIsHit_)
+		{
+			hitCount_++;
+		}
+
+		if (hitCount_ >= Player::ComboNum) 
+		{
+			isDead_ = true;
+			const float kSpeed = 1.0f;
+			deathAnimationVelocity = { 0.0f,0.4f,kSpeed };
+			deathAnimationVelocity = TransformNormal(deathAnimationVelocity, collider->GetWorldTransform().matWorld);
+		}
 	}
 }
 
@@ -120,4 +162,13 @@ Vector3 Enemy::GetCenterPosition() const
 
 	Vector3 worldPos = PositionTransform(offset, worldTransform_.matWorld);
 	return worldPos;
+}
+
+void Enemy::ReStart()
+{
+	worldTransform_.translation = startPosition_;
+	worldTransform_.rotation = { 0.0f,0.0f,0.0f };
+	worldTransform_.scale = { 1.0f,1.0f,1.0f };
+	isDead_ = false;
+	isDeathAnimationEnd_ = false;
 }

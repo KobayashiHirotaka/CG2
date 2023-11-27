@@ -42,6 +42,8 @@ public:
 
 	void AddEnemy(const Vector3& position);
 
+	void ReStart();
+
 private:
 	MyEngine* engine_ = nullptr;
 
