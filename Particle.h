@@ -14,6 +14,10 @@ public:
 
 	float RandomSpeed();
 
+	bool GetIsAlive() { return isAlive_; };
+
+	void SetIsAlive(bool isAlive) { isAlive_ = isAlive; };
+
 private:
 	Model* model_;
 
@@ -21,8 +25,8 @@ private:
 
 	Vector3 speed_;
 
-	int particleTimer = 150;
+	int particleTimer_ = 150;
 
-	bool isAlive = false;
+	bool isAlive_ = false;
 };
 

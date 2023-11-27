@@ -36,6 +36,14 @@ void Enemy::Update()
 	preIsHit_ = isHit_;
 	isHit_ = false;
 
+	particles_.remove_if([](std::unique_ptr<Particle>& particle) {
+		if (particle->GetIsAlive() == false) {
+			particle.reset();
+			return true;
+		}
+		return false;
+		});
+
 	if (isPlayerAttack_ == false)
 	{
 		hitCount_ = 0;
