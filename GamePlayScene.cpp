@@ -183,7 +183,7 @@ void GamePlayScene::Draw()
 void GamePlayScene::AddEnemy(const Vector3& position) 
 {
 	std::vector<Model*> enemyModels = { modelFighterBody_.get(), modelFighterHead_.get(), modelFighterL_arm_.get(),
-		modelFighterR_arm_.get() };
+		modelFighterR_arm_.get(), playerModel_.get()};
 
 	Enemy* enemy = new Enemy();
 

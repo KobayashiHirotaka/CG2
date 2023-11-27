@@ -3,15 +3,26 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 
-#include "ICharacter.h"
-
-class Particle : public ICharacter
+class Particle
 {
 public:
-	void Intialize(const std::vector<Model*>& models);
+	void Initialize(Model* model, Vector3 position);
 
 	void Update();
 
 	void Draw(const ViewProjection& viewProjection);
+
+	float RandomSpeed();
+
+private:
+	Model* model_;
+
+	WorldTransform worldTransformParticle_;
+
+	Vector3 speed_;
+
+	int particleTimer = 150;
+
+	bool isAlive = false;
 };
 

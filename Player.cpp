@@ -7,7 +7,7 @@ const std::array<Player::ConstAttack, Player::ComboNum>
 Player::kConstAttacks_ = {
 	{
 		{0,0,20,1,0.0f,0.0f,0.14f},
-		{15,10,15,0,0.2f,0.0f,0.0f},
+		{15,10,15,1,0.04f,0.0f,0.2f},
 		{15,10,15,30,-0.04f,0.0f,0.2f}
 	}
 };

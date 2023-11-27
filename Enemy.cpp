@@ -72,6 +72,11 @@ void Enemy::Update()
 		}
 	}
 
+	for (const std::unique_ptr<Particle>& particle : particles_)
+	{
+		particle->Update();
+	}
+
 	FloatingGimmickUpdate();
 	ICharacter::Update();
 
@@ -95,6 +100,10 @@ void Enemy::Draw(const ViewProjection& viewProjection)
 	models_[kModelIndexL_arm]->Draw(worldTransformL_arm_, viewProjection);
 	models_[kModelIndexR_arm]->Draw(worldTransformR_arm_, viewProjection);
 	
+	for (const std::unique_ptr<Particle>& particle : particles_)
+	{
+		particle->Draw(viewProjection);
+	}
 }
 
 void Enemy::SetParent(const WorldTransform* parent)
@@ -107,6 +116,11 @@ void Enemy::OnCollision(Collider* collider)
 	if (collider->GetCollisionAttribute() & kCollisionAttributeWeapon)
 	{
 		isHit_ = true;
+
+		Particle* particle = new Particle();
+		particle->Initialize(models_[4], worldTransform_.translation);
+		particles_.push_back(std::unique_ptr<Particle>(particle));
+
 		if (isHit_ != preIsHit_)
 		{
 			hitCount_++;

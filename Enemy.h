@@ -5,6 +5,7 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "MyMath.h"
+#include "Particle.h"
 #include <numbers>
 
 class Enemy : public Collider, public ICharacter
@@ -69,4 +70,6 @@ private:
 	bool isDeathAnimationEnd_ = false;
 
 	Vector3 deathAnimationVelocity{ 0.0f,0.0f,0.0f };
+
+	std::list<std::unique_ptr<Particle>> particles_;
 };
