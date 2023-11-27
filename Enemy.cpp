@@ -56,7 +56,7 @@ void Enemy::Update()
 	if (isDead_) 
 	{
 		const float kRotSpeed = 0.2f;
-		const float kDisappearanceTime = 60.0f;
+		const float kDisappearanceTime = 40.0f;
 		worldTransform_.translation = Add(worldTransform_.translation, deathAnimationVelocity);
 		worldTransform_.rotation.x += kRotSpeed;
 		worldTransform_.scale.x -= 1.0f / kDisappearanceTime;
@@ -112,8 +112,8 @@ void Enemy::OnCollision(Collider* collider)
 		if (hitCount_ >= Player::ComboNum) 
 		{
 			isDead_ = true;
-			const float kSpeed = 1.0f;
-			deathAnimationVelocity = { 0.0f,0.4f,kSpeed };
+			const float kSpeed = 0.5f;
+			deathAnimationVelocity = { 0.0f,0.2f,kSpeed };
 			deathAnimationVelocity = TransformNormal(deathAnimationVelocity, collider->GetWorldTransform().matWorld);
 		}
 	}
