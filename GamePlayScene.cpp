@@ -56,19 +56,19 @@ void GamePlayScene::Initialize()
 	player_->Initialize(playerModels);
 	
 	AddEnemy({ 0.0f,0.5f,72.0f });
-	AddEnemy({ 5.0f,0.5f,80.0f });
-	AddEnemy({ -5.0f,0.5f,85.0f });
-	AddEnemy({ 10.0f,0.5f,90.0f });
-	AddEnemy({ -10.0f,0.5f,95.0f });
+	AddEnemy({ 5.0f,0.5f,88.0f });
+	AddEnemy({ -5.0f,0.5f,104.0f });
+	AddEnemy({ 10.0f,0.5f,120.0f });
+	AddEnemy({ -10.0f,0.5f,136.0f });
 
 	goal_ = std::make_unique<Goal>();
-	goal_->Initialize(goalModel_.get(),{0.0f,1.0f,100.0f});
+	goal_->Initialize(goalModel_.get(),{0.0f,1.0f,150.0f});
 
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(skydomeModel_.get());
 
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 17; i++)
 	{
 		ground_[i] = std::make_unique<Ground>();
 	}
@@ -83,6 +83,13 @@ void GamePlayScene::Initialize()
 	ground_[7]->Initialize(groundModel_.get(), { -15.0f,0.0f,98.0f });
 	ground_[8]->Initialize(groundModel_.get(), { 15.0f,0.0f,98.0f });
 	ground_[9]->Initialize(groundModel_.get(), { 0.0f,0.0f,98.0f });
+	ground_[10]->Initialize(groundModel_.get(), { -15.0f,0.0f,113.0f });
+	ground_[11]->Initialize(groundModel_.get(), { 15.0f,0.0f,113.0f });
+	ground_[12]->Initialize(groundModel_.get(), { 0.0f,0.0f,113.0f });
+	ground_[13]->Initialize(groundModel_.get(), { -15.0f,0.0f,128.0f });
+	ground_[14]->Initialize(groundModel_.get(), { 15.0f,0.0f,128.0f });
+	ground_[15]->Initialize(groundModel_.get(), { 0.0f,0.0f,128.0f });
+	ground_[16]->Initialize(groundModel_.get(), { 0.0f,0.0f,143.0f });
 
 	moveGround_ = std::make_unique<MoveGround>();
 
@@ -112,7 +119,7 @@ void GamePlayScene::Update()
 
 	skydome_->Updata();
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 17; i++)
 	{
 		ground_[i]->Update();
 	}
@@ -142,7 +149,7 @@ void GamePlayScene::Update()
 		}
 	}
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 17; i++)
 	{
 		collisionManager_->AddCollider(ground_[i].get());
 	}
@@ -183,7 +190,7 @@ void GamePlayScene::Draw()
 
 	skydome_->Draw(viewProjection_);
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 17; i++)
 	{
 		ground_[i]->Draw(viewProjection_);
 	}

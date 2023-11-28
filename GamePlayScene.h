@@ -84,7 +84,7 @@ private:
 	std::unique_ptr<Goal> goal_;
 	std::unique_ptr<Model> goalModel_;
 
-	std::unique_ptr<Ground> ground_[10];
+	std::unique_ptr<Ground> ground_[17];
 	std::unique_ptr<MoveGround> moveGround_;
 	std::unique_ptr<Model> groundModel_;
 
