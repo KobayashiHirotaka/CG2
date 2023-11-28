@@ -77,6 +77,17 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> CreateDepthStencilTextureResource(int32_t width, int32_t height);
 
 private:
+	enum BlendMode
+	{
+		kBlendModeNone,
+		kBlendModeNormal,
+		kBlendModeAdd,
+		kBlendModeSubtract,
+		kBlendModeMultiply,
+		kBlendModeScreen,
+		kCountOfBlendMode
+	};
+
 	WindowsApp* win_;
 
 	HRESULT hr_;

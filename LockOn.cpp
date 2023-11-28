@@ -163,15 +163,16 @@ bool LockOn::InRange(const ViewProjection& viewProjection)
 	Vector3 positionView = PositionTransform(targetPosition, viewProjection.matView);
 
 	if (minDistance_ <= positionView.z && positionView.z <= maxDistance_) {
-	
-		float arcTangent = std::atan2(std::sqrt(positionView.x * positionView.x + positionView.y * positionView.y), positionView.z);
 
-		if (std::abs(arcTangent) <= angleRange_) 
+		float distanceXY = std::sqrt(positionView.x * positionView.x + positionView.y * positionView.y);
+
+		float arcTangent = distanceXY / positionView.z;
+
+		if (std::abs(arcTangent) <= angleRange_)
 		{
 			return false;
 		}
 	}
-
 	return true;
 }
 

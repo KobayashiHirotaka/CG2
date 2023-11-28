@@ -34,7 +34,16 @@ void FollowCamera::Update()
 
 		Vector3 sub = Subtract(lockOnPosition, GetWorldPosition());
 
-		destinationAngleY_ = std::atan2(sub.x, sub.z);
+		if (sub.z != 0.0) {
+			destinationAngleY_ = std::asin(sub.x / std::sqrt(sub.x * sub.x + sub.z * sub.z));
+
+			if (sub.z < 0.0) {
+				destinationAngleY_ = (sub.x >= 0.0) ? 3.141592f - destinationAngleY_ : -3.141592f - destinationAngleY_;
+			}
+		}
+		else {
+			destinationAngleY_ = (sub.x >= 0.0) ? 3.141592f / 2.0f : -3.141592f / 2.0f;
+		}
 
 	}
 	else {
