@@ -137,10 +137,10 @@ void LockOn::SearchLockOnTarget(const std::list<std::unique_ptr<Enemy>>& enemies
 		if (minDistance_ <= positionView.z && positionView.z <= maxDistance_)
 		{
 			float norm = Length(positionView);
-			float arcTangent = std::acos(positionView.z / norm);
+			float angleCosine = std::acos(positionView.z / norm);
 
 
-			if (std::abs(arcTangent) <= angleRange_ && enemy->GetIsDead() == false) {
+			if (std::abs(angleCosine) <= angleRange_ && enemy->GetIsDead() == false) {
 				targets_.emplace_back(std::make_pair(positionView.z, enemy.get()));
 			}
 		}
