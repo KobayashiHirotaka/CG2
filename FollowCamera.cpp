@@ -28,8 +28,8 @@ void FollowCamera::Update()
 	
 	viewProjection_.translation = Add(interTarget_, offset);
 
-	if (lockOn_ && lockOn_->ExistTarget()) {
-		
+	if (lockOn_ && lockOn_->ExistTarget()) 
+	{
 		Vector3 lockOnPosition = lockOn_->GetTargetPosition();
 
 		Vector3 sub = Subtract(lockOnPosition, GetWorldPosition());
@@ -47,8 +47,7 @@ void FollowCamera::Update()
 			destinationAngleY_ = (sub.x >= 0.0) ? std::numbers::pi_v<float> / 2.0f : -std::numbers::pi_v<float> / 2.0f;
 		}
 
-	}
-	else {
+	} else {
 		if (input_->GetJoystickState())
 		{
 			const float deadZone = 0.7f;

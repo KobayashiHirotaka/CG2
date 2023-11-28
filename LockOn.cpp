@@ -45,15 +45,13 @@ void LockOn::Update(const std::list<std::unique_ptr<Enemy>>& enemies, const View
 					target_ = nullptr;
 					target_ = targets_[targetIndex_].second;
 
-				}
-				else {
+				} else {
 					target_ = nullptr;
 					target_ = targets_[targetIndex_].second;
 				}
 			}
 
-		}
-		else {
+		} else {
 			if (input_->IsPressButtonEnter(XINPUT_GAMEPAD_RIGHT_THUMB))
 			{
 				SearchLockOnTarget(enemies, viewProjection);
@@ -68,8 +66,7 @@ void LockOn::Update(const std::list<std::unique_ptr<Enemy>>& enemies, const View
 				isAutoLockOn_ = false;
 				target_ = nullptr;
 
-			}
-			else {
+			} else {
 				isAutoLockOn_ = true;
 			}
 		}
@@ -140,7 +137,8 @@ void LockOn::SearchLockOnTarget(const std::list<std::unique_ptr<Enemy>>& enemies
 			float angleCosine = std::acos(positionView.z / norm);
 
 
-			if (std::abs(angleCosine) <= angleRange_ && enemy->GetIsDead() == false) {
+			if (std::abs(angleCosine) <= angleRange_ && enemy->GetIsDead() == false)
+			{
 				targets_.emplace_back(std::make_pair(positionView.z, enemy.get()));
 			}
 		}

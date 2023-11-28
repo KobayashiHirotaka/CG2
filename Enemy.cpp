@@ -37,7 +37,8 @@ void Enemy::Update()
 	isHit_ = false;
 
 	particles_.remove_if([](std::unique_ptr<Particle>& particle) {
-		if (particle->GetIsAlive() == false) {
+		if (particle->GetIsAlive() == false) 
+		{
 			particle.reset();
 			return true;
 		}
