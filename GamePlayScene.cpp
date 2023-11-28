@@ -155,6 +155,16 @@ void GamePlayScene::Update()
 	{
 		ReStart();
 	}
+
+	ImGui::Begin("PLAY");
+	ImGui::Text("LStick : Move");
+	ImGui::Text("RStick : MoveCamera");
+	ImGui::Text("PushRStick : LockOn");
+	ImGui::Text("X Button : TargetChange");
+	ImGui::Text("A Button : Jump");
+	ImGui::Text("B Button : Dash");
+	ImGui::Text("RB : Attack");
+	ImGui::End();
 }
 
 void GamePlayScene::Draw()
