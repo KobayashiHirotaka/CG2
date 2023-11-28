@@ -94,10 +94,6 @@ void Enemy::Update()
 	worldTransformHead_.UpdateMatrix(RotationType::Euler);
 	worldTransformL_arm_.UpdateMatrix(RotationType::Euler);
 	worldTransformR_arm_.UpdateMatrix(RotationType::Euler);
-
-	ImGui::Begin("Hit");
-	ImGui::Text("HitCount %d", hitCount_);
-	ImGui::End();
 }
 
 void Enemy::Draw(const ViewProjection& viewProjection)
