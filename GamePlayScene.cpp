@@ -35,6 +35,9 @@ void GamePlayScene::Initialize()
 	modelFighterL_arm_.reset(Model::CreateModelFromObj("resource/float_L_arm", "float_L_arm.obj"));
 	modelFighterR_arm_.reset(Model::CreateModelFromObj("resource/float_R_arm", "float_R_arm.obj"));
 
+	particleModel_.reset(Model::CreateModelFromObj("resource/particle", "particle.obj"));
+	particleModel_->SetLighting(Lighting::checkLighting);
+
 	goalModel_.reset(Model::CreateModelFromObj("resource/player", "player.obj"));
 
 	groundModel_.reset(Model::CreateModelFromObj("resource/ground", "ground.obj"));
@@ -183,7 +186,7 @@ void GamePlayScene::Draw()
 void GamePlayScene::AddEnemy(const Vector3& position) 
 {
 	std::vector<Model*> enemyModels = { modelFighterBody_.get(), modelFighterHead_.get(), modelFighterL_arm_.get(),
-		modelFighterR_arm_.get(), playerModel_.get()};
+		modelFighterR_arm_.get(), particleModel_.get()};
 
 	Enemy* enemy = new Enemy();
 

@@ -34,15 +34,17 @@ void FollowCamera::Update()
 
 		Vector3 sub = Subtract(lockOnPosition, GetWorldPosition());
 
-		if (sub.z != 0.0) {
+		if (sub.z != 0.0)
+		{
 			destinationAngleY_ = std::asin(sub.x / std::sqrt(sub.x * sub.x + sub.z * sub.z));
 
-			if (sub.z < 0.0) {
-				destinationAngleY_ = (sub.x >= 0.0) ? 3.141592f - destinationAngleY_ : -3.141592f - destinationAngleY_;
+			if (sub.z < 0.0) 
+			{
+				destinationAngleY_ = (sub.x >= 0.0) ? std::numbers::pi_v<float> - destinationAngleY_ : -std::numbers::pi_v<float> - destinationAngleY_;
 			}
-		}
-		else {
-			destinationAngleY_ = (sub.x >= 0.0) ? 3.141592f / 2.0f : -3.141592f / 2.0f;
+
+		} else {
+			destinationAngleY_ = (sub.x >= 0.0) ? std::numbers::pi_v<float> / 2.0f : -std::numbers::pi_v<float> / 2.0f;
 		}
 
 	}

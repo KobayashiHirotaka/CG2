@@ -8,6 +8,10 @@ void Weapon::Initialize(Model* model)
 	
 	worldTransform_.Initialize();
 	collisionWorldTransform_.Initialize();
+
+	worldTransform_.scale.x = 0.5f;
+	worldTransform_.scale.y = 0.5f;
+	worldTransform_.scale.z = 0.5f;
 	
 	SetCollisionAttribute(kCollisionAttributeWeapon);
 	SetCollisionMask(kCollisionMaskWeapon);
@@ -15,8 +19,8 @@ void Weapon::Initialize(Model* model)
 
 	AABB aabbSize =
 	{
-		{-collisionWorldTransform_.scale.x,-collisionWorldTransform_.scale.y,-collisionWorldTransform_.scale.z + 2.0f},
-		{collisionWorldTransform_.scale.x,collisionWorldTransform_.scale.y,collisionWorldTransform_.scale.z + 2.0f},
+		{-collisionWorldTransform_.scale.x,-collisionWorldTransform_.scale.y,-collisionWorldTransform_.scale.z},
+		{collisionWorldTransform_.scale.x,collisionWorldTransform_.scale.y,collisionWorldTransform_.scale.z},
 	};
 
 	SetAABB(aabbSize);

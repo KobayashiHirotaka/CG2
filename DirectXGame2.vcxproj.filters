@@ -157,6 +157,12 @@
     <Filter Include="ヘッダー ファイル\game\LockOn">
       <UniqueIdentifier>{7d8cbfcc-9c13-4855-abcc-aa1f598a85db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\game\particle">
+      <UniqueIdentifier>{345cab72-e793-424c-b6bd-c8d7792941ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\particle">
+      <UniqueIdentifier>{c13a5dfb-aa49-421d-b24f-e43ee6ba8789}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -286,7 +292,7 @@
       <Filter>ソース ファイル\game\LockOn</Filter>
     </ClCompile>
     <ClCompile Include="Particle.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -459,7 +465,7 @@
       <Filter>ヘッダー ファイル\game\LockOn</Filter>
     </ClInclude>
     <ClInclude Include="Particle.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\game\particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

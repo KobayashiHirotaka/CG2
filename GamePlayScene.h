@@ -93,5 +93,7 @@ private:
 
 	std::unique_ptr<LockOn> lockOn_ = nullptr;
 
+	std::unique_ptr<Model> particleModel_;
+
 	bool isDebugCameraActive_ = false;
 };

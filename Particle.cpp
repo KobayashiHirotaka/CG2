@@ -26,6 +26,9 @@ void Particle::Update()
 		worldTransformParticle_.translation.z += speed_.z;
 		worldTransformParticle_.rotation.x += speed_.x;
 		worldTransformParticle_.rotation.y += speed_.y;
+		worldTransformParticle_.scale.x -= 0.03f;
+		worldTransformParticle_.scale.y -= 0.03f;
+		worldTransformParticle_.scale.z -= 0.03f;
 		worldTransformParticle_.UpdateMatrix(RotationType::Euler);
 	}
 
