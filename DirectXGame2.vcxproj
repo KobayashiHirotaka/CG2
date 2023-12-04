@@ -15,7 +15,9 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="ConvertString.cpp" />
-    <ClCompile Include="DirectXCommon.cpp" />
+    <ClCompile Include="Engine\Base\DirectXCommon\DirectXCommon.cpp" />
+    <ClCompile Include="Engine\Base\MyEngine\MyEngine.cpp" />
+    <ClCompile Include="Engine\Base\WindowsApp\WindowsApp.cpp" />
     <ClCompile Include="Engine\externals\imgui\imgui.cpp" />
     <ClCompile Include="Engine\externals\imgui\imgui_demo.cpp" />
     <ClCompile Include="Engine\externals\imgui\imgui_draw.cpp" />
@@ -32,7 +34,6 @@
     <ClCompile Include="LoadCSV.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
-    <ClCompile Include="MyEngine.cpp" />
     <ClCompile Include="MyImGui.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -41,7 +42,6 @@
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="ViewProjection.cpp" />
-    <ClCompile Include="WindowsApp.cpp" />
     <ClCompile Include="WorldTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -62,7 +62,9 @@
     <ClInclude Include="CollisionConfig.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="ConvertString.h" />
-    <ClInclude Include="DirectXCommon.h" />
+    <ClInclude Include="Engine\Base\DirectXCommon\DirectXCommon.h" />
+    <ClInclude Include="Engine\Base\MyEngine\MyEngine.h" />
+    <ClInclude Include="Engine\Base\WindowsApp\WindowsApp.h" />
     <ClInclude Include="Engine\externals\imgui\imconfig.h" />
     <ClInclude Include="Engine\externals\imgui\imgui.h" />
     <ClInclude Include="Engine\externals\imgui\imgui_impl_dx12.h" />
@@ -83,7 +85,6 @@
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelData.h" />
-    <ClInclude Include="MyEngine.h" />
     <ClInclude Include="MyImGui.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="SceneManager.h" />
@@ -98,7 +99,6 @@
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="VertexData.h" />
     <ClInclude Include="ViewProjection.h" />
-    <ClInclude Include="WindowsApp.h" />
     <ClInclude Include="WorldTransform.h" />
   </ItemGroup>
   <ItemGroup>

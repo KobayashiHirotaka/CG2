@@ -1,5 +1,5 @@
 #pragma once
-#include "DirectXCommon.h"
+#include "Engine/Base/DirectXCommon/DirectXCommon.h"
 #include "TextureManager.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
