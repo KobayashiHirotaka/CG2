@@ -1,5 +1,5 @@
 #pragma once
-#include "DirectXCommon.h"
+#include "Engine/Base/DirectXCommon/DirectXCommon.h"
 #include <xaudio2.h>
 #pragma comment(lib,"xaudio2.lib")
 #include <cassert>
