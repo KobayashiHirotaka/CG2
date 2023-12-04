@@ -9,7 +9,7 @@
 #include <wrl.h>
 #include <cassert>
 #include <chrono>
-#include "externals/DirectXTex/d3dx12.h"
+#include "Engine/externals/DirectXTex/d3dx12.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
