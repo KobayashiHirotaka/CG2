@@ -300,7 +300,7 @@
     <None Include="resource\shaders\Object3d.hlsli">
       <Filter>shaders</Filter>
     </None>
-    <None Include="Particle.hlsli">
+    <None Include="resource\shaders\Particle.hlsli">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>
@@ -450,10 +450,10 @@
     <FxCompile Include="resource\shaders\Object3d.VS.hlsl">
       <Filter>shaders</Filter>
     </FxCompile>
-    <FxCompile Include="ParticlePS.hlsl">
+    <FxCompile Include="resource\shaders\ParticlePS.hlsl">
       <Filter>shaders</Filter>
     </FxCompile>
-    <FxCompile Include="ParticleVS.hlsl">
+    <FxCompile Include="resource\shaders\ParticleVS.hlsl">
       <Filter>shaders</Filter>
     </FxCompile>
   </ItemGroup>
