@@ -9,8 +9,8 @@
 #include "Engine/2D/Sprite/Sprite.h"
 #include "Engine/3D/Sphere/Sphere.h"
 #include "Engine/3D/Model/Model.h"
+#include "Engine/3D/Light/Light.h"
 #include "IScene.h"
-#include "Light.h"
 #include "ModelData.h"
 #include "MyMath.h"
 

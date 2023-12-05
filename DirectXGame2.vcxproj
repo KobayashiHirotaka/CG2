@@ -15,6 +15,7 @@
     <ClCompile Include="Engine\2D\Triangle\Triangle.cpp" />
     <ClCompile Include="Engine\3D\Camera\Camera.cpp" />
     <ClCompile Include="Engine\3D\Camera\DebugCamera.cpp" />
+    <ClCompile Include="Engine\3D\Light\Light.cpp" />
     <ClCompile Include="Engine\3D\Model\Model.cpp" />
     <ClCompile Include="Engine\3D\Sphere\Sphere.cpp" />
     <ClCompile Include="Engine\3D\WorldTransform\WorldTransform.cpp" />
@@ -36,7 +37,6 @@
     <ClCompile Include="Engine\Utility\ConvertString\ConvertString.cpp" />
     <ClCompile Include="Engine\Utility\CSV\LoadCSV.cpp" />
     <ClCompile Include="GlobalVariables.cpp" />
-    <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="Project\Game\Scenes\GameEndScene.cpp" />
@@ -60,12 +60,14 @@
     <ClInclude Include="Engine\2D\Triangle\Triangle.h" />
     <ClInclude Include="Engine\3D\Camera\Camera.h" />
     <ClInclude Include="Engine\3D\Camera\DebugCamera.h" />
+    <ClInclude Include="Engine\3D\Light\Light.h" />
     <ClInclude Include="Engine\3D\Model\Model.h" />
     <ClInclude Include="Engine\3D\Sphere\Sphere.h" />
     <ClInclude Include="Engine\3D\WorldTransform\WorldTransform.h" />
     <ClInclude Include="Engine\Base\DirectXCore\DirectXCore.h" />
     <ClInclude Include="Engine\Base\ImGuiManager\ImGuiManager.h" />
     <ClInclude Include="Engine\Base\MyEngine\MyEngine.h" />
+    <ClInclude Include="Engine\Base\ResourceObject.h" />
     <ClInclude Include="Engine\Base\TextureManager\TextureManager.h" />
     <ClInclude Include="Engine\Base\WindowsApp\WindowsApp.h" />
     <ClInclude Include="Engine\Components\Audio\Audio.h" />
@@ -84,7 +86,6 @@
     <ClInclude Include="Engine\Utility\ConvertString\ConvertString.h" />
     <ClInclude Include="Engine\Utility\CSV\LoadCSV.h" />
     <ClInclude Include="GlobalVariables.h" />
-    <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="ModelData.h" />
@@ -95,7 +96,6 @@
     <ClInclude Include="Project\Game\Scenes\IScene.h" />
     <ClInclude Include="Project\Game\Scenes\Manager\SceneManager.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="ResourceObject.h" />
     <ClInclude Include="TransformationMatrix.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />

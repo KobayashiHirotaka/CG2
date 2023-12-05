@@ -6,7 +6,7 @@
 #include "Engine/Base/ImGuiManager/ImGuiManager.h"
 #include "Engine/Components/Input/Input.h"
 #include "Engine/Components/Audio/Audio.h"
-#include "Light.h"
+#include "Engine/3D/Light/Light.h"
 #include "Project/Game/Scenes/IScene.h"
 #include "Project/Game/Scenes/GameStartScene.h"
 #include "Project/Game/Scenes/GamePlayScene.h"

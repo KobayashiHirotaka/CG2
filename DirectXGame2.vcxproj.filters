@@ -240,9 +240,6 @@
     <ClCompile Include="Engine\Base\TextureManager\TextureManager.cpp">
       <Filter>ソース ファイル\Engine\Base\TextureManager</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>ソース ファイル\Engine\3d\Light</Filter>
-    </ClCompile>
     <ClCompile Include="GlobalVariables.cpp">
       <Filter>ソース ファイル\Engine\Utility</Filter>
     </ClCompile>
@@ -293,6 +290,9 @@
     </ClCompile>
     <ClCompile Include="Engine\3D\Sphere\Sphere.cpp">
       <Filter>ソース ファイル\Engine\3d\Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\Light\Light.cpp">
+      <Filter>ソース ファイル\Engine\3d\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -359,9 +359,6 @@
     <ClInclude Include="GlobalVariables.h">
       <Filter>ヘッダー ファイル\Engine\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>ヘッダー ファイル\Engine\3d\Light</Filter>
-    </ClInclude>
     <ClInclude Include="Material.h">
       <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
     </ClInclude>
@@ -373,12 +370,6 @@
     </ClInclude>
     <ClInclude Include="TransformationMatrix.h">
       <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceObject.h">
-      <Filter>ヘッダー ファイル\Engine\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>ヘッダー ファイル\Engine\Base</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3D\WorldTransform\WorldTransform.h">
       <Filter>ヘッダー ファイル\Engine\3d\WorldTransform</Filter>
@@ -436,6 +427,15 @@
     </ClInclude>
     <ClInclude Include="Engine\3D\Sphere\Sphere.h">
       <Filter>ヘッダー ファイル\Engine\3d\Sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\Light\Light.h">
+      <Filter>ヘッダー ファイル\Engine\3d\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\ResourceObject.h">
+      <Filter>ヘッダー ファイル\Engine\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

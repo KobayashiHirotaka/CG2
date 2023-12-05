@@ -4,7 +4,7 @@
 #include "Engine/Base/ImGuiManager/ImGuiManager.h"
 #include "Engine/3D/WorldTransform/WorldTransform.h"
 #include "Engine/3D/Camera/Camera.h"
-#include "Light.h"
+#include "Engine/3D/Light/Light.h"
 #include "VertexData.h"
 #include "ModelData.h"
 #include "Material.h"
