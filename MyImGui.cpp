@@ -6,18 +6,18 @@ MyImGui* MyImGui::GetInstance()
 	return &instance;
 }
 
-void MyImGui::Initialize(WindowsApp* win, DirectXCommon* dxCommon)
+void MyImGui::Initialize(WindowsApp* win, DirectXCore* dxCore)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
 	ImGui_ImplWin32_Init(win->GetHwnd());
-	ImGui_ImplDX12_Init(dxCommon->GetDevice(),
-		dxCommon->GetSwapChainDesc().BufferCount,
-		dxCommon->GetRtvDesc().Format,
-		dxCommon->GetSrvDescriptorHeap(),
-		dxCommon->GetSrvDescriptorHeap()->GetCPUDescriptorHandleForHeapStart(),
-		dxCommon->GetSrvDescriptorHeap()->GetGPUDescriptorHandleForHeapStart());
+	ImGui_ImplDX12_Init(dxCore->GetDevice(),
+		dxCore->GetSwapChainDesc().BufferCount,
+		dxCore->GetRtvDesc().Format,
+		dxCore->GetSrvDescriptorHeap(),
+		dxCore->GetSrvDescriptorHeap()->GetCPUDescriptorHandleForHeapStart(),
+		dxCore->GetSrvDescriptorHeap()->GetGPUDescriptorHandleForHeapStart());
 }
 
 void MyImGui::BeginFlame()

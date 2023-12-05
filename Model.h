@@ -1,5 +1,5 @@
 #pragma once
-#include "DirectXCommon.h"
+#include "Engine/Base/DirectXCore/DirectXCore.h"
 #include "TextureManager.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
@@ -33,7 +33,7 @@ public:
 	}
 
 private:
-	DirectXCommon* dxCommon_ = nullptr;
+	DirectXCore* dxCore_ = nullptr;
 
 	TextureManager* textureManager_ = nullptr;
 

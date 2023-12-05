@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/Base/DirectXCommon/DirectXCommon.h"
+#include "Engine/Base/DirectXCore/DirectXCore.h"
 #include "Engine/externals/DirectXTex/DirectXTex.h"
 #include <wrl.h>
 #include <array>
@@ -20,7 +20,7 @@ public:
 
 	static TextureManager* GetInstance();
 
-	void Initialize(DirectXCommon* dxCommon);
+	void Initialize(DirectXCore* dxCore);
 
 	uint32_t LoadTexture(const std::string& filePath);
 
@@ -31,7 +31,7 @@ private:
 
 	HRESULT hr_;
 
-	DirectXCommon* dxCommon_ = nullptr;
+	DirectXCore* dxCore_ = nullptr;
 
 	bool CheckTextureIndex[kMaxTexture];
 

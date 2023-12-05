@@ -1,6 +1,6 @@
 #pragma once
-#include "WindowsApp.h"
-#include "DirectXCommon.h"
+#include "Engine/Base/WindowsApp/WindowsApp.h"
+#include "Engine/Base/DirectXCore/DirectXCore.h"
 
 class MyImGui
 {
@@ -10,7 +10,7 @@ public:
 	//MyImGui();
 	//~MyImGui();
 
-	void Initialize(WindowsApp* win, DirectXCommon* dxCommon);
+	void Initialize(WindowsApp* win, DirectXCore* dxCore);
 
 	void BeginFlame();
 

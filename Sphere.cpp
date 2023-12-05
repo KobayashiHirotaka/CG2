@@ -2,13 +2,13 @@
 
 void Sphere::Initialize()
 {
-	dxCommon_ = DirectXCommon::GetInstance();
+	dxCore_ = DirectXCore::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
 	light_ = Light::GetInstance();
 
-	vertexResourceSphere_ = dxCommon_->CreateBufferResource(sizeof(VertexData) * 4 * kSubdivision_ * kSubdivision_);
-	materialResourceSphere_ = dxCommon_->CreateBufferResource(sizeof(Material));
-	indexResourceSphere_ = dxCommon_->CreateBufferResource(sizeof(uint32_t) * 6 * kSubdivision_ * kSubdivision_);
+	vertexResourceSphere_ = dxCore_->CreateBufferResource(sizeof(VertexData) * 4 * kSubdivision_ * kSubdivision_);
+	materialResourceSphere_ = dxCore_->CreateBufferResource(sizeof(Material));
+	indexResourceSphere_ = dxCore_->CreateBufferResource(sizeof(uint32_t) * 6 * kSubdivision_ * kSubdivision_);
 
 	CreateVertexBufferViewSphere();
 	CreateIndexBufferViewSphere();
@@ -109,28 +109,28 @@ void Sphere::Draw(const WorldTransform& transform, const ViewProjection& viewPro
 	materialDataSphere_->enableLighting = lightFlag;
 	materialDataSphere_->uvTransform = MakeIdentity4x4();
 
-	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	dxCore_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	//頂点
-	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewSphere_);
-	dxCommon_->GetcommandList()->IASetIndexBuffer(&indexBufferViewSphere_);
+	dxCore_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewSphere_);
+	dxCore_->GetcommandList()->IASetIndexBuffer(&indexBufferViewSphere_);
 
 	//WorldTransform
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff->GetGPUVirtualAddress());
+	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff->GetGPUVirtualAddress());
 
 	//ViewProjection
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection.constBuff->GetGPUVirtualAddress());
+	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection.constBuff->GetGPUVirtualAddress());
 
 	//色用のCBufferの場所を特定
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSphere_.Get()->GetGPUVirtualAddress());
+	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSphere_.Get()->GetGPUVirtualAddress());
 
 	//テクスチャ
-	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(textureHandle));
+	dxCore_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(textureHandle));
 
 	//Light
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
+	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
 
-	dxCommon_->GetcommandList()->DrawIndexedInstanced(kSubdivision_ * kSubdivision_ * 6, 1, 0, 0, 0);
+	dxCore_->GetcommandList()->DrawIndexedInstanced(kSubdivision_ * kSubdivision_ * 6, 1, 0, 0, 0);
 }
 
 void Sphere::CreateVertexBufferViewSphere()

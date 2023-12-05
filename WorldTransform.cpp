@@ -10,7 +10,7 @@ void WorldTransform::Initialize()
 
 void WorldTransform::CreateConstBuffer()
 {
-	constBuff = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(ConstBufferDataWorldTransform));
+	constBuff = DirectXCore::GetInstance()->CreateBufferResource(sizeof(ConstBufferDataWorldTransform));
 }
 
 void WorldTransform::Map()

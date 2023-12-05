@@ -15,7 +15,7 @@ void SceneManager::Initialize()
 
 	win_ = WindowsApp::GetInstance();
 
-	dxCommon_ = DirectXCommon::GetInstance();
+	dxCore_ = DirectXCore::GetInstance();
 
 	engine_ = MyEngine::GetInstance();
 	engine_->Initialize();
@@ -23,7 +23,7 @@ void SceneManager::Initialize()
 	textureManager_ = TextureManager::GetInstance();
 
 	imGui_ = MyImGui::GetInstance();
-	imGui_->Initialize(win_, dxCommon_);
+	imGui_->Initialize(win_, dxCore_);
 
 	input_ = Input::GetInstance();
 	input_->Initialize(win_);
@@ -57,7 +57,7 @@ void SceneManager::Update()
 		}else {
 			//ゲームの処理
 			imGui_->BeginFlame();
-			dxCommon_->PreDraw();
+			dxCore_->PreDraw();
 			input_->Update();
 			//GlobalVariables::GetInstance()->Update();
 
@@ -65,14 +65,14 @@ void SceneManager::Update()
 			state[GameStartScene::sceneNum]->Draw();
 
 			imGui_->EndFlame();
-			dxCommon_->PostDraw();
+			dxCore_->PostDraw();
 		}
 	}
 }
 
 void SceneManager::Release()
 {
-	dxCommon_->Release();
+	dxCore_->Release();
 
 	ImGui_ImplDX12_Shutdown();
 	CoUninitialize();

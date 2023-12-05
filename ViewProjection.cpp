@@ -10,7 +10,7 @@ void ViewProjection::Initialize()
 
 void ViewProjection::CreateConstBuffer()
 {
-	constBuff = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(ConstBufferDataViewProjection));
+	constBuff = DirectXCore::GetInstance()->CreateBufferResource(sizeof(ConstBufferDataViewProjection));
 }
 
 void ViewProjection::Map()

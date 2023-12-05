@@ -33,7 +33,7 @@ public:
 	ID3D12Resource* GetDirectionalLight()const { return directionalLightResource_.Get(); }
 
 private:
-	DirectXCommon* dxCommon_ = nullptr;
+	DirectXCore* dxCore_ = nullptr;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource>directionalLightResource_ = nullptr;
 	DirectionalLight* directionalLightData_ = nullptr;

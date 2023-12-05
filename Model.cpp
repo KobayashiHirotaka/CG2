@@ -3,11 +3,11 @@
 
 void Model::Initialize(const std::string& directoryPath, const std::string& filename)
 {
-	dxCommon_ = DirectXCommon::GetInstance();
+	dxCore_ = DirectXCore::GetInstance();
 	textureManager_ =TextureManager::GetInstance();
 	light_ = Light::GetInstance();
 
-	materialResourceObj_ = dxCommon_->CreateBufferResource(sizeof(Material));
+	materialResourceObj_ = dxCore_->CreateBufferResource(sizeof(Material));
 
 	modelData_ = LoadObjFile(directoryPath, filename);
 
@@ -23,21 +23,21 @@ void Model::Initialize(const std::string& directoryPath, const std::string& file
 
 void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProjection)
 {
-	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	dxCore_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewObj_);
+	dxCore_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferViewObj_);
 
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1,transform.constBuff->GetGPUVirtualAddress());
+	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(1,transform.constBuff->GetGPUVirtualAddress());
 
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(4,viewProjection.constBuff->GetGPUVirtualAddress());
+	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(4,viewProjection.constBuff->GetGPUVirtualAddress());
 
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceObj_->GetGPUVirtualAddress());
+	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceObj_->GetGPUVirtualAddress());
 
-	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(modelData_.TextureIndex));
+	dxCore_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(modelData_.TextureIndex));
 
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
+	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
 
-	dxCommon_->GetcommandList()->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
+	dxCore_->GetcommandList()->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
 }
 
 void Model::ImGui(const char* Title)
@@ -141,7 +141,7 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 
 	modelData.TextureIndex = textureManager_->LoadTexture(modelData.material.textureFilePath);
 
-	vertexResourceObj_ = dxCommon_->CreateBufferResource(sizeof(VertexData) * modelData.vertices.size());
+	vertexResourceObj_ = dxCore_->CreateBufferResource(sizeof(VertexData) * modelData.vertices.size());
 	vertexBufferViewObj_.BufferLocation = vertexResourceObj_->GetGPUVirtualAddress();
 	vertexBufferViewObj_.SizeInBytes = UINT(sizeof(VertexData) * modelData.vertices.size());
 	vertexBufferViewObj_.StrideInBytes = sizeof(VertexData);

@@ -15,7 +15,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="ConvertString.cpp" />
-    <ClCompile Include="Engine\Base\DirectXCommon\DirectXCommon.cpp" />
+    <ClCompile Include="Engine\Base\DirectXCore\DirectXCore.cpp" />
     <ClCompile Include="Engine\Base\MyEngine\MyEngine.cpp" />
     <ClCompile Include="Engine\Base\WindowsApp\WindowsApp.cpp" />
     <ClCompile Include="Engine\externals\imgui\imgui.cpp" />
@@ -62,7 +62,7 @@
     <ClInclude Include="CollisionConfig.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="ConvertString.h" />
-    <ClInclude Include="Engine\Base\DirectXCommon\DirectXCommon.h" />
+    <ClInclude Include="Engine\Base\DirectXCore\DirectXCore.h" />
     <ClInclude Include="Engine\Base\MyEngine\MyEngine.h" />
     <ClInclude Include="Engine\Base\WindowsApp\WindowsApp.h" />
     <ClInclude Include="Engine\externals\imgui\imconfig.h" />

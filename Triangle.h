@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/Base/DirectXCommon/DirectXCommon.h"
+#include "Engine/Base/DirectXCore/DirectXCore.h"
 #include "TextureManager.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
@@ -19,7 +19,7 @@ private:
 	void CreateVertexBufferView();
 
 private:
-	DirectXCommon* dxCommon_ = nullptr;
+	DirectXCore* dxCore_ = nullptr;
 
 	TextureManager* textureManager_ = nullptr;
 

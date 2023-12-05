@@ -17,7 +17,7 @@ void GamePlayScene::Initialize()
 	camera_ = new Camera();
 	camera_->Initialize(1280, 720);
 
-	dxCommon_ = DirectXCommon::GetInstance();
+	dxCore_ = DirectXCore::GetInstance();
 	
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();

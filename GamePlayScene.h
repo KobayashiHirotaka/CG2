@@ -1,6 +1,6 @@
 #pragma once
 #include "IScene.h"
-#include "MyEngine.h"
+#include "Engine/Base/MyEngine/MyEngine.h"
 #include "Camera.h"
 #include "Light.h"
 #include "Triangle.h"
@@ -42,7 +42,7 @@ private:
 
 	Audio* audio_ = nullptr;
 
-	DirectXCommon* dxCommon_ = nullptr;
+	DirectXCore* dxCore_ = nullptr;
 
 	Model* model_ = nullptr;
 

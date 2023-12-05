@@ -8,9 +8,9 @@ Light* Light::GetInstance()
 
 void Light::Initialize()
 {
-	dxCommon_ = DirectXCommon::GetInstance();
+	dxCore_ = DirectXCore::GetInstance();
 
-	directionalLightResource_ = dxCommon_->CreateBufferResource(sizeof(DirectionalLight));
+	directionalLightResource_ = dxCore_->CreateBufferResource(sizeof(DirectionalLight));
 	directionalLightResource_.Get()->Map(0, nullptr, reinterpret_cast<void**>(&directionalLightData_));
 	directionalLightData_->color = { 1.0f,1.0f,1.0f,1.0f };
 	directionalLightData_->direction = { 0.0f,-1.0f,0.0f };

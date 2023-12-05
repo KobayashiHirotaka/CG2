@@ -2,11 +2,11 @@
 
 void Triangle::Initialize()
 {
-	dxCommon_ = DirectXCommon::GetInstance();
+	dxCore_ = DirectXCore::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
 
-	vertexResource_ = dxCommon_->CreateBufferResource(sizeof(VertexData) * 3);
-	materialResource_ = dxCommon_->CreateBufferResource(sizeof(Material));
+	vertexResource_ = dxCore_->CreateBufferResource(sizeof(VertexData) * 3);
+	materialResource_ = dxCore_->CreateBufferResource(sizeof(Material));
 
 	CreateVertexBufferView();
 
@@ -40,23 +40,23 @@ void Triangle::Draw(const WorldTransform& transform, const ViewProjection& viewP
 	uvTransformMatrix = Multiply(uvTransformMatrix, MakeTranslateMatrix(uvTranformTriAngle_.translate));
 	materialData_->uvTransform = uvTransformMatrix;
 
-	dxCommon_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
+	dxCore_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
 
-	dxCommon_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	dxCore_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	//WorldTransform
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff->GetGPUVirtualAddress());
+	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff->GetGPUVirtualAddress());
 
 	//ViewProjection
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection.constBuff->GetGPUVirtualAddress());
+	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection.constBuff->GetGPUVirtualAddress());
 
 	//色用のCBufferの場所を特定
-	dxCommon_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource_.Get()->GetGPUVirtualAddress());
+	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource_.Get()->GetGPUVirtualAddress());
 
 	//SRVのDescriptorTableの先頭を設定　2はrootParameter[2]の2
-	dxCommon_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(textureHandle));
+	dxCore_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(textureHandle));
 
-	dxCommon_->GetcommandList()->DrawInstanced(3, 1, 0, 0);
+	dxCore_->GetcommandList()->DrawInstanced(3, 1, 0, 0);
 }
 
 void Triangle::ImGui(const char* Title)

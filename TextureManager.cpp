@@ -6,12 +6,12 @@ TextureManager* TextureManager::GetInstance()
 	return &instance;
 }
 
-void TextureManager::Initialize(DirectXCommon* dxCommon)
+void TextureManager::Initialize(DirectXCore* dxCore)
 {
-	dxCommon_ = dxCommon;
-	descriptorSizeSRV_ = dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	descriptorSizeRTV_ = dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-	descriptorSizeDSV_ = dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
+	dxCore_ = dxCore;
+	descriptorSizeSRV_ = dxCore_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	descriptorSizeRTV_ = dxCore_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+	descriptorSizeDSV_ = dxCore_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 }
 
 uint32_t TextureManager::LoadTexture(const std::string& filePath)
@@ -41,7 +41,7 @@ uint32_t TextureManager::LoadTexture(const std::string& filePath)
 	//Textureを読んで転送する
 	DirectX::ScratchImage mipImages = OpenImage(filePath);
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
-	textures_.at(spriteIndex).textureResource = CreateTextureResource(dxCommon_->GetDevice(), metadata);
+	textures_.at(spriteIndex).textureResource = CreateTextureResource(dxCore_->GetDevice(), metadata);
 	intermediateResource_[spriteIndex] = UploadTextureData(textures_.at(spriteIndex).textureResource, mipImages);
 
 	//metadataを基にSRVの設定
@@ -52,14 +52,14 @@ uint32_t TextureManager::LoadTexture(const std::string& filePath)
 	srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
 
 	//SRVを作成するDescriptorHeapの場所を決める
-	textures_.at(spriteIndex).textureSrvHandleCPU = GetCPUDescriptorHandle(dxCommon_->GetSrvDescriptorHeap(), descriptorSizeSRV_, spriteIndex);
-	textures_.at(spriteIndex).textureSrvHandleGPU = GetGPUDescriptorHandle(dxCommon_->GetSrvDescriptorHeap(), descriptorSizeSRV_, spriteIndex);
+	textures_.at(spriteIndex).textureSrvHandleCPU = GetCPUDescriptorHandle(dxCore_->GetSrvDescriptorHeap(), descriptorSizeSRV_, spriteIndex);
+	textures_.at(spriteIndex).textureSrvHandleGPU = GetGPUDescriptorHandle(dxCore_->GetSrvDescriptorHeap(), descriptorSizeSRV_, spriteIndex);
 	//先頭はImGuiが使っているので次のを使う
-	textures_.at(spriteIndex).textureSrvHandleCPU.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	textures_.at(spriteIndex).textureSrvHandleGPU.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	textures_.at(spriteIndex).textureSrvHandleCPU.ptr += dxCore_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	textures_.at(spriteIndex).textureSrvHandleGPU.ptr += dxCore_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	//SRVの作成
-	dxCommon_->GetDevice()->CreateShaderResourceView(textures_.at(spriteIndex).textureResource.Get(), &srvDesc, textures_.at(spriteIndex).textureSrvHandleCPU);
+	dxCore_->GetDevice()->CreateShaderResourceView(textures_.at(spriteIndex).textureResource.Get(), &srvDesc, textures_.at(spriteIndex).textureSrvHandleCPU);
 
 	return spriteIndex;
 }
@@ -118,10 +118,10 @@ Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::CreateTextureResource(Mic
 Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> texture, const DirectX::ScratchImage& mipImages)
 {
 	std::vector<D3D12_SUBRESOURCE_DATA>subresources;
-	DirectX::PrepareUpload(dxCommon_->GetDevice(), mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresources);
+	DirectX::PrepareUpload(dxCore_->GetDevice(), mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresources);
 	uint64_t intermediateSize = GetRequiredIntermediateSize(texture.Get(), 0, UINT(subresources.size()));
-	Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource = dxCommon_->CreateBufferResource(intermediateSize);
-	UpdateSubresources(dxCommon_->GetcommandList(), texture.Get(), intermediateResource.Get(), 0, 0, UINT(subresources.size()), subresources.data());
+	Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource = dxCore_->CreateBufferResource(intermediateSize);
+	UpdateSubresources(dxCore_->GetcommandList(), texture.Get(), intermediateResource.Get(), 0, 0, UINT(subresources.size()), subresources.data());
 
 	//Tetureへの転送後は利用できるようにD3D12_RESOURCE_STATE_COPY_DESTからD3D12_RESOURCE_STATE_GENERIC_READへResourceStateを変更する
 	D3D12_RESOURCE_BARRIER barrier{};
@@ -131,7 +131,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::UploadTextureData(Microso
 	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
-	dxCommon_->GetcommandList()->ResourceBarrier(1, &barrier);
+	dxCore_->GetcommandList()->ResourceBarrier(1, &barrier);
 
 	return intermediateResource;
 }

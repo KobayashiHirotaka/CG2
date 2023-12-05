@@ -1,8 +1,7 @@
 #pragma once
-#include "WindowsApp.h"
-#include"DirectXCommon.h"
+#include "Engine/Base/WindowsApp/WindowsApp.h"
+#include "Engine/Base/DirectXCore/DirectXCore.h"
 #include "TextureManager.h"
-
 #include <fstream>
 #include <numbers>
 
@@ -21,7 +20,7 @@ public:
 private:
 	WindowsApp* win_ = nullptr;
 
-	DirectXCommon* dxCommon_ = nullptr;
+	DirectXCore* dxCore_ = nullptr;
 
 	TextureManager* textureManager_ = nullptr;
 

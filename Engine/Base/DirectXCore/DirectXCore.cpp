@@ -1,12 +1,12 @@
-#include"DirectXCommon.h"
+#include "DirectXCore.h"
 
-DirectXCommon* DirectXCommon::GetInstance()
+DirectXCore* DirectXCore::GetInstance()
 {
-	static DirectXCommon instance;
+	static DirectXCore instance;
 	return &instance;
 }
 
-void DirectXCommon::Initialize(WindowsApp* win)
+void DirectXCore::Initialize(WindowsApp* win)
 {
 	win_ = win;
 
@@ -49,7 +49,7 @@ void DirectXCommon::Initialize(WindowsApp* win)
 	CreateScissorRect();
 }
 
-void DirectXCommon::PreDraw()
+void DirectXCore::PreDraw()
 {
 	UINT backBufferIndex = swapChain_->GetCurrentBackBufferIndex();
 	//今回のバリアはTransition
@@ -91,7 +91,7 @@ void DirectXCommon::PreDraw()
 	commandList_->SetPipelineState(graphicsPipelineState_.Get());
 }
 
-void DirectXCommon::PostDraw()
+void DirectXCore::PostDraw()
 {
 	//実際のCommandListのImGuiの描画コマンドを進む
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), commandList_.Get());
@@ -123,7 +123,7 @@ void DirectXCommon::PostDraw()
 	assert(SUCCEEDED(hr_));
 }
 
-Microsoft::WRL::ComPtr<ID3D12Resource> DirectXCommon::CreateBufferResource(size_t sizeInBytes)
+Microsoft::WRL::ComPtr<ID3D12Resource> DirectXCore::CreateBufferResource(size_t sizeInBytes)
 {
 	Microsoft::WRL::ComPtr<ID3D12Resource> Resource = nullptr;
 	D3D12_HEAP_PROPERTIES uploadHeapProperties{};
@@ -142,7 +142,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> DirectXCommon::CreateBufferResource(size_
 	return Resource;
 }
 
-void DirectXCommon::CreateDXGIDevice()
+void DirectXCore::CreateDXGIDevice()
 {
 	//DXGIファクトリーを作成
 	hr_ = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory_));
@@ -209,7 +209,7 @@ void DirectXCommon::CreateDXGIDevice()
 #endif
 }
 
-void DirectXCommon::CreateCommand()
+void DirectXCore::CreateCommand()
 {
 	//コマンドキューを生成
 	D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
@@ -231,7 +231,7 @@ void DirectXCommon::CreateCommand()
 	assert(SUCCEEDED(hr_));
 }
 
-void DirectXCommon::CreateSwapChain()
+void DirectXCore::CreateSwapChain()
 {
 	//スワップチェーンを作成
 	swapChainDesc_.Width = WindowsApp::kClientWidth;
@@ -249,7 +249,7 @@ void DirectXCommon::CreateSwapChain()
 	assert(SUCCEEDED(hr_));
 }
 
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DirectXCommon::CreateDescriptorHeap(Microsoft::WRL::ComPtr<ID3D12Device> device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible)
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DirectXCore::CreateDescriptorHeap(Microsoft::WRL::ComPtr<ID3D12Device> device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible)
 {
 	//ディスクリプタヒープの作成
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap = nullptr;
@@ -266,7 +266,7 @@ Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DirectXCommon::CreateDescriptorHeap
 	return descriptorHeap;
 }
 
-void DirectXCommon::CreateFinalRenderTargets()
+void DirectXCore::CreateFinalRenderTargets()
 {
 	rtvDescriptorHeap_ = CreateDescriptorHeap(device_.Get(), D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
 	srvDescriptorHeap_ = CreateDescriptorHeap(device_.Get(), D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);
@@ -310,7 +310,7 @@ void DirectXCommon::CreateFinalRenderTargets()
 	device_->CreateDepthStencilView(depthStencilResource_.Get(), &dsvDesc, dsvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart());
 }
 
-void DirectXCommon::CreateFence()
+void DirectXCore::CreateFence()
 {
 	//Fenceを作る
 	hr_ = device_->CreateFence(fenceValue_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence_));
@@ -320,7 +320,7 @@ void DirectXCommon::CreateFence()
 	assert(fenceEvent_ != nullptr);
 }
 
-void DirectXCommon::CreateRootSignature()
+void DirectXCore::CreateRootSignature()
 {
 	//RootSignature生成
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
@@ -385,7 +385,7 @@ void DirectXCommon::CreateRootSignature()
 	assert(SUCCEEDED(hr_));
 }
 
-void DirectXCommon::CreateInputLayOut()
+void DirectXCore::CreateInputLayOut()
 {
 	inputElementDescs_[0].SemanticName = "POSITION";
 	inputElementDescs_[0].SemanticIndex = 0;
@@ -406,7 +406,7 @@ void DirectXCommon::CreateInputLayOut()
 	inputLayoutDesc_.NumElements = _countof(inputElementDescs_);
 }
 
-void DirectXCommon::CreateBlendState()
+void DirectXCore::CreateBlendState()
 {
 	//すべての色要素を書き込む
 	blendDesc_.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
@@ -421,7 +421,7 @@ void DirectXCommon::CreateBlendState()
 	blendDesc_.RenderTarget[0].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
 }
 
-void DirectXCommon::CreateRasterizerState()
+void DirectXCore::CreateRasterizerState()
 {
 	//裏面(時計回り)を表示しない
 	rasterizerDesc_.CullMode = D3D12_CULL_MODE_BACK;
@@ -437,7 +437,7 @@ void DirectXCommon::CreateRasterizerState()
 	assert(pixelShaderBlob_ != nullptr);
 }
 
-void DirectXCommon::CreatePSO()
+void DirectXCore::CreatePSO()
 {
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
 
@@ -491,7 +491,7 @@ void DirectXCommon::CreatePSO()
 	assert(SUCCEEDED(hr_));
 }
 
-void DirectXCommon::CreateViewport()
+void DirectXCore::CreateViewport()
 {
 	//クライアント領域のサイズ
 	viewport_.Width = (float)WindowsApp::kClientWidth;
@@ -502,7 +502,7 @@ void DirectXCommon::CreateViewport()
 	viewport_.MaxDepth = 1.0f;
 }
 
-void DirectXCommon::CreateScissorRect()
+void DirectXCore::CreateScissorRect()
 {
 	//シザー矩形
 	scissorRect_.left = 0;
@@ -511,7 +511,7 @@ void DirectXCommon::CreateScissorRect()
 	scissorRect_.bottom = WindowsApp::kClientHeight;
 }
 
-void DirectXCommon::Release()
+void DirectXCore::Release()
 {
 	CloseHandle(fenceEvent_);
 	
@@ -522,7 +522,7 @@ void DirectXCommon::Release()
 	CloseWindow(win_->GetHwnd());
 }
 
-void DirectXCommon::CreateDxcCompiler()
+void DirectXCore::CreateDxcCompiler()
 {
 	hr_ = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils_));
 	assert(SUCCEEDED(hr_));
@@ -534,7 +534,7 @@ void DirectXCommon::CreateDxcCompiler()
 	assert(SUCCEEDED(hr_));
 }
 
-IDxcBlob* DirectXCommon::CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler)
+IDxcBlob* DirectXCore::CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler)
 {
 	//これからシェーダーをコンパイルする旨をログに出す
 	Log(ConvertString(std::format(L"Begin CompileShader, path:{},profile:{}\n", filePath, profile)));
@@ -597,7 +597,7 @@ IDxcBlob* DirectXCommon::CompileShader(const std::wstring& filePath, const wchar
 	return shaderBlob_;
 }
 
-Microsoft::WRL::ComPtr<ID3D12Resource> DirectXCommon::CreateDepthStencilTextureResource(int32_t width, int32_t height)
+Microsoft::WRL::ComPtr<ID3D12Resource> DirectXCore::CreateDepthStencilTextureResource(int32_t width, int32_t height)
 {
 	//生成するResourceの設定
 	D3D12_RESOURCE_DESC resourceDesc{};
@@ -635,14 +635,14 @@ Microsoft::WRL::ComPtr<ID3D12Resource> DirectXCommon::CreateDepthStencilTextureR
 	return resource;
 }
 
-void DirectXCommon::InitializeFixFPS() 
+void DirectXCore::InitializeFixFPS()
 {
 	//現在時間を記録する
 	reference_ = std::chrono::steady_clock::now();
 }
 
 
-void DirectXCommon::UpdateFixFPS() 
+void DirectXCore::UpdateFixFPS()
 {
 	//1/60秒ぴったりの時間
 	const std::chrono::microseconds kMinTime(uint64_t(1000000.0f / 60.0f));

@@ -16,10 +16,10 @@
 #pragma comment(lib,"dxcompiler.lib")
 #pragma comment(lib,"dxguid.lib")
 
-class DirectXCommon
+class DirectXCore
 {
 public:
-	static DirectXCommon* GetInstance();
+	static DirectXCore* GetInstance();
 
 	void Initialize(WindowsApp* win);
 
