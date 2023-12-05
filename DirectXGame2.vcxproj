@@ -15,6 +15,8 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="ConvertString.cpp" />
+    <ClCompile Include="Engine\3D\ViewProjection.cpp" />
+    <ClCompile Include="Engine\3D\WorldTransform\WorldTransform.cpp" />
     <ClCompile Include="Engine\Base\DirectXCore\DirectXCore.cpp" />
     <ClCompile Include="Engine\Base\ImGuiManager\ImGuiManager.cpp" />
     <ClCompile Include="Engine\Base\MyEngine\MyEngine.cpp" />
@@ -41,8 +43,6 @@
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Triangle.cpp" />
-    <ClCompile Include="ViewProjection.cpp" />
-    <ClCompile Include="WorldTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -62,6 +62,8 @@
     <ClInclude Include="CollisionConfig.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="ConvertString.h" />
+    <ClInclude Include="Engine\3D\ViewProjection.h" />
+    <ClInclude Include="Engine\3D\WorldTransform\WorldTransform.h" />
     <ClInclude Include="Engine\Base\DirectXCore\DirectXCore.h" />
     <ClInclude Include="Engine\Base\ImGuiManager\ImGuiManager.h" />
     <ClInclude Include="Engine\Base\MyEngine\MyEngine.h" />
@@ -98,8 +100,6 @@
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="VertexData.h" />
-    <ClInclude Include="ViewProjection.h" />
-    <ClInclude Include="WorldTransform.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectXGame2.rc" />

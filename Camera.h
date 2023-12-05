@@ -1,10 +1,10 @@
 #pragma once
 #include "Engine/Base/ImGuiManager/ImGuiManager.h"
+#include "Engine/3D/WorldTransform/WorldTransform.h"
+#include "Engine/3D/ViewProjection.h"
 #include "MyMath.h"
 #include "Vector3.h"
 #include "Input.h"
-#include "WorldTransform.h"
-#include "ViewProjection.h"
 
 class Camera
 {

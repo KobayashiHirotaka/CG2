@@ -1,6 +1,8 @@
 #pragma once
-#include "IScene.h"
 #include "Engine/Base/MyEngine/MyEngine.h"
+#include "Engine/3D/WorldTransform/WorldTransform.h"
+#include "Engine/3D/ViewProjection.h"
+#include "IScene.h"
 #include "Camera.h"
 #include "Light.h"
 #include "Triangle.h"
@@ -10,8 +12,6 @@
 #include "ModelData.h"
 #include "Input.h"
 #include "Audio.h"
-#include "WorldTransform.h"
-#include "ViewProjection.h"
 #include "MyMath.h"
 
 #define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定

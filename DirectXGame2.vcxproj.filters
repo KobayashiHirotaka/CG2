@@ -178,6 +178,12 @@
     <Filter Include="ソース ファイル\Project\Game\Scenes\Manager">
       <UniqueIdentifier>{08e03cdb-74e3-48bc-9a25-1a347e916623}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\3d\WorldTransform">
+      <UniqueIdentifier>{cd791f8b-78bf-431f-a7d1-257a87d4cd91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\3d\WorldTransform">
+      <UniqueIdentifier>{afda09be-5450-496a-8e5d-674e7e10e747}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -212,12 +218,6 @@
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>ソース ファイル\Engine\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldTransform.cpp">
-      <Filter>ソース ファイル\Engine\3d</Filter>
-    </ClCompile>
-    <ClCompile Include="ViewProjection.cpp">
-      <Filter>ソース ファイル\Engine\3d</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>ソース ファイル\Project\Game\Scenes\Manager</Filter>
@@ -276,6 +276,12 @@
     <ClCompile Include="GlobalVariables.cpp">
       <Filter>ソース ファイル\Engine\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\3D\ViewProjection.cpp">
+      <Filter>ソース ファイル\Engine\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\WorldTransform\WorldTransform.cpp">
+      <Filter>ソース ファイル\Engine\3d\WorldTransform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -287,9 +293,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ResourceObject.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="IScene.h">
       <Filter>ヘッダー ファイル\Project\Game\Scenes</Filter>
     </ClInclude>
@@ -337,15 +340,6 @@
     </ClInclude>
     <ClInclude Include="Triangle.h">
       <Filter>ヘッダー ファイル\Engine\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldTransform.h">
-      <Filter>ヘッダー ファイル\Engine\3d</Filter>
-    </ClInclude>
-    <ClInclude Include="ViewProjection.h">
-      <Filter>ヘッダー ファイル\Engine\3d</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>ヘッダー ファイル\Project\Game\Scenes\Manager</Filter>
@@ -418,6 +412,18 @@
     </ClInclude>
     <ClInclude Include="TransformationMatrix.h">
       <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceObject.h">
+      <Filter>ヘッダー ファイル\Engine\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル\Engine\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\ViewProjection.h">
+      <Filter>ヘッダー ファイル\Engine\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\WorldTransform\WorldTransform.h">
+      <Filter>ヘッダー ファイル\Engine\3d\WorldTransform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
