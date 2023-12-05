@@ -11,8 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\2D\Sprite\Sprite.cpp" />
+    <ClCompile Include="Engine\2D\Triangle\Triangle.cpp" />
     <ClCompile Include="Engine\3D\Camera\Camera.cpp" />
     <ClCompile Include="Engine\3D\Camera\DebugCamera.cpp" />
+    <ClCompile Include="Engine\3D\Model\Model.cpp" />
+    <ClCompile Include="Engine\3D\Sphere\Sphere.cpp" />
     <ClCompile Include="Engine\3D\WorldTransform\WorldTransform.cpp" />
     <ClCompile Include="Engine\Base\DirectXCore\DirectXCore.cpp" />
     <ClCompile Include="Engine\Base\ImGuiManager\ImGuiManager.cpp" />
@@ -34,15 +38,11 @@
     <ClCompile Include="GlobalVariables.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Model.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="Project\Game\Scenes\GameEndScene.cpp" />
     <ClCompile Include="Project\Game\Scenes\GamePlayScene.cpp" />
     <ClCompile Include="Project\Game\Scenes\GameStartScene.cpp" />
     <ClCompile Include="Project\Game\Scenes\Manager\SceneManager.cpp" />
-    <ClCompile Include="Sphere.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -56,8 +56,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\2D\Sprite\Sprite.h" />
+    <ClInclude Include="Engine\2D\Triangle\Triangle.h" />
     <ClInclude Include="Engine\3D\Camera\Camera.h" />
     <ClInclude Include="Engine\3D\Camera\DebugCamera.h" />
+    <ClInclude Include="Engine\3D\Model\Model.h" />
+    <ClInclude Include="Engine\3D\Sphere\Sphere.h" />
     <ClInclude Include="Engine\3D\WorldTransform\WorldTransform.h" />
     <ClInclude Include="Engine\Base\DirectXCore\DirectXCore.h" />
     <ClInclude Include="Engine\Base\ImGuiManager\ImGuiManager.h" />
@@ -83,7 +87,6 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Matrix4x4.h" />
-    <ClInclude Include="Model.h" />
     <ClInclude Include="ModelData.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="Project\Game\Scenes\GameEndScene.h" />
@@ -93,10 +96,7 @@
     <ClInclude Include="Project\Game\Scenes\Manager\SceneManager.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceObject.h" />
-    <ClInclude Include="Sphere.h" />
-    <ClInclude Include="Sprite.h" />
     <ClInclude Include="TransformationMatrix.h" />
-    <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="VertexData.h" />

@@ -184,6 +184,18 @@
     <Filter Include="ソース ファイル\Engine\3d\WorldTransform">
       <UniqueIdentifier>{afda09be-5450-496a-8e5d-674e7e10e747}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\2d\Sprite">
+      <UniqueIdentifier>{7d788adf-d428-4568-acaf-aa3f264d447c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\2d\Triangle">
+      <UniqueIdentifier>{e8efef33-0050-4075-93a0-4a85f952b09e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\2d\Sprite">
+      <UniqueIdentifier>{7789594b-aeec-4f69-9f40-90ea7263c511}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\2d\Triangle">
+      <UniqueIdentifier>{a7a5d53b-51e0-48cd-ba1d-0bb401f06e47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -191,12 +203,6 @@
     </ClCompile>
     <ClCompile Include="MyMath.cpp">
       <Filter>ソース ファイル\Engine\Utility\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Triangle.cpp">
-      <Filter>ソース ファイル\Engine\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>ソース ファイル\Engine\2d</Filter>
     </ClCompile>
     <ClCompile Include="Engine\externals\imgui\imgui.cpp">
       <Filter>Imgui</Filter>
@@ -237,12 +243,6 @@
     <ClCompile Include="Light.cpp">
       <Filter>ソース ファイル\Engine\3d\Light</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>ソース ファイル\Engine\3d\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Sphere.cpp">
-      <Filter>ソース ファイル\Engine\3d\Sphere</Filter>
-    </ClCompile>
     <ClCompile Include="GlobalVariables.cpp">
       <Filter>ソース ファイル\Engine\Utility</Filter>
     </ClCompile>
@@ -282,6 +282,18 @@
     <ClCompile Include="Engine\Utility\ConvertString\ConvertString.cpp">
       <Filter>ソース ファイル\Engine\Utility\ConvertString</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\2D\Sprite\Sprite.cpp">
+      <Filter>ソース ファイル\Engine\2d\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2D\Triangle\Triangle.cpp">
+      <Filter>ソース ファイル\Engine\2d\Triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\Model\Model.cpp">
+      <Filter>ソース ファイル\Engine\3d\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\Sphere\Sphere.cpp">
+      <Filter>ソース ファイル\Engine\3d\Sphere</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -304,12 +316,6 @@
     </ClInclude>
     <ClInclude Include="Matrix4x4.h">
       <Filter>ヘッダー ファイル\Engine\Utility\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>ヘッダー ファイル\Engine\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="Triangle.h">
-      <Filter>ヘッダー ファイル\Engine\2d</Filter>
     </ClInclude>
     <ClInclude Include="Engine\externals\imgui\imconfig.h">
       <Filter>Imgui</Filter>
@@ -352,12 +358,6 @@
     </ClInclude>
     <ClInclude Include="GlobalVariables.h">
       <Filter>ヘッダー ファイル\Engine\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>ヘッダー ファイル\Engine\3d\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Sphere.h">
-      <Filter>ヘッダー ファイル\Engine\3d\Sphere</Filter>
     </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>ヘッダー ファイル\Engine\3d\Light</Filter>
@@ -424,6 +424,18 @@
     </ClInclude>
     <ClInclude Include="Engine\Utility\ConvertString\ConvertString.h">
       <Filter>ヘッダー ファイル\Engine\Utility\ConvertString</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2D\Triangle\Triangle.h">
+      <Filter>ヘッダー ファイル\Engine\2d\Triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2D\Sprite\Sprite.h">
+      <Filter>ヘッダー ファイル\Engine\2d\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\Model\Model.h">
+      <Filter>ヘッダー ファイル\Engine\3d\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\Sphere\Sphere.h">
+      <Filter>ヘッダー ファイル\Engine\3d\Sphere</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
