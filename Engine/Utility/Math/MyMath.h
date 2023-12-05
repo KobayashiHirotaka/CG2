@@ -1,8 +1,8 @@
 #pragma once
-#include "Matrix4x4.h"
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
+#include "Engine/Utility/Structs/Matrix4x4.h"
+#include "Engine/Utility/Structs/Vector2.h"
+#include "Engine/Utility/Structs/Vector3.h"
+#include "Engine/Utility/Structs/Vector4.h"
 #include <assert.h>
 #include <cmath>
 #include <numbers>

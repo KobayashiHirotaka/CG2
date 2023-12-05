@@ -4,7 +4,7 @@
 #include "Engine/3D/Camera/Camera.h"
 #include "Engine/Components/Input/Input.h"
 #include "Engine/Utility/Math/MyMath.h"
-#include "Vector3.h"
+#include "Engine/Utility/Structs/Vector3.h"
 
 class DebugCamera
 {

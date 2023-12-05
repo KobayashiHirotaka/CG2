@@ -1,10 +1,10 @@
 #pragma once
 #include "Engine/Base/ImGuiManager/ImGuiManager.h"
-#include "Vector3.h"
+#include "Engine/Utility/Structs/Vector3.h"
+#include "Engine/externals/nlohmann/json.hpp"
 #include <variant>
 #include <map>
 #include <string>
-#include "Engine/externals/nlohmann/json.hpp"
 #include <fstream>
 
 using json = nlohmann::json;

@@ -87,19 +87,20 @@
     <ClInclude Include="Engine\Utility\CSV\LoadCSV.h" />
     <ClInclude Include="Engine\Utility\GlobalVariables.h" />
     <ClInclude Include="Engine\Utility\Math\MyMath.h" />
-    <ClInclude Include="Material.h" />
-    <ClInclude Include="Matrix4x4.h" />
-    <ClInclude Include="ModelData.h" />
+    <ClInclude Include="Engine\Utility\Structs\Material.h" />
+    <ClInclude Include="Engine\Utility\Structs\Matrix4x4.h" />
+    <ClInclude Include="Engine\Utility\Structs\ModelData.h" />
+    <ClInclude Include="Engine\Utility\Structs\TransformationMatrix.h" />
+    <ClInclude Include="Engine\Utility\Structs\Vector2.h" />
+    <ClInclude Include="Engine\Utility\Structs\Vector3.h" />
+    <ClInclude Include="Engine\Utility\Structs\Vector4.h" />
+    <ClInclude Include="Engine\Utility\Structs\VertexData.h" />
     <ClInclude Include="Project\Game\Scenes\GameEndScene.h" />
     <ClInclude Include="Project\Game\Scenes\GamePlayScene.h" />
     <ClInclude Include="Project\Game\Scenes\GameStartScene.h" />
     <ClInclude Include="Project\Game\Scenes\IScene.h" />
     <ClInclude Include="Project\Game\Scenes\Manager\SceneManager.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="TransformationMatrix.h" />
-    <ClInclude Include="Vector2.h" />
-    <ClInclude Include="Vector3.h" />
-    <ClInclude Include="VertexData.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectXGame2.rc" />

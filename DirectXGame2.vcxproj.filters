@@ -305,15 +305,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Vector2.h">
-      <Filter>ヘッダー ファイル\Engine\Utility\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>ヘッダー ファイル\Engine\Utility\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Matrix4x4.h">
-      <Filter>ヘッダー ファイル\Engine\Utility\Math</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\externals\imgui\imconfig.h">
       <Filter>Imgui</Filter>
     </ClInclude>
@@ -352,18 +343,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Base\TextureManager\TextureManager.h">
       <Filter>ヘッダー ファイル\Engine\Base\TextureManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
-    </ClInclude>
-    <ClInclude Include="ModelData.h">
-      <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
-    </ClInclude>
-    <ClInclude Include="VertexData.h">
-      <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
-    </ClInclude>
-    <ClInclude Include="TransformationMatrix.h">
-      <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3D\WorldTransform\WorldTransform.h">
       <Filter>ヘッダー ファイル\Engine\3d\WorldTransform</Filter>
@@ -436,6 +415,30 @@
     </ClInclude>
     <ClInclude Include="Engine\Utility\GlobalVariables.h">
       <Filter>ヘッダー ファイル\Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\Structs\Material.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\Structs\Matrix4x4.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\Structs\ModelData.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\Structs\TransformationMatrix.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\Structs\Vector2.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\Structs\Vector3.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\Structs\Vector4.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\Structs\VertexData.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

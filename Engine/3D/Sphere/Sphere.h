@@ -5,8 +5,8 @@
 #include "Engine/3D/Camera/Camera.h"
 #include "Engine/3D/Light/Light.h"
 #include "Engine/Utility/Math/MyMath.h"
-#include "VertexData.h"
-#include "Material.h"
+#include "Engine/Utility/Structs/VertexData.h"
+#include "Engine/Utility/Structs/Material.h"
 #include <wrl.h>
 #include <numbers>
 

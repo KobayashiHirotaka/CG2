@@ -11,8 +11,8 @@
 #include "Engine/3D/Model/Model.h"
 #include "Engine/3D/Light/Light.h"
 #include "Engine/Utility/Math/MyMath.h"
+#include "Engine/Utility/Structs/ModelData.h"
 #include "IScene.h"
-#include "ModelData.h"
 
 #define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定
 #include <dinput.h>
