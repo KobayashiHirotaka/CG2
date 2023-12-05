@@ -27,6 +27,11 @@ public:
 
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
+	void SetColor(Vector4 color)
+	{
+		materialDataObj_->color = color;
+	}
+
 	void SetLighting(int32_t lightFlag)
 	{
 		materialDataObj_->enableLighting = lightFlag;

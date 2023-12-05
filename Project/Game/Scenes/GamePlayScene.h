@@ -88,4 +88,6 @@ private:
 	};
 
 	int count_ = 0;
+
+	Vector4 color_ = { 1.0f,1.0f,1.0f,0.5f };
 };

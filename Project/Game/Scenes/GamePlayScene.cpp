@@ -48,6 +48,7 @@ void GamePlayScene::Initialize()
 
 	model_ = model_->CreateModelFromObj("resource","plane.obj");
 	model_->SetLighting(Lighting::harfLambert);
+	/*model_->SetColor(color_);*/
 
 	worldTransform_[0].translation.x = 5.0f;
 	worldTransform_[1].translation.z = -10.0f;
