@@ -43,9 +43,9 @@ void Sprite::Initialize(const Vector4& LeftTop, const Vector4& LeftBottom, const
 	indexDataSprite_[4] = 3;
 	indexDataSprite_[5] = 2;
 
-	viewProjection_.Initialize();
-	viewProjection_.constMap->view = MakeIdentity4x4();
-	viewProjection_.constMap->projection = MakeOrthographicMatrix(0.0f, 0.0f, float(WindowsApp::kClientWidth), float(WindowsApp::kClientHeight), 0.0f, 100.0f);
+	camera_.Initialize();
+	camera_.constMap->view = MakeIdentity4x4();
+	camera_.constMap->projection = MakeOrthographicMatrix(0.0f, 0.0f, float(WindowsApp::kClientWidth), float(WindowsApp::kClientHeight), 0.0f, 100.0f);
 }
 
 void Sprite::Draw(const WorldTransform& transform, const uint32_t textureHandle)
@@ -73,7 +73,7 @@ void Sprite::Draw(const WorldTransform& transform, const uint32_t textureHandle)
 	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff.Get()->GetGPUVirtualAddress());
 
 	//ViewProjection
-	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection_.constBuff->GetGPUVirtualAddress());
+	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(4, camera_.constBuff->GetGPUVirtualAddress());
 
 	//色用のCBufferの場所を特定
 	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite_.Get()->GetGPUVirtualAddress());

@@ -1,30 +1,30 @@
 #pragma once
 #include "Engine/Base/ImGuiManager/ImGuiManager.h"
 #include "Engine/3D/WorldTransform/WorldTransform.h"
-#include "Engine/3D/ViewProjection.h"
+#include "Engine/3D/Camera/Camera.h"
 #include "MyMath.h"
 #include "Vector3.h"
 #include "Input.h"
 
-class Camera
+class DebugCamera
 {
 public:
-	Camera();
+	DebugCamera();
 
-	~Camera();
+	~DebugCamera();
 
 	void Initialize(int32_t kClientWidth, int32_t kClientHeight);
 
 	void Update();
 
-	const ViewProjection& GetViewProjection() { return viewProjection_; };
+	const Camera& GetCamera() { return camera_; };
 
 	void SetTarget(const WorldTransform* target) { target_ = target; };
 
 #ifdef _DEBUG
 	void DebugCameraMove();
 
-	void DebugCamera(bool Flag)
+	void SwitchDebugCamera(bool Flag)
 	{
 		DebucCameraFlag = Flag;
 	}
@@ -40,7 +40,7 @@ private:
 	WorldTransform worldTransform_{};
 
 	//ビュープロジェクション
-	ViewProjection viewProjection_{};
+	Camera camera_{};
 
 	//オフセット
 	Vector3 offset_ = { 0.0f,0.0f,-50.0f };

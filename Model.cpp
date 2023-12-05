@@ -21,7 +21,7 @@ void Model::Initialize(const std::string& directoryPath, const std::string& file
 	materialDataObj_->uvTransform = MakeIdentity4x4();
 }
 
-void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProjection)
+void Model::Draw(const WorldTransform& transform, const Camera& camera)
 {
 	dxCore_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
@@ -29,7 +29,7 @@ void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProj
 
 	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(1,transform.constBuff->GetGPUVirtualAddress());
 
-	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(4,viewProjection.constBuff->GetGPUVirtualAddress());
+	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(4,camera.constBuff->GetGPUVirtualAddress());
 
 	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceObj_->GetGPUVirtualAddress());
 

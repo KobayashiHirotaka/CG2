@@ -2,7 +2,7 @@
 #include "Engine/Base/DirectXCore/DirectXCore.h"
 #include "Engine/Base/TextureManager/TextureManager.h"
 #include "Engine/3D/WorldTransform/WorldTransform.h"
-#include "Engine/3D/ViewProjection.h"
+#include "Engine/3D/Camera/Camera.h"
 #include "MyMath.h"
 #include "VertexData.h"
 #include "Material.h"
@@ -54,7 +54,7 @@ private:
 		{0.0f,0.0f,0.0f}
 	};
 
-	ViewProjection viewProjection_;
+	Camera camera_;
 
 	Vector4 color_ = { 1.0f,1.0f,1.0f,1.0f };
 };

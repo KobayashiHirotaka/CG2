@@ -1,9 +1,9 @@
 #pragma once
 #include "Engine/Base/MyEngine/MyEngine.h"
 #include "Engine/3D/WorldTransform/WorldTransform.h"
-#include "Engine/3D/ViewProjection.h"
+#include "Engine/3D/Camera/Camera.h"
+#include "Engine/3D/Camera/DebugCamera.h"
 #include "IScene.h"
-#include "Camera.h"
 #include "Light.h"
 #include "Triangle.h"
 #include "Sprite.h"
@@ -32,7 +32,7 @@ public:
 private:
 	MyEngine* engine_ = nullptr;
 
-	Camera* camera_ = nullptr;
+	DebugCamera* debugCamera_ = nullptr;
 
 	TextureManager* textureManager_ = nullptr;
 
@@ -52,7 +52,7 @@ private:
 
 	WorldTransform worldTransformModel_;
 
-	ViewProjection viewProjection_;
+	Camera camera_;
 
 	Sprite* sprite_;
 

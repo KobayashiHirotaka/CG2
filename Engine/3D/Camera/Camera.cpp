@@ -1,6 +1,6 @@
-#include "ViewProjection.h"
+#include "Camera.h"
 
-void ViewProjection::Initialize()
+void Camera::Initialize()
 {
 	CreateConstBuffer();
 	Map();
@@ -8,36 +8,36 @@ void ViewProjection::Initialize()
 	TransferMatrix();
 }
 
-void ViewProjection::CreateConstBuffer()
+void Camera::CreateConstBuffer()
 {
 	constBuff = DirectXCore::GetInstance()->CreateBufferResource(sizeof(ConstBufferDataViewProjection));
 }
 
-void ViewProjection::Map()
+void Camera::Map()
 {
 	constBuff.Get()->Map(0, nullptr, reinterpret_cast<void**>(&constMap));
 }
 
-void ViewProjection::UpdateMatrix()
+void Camera::UpdateMatrix()
 {
 	UpdateViewMatrix();
 	UpdateProjectionMatrix();
 	TransferMatrix();
 }
 
-void ViewProjection::TransferMatrix()
+void Camera::TransferMatrix()
 {
 	constMap->view = matView;
 	constMap->projection = matProjection;
 }
 
-void ViewProjection::UpdateViewMatrix()
+void Camera::UpdateViewMatrix()
 {
 	Matrix4x4 cameraMatrix = MakeAffineMatrix({ 1.0f,1.0f,1.0f }, rotation, translation);
 	matView = Inverse(cameraMatrix);
 }
 
-void ViewProjection::UpdateProjectionMatrix()
+void Camera::UpdateProjectionMatrix()
 {
 	matProjection = MakePerspectiveFovMatrix(fovAngleY, aspectRatio, nearZ, farZ);
 }

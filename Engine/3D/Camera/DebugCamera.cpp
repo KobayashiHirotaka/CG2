@@ -1,16 +1,16 @@
-#include "Camera.h"
+#include "DebugCamera.h"
 
-Camera::Camera()
+DebugCamera::DebugCamera()
 {
 
 }
 
-Camera::~Camera()
+DebugCamera::~DebugCamera()
 {
 
 };
 
-void Camera::Initialize(int32_t kClientWidth, int32_t kClientHeight)
+void DebugCamera::Initialize(int32_t kClientWidth, int32_t kClientHeight)
 {
 	kClientWidth_ = kClientWidth;
 	kClientHeight_ = kClientHeight;
@@ -21,7 +21,7 @@ void Camera::Initialize(int32_t kClientWidth, int32_t kClientHeight)
 	worldTransform_.translation = { 0.0f,0.0f,-50.0f };
 }
 
-void Camera::Update()
+void DebugCamera::Update()
 {
 #ifdef _DEBUG
 	if (DebucCameraFlag)
@@ -50,14 +50,14 @@ void Camera::Update()
 	//ワールド行列を計算
 	worldTransform_.matWorld = Multiply(matRot_, translateMatrix);
 	//ビュー行列の計算
-	viewProjection_.matView = Multiply(Inverse(translateMatrix), Inverse(matRot_));
+	camera_.matView = Multiply(Inverse(translateMatrix), Inverse(matRot_));
 	//プロジェクション行列の計算
-	viewProjection_.matProjection = MakePerspectiveFovMatrix(viewProjection_.fovAngleY, viewProjection_.aspectRatio, viewProjection_.nearZ, viewProjection_.farZ);
+	camera_.matProjection = MakePerspectiveFovMatrix(camera_.fovAngleY, camera_.aspectRatio, camera_.nearZ, camera_.farZ);
 }
 
 
 #ifdef _DEBUG
-void Camera::DebugCameraMove()
+void DebugCamera::DebugCameraMove()
 {
 	//左右移動
 	if (input_->PushKey(DIK_D)) {

@@ -14,8 +14,8 @@ GamePlayScene::~GamePlayScene()
 
 void GamePlayScene::Initialize()
 {
-	camera_ = new Camera();
-	camera_->Initialize(1280, 720);
+	debugCamera_ = new DebugCamera();
+	debugCamera_->Initialize(1280, 720);
 
 	dxCore_ = DirectXCore::GetInstance();
 	
@@ -53,7 +53,7 @@ void GamePlayScene::Initialize()
 	worldTransform_[1].translation.z = -10.0f;
 
 
-	viewProjection_.Initialize();
+	camera_.Initialize();
 	worldTransformModel_.Initialize();
 
 	float s = 10;
@@ -68,17 +68,17 @@ void GamePlayScene::Initialize()
 
 void GamePlayScene::Update()
 {
-	camera_->Update();
+	debugCamera_->Update();
 
 #ifdef _DEBUG
 	if (input_->PushKey(DIK_1))
 	{
-		camera_->DebugCamera(true);
+		debugCamera_->SwitchDebugCamera(true);
 	}
 
 	if (input_->PushKey(DIK_2))
 	{
-		camera_->DebugCamera(false);
+		debugCamera_->SwitchDebugCamera(false);
 	}
 #endif // _DEBUG
 
@@ -143,7 +143,7 @@ void GamePlayScene::Update()
 		worldTransform_[0].rotation.y -= 0.05f;
 	}
 
-	viewProjection_.UpdateMatrix();
+	camera_.UpdateMatrix();
 	worldTransform_[0].UpdateMatrix();
 	worldTransformModel_.UpdateMatrix();
 }
@@ -155,7 +155,7 @@ void GamePlayScene::Draw()
 
 	//sprite_->Draw(worldTransformSprite_, texture_);
 
-	model_->Draw(worldTransformModel_, viewProjection_);
+	model_->Draw(worldTransformModel_, camera_);
 
 	ImGui::Begin("sphereTexture");
 	ImGui::Checkbox("texture", &changeTexture_);
@@ -166,8 +166,8 @@ void GamePlayScene::Draw()
 	ImGui::End();
 
 	ImGui::Begin("Camera");
-	ImGui::SliderFloat3("rotation", &viewProjection_.rotation.x, 1.0f, -1.0f);
-	ImGui::SliderFloat3("transform", &viewProjection_.translation.x, 10.0f, -10.0f);
+	ImGui::SliderFloat3("rotation", &camera_.rotation.x, 1.0f, -1.0f);
+	ImGui::SliderFloat3("transform", &camera_.translation.x, 10.0f, -10.0f);
 	ImGui::End();
 
 	engine_->ImGui();

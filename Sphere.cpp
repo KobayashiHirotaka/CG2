@@ -101,7 +101,7 @@ void Sphere::Initialize()
 	}
 }
 
-void Sphere::Draw(const WorldTransform& transform, const ViewProjection& viewProjection, const uint32_t& textureHandle)
+void Sphere::Draw(const WorldTransform& transform, const Camera& camera, const uint32_t& textureHandle)
 {
 	materialResourceSphere_.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialDataSphere_));
 
@@ -119,7 +119,7 @@ void Sphere::Draw(const WorldTransform& transform, const ViewProjection& viewPro
 	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff->GetGPUVirtualAddress());
 
 	//ViewProjection
-	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection.constBuff->GetGPUVirtualAddress());
+	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(4, camera.constBuff->GetGPUVirtualAddress());
 
 	//色用のCBufferの場所を特定
 	dxCore_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSphere_.Get()->GetGPUVirtualAddress());

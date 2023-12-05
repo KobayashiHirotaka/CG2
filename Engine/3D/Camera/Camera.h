@@ -16,7 +16,7 @@ struct ConstBufferDataViewProjection
 	Vector3 cameraPos;
 };
 
-class ViewProjection
+class Camera
 {
 public:
 	// 定数バッファ

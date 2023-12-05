@@ -2,7 +2,7 @@
 #include "Engine/Base/DirectXCore/DirectXCore.h"
 #include "Engine/Base/TextureManager/TextureManager.h"
 #include "Engine/3D/WorldTransform/WorldTransform.h"
-#include "Engine/3D/ViewProjection.h"
+#include "Engine/3D/Camera/Camera.h"
 #include "MyMath.h"
 #include "VertexData.h"
 #include "Material.h"
@@ -12,7 +12,7 @@ class Triangle
 {
 public:
 	void Initialize();
-	void Draw(const WorldTransform& transform, const ViewProjection& viewProjection, const uint32_t textureHandle);
+	void Draw(const WorldTransform& transform, const Camera& camera, const uint32_t textureHandle);
 	void ImGui(const char* Title);
 
 private:

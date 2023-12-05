@@ -3,7 +3,7 @@
 #include "Engine/Base/TextureManager/TextureManager.h"
 #include "Engine/Base/ImGuiManager/ImGuiManager.h"
 #include "Engine/3D/WorldTransform/WorldTransform.h"
-#include "Engine/3D/ViewProjection.h"
+#include "Engine/3D/Camera/Camera.h"
 #include "Light.h"
 #include "VertexData.h"
 #include "ModelData.h"
@@ -18,7 +18,7 @@ class Model
 {
 public:
 	void Initialize(const std::string& directoryPath, const std::string& filename);
-	void Draw(const WorldTransform& transform, const ViewProjection& viewProjection);
+	void Draw(const WorldTransform& transform, const Camera& camera);
 	void ImGui(const char* Title);
 
 	static Model* CreateModelFromObj(const std::string& directoryPath, const std::string& filename);
