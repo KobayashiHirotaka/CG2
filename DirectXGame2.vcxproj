@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="ConvertString.cpp" />
     <ClCompile Include="Engine\3D\Camera\Camera.cpp" />
@@ -22,6 +21,8 @@
     <ClCompile Include="Engine\Base\MyEngine\MyEngine.cpp" />
     <ClCompile Include="Engine\Base\TextureManager\TextureManager.cpp" />
     <ClCompile Include="Engine\Base\WindowsApp\WindowsApp.cpp" />
+    <ClCompile Include="Engine\Components\Audio\Audio.cpp" />
+    <ClCompile Include="Engine\Components\Input\Input.cpp" />
     <ClCompile Include="Engine\externals\imgui\imgui.cpp" />
     <ClCompile Include="Engine\externals\imgui\imgui_demo.cpp" />
     <ClCompile Include="Engine\externals\imgui\imgui_draw.cpp" />
@@ -33,7 +34,6 @@
     <ClCompile Include="GamePlayScene.cpp" />
     <ClCompile Include="GameStartScene.cpp" />
     <ClCompile Include="GlobalVariables.cpp" />
-    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LoadCSV.cpp" />
     <ClCompile Include="main.cpp" />
@@ -56,7 +56,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Audio.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionConfig.h" />
     <ClInclude Include="CollisionManager.h" />
@@ -69,6 +68,8 @@
     <ClInclude Include="Engine\Base\MyEngine\MyEngine.h" />
     <ClInclude Include="Engine\Base\TextureManager\TextureManager.h" />
     <ClInclude Include="Engine\Base\WindowsApp\WindowsApp.h" />
+    <ClInclude Include="Engine\Components\Audio\Audio.h" />
+    <ClInclude Include="Engine\Components\Input\Input.h" />
     <ClInclude Include="Engine\externals\imgui\imconfig.h" />
     <ClInclude Include="Engine\externals\imgui\imgui.h" />
     <ClInclude Include="Engine\externals\imgui\imgui_impl_dx12.h" />
@@ -81,7 +82,6 @@
     <ClInclude Include="GamePlayScene.h" />
     <ClInclude Include="GameStartScene.h" />
     <ClInclude Include="GlobalVariables.h" />
-    <ClInclude Include="Input.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LoadCSV.h" />

@@ -3,6 +3,8 @@
 #include "Engine/3D/WorldTransform/WorldTransform.h"
 #include "Engine/3D/Camera/Camera.h"
 #include "Engine/3D/Camera/DebugCamera.h"
+#include "Engine/Components/Input/Input.h"
+#include "Engine/Components/Audio/Audio.h"
 #include "IScene.h"
 #include "Light.h"
 #include "Triangle.h"
@@ -10,8 +12,6 @@
 #include "Sphere.h"
 #include "Model.h"
 #include "ModelData.h"
-#include "Input.h"
-#include "Audio.h"
 #include "MyMath.h"
 
 #define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定

@@ -2,9 +2,9 @@
 #include "Engine/Base/ImGuiManager/ImGuiManager.h"
 #include "Engine/3D/WorldTransform/WorldTransform.h"
 #include "Engine/3D/Camera/Camera.h"
+#include "Engine/Components/Input/Input.h"
 #include "MyMath.h"
 #include "Vector3.h"
-#include "Input.h"
 
 class DebugCamera
 {
