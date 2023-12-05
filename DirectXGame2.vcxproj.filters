@@ -189,15 +189,6 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GamePlayScene.cpp">
-      <Filter>ソース ファイル\Project\Game\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEndScene.cpp">
-      <Filter>ソース ファイル\Project\Game\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStartScene.cpp">
-      <Filter>ソース ファイル\Project\Game\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="MyMath.cpp">
       <Filter>ソース ファイル\Engine\Utility\Math</Filter>
     </ClCompile>
@@ -209,9 +200,6 @@
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>ソース ファイル\Engine\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>ソース ファイル\Project\Game\Scenes\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Engine\externals\imgui\imgui.cpp">
       <Filter>Imgui</Filter>
@@ -282,6 +270,18 @@
     <ClCompile Include="Engine\Components\Audio\Audio.cpp">
       <Filter>ソース ファイル\Engine\Components\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="Project\Game\Scenes\Manager\SceneManager.cpp">
+      <Filter>ソース ファイル\Project\Game\Scenes\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\Game\Scenes\GameStartScene.cpp">
+      <Filter>ソース ファイル\Project\Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\Game\Scenes\GamePlayScene.cpp">
+      <Filter>ソース ファイル\Project\Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\Game\Scenes\GameEndScene.cpp">
+      <Filter>ソース ファイル\Project\Game\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -293,18 +293,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IScene.h">
-      <Filter>ヘッダー ファイル\Project\Game\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStartScene.h">
-      <Filter>ヘッダー ファイル\Project\Game\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="GamePlayScene.h">
-      <Filter>ヘッダー ファイル\Project\Game\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEndScene.h">
-      <Filter>ヘッダー ファイル\Project\Game\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="MyMath.h">
       <Filter>ヘッダー ファイル\Engine\Utility\Math</Filter>
     </ClInclude>
@@ -331,9 +319,6 @@
     </ClInclude>
     <ClInclude Include="Triangle.h">
       <Filter>ヘッダー ファイル\Engine\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>ヘッダー ファイル\Project\Game\Scenes\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\externals\imgui\imconfig.h">
       <Filter>Imgui</Filter>
@@ -424,6 +409,21 @@
     </ClInclude>
     <ClInclude Include="Engine\Components\Input\Input.h">
       <Filter>ヘッダー ファイル\Engine\Components\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Game\Scenes\Manager\SceneManager.h">
+      <Filter>ヘッダー ファイル\Project\Game\Scenes\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Game\Scenes\GameStartScene.h">
+      <Filter>ヘッダー ファイル\Project\Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Game\Scenes\IScene.h">
+      <Filter>ヘッダー ファイル\Project\Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Game\Scenes\GamePlayScene.h">
+      <Filter>ヘッダー ファイル\Project\Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Game\Scenes\GameEndScene.h">
+      <Filter>ヘッダー ファイル\Project\Game\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

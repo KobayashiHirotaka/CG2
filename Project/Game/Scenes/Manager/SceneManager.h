@@ -7,10 +7,10 @@
 #include "Engine/Components/Input/Input.h"
 #include "Engine/Components/Audio/Audio.h"
 #include "Light.h"
-#include "IScene.h"
-#include "GameStartScene.h"
-#include "GamePlayScene.h"
-#include "GameEndScene.h"
+#include "Project/Game/Scenes/IScene.h"
+#include "Project/Game/Scenes/GameStartScene.h"
+#include "Project/Game/Scenes/GamePlayScene.h"
+#include "Project/Game/Scenes/GameEndScene.h"
 
 class SceneManager
 {
