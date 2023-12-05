@@ -201,9 +201,6 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="MyMath.cpp">
-      <Filter>ソース ファイル\Engine\Utility\Math</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\externals\imgui\imgui.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
@@ -239,9 +236,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Base\TextureManager\TextureManager.cpp">
       <Filter>ソース ファイル\Engine\Base\TextureManager</Filter>
-    </ClCompile>
-    <ClCompile Include="GlobalVariables.cpp">
-      <Filter>ソース ファイル\Engine\Utility</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3D\WorldTransform\WorldTransform.cpp">
       <Filter>ソース ファイル\Engine\3d\WorldTransform</Filter>
@@ -294,6 +288,12 @@
     <ClCompile Include="Engine\3D\Light\Light.cpp">
       <Filter>ソース ファイル\Engine\3d\Light</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Utility\Math\MyMath.cpp">
+      <Filter>ソース ファイル\Engine\Utility\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Utility\GlobalVariables.cpp">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -305,9 +305,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MyMath.h">
-      <Filter>ヘッダー ファイル\Engine\Utility\Math</Filter>
-    </ClInclude>
     <ClInclude Include="Vector2.h">
       <Filter>ヘッダー ファイル\Engine\Utility\Math</Filter>
     </ClInclude>
@@ -355,9 +352,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Base\TextureManager\TextureManager.h">
       <Filter>ヘッダー ファイル\Engine\Base\TextureManager</Filter>
-    </ClInclude>
-    <ClInclude Include="GlobalVariables.h">
-      <Filter>ヘッダー ファイル\Engine\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Material.h">
       <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
@@ -436,6 +430,12 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\Math\MyMath.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\GlobalVariables.h">
+      <Filter>ヘッダー ファイル\Engine\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

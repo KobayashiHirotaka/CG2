@@ -1,5 +1,5 @@
 #include "SceneManager.h"
-#include "GlobalVariables.h"
+#include "Engine/Utility/GlobalVariables.h"
 
 void SceneManager::Run()
 {

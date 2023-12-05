@@ -36,9 +36,9 @@
     <ClCompile Include="Engine\Utility\Collision\CollisionManager.cpp" />
     <ClCompile Include="Engine\Utility\ConvertString\ConvertString.cpp" />
     <ClCompile Include="Engine\Utility\CSV\LoadCSV.cpp" />
-    <ClCompile Include="GlobalVariables.cpp" />
+    <ClCompile Include="Engine\Utility\GlobalVariables.cpp" />
+    <ClCompile Include="Engine\Utility\Math\MyMath.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="Project\Game\Scenes\GameEndScene.cpp" />
     <ClCompile Include="Project\Game\Scenes\GamePlayScene.cpp" />
     <ClCompile Include="Project\Game\Scenes\GameStartScene.cpp" />
@@ -85,11 +85,11 @@
     <ClInclude Include="Engine\Utility\Collision\CollisionManager.h" />
     <ClInclude Include="Engine\Utility\ConvertString\ConvertString.h" />
     <ClInclude Include="Engine\Utility\CSV\LoadCSV.h" />
-    <ClInclude Include="GlobalVariables.h" />
+    <ClInclude Include="Engine\Utility\GlobalVariables.h" />
+    <ClInclude Include="Engine\Utility\Math\MyMath.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="ModelData.h" />
-    <ClInclude Include="MyMath.h" />
     <ClInclude Include="Project\Game\Scenes\GameEndScene.h" />
     <ClInclude Include="Project\Game\Scenes\GamePlayScene.h" />
     <ClInclude Include="Project\Game\Scenes\GameStartScene.h" />

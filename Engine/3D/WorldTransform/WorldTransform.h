@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine/Base/DirectXCore/DirectXCore.h"
-#include "MyMath.h"
+#include "Engine/Utility/Math/MyMath.h"
 
 struct ConstBufferDataWorldTransform
 {

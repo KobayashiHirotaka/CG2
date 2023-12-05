@@ -1,9 +1,9 @@
 #pragma once
 #include "Engine/3D/WorldTransform/WorldTransform.h"
-#include "MyMath.h"
+#include "Engine/Utility/Math/MyMath.h"
+#include "CollisionConfig.h"
 #include <stdint.h>
 #include <algorithm>
-#include "CollisionConfig.h"
 
 class Collider
 {

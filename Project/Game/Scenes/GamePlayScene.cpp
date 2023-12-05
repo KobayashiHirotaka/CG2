@@ -1,5 +1,5 @@
 #include "GamePlayScene.h"
-#include "GlobalVariables.h"
+#include "Engine/Utility/GlobalVariables.h"
 
 GamePlayScene::GamePlayScene()
 {
