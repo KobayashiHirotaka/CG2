@@ -234,12 +234,6 @@
     <ClCompile Include="Engine\Base\TextureManager\TextureManager.cpp">
       <Filter>ソース ファイル\Engine\Base\TextureManager</Filter>
     </ClCompile>
-    <ClCompile Include="ConvertString.cpp">
-      <Filter>ソース ファイル\Engine\Utility\ConvertString</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadCSV.cpp">
-      <Filter>ソース ファイル\Engine\Utility\CSV</Filter>
-    </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>ソース ファイル\Engine\3d\Light</Filter>
     </ClCompile>
@@ -281,6 +275,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Utility\Collision\CollisionManager.cpp">
       <Filter>ソース ファイル\Engine\Utility\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Utility\CSV\LoadCSV.cpp">
+      <Filter>ソース ファイル\Engine\Utility\CSV</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Utility\ConvertString\ConvertString.cpp">
+      <Filter>ソース ファイル\Engine\Utility\ConvertString</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -350,12 +350,6 @@
     <ClInclude Include="Engine\Base\TextureManager\TextureManager.h">
       <Filter>ヘッダー ファイル\Engine\Base\TextureManager</Filter>
     </ClInclude>
-    <ClInclude Include="ConvertString.h">
-      <Filter>ヘッダー ファイル\Engine\Utility\ConvertString</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadCSV.h">
-      <Filter>ヘッダー ファイル\Engine\Utility\CSV</Filter>
-    </ClInclude>
     <ClInclude Include="GlobalVariables.h">
       <Filter>ヘッダー ファイル\Engine\Utility</Filter>
     </ClInclude>
@@ -424,6 +418,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Utility\Collision\CollisionManager.h">
       <Filter>ヘッダー ファイル\Engine\Utility\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\CSV\LoadCSV.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\CSV</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\ConvertString\ConvertString.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\ConvertString</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ConvertString.cpp" />
     <ClCompile Include="Engine\3D\Camera\Camera.cpp" />
     <ClCompile Include="Engine\3D\Camera\DebugCamera.cpp" />
     <ClCompile Include="Engine\3D\WorldTransform\WorldTransform.cpp" />
@@ -30,9 +29,10 @@
     <ClCompile Include="Engine\externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="Engine\externals\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Engine\Utility\Collision\CollisionManager.cpp" />
+    <ClCompile Include="Engine\Utility\ConvertString\ConvertString.cpp" />
+    <ClCompile Include="Engine\Utility\CSV\LoadCSV.cpp" />
     <ClCompile Include="GlobalVariables.cpp" />
     <ClCompile Include="Light.cpp" />
-    <ClCompile Include="LoadCSV.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="MyMath.cpp" />
@@ -56,7 +56,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ConvertString.h" />
     <ClInclude Include="Engine\3D\Camera\Camera.h" />
     <ClInclude Include="Engine\3D\Camera\DebugCamera.h" />
     <ClInclude Include="Engine\3D\WorldTransform\WorldTransform.h" />
@@ -78,9 +77,10 @@
     <ClInclude Include="Engine\Utility\Collision\Collider.h" />
     <ClInclude Include="Engine\Utility\Collision\CollisionConfig.h" />
     <ClInclude Include="Engine\Utility\Collision\CollisionManager.h" />
+    <ClInclude Include="Engine\Utility\ConvertString\ConvertString.h" />
+    <ClInclude Include="Engine\Utility\CSV\LoadCSV.h" />
     <ClInclude Include="GlobalVariables.h" />
     <ClInclude Include="Light.h" />
-    <ClInclude Include="LoadCSV.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="Model.h" />
