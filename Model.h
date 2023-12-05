@@ -1,9 +1,9 @@
 #pragma once
 #include "Engine/Base/DirectXCore/DirectXCore.h"
-#include "TextureManager.h"
+#include "Engine/Base/TextureManager/TextureManager.h"
+#include "Engine/Base/ImGuiManager/ImGuiManager.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
-#include "MyImGui.h"
 #include "Light.h"
 #include "VertexData.h"
 #include "ModelData.h"

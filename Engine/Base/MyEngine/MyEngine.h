@@ -1,7 +1,7 @@
 #pragma once
 #include "Engine/Base/WindowsApp/WindowsApp.h"
 #include "Engine/Base/DirectXCore/DirectXCore.h"
-#include "TextureManager.h"
+#include "Engine/Base/TextureManager/TextureManager.h"
 #include <fstream>
 #include <numbers>
 

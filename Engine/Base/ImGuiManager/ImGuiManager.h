@@ -2,13 +2,13 @@
 #include "Engine/Base/WindowsApp/WindowsApp.h"
 #include "Engine/Base/DirectXCore/DirectXCore.h"
 
-class MyImGui
+class ImGuiManager
 {
 public:
-	static MyImGui* GetInstance();
+	static ImGuiManager* GetInstance();
 
-	//MyImGui();
-	//~MyImGui();
+	//ImGuiManager();
+	//~ImGuiManager();
 
 	void Initialize(WindowsApp* win, DirectXCore* dxCore);
 

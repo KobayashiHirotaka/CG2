@@ -2,8 +2,8 @@
 #include "Engine/Base/WindowsApp/WindowsApp.h"
 #include "Engine/Base/DirectXCore/DirectXCore.h"
 #include "Engine/Base/MyEngine/MyEngine.h"
-#include "TextureManager.h"
-#include "MyImGui.h"
+#include "Engine/Base/TextureManager/TextureManager.h"
+#include "Engine/Base/ImGuiManager/ImGuiManager.h"
 #include "Input.h"
 #include "Audio.h"
 #include "Light.h"
@@ -39,7 +39,7 @@ private:
 
 	MyEngine* engine_ = nullptr;
 
-	MyImGui* imGui_ = nullptr;
+	ImGuiManager* imGuiManager_ = nullptr;
 
 	TextureManager* textureManager_ = nullptr;
 

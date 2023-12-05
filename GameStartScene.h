@@ -1,6 +1,6 @@
 #pragma once
+#include "Engine/Base/ImGuiManager/ImGuiManager.h"
 #include "IScene.h"
-#include "MyImGui.h"
 
 class GameStartScene : public IScene
 {

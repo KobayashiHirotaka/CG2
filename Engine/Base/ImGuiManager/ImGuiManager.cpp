@@ -1,12 +1,12 @@
-#include "MyImGui.h"
+#include "ImGuiManager.h"
 
-MyImGui* MyImGui::GetInstance()
+ImGuiManager* ImGuiManager::GetInstance()
 {
-	static MyImGui instance;
+	static ImGuiManager instance;
 	return &instance;
 }
 
-void MyImGui::Initialize(WindowsApp* win, DirectXCore* dxCore)
+void ImGuiManager::Initialize(WindowsApp* win, DirectXCore* dxCore)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -20,14 +20,14 @@ void MyImGui::Initialize(WindowsApp* win, DirectXCore* dxCore)
 		dxCore->GetSrvDescriptorHeap()->GetGPUDescriptorHandleForHeapStart());
 }
 
-void MyImGui::BeginFlame()
+void ImGuiManager::BeginFlame()
 {
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 }
 
-void MyImGui::EndFlame()
+void ImGuiManager::EndFlame()
 {
 	ImGui::Render();
 }

@@ -22,8 +22,8 @@ void SceneManager::Initialize()
 
 	textureManager_ = TextureManager::GetInstance();
 
-	imGui_ = MyImGui::GetInstance();
-	imGui_->Initialize(win_, dxCore_);
+	imGuiManager_ = ImGuiManager::GetInstance();
+	imGuiManager_->Initialize(win_, dxCore_);
 
 	input_ = Input::GetInstance();
 	input_->Initialize(win_);
@@ -56,7 +56,7 @@ void SceneManager::Update()
 
 		}else {
 			//ゲームの処理
-			imGui_->BeginFlame();
+			imGuiManager_->BeginFlame();
 			dxCore_->PreDraw();
 			input_->Update();
 			//GlobalVariables::GetInstance()->Update();
@@ -64,7 +64,7 @@ void SceneManager::Update()
 			state[GameStartScene::sceneNum]->Update();
 			state[GameStartScene::sceneNum]->Draw();
 
-			imGui_->EndFlame();
+			imGuiManager_->EndFlame();
 			dxCore_->PostDraw();
 		}
 	}

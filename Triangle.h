@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine/Base/DirectXCore/DirectXCore.h"
-#include "TextureManager.h"
+#include "Engine/Base/TextureManager/TextureManager.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "MyMath.h"
