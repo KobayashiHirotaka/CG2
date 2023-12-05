@@ -192,9 +192,6 @@
     <ClCompile Include="MyMath.cpp">
       <Filter>ソース ファイル\Engine\Utility\Math</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>ソース ファイル\Engine\Utility\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="Triangle.cpp">
       <Filter>ソース ファイル\Engine\2d</Filter>
     </ClCompile>
@@ -282,6 +279,9 @@
     <ClCompile Include="Project\Game\Scenes\GameEndScene.cpp">
       <Filter>ソース ファイル\Project\Game\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Utility\Collision\CollisionManager.cpp">
+      <Filter>ソース ファイル\Engine\Utility\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -304,15 +304,6 @@
     </ClInclude>
     <ClInclude Include="Matrix4x4.h">
       <Filter>ヘッダー ファイル\Engine\Utility\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>ヘッダー ファイル\Engine\Utility\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionConfig.h">
-      <Filter>ヘッダー ファイル\Engine\Utility\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionManager.h">
-      <Filter>ヘッダー ファイル\Engine\Utility\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>ヘッダー ファイル\Engine\2d</Filter>
@@ -424,6 +415,15 @@
     </ClInclude>
     <ClInclude Include="Project\Game\Scenes\GameEndScene.h">
       <Filter>ヘッダー ファイル\Project\Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\Collision\Collider.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\Collision\CollisionConfig.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\Collision\CollisionManager.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

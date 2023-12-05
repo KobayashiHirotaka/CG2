@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="ConvertString.cpp" />
     <ClCompile Include="Engine\3D\Camera\Camera.cpp" />
     <ClCompile Include="Engine\3D\Camera\DebugCamera.cpp" />
@@ -30,6 +29,7 @@
     <ClCompile Include="Engine\externals\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="Engine\externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="Engine\externals\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Engine\Utility\Collision\CollisionManager.cpp" />
     <ClCompile Include="GlobalVariables.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LoadCSV.cpp" />
@@ -56,9 +56,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Collider.h" />
-    <ClInclude Include="CollisionConfig.h" />
-    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="ConvertString.h" />
     <ClInclude Include="Engine\3D\Camera\Camera.h" />
     <ClInclude Include="Engine\3D\Camera\DebugCamera.h" />
@@ -78,6 +75,9 @@
     <ClInclude Include="Engine\externals\imgui\imstb_rectpack.h" />
     <ClInclude Include="Engine\externals\imgui\imstb_textedit.h" />
     <ClInclude Include="Engine\externals\imgui\imstb_truetype.h" />
+    <ClInclude Include="Engine\Utility\Collision\Collider.h" />
+    <ClInclude Include="Engine\Utility\Collision\CollisionConfig.h" />
+    <ClInclude Include="Engine\Utility\Collision\CollisionManager.h" />
     <ClInclude Include="GlobalVariables.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LoadCSV.h" />
