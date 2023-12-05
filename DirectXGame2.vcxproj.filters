@@ -13,51 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル\imgui">
-      <UniqueIdentifier>{d720da6c-1bcf-4ede-b983-ab83df35aab5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\scenes">
-      <UniqueIdentifier>{1d55660e-37a2-429b-b343-f9292cfd01e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\scenes">
-      <UniqueIdentifier>{5d9d8822-66ae-403c-82d4-6647028c3560}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\math">
-      <UniqueIdentifier>{29540ec8-7afe-4927-9080-9753b35650fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\camera">
-      <UniqueIdentifier>{85a72027-3992-45a4-a55e-61af2ef7f784}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\math">
-      <UniqueIdentifier>{9a7bc6e2-8f37-4fd0-9011-faa5acfe1dff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\camera">
-      <UniqueIdentifier>{6bfb208f-72e5-4a3c-ba26-ecf3d864a41e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\collision">
-      <UniqueIdentifier>{c681c764-c19e-4d5b-8fb3-ee4ef6430bc5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\collision">
-      <UniqueIdentifier>{439ca281-bb22-40be-b251-cbd26343f1be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Utility">
-      <UniqueIdentifier>{3882b7c3-8923-47bd-aa39-7ac0da554ea8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Utility">
-      <UniqueIdentifier>{753fee5b-e7a1-48d0-ab9b-30468d2c506a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\scenes\manager">
-      <UniqueIdentifier>{1476084c-c349-4eef-82e2-7b5720dd184b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\scenes\manager">
-      <UniqueIdentifier>{08e03cdb-74e3-48bc-9a25-1a347e916623}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\GlobalVariables">
-      <UniqueIdentifier>{e10d76ff-5c27-45df-9446-5f8d7fd62f75}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\GlobalVariables">
-      <UniqueIdentifier>{d187794f-2788-48b7-be67-64e4157b9c69}</UniqueIdentifier>
-    </Filter>
     <Filter Include="shaders">
       <UniqueIdentifier>{7b7ea5e1-b748-4f74-8c27-3a7867154ff1}</UniqueIdentifier>
     </Filter>
@@ -106,20 +61,8 @@
     <Filter Include="ソース ファイル\Engine\Base\TextureManager">
       <UniqueIdentifier>{7a0a0eef-207e-4000-b31d-02b7de839f14}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Engine\audio">
-      <UniqueIdentifier>{a91d91c5-278d-4328-84a4-c7e2be478361}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\input">
-      <UniqueIdentifier>{09ec9e24-024f-4569-8f99-56397730dbd6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engine\Base\MyEngine">
       <UniqueIdentifier>{b60c236a-0951-4b93-bce8-fffd681d688c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\audio">
-      <UniqueIdentifier>{8629fe5c-8508-4851-864c-254adda392b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\input">
-      <UniqueIdentifier>{9d05a117-d756-4fa7-a4c5-9fb3f7862e3d}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Engine\Base\MyEngine">
       <UniqueIdentifier>{ea77232b-67d8-443f-8bdb-efdb9892e76d}</UniqueIdentifier>
@@ -130,40 +73,139 @@
     <Filter Include="ヘッダー ファイル\Engine\Base\TextureManager">
       <UniqueIdentifier>{aef1af38-cc7d-4fab-a922-a0344f7d9b10}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\Utility">
+      <UniqueIdentifier>{9159f896-467d-4fab-8311-42d2bde55d1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Utility\ConvertString">
+      <UniqueIdentifier>{6493a568-be06-4954-9d79-e6106bca51e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Utility\Collision">
+      <UniqueIdentifier>{439ca281-bb22-40be-b251-cbd26343f1be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Components">
+      <UniqueIdentifier>{3cc14d9c-9113-412d-98d7-ad7457b858f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Components\Audio">
+      <UniqueIdentifier>{a91d91c5-278d-4328-84a4-c7e2be478361}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Components\Input">
+      <UniqueIdentifier>{09ec9e24-024f-4569-8f99-56397730dbd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Utility\CSV">
+      <UniqueIdentifier>{6afc9609-243a-4734-8b5c-5f1a8fedf03e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Components">
+      <UniqueIdentifier>{19f16e3b-0c33-4c91-9d02-dd3b77b303fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Components\Audio">
+      <UniqueIdentifier>{8629fe5c-8508-4851-864c-254adda392b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Components\Input">
+      <UniqueIdentifier>{9d05a117-d756-4fa7-a4c5-9fb3f7862e3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Utility">
+      <UniqueIdentifier>{753fee5b-e7a1-48d0-ab9b-30468d2c506a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Utility\Collision">
+      <UniqueIdentifier>{c681c764-c19e-4d5b-8fb3-ee4ef6430bc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Utility\ConvertString">
+      <UniqueIdentifier>{db972189-23aa-4645-bafd-399447cf1f2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Utility\CSV">
+      <UniqueIdentifier>{ac1fe28d-05f0-4938-8415-c8fba112d0b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\3d\Light">
+      <UniqueIdentifier>{37c16b38-2e4d-4ee8-bb66-697a1b4c8537}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\3d\Camera">
+      <UniqueIdentifier>{85a72027-3992-45a4-a55e-61af2ef7f784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\3d\Model">
+      <UniqueIdentifier>{3a1acfc6-3a38-4a4c-9d4a-260b02afc518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\3d\Sphere">
+      <UniqueIdentifier>{b18ac748-69ec-40cd-a186-c7d655c4d919}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Utility\Math">
+      <UniqueIdentifier>{29540ec8-7afe-4927-9080-9753b35650fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Utility\Math">
+      <UniqueIdentifier>{9a7bc6e2-8f37-4fd0-9011-faa5acfe1dff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\3d\Camera">
+      <UniqueIdentifier>{6bfb208f-72e5-4a3c-ba26-ecf3d864a41e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\3d\Model">
+      <UniqueIdentifier>{683f2ac0-56a1-4544-80eb-e51d758ad3b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\3d\Sphere">
+      <UniqueIdentifier>{ba9fb95c-8022-4a16-97f7-85f27eba84c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\3d\Light">
+      <UniqueIdentifier>{c7ae341d-7eec-4e85-8ad1-db759020636b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Utility\Structs">
+      <UniqueIdentifier>{bb1ff5a6-e980-4815-a511-d275ab6ccbc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Project">
+      <UniqueIdentifier>{fdfb5075-b81a-4a32-8584-fb24fe4195df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Project\Game">
+      <UniqueIdentifier>{55ae0ec5-a4da-4e17-8204-f1a0c043443b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Project\GameObject">
+      <UniqueIdentifier>{a5148be7-5fba-4e9c-af9f-db8912835e38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Project">
+      <UniqueIdentifier>{b97ed785-0c2b-4c30-aa61-7491bc3ba33d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Project\Game">
+      <UniqueIdentifier>{6afc74fe-29eb-4127-9f23-0771ac0ee0ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Project\Game\Scenes">
+      <UniqueIdentifier>{5d9d8822-66ae-403c-82d4-6647028c3560}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Project\Game\Scenes\Manager">
+      <UniqueIdentifier>{1476084c-c349-4eef-82e2-7b5720dd184b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Project\GameObject">
+      <UniqueIdentifier>{5d0404f2-2afc-46e4-a8ec-3d10120c5ab0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Project\Game\Scenes">
+      <UniqueIdentifier>{1d55660e-37a2-429b-b343-f9292cfd01e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Project\Game\Scenes\Manager">
+      <UniqueIdentifier>{08e03cdb-74e3-48bc-9a25-1a347e916623}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="GamePlayScene.cpp">
-      <Filter>ソース ファイル\scenes</Filter>
+      <Filter>ソース ファイル\Project\Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="GameEndScene.cpp">
-      <Filter>ソース ファイル\scenes</Filter>
+      <Filter>ソース ファイル\Project\Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="GameStartScene.cpp">
-      <Filter>ソース ファイル\scenes</Filter>
+      <Filter>ソース ファイル\Project\Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="MyMath.cpp">
-      <Filter>ソース ファイル\math</Filter>
+      <Filter>ソース ファイル\Engine\Utility\Math</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>ソース ファイル\camera</Filter>
+      <Filter>ソース ファイル\Engine\3d\Camera</Filter>
     </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
-      <Filter>ソース ファイル\collision</Filter>
-    </ClCompile>
-    <ClCompile Include="ConvertString.cpp">
-      <Filter>ソース ファイル\Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadCSV.cpp">
-      <Filter>ソース ファイル\Utility</Filter>
+      <Filter>ソース ファイル\Engine\Utility\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Audio.cpp">
-      <Filter>ソース ファイル\Engine\audio</Filter>
+      <Filter>ソース ファイル\Engine\Components\Audio</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
-      <Filter>ソース ファイル\Engine\input</Filter>
+      <Filter>ソース ファイル\Engine\Components\Input</Filter>
     </ClCompile>
     <ClCompile Include="Triangle.cpp">
       <Filter>ソース ファイル\Engine\2d</Filter>
@@ -177,20 +219,8 @@
     <ClCompile Include="ViewProjection.cpp">
       <Filter>ソース ファイル\Engine\3d</Filter>
     </ClCompile>
-    <ClCompile Include="Sphere.cpp">
-      <Filter>ソース ファイル\Engine\3d</Filter>
-    </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>ソース ファイル\Engine\3d</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>ソース ファイル\scenes\manager</Filter>
-    </ClCompile>
-    <ClCompile Include="GlobalVariables.cpp">
-      <Filter>ソース ファイル\GlobalVariables</Filter>
+      <Filter>ソース ファイル\Project\Game\Scenes\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Engine\externals\imgui\imgui.cpp">
       <Filter>Imgui</Filter>
@@ -228,6 +258,24 @@
     <ClCompile Include="Engine\Base\TextureManager\TextureManager.cpp">
       <Filter>ソース ファイル\Engine\Base\TextureManager</Filter>
     </ClCompile>
+    <ClCompile Include="ConvertString.cpp">
+      <Filter>ソース ファイル\Engine\Utility\ConvertString</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadCSV.cpp">
+      <Filter>ソース ファイル\Engine\Utility\CSV</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>ソース ファイル\Engine\3d\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>ソース ファイル\Engine\3d\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>ソース ファイル\Engine\3d\Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalVariables.cpp">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -239,68 +287,50 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Material.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ModelData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ResourceObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="IScene.h">
-      <Filter>ヘッダー ファイル\scenes</Filter>
+      <Filter>ヘッダー ファイル\Project\Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="GameStartScene.h">
-      <Filter>ヘッダー ファイル\scenes</Filter>
+      <Filter>ヘッダー ファイル\Project\Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="GamePlayScene.h">
-      <Filter>ヘッダー ファイル\scenes</Filter>
+      <Filter>ヘッダー ファイル\Project\Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="GameEndScene.h">
-      <Filter>ヘッダー ファイル\scenes</Filter>
+      <Filter>ヘッダー ファイル\Project\Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="MyMath.h">
-      <Filter>ヘッダー ファイル\math</Filter>
+      <Filter>ヘッダー ファイル\Engine\Utility\Math</Filter>
     </ClInclude>
     <ClInclude Include="Vector2.h">
-      <Filter>ヘッダー ファイル\math</Filter>
+      <Filter>ヘッダー ファイル\Engine\Utility\Math</Filter>
     </ClInclude>
     <ClInclude Include="Vector3.h">
-      <Filter>ヘッダー ファイル\math</Filter>
-    </ClInclude>
-    <ClInclude Include="TransformationMatrix.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engine\Utility\Math</Filter>
     </ClInclude>
     <ClInclude Include="Matrix4x4.h">
-      <Filter>ヘッダー ファイル\math</Filter>
-    </ClInclude>
-    <ClInclude Include="VertexData.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engine\Utility\Math</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>ヘッダー ファイル\camera</Filter>
+      <Filter>ヘッダー ファイル\Engine\3d\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
-      <Filter>ヘッダー ファイル\collision</Filter>
+      <Filter>ヘッダー ファイル\Engine\Utility\Collision</Filter>
     </ClInclude>
     <ClInclude Include="CollisionConfig.h">
-      <Filter>ヘッダー ファイル\collision</Filter>
+      <Filter>ヘッダー ファイル\Engine\Utility\Collision</Filter>
     </ClInclude>
     <ClInclude Include="CollisionManager.h">
-      <Filter>ヘッダー ファイル\collision</Filter>
-    </ClInclude>
-    <ClInclude Include="ConvertString.h">
-      <Filter>ヘッダー ファイル\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadCSV.h">
-      <Filter>ヘッダー ファイル\Utility</Filter>
+      <Filter>ヘッダー ファイル\Engine\Utility\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Audio.h">
-      <Filter>ヘッダー ファイル\Engine\audio</Filter>
+      <Filter>ヘッダー ファイル\Engine\Components\Audio</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
-      <Filter>ヘッダー ファイル\Engine\input</Filter>
+      <Filter>ヘッダー ファイル\Engine\Components\Input</Filter>
     </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>ヘッダー ファイル\Engine\2d</Filter>
@@ -314,23 +344,11 @@
     <ClInclude Include="ViewProjection.h">
       <Filter>ヘッダー ファイル\Engine\3d</Filter>
     </ClInclude>
-    <ClInclude Include="Sphere.h">
-      <Filter>ヘッダー ファイル\Engine\3d</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>ヘッダー ファイル\Engine\3d</Filter>
-    </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>ヘッダー ファイル\scenes\manager</Filter>
-    </ClInclude>
-    <ClInclude Include="GlobalVariables.h">
-      <Filter>ヘッダー ファイル\GlobalVariables</Filter>
+      <Filter>ヘッダー ファイル\Project\Game\Scenes\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\externals\imgui\imconfig.h">
       <Filter>Imgui</Filter>
@@ -370,6 +388,36 @@
     </ClInclude>
     <ClInclude Include="Engine\Base\TextureManager\TextureManager.h">
       <Filter>ヘッダー ファイル\Engine\Base\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ConvertString.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\ConvertString</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadCSV.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\CSV</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalVariables.h">
+      <Filter>ヘッダー ファイル\Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>ヘッダー ファイル\Engine\3d\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>ヘッダー ファイル\Engine\3d\Sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>ヘッダー ファイル\Engine\3d\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelData.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexData.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformationMatrix.h">
+      <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
