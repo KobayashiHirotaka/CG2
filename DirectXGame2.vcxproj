@@ -100,10 +100,6 @@
     <ClInclude Include="Project\Game\Scenes\GameStartScene.h" />
     <ClInclude Include="Project\Game\Scenes\IScene.h" />
     <ClInclude Include="Project\Game\Scenes\Manager\SceneManager.h" />
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="DirectXGame2.rc" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resource\shaders\Object3d.PS.hlsl">

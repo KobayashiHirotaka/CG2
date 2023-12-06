@@ -407,9 +407,6 @@
     <ClInclude Include="Engine\Base\ResourceObject.h">
       <Filter>ヘッダー ファイル\Engine\Base</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Utility\Math\MyMath.h">
       <Filter>ヘッダー ファイル\Engine\Utility\Math</Filter>
     </ClInclude>
@@ -440,11 +437,6 @@
     <ClInclude Include="Engine\Utility\Structs\VertexData.h">
       <Filter>ヘッダー ファイル\Engine\Utility\Structs</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="DirectXGame2.rc">
-      <Filter>リソース ファイル</Filter>
-    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resource\shaders\Object3d.PS.hlsl">
