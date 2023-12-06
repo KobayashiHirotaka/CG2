@@ -34,11 +34,6 @@ void GameStartScene::Update()
 	ImGui::Text("%1.2f      : Norm", norm);
 	
 	ImGui::End();
-
-	/*ImGui::Begin("SceneNum");
-	ImGui::Text("SceneNum %d", sceneNum);
-	ImGui::InputInt("SceneNum", &sceneNum);
-	ImGui::End();*/
 }
 
 void GameStartScene::Draw()
