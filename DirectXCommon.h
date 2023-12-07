@@ -7,6 +7,7 @@
 #include "dxgidebug.h"
 #include "MyMath.h"
 #include <wrl.h>
+#include <thread>
 #include <cassert>
 #include <chrono>
 #include "externals/DirectXTex/d3dx12.h"

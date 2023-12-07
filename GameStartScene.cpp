@@ -31,11 +31,6 @@ void GameStartScene::Update()
 	ImGui::Text("%1.2f,%1.2f,%1.2f      : rotateByMatrix", rotateByMatrix.x, rotateByMatrix.y, rotateByMatrix.z);
 	
 	ImGui::End();
-
-	/*ImGui::Begin("SceneNum");
-	ImGui::Text("SceneNum %d", sceneNum);
-	ImGui::InputInt("SceneNum", &sceneNum);
-	ImGui::End();*/
 }
 
 void GameStartScene::Draw()
