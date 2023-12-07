@@ -8,6 +8,7 @@
 #include <dxgi1_6.h>
 #include <dxcapi.h>
 #include <wrl.h>
+#include <thread>
 #include <chrono>
 #include <cassert>
 
