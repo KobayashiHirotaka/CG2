@@ -1,0 +1,10 @@
+{
+    "Player": {
+        "Translation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "behaviorDashTime": 10
+    }
+}
